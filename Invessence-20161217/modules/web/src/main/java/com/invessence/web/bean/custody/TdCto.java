@@ -1334,10 +1334,12 @@ public class TdCto
                      dataOK = false;
                      pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.investamt.requiredMsg", "Investment amount is required!", null));
                   }
-                  else if (tdMasterData.getInitialInvestment() < 50000)
+                  else if (tdMasterData.getInitialInvestment() < 2000)
                   {
                      dataOK = false;
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.investamtless.requiredMsg", "Investment amount should be minimum $50000!", null));
+                     //String minInvestment = webutil.getDataDisplayConverter().displayAsMoney(tdMasterData.getCustomerData().getInitialInvestment());
+                     String minInvestment = "2000";
+                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.investamtless.requiredMsg", "Min " + minInvestment + " investment required", new Object[]{minInvestment}));
                   }
 
                   if (!hasRequiredData(tdMasterData.getAchBankDetail().getBankAcctType()))
@@ -2071,6 +2073,11 @@ public class TdCto
             subtab = 0;
             return;
          }
+         else
+         {
+            pagemanager.nextPage();
+            pageControl(pagemanager.getPage());
+         }
          if (!tdMasterData.getRecurringFlag()&& !validatePage(10))
          {
             activeTab = 0;
@@ -2103,10 +2110,12 @@ public class TdCto
          if (wsCallResult.getWSCallStatus().getErrorCode() != 0)
          {
                msg = wsCallResult.getWSCallStatus().getErrorMessage();
+
             webutil.redirecttoMessagePage("ERROR", "Failed to Save", msg);
          }
          else
          {
+            custodySaveDAO.tdMangedUserProfile(tdMasterData.getAcctnum(),"F");
             uiLayout.doMenuAction("custody", "tdconfirmation.xhtml");
          }
       }

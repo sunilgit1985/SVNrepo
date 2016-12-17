@@ -20,7 +20,7 @@
                             <div class="Container100 MobileModeConDash"
                                  style="padding: 0 10px;">
                                 <h5>Welcome,</h5>
-                                <h2>Prakash Lal</h2>
+                                <h2>#{webutil.lastFirstName}</h2>
                             </div>
                             <div class="Container70 MobileModeConDash" style="display: none;">
 
@@ -73,12 +73,14 @@
                                                         <div class="ContentForTitleDash">#{investment.portfolioName}</div></td>
                                                     <td class="CustomWidthColumn_d">
                                                         <div class="ContentTitleDash textRAlign">Invested Amount</div>
-                                                        <div class="ContentForTitleDash textRAlign"><h:outputText
+                                                        <div class="ContentForTitleDash textRAlign">
+                                                            <h:outputText
                                                                 value="#{investment.actualInvestment}"
                                                                 rendered="#{investment.managed}">
                                                             <f:convertNumber currencySymbol="$" type="currency" />
-                                                        </h:outputText> <h:outputText value="#{investment.initialInvestment}"
-                                                                                      rendered="#{!investment.managed}">
+                                                            </h:outputText>
+                                                            <h:outputText value="#{investment.initialInvestment}"
+                                                                          rendered="#{!investment.managed}">
                                                             <f:convertNumber currencySymbol="$" type="currency" />
                                                         </h:outputText></div></td>
 
@@ -173,12 +175,12 @@
                                                             <div class="NewDashButtonBlock">
                                                                 <div class="Container100">
                                                                     <p:commandButton id="fundButton"
-                                                                                     disabled="#{!investment.hasPosition}"
+                                                                                     disabled="#{!investment.hasClientID}"
                                                                                      styleClass="Fs14 GreenButton" process="@this"
                                                                                      immediate="true" icon="fa fa-university Fs14 white"
                                                                                      action="#{tcmdash.doFundingAction}">
                                                                         <p:tooltip id="fundToolTipFade" for="fundButton"
-                                                                                   value="Edit Funding" />
+                                                                                   value="Edit Funding" position="left" />
                                                                         <f:setPropertyActionListener value="#{investment}"
                                                                                                      target="#{tcmdash.selectedAccount}" />
                                                                     </p:commandButton>
