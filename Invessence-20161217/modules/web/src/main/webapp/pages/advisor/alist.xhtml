@@ -26,7 +26,7 @@
                     </p:confirmDialog>
 
                     <h:form id="form">
-                        <div class="Container100">
+                        <div class="Container100 advisorButtons">
                            <div class="Fright">
                            <p:selectOneButton value="#{manageAdvisorBean.filteredClient}">
                                <p:ajax update="@form" event="change"
@@ -64,7 +64,7 @@
                                 </p:commandButton>
 
                                 <p:commandButton id="ovButton" rendered="#{managedVar.acctStatus == 'Active'}"
-                                                 styleClass="Fs16 GreenButton"
+                                                 styleClass="Fs16 GreenButton DualBtnModeLeft"
                                                  process="@this" immediate="true"
                                                  icon="fa fa-search-plus Fs14 white"
                                                  action="#{manageAdvisorBean.doManagedAction}">
@@ -89,7 +89,7 @@
                                       headerText="Strategy"
                                       styleClass="ListOfAccntsColWidth"
                                       resizable="true">
-                                <h:outputText styleClass="dashboardUsrColumnFloatLeft" value="#{managedVar.portfolioName}"/>
+                                <h:outputText styleClass="dashboardUsrColumnFloatRight" value="#{managedVar.portfolioName}"/>
                             </p:column>
                             <p:column sortBy="#{managedVar.displayAcct}"
                                       headerText="Acct#"
