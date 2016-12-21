@@ -26,7 +26,7 @@
                     </p:confirmDialog>
 
                     <h:form id="form">
-                        <div class="Container100 advisorButtons">
+                        <div class="Container100">
                            <div class="Fright">
                            <p:selectOneButton value="#{manageAdvisorBean.filteredClient}">
                                <p:ajax update="@form" event="change"
@@ -41,17 +41,6 @@
                         <p:dataTable id="managedTable" var="managedVar" styleClass="ListOfAccountsTable" widgetVar="managedTable"
                                      value="#{manageAdvisorBean.filteredDataList}" reflow="true">
 
-<!--
-                           <f:facet name="header" style="text-align:right">
-                               <p:outputPanel style="text-align:right">
-                                   <h:outputText value="Search:" />
-                                   <p:inputText id="globalFilter" onkeyup="PF('managedTable').filter()"
-                                                style="width:150px; margin-left: 5px" placeholder="Enter keyword"/>
-                                   <p:commandButton value="Clear" onclick="PF('managedTable').clearFilters();"/>
-                               </p:outputPanel>
-                           </f:facet>
--->
-
                             <p:column styleClass="ListOfAccntsColWidthBtn ZeroPaddingBottom" resizable="true">
                                 <p:commandButton id="editButton"
                                                  styleClass="Fs16 BlueButton DualBtnModeLeft"
@@ -64,7 +53,7 @@
                                 </p:commandButton>
 
                                 <p:commandButton id="ovButton" rendered="#{managedVar.acctStatus == 'Active'}"
-                                                 styleClass="Fs16 GreenButton DualBtnModeLeft"
+                                                 styleClass="Fs16 GreenButton"
                                                  process="@this" immediate="true"
                                                  icon="fa fa-search-plus Fs14 white"
                                                  action="#{manageAdvisorBean.doManagedAction}">
@@ -91,6 +80,12 @@
                                       resizable="true">
                                 <h:outputText styleClass="dashboardUsrColumnFloatRight" value="#{managedVar.portfolioName}"/>
                             </p:column>
+                            <p:column sortBy="#{managedVar.fullname}"
+                                      headerText="Name"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText styleClass="dashboardUsrColumnFloatRight" value="#{managedVar.fullname}"/>
+                            </p:column>
                             <p:column sortBy="#{managedVar.displayAcct}"
                                       headerText="Acct#"
                                       styleClass="ListOfAccntsColWidth"
@@ -98,6 +93,12 @@
                                 <h:outputText styleClass="dashboardUsrColumnFloatRight" value="#{managedVar.displayAcct}"/>
                             </p:column>
 
+                            <p:column sortBy="#{managedVar.accttype}"
+                                      headerText="Account Type"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText styleClass="dashboardUsrColumnFloatRight" value="#{managedVar.accttype}"/>
+                            </p:column>
                             <p:column sortBy="#{managedVar.goal}"
                                       headerText="Goal"
                                       styleClass="ListOfAccntsColWidth"
