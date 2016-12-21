@@ -1078,14 +1078,47 @@ img.riskImage:hover {
     margin-top: 10px;
 }
 
-/**New Version Dashboard**/
+@media (max-width:640px) {
+    .ListOfAccntsColWidth {
+    font-size:13px!important;
+    }
+}
 
+/**New Version Dashboard**/
+.topAdjustCustomFunding {
+    position: relative;
+    top: 7px;
+}
 @media (max-width: 500px) {
 
     /* .NewDashTable > tbody > tr > td:nth-child(1), .NewDashTable > tbody > tr > td:nth-child(3) {
     width: 50%!important;
     }
      */
+/*dec21*/
+
+
+
+    .NewDashTable2 > tbody > tr {
+        display: inline-block;
+    }
+
+    .NewDashTable2 > tbody > tr:nth-child(2) {
+        display: none!important;
+    }
+
+    .NewDashTable2 > tbody > tr:nth-child(1) {
+    width: 30%!important;
+    float: left;
+}
+
+    .NewDashTable2 > tbody > tr:nth-child(3) {
+        display: table!important;
+        width: 70%!important;
+        float: right;
+    }
+
+/**/
     .InfoNewDash {
         float: none;
     }
@@ -1095,7 +1128,7 @@ img.riskImage:hover {
     }
 
     .NewDashButtonBlock {
-        width: 25%!important;
+        width: 32%!important;
     }
 
     .NewDashTable, .NewDashTable2 {
@@ -1163,6 +1196,7 @@ img.riskImage:hover {
 
 .dashExtraInfoTable > tbody > tr > td  {
     padding: 5px 0px;
+    text-align: left;
 }
 
 .textRAlign {
