@@ -258,6 +258,7 @@ public class UserBean implements Serializable
 
    private void resetBean()
    {
+      webutil.resetSession(); // Force a logout to clear session and cache.
       pwd1 = null;
       pwd2 = null;
       beanq1 = null;
@@ -269,7 +270,6 @@ public class UserBean implements Serializable
       beanCustID = null;
       attempts = 0;
       userdata = new UserData();
-
    }
 
    /*
@@ -666,7 +666,7 @@ public class UserBean implements Serializable
       {
          String passwordEncrypted = MsgDigester.getMessageDigest(pwd1);
          userInfoDAO.resetPassword(beanUserID, passwordEncrypted);
-         webutil.logout(); // Force a logout to clear session and cache.
+         webutil.resetSession(); // Force a logout to clear session and cache.
          webutil.redirect("/signup4.xhtml", null);
       }
    }

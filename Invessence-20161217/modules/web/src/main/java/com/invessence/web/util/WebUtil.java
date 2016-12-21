@@ -952,7 +952,7 @@ public class WebUtil implements Serializable
    }
 
 
-   public void logout() {
+   public void resetSession() {
       HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
       HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
       SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
