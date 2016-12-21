@@ -555,6 +555,7 @@ public class TDMasterData implements Serializable
       }
       else
       {
+         electroicBankDetail=new ElectronicFundDetails();
          submitButton=false;
          optoutRecurring=false;
       }
