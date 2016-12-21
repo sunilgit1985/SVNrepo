@@ -666,6 +666,7 @@ public class UserBean implements Serializable
       {
          String passwordEncrypted = MsgDigester.getMessageDigest(pwd1);
          userInfoDAO.resetPassword(beanUserID, passwordEncrypted);
+         webutil.logout(); // Force a logout to clear session and cache.
          webutil.redirect("/signup4.xhtml", null);
       }
    }
@@ -882,8 +883,16 @@ public class UserBean implements Serializable
       return updtStr;
    }
 
+   Integer qnum = null;
+   Integer prevQ = null;
+
    public void setRandomQuestion() {
-      Integer qnum = webutil.randomGenerator(1,3);
+      prevQ = qnum;
+      qnum = webutil.randomGenerator(1,3);
+      if (prevQ != null && prevQ == qnum) {  // If the random picked the same question, then increment by 1.
+        qnum++;
+        qnum = (qnum % 3);
+      }
       switch (qnum) {
          case 0:
          case 1:
