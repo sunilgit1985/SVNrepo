@@ -809,15 +809,7 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
 
    private void setAccountType()
    {
-      if (getAccountTaxable())
-      {
-         setAccountType("Taxable");
-      }
-      else
-      {
-         setAccountType("Non-Taxable");
-      }
-
+         setAccountType(null);
    }
 
    private void setDefaults()

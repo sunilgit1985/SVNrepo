@@ -166,7 +166,7 @@ public class TCMDashBean implements Serializable
             portfolioEdit = true;
 
          // If the app is not yet managed but is pending, then we can still do the portfolio Edit.
-         if (!getSelectedAccount().getManaged() && getSelectedAccount().getEditable())
+         if (!getSelectedAccount().getManaged() && getSelectedAccount().getCurrentStatus().equalsIgnoreCase("P"))
             portfolioEdit = true;
 
          if (portfolioEdit)

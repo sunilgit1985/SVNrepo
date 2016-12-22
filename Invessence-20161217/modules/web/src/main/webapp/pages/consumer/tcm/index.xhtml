@@ -72,7 +72,14 @@
                                                         <div class="ContentTitleDash">Strategy</div>
                                                         <div class="ContentForTitleDash">#{investment.portfolioName}</div></td>
                                                     <td class="CustomWidthColumn_d">
-                                                        <div class="ContentTitleDash textRAlign">Invested Amount</div>
+                                                        <div class="ContentTitleDash textRAlign">
+                                                            <h:outputText
+                                                                    value="Invested Amount"
+                                                                    rendered="#{investment.managed}"/>
+                                                            <h:outputText
+                                                                    value="Proposed Amount"
+                                                                    rendered="#{! investment.managed}"/>
+                                                        </div>
                                                         <div class="ContentForTitleDash textRAlign">
                                                             <h:outputText
                                                                 value="#{investment.actualInvestment}"
