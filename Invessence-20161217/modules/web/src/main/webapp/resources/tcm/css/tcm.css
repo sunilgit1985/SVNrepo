@@ -140,6 +140,45 @@ img.riskImage:hover {
 }
 /*Prakash - Advisor Page*/
 
+/*Message*/
+
+@media (max-width: 640px) {
+    .advisorMsgTable > div > table > tbody > tr > td:nth-child(even) {
+        background: #f1f1f3;
+    }
+
+    .advisorMsgTable > div > table > tbody > tr > td:nth-child(3) >table>tbody>tr>td {
+        border: solid 1px #D9E3E8!important;
+    }
+
+    .mobileRightAdvMsg {
+        text-align: right!important;
+    }
+
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+    .advisorMsgTable > div > table > thead > tr > th:nth-child(1) {
+        width: 10%;
+    }
+
+    .advisorMsgTable > div > table > thead > tr > th:nth-child(2) {
+        width: 30%;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 4000px) {
+    .advisorMsgTable > div > table > thead > tr > th:nth-child(1) {
+        width: 7%;
+    }
+
+    .advisorMsgTable > div > table > thead > tr > th:nth-child(2) {
+        width: 20%;
+    }
+}
+
+/**/
+
 
 .CommonBtnWidthCancel,.CommonBtnWidthSave {
     width: 100px!important;
