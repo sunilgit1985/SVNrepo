@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS `delete_userAccount`;
+DROP PROCEDURE IF EXISTS `invdb`.`delete_userAccount`;
 
 DELIMITER $$
-CREATE PROCEDURE `delete_userAccount`(
+CREATE PROCEDURE `invdb`.`delete_userAccount`(
 	IN p_acctnum BIGINT(20))
 BEGIN
 	DECLARE numOfAccounts INTEGER;

@@ -137,6 +137,16 @@ BEGIN
 									,'</table>');
 			END IF;
 			
+			IF (p_messageType = 'REBALANCE')
+			THEN
+				set tInvested = Round(tInvested,2);
+				SET tMessage=concat('<strong><p>',tadvisorsubject,'</p><p> Account#:',tclientAccountID,' Name#:', tName,'</p></strong>'
+									,'<table>'
+									,'<tr><td>Account</td><td>Strategy</td><td>Goal</td><td>Amount</td></tr>'
+									,'<tr><td>',tacctType,'</td><td>',tPortfolioName,'</td><td>',tGoal,'</td><td>',tInvested,'</td></tr>'
+									,'</table>');
+			END IF;
+
 			IF (tMessage is not NULL)
 			THEN
 				CALL `invdb`.`sav_notification_advisor`(
@@ -203,6 +213,19 @@ BEGIN
 									);
 			END IF;
 			
+			IF (p_messageType = 'REBALANCE')
+			THEN
+				set tInvested = Round(tInvested,2);
+				SET tMessage=concat(temailAdvisorSubject, '\n'
+									, ' \n\t Account#: ', tclientAccountID
+									, ' \n\t Name: ', tName
+									, ' \n\t Account Type: ', tacctType
+									, ' \n\t Strategy: ', tPortfolioName
+									, ' \n\t Goal: ', tGoal
+									, ' \n\t Amount: ', tInvested
+									);
+			END IF;
+
 			IF (tMessage is not NULL)
 			THEN
 				CALL `invdb`.`sp_email_messages_add_mod`(

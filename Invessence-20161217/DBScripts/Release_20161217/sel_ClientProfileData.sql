@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS `sel_ClientProfileData`;
+DROP PROCEDURE IF EXISTS `invdb`.`sel_ClientProfileData`;
 
 DELIMITER $$
-CREATE PROCEDURE `sel_ClientProfileData`(
+CREATE PROCEDURE `invdb`.`sel_ClientProfileData`(
 	IN p_logonid BIGINT,
 	IN p_acctnum BIGINT,
 	IN p_days	 INTEGER
