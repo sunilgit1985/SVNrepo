@@ -177,6 +177,47 @@ img.riskImage:hover {
     }
 }
 
+.msgAdvStatus, .msgAdvAcctName {
+    margin: 5px 0px;
+}
+.msgAdvAcctName > div:nth-child(1) {
+    float: left;
+}
+
+.msgAdvAcctName > div:nth-child(2) {
+    float: right!important;
+}
+
+.msgAdvAcctName > div:nth-child(2) > div {
+    text-align: right!important;
+}
+
+.messageContentAdvNotification {
+    position: relative;
+    top: 10px;
+    margin-bottom: 15px;
+    box-shadow: 1px 1px 3px rgba(128, 128, 128, 0.57);
+}
+
+.messageContentAdvNotification > tbody > tr >td {
+    border: 0!important;
+}
+
+.messageContentAdvNotification > tbody > tr >td:nth-child(2) {
+    border-left: 1px solid #d9e3e8!important;
+    border-right: 1px solid #d9e3e8!important;
+}
+
+@media (max-width: 450px) {
+    .messageContentAdvNotification > tbody > tr >td >div {
+        text-align: center;
+    }
+
+    .messageContentAdvNotification > tbody > tr >td {
+        display: block;
+    }
+}
+
 /**/
 
 
