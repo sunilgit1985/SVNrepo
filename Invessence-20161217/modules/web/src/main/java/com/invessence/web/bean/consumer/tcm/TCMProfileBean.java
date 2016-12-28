@@ -1203,16 +1203,18 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
       if (cangoToNext)
       {
          if (currentpage == 0)
-         {  // This is before moving to next page. ONLY for FIRST PAGE
-            if (getAcctnum() == null || getAcctnum() <= 0)
-            {
-               saveVisitor();
-            }
             createAssetPortfolio(1); // Since we are refreshing on real-time, we don't need to do it during next.
-         }
 
          if(!formPortfolioEdit)
             saveProfile();
+
+         if (currentpage == 0)
+         {  // This is before moving to next page. ONLY for FIRST PAGE
+            if (getAcctnum() != null || getAcctnum() >= 0)
+            {   // We need to record the account number...
+               saveVisitor();
+            }
+         }
 
          if((getFormula() != null && getFormula().equalsIgnoreCase("Q")) && pagemanager.getPage() == 0 && formPortfolioEdit)
             pagemanager.nextPage();
