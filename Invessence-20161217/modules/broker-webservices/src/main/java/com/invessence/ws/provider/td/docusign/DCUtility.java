@@ -590,7 +590,7 @@ catch (Exception e)
          }else if(acctOwner.getOwnership().equalsIgnoreCase("Joint")){
                signer=new Signer();
                signer.setEmail(acctOwner.getEmailAddress());
-               signer.setName(acctOwner.getFirstName());
+            signer.setName(acctOwner.getFirstName()+" "+acctOwner.getLastName());
                signer.setRecipientId(""+signerRecipientId);
                signer.setRoleName(acctOwner.getOwnership());
             //signer.setRoutingOrder("2");
@@ -813,7 +813,7 @@ catch (Exception e)
          }else if(acctOwner.getOwnership().equalsIgnoreCase("Joint")){
             signer=new Signer();
             signer.setEmail(acctOwner.getEmailAddress());
-            signer.setName(acctOwner.getFirstName());
+            signer.setName(acctOwner.getFirstName()+" "+acctOwner.getLastName());
             signer.roleName(acctOwner.getOwnership());
             signer.setRecipientId(""+signerRecipientId);
             if(dcTemplateDetails.getAuthRequired().equalsIgnoreCase("Y")){
