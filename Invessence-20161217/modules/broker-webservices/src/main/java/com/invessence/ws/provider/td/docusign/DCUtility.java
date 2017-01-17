@@ -780,7 +780,7 @@ catch (Exception e)
             signer=new Signer();
             signer.setEmail(acctOwner.getEmailAddress());
             signer.setName(acctOwner.getFirstName()+" "+acctOwner.getLastName());
-            signer.roleName(acctOwner.getOwnership());
+            signer.setRoleName(acctOwner.getOwnership());
             signer.setRecipientId(""+signerRecipientId);
             if(dcTemplateDetails.getAuthRequired().equalsIgnoreCase("Y")){
               signer.setIdCheckConfigurationName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"ID_CHECK_CONF_NAME"));
