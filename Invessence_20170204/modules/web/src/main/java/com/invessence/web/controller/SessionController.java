@@ -58,6 +58,16 @@ public class SessionController implements Serializable
       this.logonid = logonid;
    }
 
+   public void preRenderView()
+   {
+      if (!FacesContext.getCurrentInstance().isPostback())
+      {
+         System.out.println("Inside Session Prerender");
+         resetCIDByURL(null);  // This method, will find the URL if not defined.
+      }
+   }
+
+
    public String getLogonStart() {
 
       if (webutil != null) {
