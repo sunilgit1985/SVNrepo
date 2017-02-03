@@ -1,1 +1,1 @@
-UPDATE  invdb .web_site_info  SET value ='INTERNAL' WHERE url ='buildingbenjamins' andname ='CUSTODY.SERVICE';
+UPDATE  invdb .web_site_info  SET value ='INTERNAL' WHERE url ='buildingbenjamins' and name ='CUSTODY.SERVICE';
