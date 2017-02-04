@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS `invdb`.`sp_send_advisor_notification`;
+DROP PROCEDURE IF EXISTS `sp_send_advisor_notification`;
 
 DELIMITER $$
-CREATE  PROCEDURE `invdb`.`sp_send_advisor_notification`(
+CREATE PROCEDURE `sp_send_advisor_notification`(
 	IN p_acctnum		BIGINT,
     IN p_advisor		VARCHAR(20),
     IN p_rep			VARCHAR(20),
@@ -216,24 +216,44 @@ BEGIN
 							<div class="ContentForTitleDash Fs14">',tInvested,'</div>
 							</td></tr>
 							</table>');
+			END IF;			
+			IF (p_messageType = 'REBALANCE')
+			THEN
+					SET tMessage=concat('<div class="msgAdvStatus">
+							<span>',tadvisorsubject,'</span>
+							<div class="msgAdvAcctName">
+							<div class="Container40">
+							<div class="ContentTitleDash">Name</div>
+							<div class="ContentForTitleDash">',tFirstname,' ',tLastName,'</div>
+							</div><div class="Container40">
+							<div class="ContentTitleDash">Account</div>
+							<div class="ContentForTitleDash">',tclientAccountID,'</div>
+							</div></div>
+							<table class="messageContentAdvNotification">
+							<tr><td>
+							<div class="ContentTitleDash">Strategy</div>
+							<div class="ContentForTitleDash Fs14">',tPortfolioName,'</div>
+							</td><td>
+							<div class="ContentTitleDash">Goal</div>
+							<div class="ContentForTitleDash Fs14">',tGoal,'</div>
+							</td><td>
+							<div class="ContentTitleDash">Account Type</div>
+							<div class="ContentForTitleDash Fs14">',tacctType,'</div>
+							</td></tr>
+							</table>');
 			END IF;
-			
 			IF (p_messageType = 'CHNGADDRS')
  			THEN
- 					SET tMessage=concat('<div class="msgAdvStatus">
- 							<span>',tadvisorsubject,'</span>
- 							</div>
- 							<div class="msgAdvAcctName">
- 							<div class="Container40">
- 							<div class="ContentTitleDash">Name</div>
- 							<div class="ContentForTitleDash">',tFirstname,'</div>
- 							<div class="ContentForTitleDash">',tLastName,'</div>
- 							</div><div class="Container40">
- 							<div class="ContentTitleDash">Account</div>
- 							<div class="ContentForTitleDash">',tclientAccountID,'</div>
- 							</div></div>
- 							');
-
+					SET tMessage=concat('<div class="msgAdvStatus">
+							<span>',tadvisorsubject,'</span>
+							<div class="msgAdvAcctName">
+							<div class="Container40">
+							<div class="ContentTitleDash">Name</div>
+							<div class="ContentForTitleDash">',tFirstname,' ',tLastName,'</div>
+							</div><div class="Container40">
+							<div class="ContentTitleDash">Account</div>
+							<div class="ContentForTitleDash">',tclientAccountID,'</div>
+							</div></div>');
  			END IF;
 
  			IF (tMessage is not NULL)
@@ -291,16 +311,26 @@ BEGIN
  			END IF;
  			IF (p_messageType = 'ACTIVE')
  			THEN
- 				set tInvested = Round(tInvested,2);
- 				SET tMessage=concat(temailAdvisorSubject, '\n'
- 									, ' \n\t Account#: ', tclientAccountID
- 									, ' \n\t Name: ', tName
- 									, ' \n\t Account Type: ', tacctType
- 									, ' \n\t Strategy: ', tPortfolioName
- 									, ' \n\t Goal: ', tGoal
- 									, ' \n\t Amount: ', tInvested
- 									);
- 			END IF;
+			IF (p_messageType = 'REBALANCE')
+			THEN
+				SET tMessage=concat(temailAdvisorSubject, '\n'
+							, ' \n\t Account#: ', tclientAccountID
+							, ' \n\t Name: ', tName
+							, ' \n\t Account Type: ', tacctType
+							, ' \n\t Strategy: ', tPortfolioName
+							, ' \n\t Goal: ', tGoal
+							);
+			END IF;
+			set tInvested = Round(tInvested,2);
+			SET tMessage=concat(temailAdvisorSubject, '\n'
+						, ' \n\t Account#: ', tclientAccountID
+						, ' \n\t Name: ', tName
+						, ' \n\t Account Type: ', tacctType
+						, ' \n\t Strategy: ', tPortfolioName
+						, ' \n\t Goal: ', tGoal
+						, ' \n\t Amount: ', tInvested
+						);
+			END IF;
  			IF (p_messageType = 'CHNGADDRS')
  			THEN
  				SET tMessage=concat(temailAdvisorSubject, '\n'
