@@ -128,9 +128,12 @@ public class WebUtil implements Serializable
       }
    }
 
+   public Boolean getHasSSLSeal() {
+     return (getIsSecure() && webprofile.getSslseal() != null);
+   }
+
    public Boolean getIsSecure()
    {
-
       HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
       return (request != null) && (request.isSecure());
