@@ -1233,7 +1233,7 @@ img.riskImage:hover {
 
 @media (max-width: 744px) {
 	.dsahboardEditDropdownBlock {
-        display: block;
+    display: block;
 	position: absolute;
     right: 0;
     margin-top: -85px;
