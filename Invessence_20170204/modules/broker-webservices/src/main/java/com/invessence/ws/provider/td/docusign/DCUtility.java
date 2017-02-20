@@ -6,20 +6,14 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.bind.DatatypeConverter;
 
 import com.docusign.esign.api.*;
 import com.docusign.esign.client.*;
-import com.docusign.esign.model.Checkbox;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.RadioGroup;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-import com.docusign.esign.model.Text;
 import com.docusign.esign.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.*;
 import com.invessence.service.bean.*;
 import com.invessence.service.util.*;
 import com.invessence.ws.provider.td.bean.*;
@@ -28,8 +22,6 @@ import com.invessence.ws.util.CommonUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -57,12 +49,12 @@ public class DCUtility
 
       EnvelopeSummary envelopeSummary=null;
       Date reqTime= new Date();
-      String UserName = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"USERNAME");//"prashant@invessence.com";//"[EMAIL]";
-      String Password = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"PASSWORD");//"Inv3ss3nc3!";//"[PASSWORD]";
+      String UserName = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "USERNAME");//"prashant@invessence.com";//"[EMAIL]";
+      String Password = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "PASSWORD");//"Inv3ss3nc3!";//"[PASSWORD]";
       // TODO: Enter your Integrator Key (aka API key), created through your developer sandbox preferences
-      String IntegratorKey = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"INTEGRATOR_KEY");//"TDAM-d7feb45c-e88d-4c20-b5bd-1dcd9a9d6f56";//"[INTEGRATOR_KEY]";
+      String IntegratorKey = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "INTEGRATOR_KEY");//"TDAM-d7feb45c-e88d-4c20-b5bd-1dcd9a9d6f56";//"[INTEGRATOR_KEY]";
       // for production environment update to "www.docusign.net/restapi"
-      String BaseUrl = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"BASE_URL");//"https://demo.docusign.net/restapi";
+      String BaseUrl = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "BASE_URL");//"https://demo.docusign.net/restapi";
 
       // initialize the api client
       ApiClient apiClient = new ApiClient();
@@ -100,7 +92,7 @@ public class DCUtility
          // use the |accountId| we retrieved through the Login API to create the Envelope
          //String accountId = loginAccounts.get(0).getAccountId();
 
-         String accountId=ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"ACCOUNT_ID");
+         String accountId= ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "ACCOUNT_ID");
 
          // instantiate a new EnvelopesApi object
          EnvelopesApi envelopesApi = new EnvelopesApi();
@@ -108,15 +100,15 @@ public class DCUtility
          envelopeSummary = envelopesApi.createEnvelope(accountId, envDef);
 
          logger.info("EnvelopeSummary: " + envelopeSummary);
-         DCRequestAudit dcRequestAudit = new DCRequestAudit(requestIds, acctNum, eventNum, envDef==null?"":""/*getJsonObjectToString(envDef)*/,envelopeSummary==null?"":getJsonObjectToString(envelopeSummary),"S", reqTime, envelopeSummary==null?"":envelopeSummary.getEnvelopeId());
+         DCRequestAudit dcRequestAudit = new DCRequestAudit(requestIds, acctNum, eventNum, envDef==null?"":""/*getJsonObjectToString(envDef)*/, envelopeSummary==null?"":getJsonObjectToString(envelopeSummary), "S", reqTime, envelopeSummary==null?"":envelopeSummary.getEnvelopeId());
          logger.debug("dcRequestAudit = " + dcRequestAudit);
          tdDaoLayer.callDCAuditSP(dcRequestAudit);
          return true;
       }
-      catch (com.docusign.esign.client.ApiException ex)
+      catch (ApiException ex)
       {
          logger.error(ex);
-         DCRequestAudit dcRequestAudit = new DCRequestAudit(requestIds,acctNum, eventNum, envDef==null?"":""/*getJsonObjectToString(envDef)*/,ex.toString(),"E", reqTime, "");
+         DCRequestAudit dcRequestAudit = new DCRequestAudit(requestIds, acctNum, eventNum, envDef==null?"":""/*getJsonObjectToString(envDef)*/, ex.toString(), "E", reqTime, "");
          logger.debug("dcRequestAudit = " + dcRequestAudit);
          tdDaoLayer.callDCAuditSP(dcRequestAudit);
       }catch(Exception ex){
@@ -140,10 +132,51 @@ public class DCUtility
       return inlineTemplate;
    }
 
+   public EnvelopeDefinition getEnvelopeDefinition (){
+
+      EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+      getNotification(envelopeDefinition);
+      return envelopeDefinition;
+   }
+
+   public void getNotification(EnvelopeDefinition envelopeDefinition){
+      Notification notification=null;
+      if(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "USE_ACCT_DEFAULT_NOTIFICATION").equalsIgnoreCase("false"))
+      {
+         notification = new Notification();
+         notification.setUseAccountDefaults("false");
+         if (ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "REMINDER_ENABLED").equalsIgnoreCase("true"))
+         {
+            Reminders reminders = new Reminders();
+            reminders.setReminderEnabled("true");
+            reminders.setReminderDelay(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "REMINDER_DELAY"));
+            reminders.setReminderFrequency(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "REMINDER_FREQUENCY"));
+            notification.setReminders(reminders);
+         }
+         if (ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "EXPIRE_ENABLED").equalsIgnoreCase("true"))
+         {
+            Expirations expirations = new Expirations();
+            expirations.setExpireEnabled("true");
+            expirations.setExpireAfter(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "EXPIRE_AFTER"));
+            expirations.setExpireWarn(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "EXPIRE_WARN"));
+            notification.setExpirations(expirations);
+         }
+      }else if(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "USE_ACCT_DEFAULT_NOTIFICATION").equalsIgnoreCase("true"))
+      {
+         notification=new Notification();
+         notification.setUseAccountDefaults("true");
+      }else{
+         logger.info("Notification flag not set!");
+      }
+      if(notification!=null){
+         envelopeDefinition.setNotification(notification);
+      }
+   }
+
    private CarbonCopy getCarbonCopyEmail(){
       CarbonCopy cc = new CarbonCopy();
-      cc.setEmail(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"CCMAIL"));
-      cc.setName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"CCMAILNAME"));
+      cc.setEmail(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "CCMAIL"));
+      cc.setName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "CCMAILNAME"));
       cc.setRecipientId("1");
       cc.setRoutingOrder("102");
       return cc;
@@ -453,7 +486,7 @@ public class DCUtility
       return recipients;
    }
 
-   public Recipients getRecipientsMoveMoney(DCTemplateDetails dcTemplateDetails, AcctDetails acctDetails, List<AcctOwnerDetails> acctOwnerDetails, MoveMoneyDetails moveMoneyDetails,  Object dataObject)
+   public Recipients getRecipientsMoveMoney(DCTemplateDetails dcTemplateDetails, AcctDetails acctDetails, List<AcctOwnerDetails> acctOwnerDetails, MoveMoneyDetails moveMoneyDetails, Object dataObject)
    {
 
       logger.info("DCUtility.getRecipientsMoveMoney");
@@ -684,7 +717,7 @@ catch (Exception e)
          }
 
       }
-      final String SignTest1File = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"DOC_PATH");//"[PATH/TO/DOCUMENT/TEST.PDF]";
+      final String SignTest1File = ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "DOC_PATH");//"[PATH/TO/DOCUMENT/TEST.PDF]";
       List<Document> docs = new ArrayList<Document>();
 
       List<DCDocumentMapping> dcDocumentDetailsList = null;
@@ -827,7 +860,7 @@ catch (Exception e)
       return inlineTemplate;
    }
 
-   private List<Signer> getSigners(DCTemplateDetails dcTemplateDetails, AcctDetails acctDetails, List<AcctOwnerDetails> acctOwnerDetails, List<Text> textboxLst, List<Checkbox> checkboxeLst,List<RadioGroup> radioGroupLst,List<com.docusign.esign.model.List> listboxLst, List<Ssn> ssnLst){
+   private List<Signer> getSigners(DCTemplateDetails dcTemplateDetails, AcctDetails acctDetails, List<AcctOwnerDetails> acctOwnerDetails, List<Text> textboxLst, List<Checkbox> checkboxeLst, List<RadioGroup> radioGroupLst, List<com.docusign.esign.model.List> listboxLst, List<Ssn> ssnLst){
       List<String> dbColumns=null;
       List<Signer> signerLst=new ArrayList<>();
       List<DCTemplateMapping> dcTemplateMappingList=dcTemplateDetails.getDcTemplateMappings().get("Client");
@@ -867,7 +900,7 @@ catch (Exception e)
             signer.setRoleName(acctOwner.getOwnership());
             signer.setRecipientId(""+signerRecipientId);
             if(dcTemplateDetails.getAuthRequired().equalsIgnoreCase("Y")){
-              signer.setIdCheckConfigurationName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"ID_CHECK_CONF_NAME"));
+              signer.setIdCheckConfigurationName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "ID_CHECK_CONF_NAME"));
                signer.setIdCheckInformationInput(getKBAInputs(acctOwner));
             }
             dcTemplateMappingList=dcTemplateDetails.getDcTemplateMappings().get("Client");
@@ -901,7 +934,7 @@ catch (Exception e)
             signer.setRoleName(acctOwner.getOwnership());
             signer.setRecipientId(""+signerRecipientId);
             if(dcTemplateDetails.getAuthRequired().equalsIgnoreCase("Y")){
-               signer.setIdCheckConfigurationName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(),Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(),"ID_CHECK_CONF_NAME"));
+               signer.setIdCheckConfigurationName(ServiceParameters.getConfigProperty(Constant.SERVICES.DOCUSIGN_SERVICES.toString(), Constant.DOCUSIGN_SERVICES.DOCUSIGN.toString(), "ID_CHECK_CONF_NAME"));
                signer.setIdCheckInformationInput(getKBAInputs(acctOwner));
             }
             dcTemplateMappingList=dcTemplateDetails.getDcTemplateMappings().get("Joint");
@@ -934,7 +967,7 @@ catch (Exception e)
       return signerLst;
    }
 
-   private void getTabObject(List<DCTemplateMapping> dcTemplateMappingList, List<String> dbColumns, List<Text> textboxLst, List<Checkbox> checkboxeLst,List<RadioGroup> radioGroupLst,List<com.docusign.esign.model.List> listboxLst, Object dataObject){
+   private void getTabObject(List<DCTemplateMapping> dcTemplateMappingList, List<String> dbColumns, List<Text> textboxLst, List<Checkbox> checkboxeLst, List<RadioGroup> radioGroupLst, List<com.docusign.esign.model.List> listboxLst, Object dataObject){
      Iterator<DCTemplateMapping> itr1=dcTemplateMappingList.iterator();
       while (itr1.hasNext()){
          DCTemplateMapping dctemplate=(DCTemplateMapping)itr1.next();
@@ -956,7 +989,7 @@ catch (Exception e)
          }
       }
    }
-   private void getTabObject(List<DCTemplateMapping> dcTemplateMappingList, List<String> dbColumns, List<Text> textboxLst, List<Checkbox> checkboxeLst,List<RadioGroup> radioGroupLst,List<com.docusign.esign.model.List> listboxLst, List<Ssn> ssnLst, Object dataObject){
+   private void getTabObject(List<DCTemplateMapping> dcTemplateMappingList, List<String> dbColumns, List<Text> textboxLst, List<Checkbox> checkboxeLst, List<RadioGroup> radioGroupLst, List<com.docusign.esign.model.List> listboxLst, List<Ssn> ssnLst, Object dataObject){
       Iterator<DCTemplateMapping> itr1=dcTemplateMappingList.iterator();
       while (itr1.hasNext()){
          DCTemplateMapping dctemplate=(DCTemplateMapping)itr1.next();
@@ -1012,7 +1045,7 @@ catch (Exception e)
          }
       }
    }
-   private void getTabObject(List<DCTemplateMapping> dcTemplateMappingList, List<String> dbColumns, List<Text> textboxLst, List<Checkbox> checkboxeLst,List<RadioGroup> radioGroupLst,List<com.docusign.esign.model.List> listboxLst, List<Ssn> ssnLst, Object dataObject, String addLableVal, boolean isPostfix){
+   private void getTabObject(List<DCTemplateMapping> dcTemplateMappingList, List<String> dbColumns, List<Text> textboxLst, List<Checkbox> checkboxeLst, List<RadioGroup> radioGroupLst, List<com.docusign.esign.model.List> listboxLst, List<Ssn> ssnLst, Object dataObject, String addLableVal, boolean isPostfix){
       Iterator<DCTemplateMapping> itr1=dcTemplateMappingList.iterator();;
       String preLable=null;
       while (itr1.hasNext()){
@@ -1075,7 +1108,7 @@ catch (Exception e)
      return idCheckInformationInput;
    }
 
-   private Text getText (DCDocumentMapping documentMapping, Object dataObject, String documentId,String identifier){
+   private Text getText (DCDocumentMapping documentMapping, Object dataObject, String documentId, String identifier){
       Text text=null;
       try
       {

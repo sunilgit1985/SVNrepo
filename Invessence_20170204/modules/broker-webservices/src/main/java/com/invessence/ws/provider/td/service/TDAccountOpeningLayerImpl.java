@@ -31,7 +31,7 @@ public class TDAccountOpeningLayerImpl implements TDAccountOpeningLayer
    public WSCallResult docuSignRequestHandler(List<DCRequest> dcRequests)
    {
       WSCallResult wsCallResult = null;
-      EnvelopeDefinition envDef = new EnvelopeDefinition();
+      EnvelopeDefinition envDef = dcUtility.getEnvelopeDefinition();
       String emailSubject = null;
       Long acctNum = null;
       int eventNum = 0;
@@ -42,6 +42,7 @@ public class TDAccountOpeningLayerImpl implements TDAccountOpeningLayer
 
       Iterator<DCRequest> itr = dcRequests.iterator();
       int reqCounter = 1;
+
       envDef.setCompositeTemplates(new ArrayList<CompositeTemplate>());
       DCRequest dcReqExtDoc = null;
          DCRequest dcReqAcatOther = null;
@@ -184,19 +185,19 @@ public class TDAccountOpeningLayerImpl implements TDAccountOpeningLayer
                || dcReqExtDoc.getReqType().equalsIgnoreCase(WSConstants.DocuSignServiceOperations.TD_TRAN_NEW.toString()))
             {
 
-               CompositeTemplate compositeTemplate = advForm(dcTemplateDetails, docuSignOperationDetails, dcReqExtDoc, WSConstants.DocuSignServiceOperations.BB_TCM_ADV_AGREE.toString() ,  "" + reqCounter);
+               CompositeTemplate compositeTemplate = advForm(dcTemplateDetails, docuSignOperationDetails, dcReqExtDoc, WSConstants.DocuSignServiceOperations.BB_TCM_ADV_AGREE.toString() , "" + reqCounter);
                if(compositeTemplate==null) throw new EnvelopeCreationException("EnvelopeCreationException for acctNum ="+dcReqExtDoc.getAcctnum()+" reqId = "+dcReqExtDoc.getReqId());
                envDef.getCompositeTemplates().add(0,compositeTemplate);
 
                System.out.println(envDef.getCompositeTemplates().size());
 
-               CompositeTemplate compositeTemplate1 = advForm(dcTemplateDetails, docuSignOperationDetails, dcReqExtDoc, WSConstants.DocuSignServiceOperations.TCM_ADV_2AB.toString() ,  "" + reqCounter++);
+               CompositeTemplate compositeTemplate1 = advForm(dcTemplateDetails, docuSignOperationDetails, dcReqExtDoc, WSConstants.DocuSignServiceOperations.TCM_ADV_2AB.toString() , "" + reqCounter++);
                if(compositeTemplate1==null) throw new EnvelopeCreationException("EnvelopeCreationException for acctNum ="+dcReqExtDoc.getAcctnum()+" reqId = "+dcReqExtDoc.getReqId());
                envDef.getCompositeTemplates().add(compositeTemplate1);
 
                System.out.println(envDef.getCompositeTemplates().size());
 
-               CompositeTemplate compositeTemplate2 = advForm(dcTemplateDetails, docuSignOperationDetails, dcReqExtDoc, WSConstants.DocuSignServiceOperations.TCM_PRIVACY_NOTICE.toString() ,  "" + reqCounter++);
+               CompositeTemplate compositeTemplate2 = advForm(dcTemplateDetails, docuSignOperationDetails, dcReqExtDoc, WSConstants.DocuSignServiceOperations.TCM_PRIVACY_NOTICE.toString() , "" + reqCounter++);
                if(compositeTemplate2==null) throw new EnvelopeCreationException("EnvelopeCreationException for acctNum ="+dcReqExtDoc.getAcctnum()+" reqId = "+dcReqExtDoc.getReqId());
                envDef.getCompositeTemplates().add(compositeTemplate2);
 
@@ -300,6 +301,7 @@ public class TDAccountOpeningLayerImpl implements TDAccountOpeningLayer
 
       return compositeTemplate;
    }
+
 
    private CompositeTemplate acctTransfer(DCRequest dcRequest, DCTemplateDetails dcTemplateDetail, String servTempSeq, String reqType)throws Exception{
       logger.info("TDAccountOpeningLayerImpl.acctTransfer");
@@ -597,7 +599,7 @@ public class TDAccountOpeningLayerImpl implements TDAccountOpeningLayer
 
       Map<String,DCDocumentDetails> dcDocumentDetails=(Map<String,DCDocumentDetails>) ServiceParameters.additionalDetails.get(Constant.SERVICES.DOCUSIGN_SERVICES.toString()).get(Constant.ADDITIONAL_DETAILS.DOCUMENT_DETAILS
                                                                                                                                                                                      .toString());
-      EnvelopeDefinition envDef = new EnvelopeDefinition();
+      EnvelopeDefinition envDef = dcUtility.getEnvelopeDefinition();
       String emailSubject=dcRequest.getEnvelopeHeading();
 
       CompositeTemplate compositeTemplate=null;
@@ -639,7 +641,7 @@ public class TDAccountOpeningLayerImpl implements TDAccountOpeningLayer
 
       DCTemplateDetails dcTemplateDetail = dcTemplateDetails.get(docuSignOperationDetails.get(dcRequest.getReqType()).getRefValue());
 
-      EnvelopeDefinition envDef = new EnvelopeDefinition();
+      EnvelopeDefinition envDef = dcUtility.getEnvelopeDefinition();
       String emailSubject=dcRequest.getEnvelopeHeading();
 
       CompositeTemplate compositeTemplate=null;
