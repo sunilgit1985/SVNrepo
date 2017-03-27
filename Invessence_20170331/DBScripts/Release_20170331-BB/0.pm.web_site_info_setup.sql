@@ -1,4 +1,4 @@
-DELETE FROM `invdb`.`web_site_info` where url in ( 'buildingbenjamins', 'traditionadvisers');
+DELETE FROM `invdb`.`web_site_info`;
 
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'ARCHIVE.CLOSED', 'A', '10', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'ARCHIVE.INACTIVE', 'A', '30', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
@@ -37,7 +37,7 @@ INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'URL.WEBSITE', 'A', 'http://traditionadvisers.net', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.COMPANYNAME', 'A', 'Tradition Advisers', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.COPYRIGHT', 'A', 'Tradition Capital Management', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.FAVICONLOGO', 'A', '/javax.faces.resource/images/BBicon.png.xhtml?ln=tcm', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.FAVICONLOGO', 'A', '/javax.faces.resource/images/tcmicon.png.xhtml?ln=tcm', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.GOOGLEANALYTICS', 'A', 'bb_googleanalytics.js', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.LOGO', 'A', 'images/logo/tcm-logo.jpe', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'WEB.LOGOLIB', 'A', 'invessence', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
@@ -100,6 +100,7 @@ INSERT INTO invdb.web_site_info (url, name, status, value, encrFlag, created) VA
 INSERT INTO invdb.web_site_info (url, name, status, value, encrFlag, created) VALUES ('traditionadvisers', 'SERVICE.DOCUSIGN.MODE', 'A', 'PROD', 'N', NOW());
 INSERT INTO invdb.web_site_info (url, name, status, value, encrFlag, created) VALUES ('traditionadvisers', 'SERVICE.EMAILER.MODE', 'A', 'PROD', 'N', NOW());
 INSERT INTO invdb.web_site_info (url, name, status, value, encrFlag, created) VALUES ('traditionadvisers', 'SERVICE.PRICING.MODE', 'A', 'PROD', 'N', NOW());
+INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('buildingbenjamins', 'WEB.FAVICONLOGO', 'A', '/javax.faces.resource/images/BBicon.png.xhtml?ln=tcm', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /* Insert your additional properties here */
 
 insert into `invdb`.`web_site_info`
@@ -111,7 +112,7 @@ SELECT 'preuat',
     `web_site_info`.`created`,
     `web_site_info`.`updated`
 FROM `invdb`.`web_site_info`
-where `web_site_info` = 'buildingbenjamins';
+where `web_site_info`.`url` = 'buildingbenjamins';
 
 
 
@@ -124,7 +125,7 @@ SELECT 'demo',
     `web_site_info`.`created`,
     `web_site_info`.`updated`
 FROM `invdb`.`web_site_info`
-where `web_site_info` = 'traditionadvisers';
+where `web_site_info`.`url` = 'traditionadvisers';
 
 insert into `invdb`.`web_site_info`
 SELECT 'uatbb',
@@ -135,7 +136,7 @@ SELECT 'uatbb',
     `web_site_info`.`created`,
     `web_site_info`.`updated`
 FROM `invdb`.`web_site_info`
-where `web_site_info` = 'buildingbenjamins';
+where `web_site_info`.`url` = 'buildingbenjamins';
 
 
 insert into `invdb`.`web_site_info`
@@ -147,7 +148,7 @@ SELECT 'uattcm',
     `web_site_info`.`created`,
     `web_site_info`.`updated`
 FROM `invdb`.`web_site_info`
-where `web_site_info` = 'traditionadvisers';
+where `web_site_info`.`url` = 'traditionadvisers';
 
 insert into `invdb`.`web_site_info`
 SELECT 'localhost',
@@ -158,7 +159,7 @@ SELECT 'localhost',
     `web_site_info`.`created`,
     `web_site_info`.`updated`
 FROM `invdb`.`web_site_info`
-where `web_site_info` = 'traditionadvisers';
+where `web_site_info`.`url` = 'traditionadvisers';
 
 update `invdb`.`web_site_info`
 set value = 'UAT'
