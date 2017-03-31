@@ -1,3 +1,4 @@
+set sql_safe_updates=0;
 DELETE FROM `invdb`.`web_site_info`;
 
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('traditionadvisers', 'ARCHIVE.CLOSED', 'A', '10', 'N', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
