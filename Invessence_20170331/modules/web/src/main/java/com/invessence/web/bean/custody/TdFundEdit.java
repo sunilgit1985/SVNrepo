@@ -1,28 +1,14 @@
 package com.invessence.web.bean.custody;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.*;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
-import com.invessence.converter.JavaUtil;
 import com.invessence.service.bean.ServiceRequest;
 import com.invessence.web.constant.*;
-import com.invessence.web.dao.common.CommonDAO;
-import com.invessence.web.dao.consumer.ConsumerListDataDAO;
-import com.invessence.web.dao.custody.*;
-import com.invessence.web.data.common.UserData;
 import com.invessence.web.data.custody.TDMasterData;
-import com.invessence.web.data.custody.td.*;
 import com.invessence.web.util.Impl.PagesImpl;
-import com.invessence.web.util.*;
 import com.invessence.ws.bean.*;
-import com.invessence.ws.provider.td.bean.DCResponse;
-import com.invessence.ws.service.ServiceLayerImpl;
-import org.apache.commons.logging.*;
-import org.primefaces.event.*;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -72,7 +58,7 @@ public class TdFundEdit extends BaseTD
 
             getCustodyListDAO().getAcatFirmList(getTdMasterData());
             Integer currentPage = getPagemanager().getPage();
-            activeTab=0;
+            activeTab = 0;
             getPagemanager().setPage(9);
             getPagemanager().clearAllErrorMessage();
             saveandOpenError = null;
@@ -204,33 +190,49 @@ public class TdFundEdit extends BaseTD
                   break;
                case 1:
                   if (subtab == 0)
+                  {
                      getPagemanager().setPage(1);
+                  }
                   else
+                  {
                      getPagemanager().setPage(2);
+                  }
                   break;
                case 2:
                   if (subtab == 0)
+                  {
                      getPagemanager().setPage(3);
+                  }
                   else
+                  {
                      getPagemanager().setPage(4);
+                  }
                   break;
                case 3:
                   getPagemanager().setPage(5);
                   break;
                case 4:
                   if (subtab == 0)
+                  {
                      getPagemanager().setPage(6);
+                  }
                   else
+                  {
                      getPagemanager().setPage(7);
+                  }
                   break;
                case 5:
                   getPagemanager().setPage(8);
                   break;
                case 6:
                   if (subtab == 0)
+                  {
                      getPagemanager().setPage(9);
+                  }
                   else
+                  {
                      getPagemanager().setPage(10);
+                  }
                   break;
                default:
                   getPagemanager().setPage(0);
@@ -364,13 +366,19 @@ public class TdFundEdit extends BaseTD
       {
          saveData(getPagemanager().getPage());
          if (getPagemanager().isLastPage())
+         {
             getTdMasterData().setSubmitButton(true);
+         }
          else
+         {
             getTdMasterData().setSubmitButton(false);
+         }
 
          getPagemanager().clearAllErrorMessage();
          if (getPagemanager().isLastPage() || (getPagemanager().getPage() == 9 && getTdMasterData().getFundNow()))
+         {
             resetActiveTab(11);
+         }
          else
          {
             getPagemanager().nextPage();
@@ -412,7 +420,9 @@ public class TdFundEdit extends BaseTD
       getPagemanager().setPage(currentPage);
       resetActiveTab(getPagemanager().getPage());
       if (!status)
+      {
          saveandOpenError = "Please fill appropriate forms above.";
+      }
 
       return status;
    }
@@ -510,7 +520,7 @@ public class TdFundEdit extends BaseTD
 
    public void editFundingInitPage()
    {
-     try
+      try
       {
 
          loadTDAccountDetails();
@@ -525,7 +535,7 @@ public class TdFundEdit extends BaseTD
 
    public void nextPageEdit()
    {
-      if(getTdMasterData().getOptFund())
+      if (getTdMasterData().getOptFund())
       {
          activeTab = 0;
          subtab = 1;
@@ -536,13 +546,19 @@ public class TdFundEdit extends BaseTD
          {
             // saveData(pagemanager.getPage());
             if (getPagemanager().isLastPage())
+            {
                getTdMasterData().setSubmitButton(true);
+            }
             else
+            {
                getTdMasterData().setSubmitButton(false);
+            }
 
             getPagemanager().clearAllErrorMessage();
             if (getPagemanager().isLastPage() || (getPagemanager().getPage() == 9 && getTdMasterData().getFundNow()))
+            {
                resetActiveTab(11);
+            }
             else
             {
                getPagemanager().nextPage();
@@ -553,24 +569,26 @@ public class TdFundEdit extends BaseTD
          }
       }
    }
+
    public void prevPageEdit()
    {
-      activeTab=0;
-      subtab=0;
+      activeTab = 0;
+      subtab = 0;
 
    }
+
    public void optoutFundingChange()
    {
-      if(getTdMasterData().getOptFund())
+      if (getTdMasterData().getOptFund())
       {
-         activeTab=0;
-         subtab=1;
+         activeTab = 0;
+         subtab = 1;
          getTdMasterData().setCopyAchInstructions(false);
       }
       else
       {
-         activeTab=0;
-         subtab=0;
+         activeTab = 0;
+         subtab = 0;
       }
    }
 
@@ -581,7 +599,7 @@ public class TdFundEdit extends BaseTD
       try
       {
          getPagemanager().setPage(9);
-         if (!getTdMasterData().getOptFund()&& !validatePage(9))
+         if (!getTdMasterData().getOptFund() && !validatePage(9))
          {
             activeTab = 0;
             subtab = 0;
@@ -592,7 +610,7 @@ public class TdFundEdit extends BaseTD
             getPagemanager().nextPage();
             pageControl(getPagemanager().getPage());
          }
-         if (!getTdMasterData().getRecurringFlag()&& !validatePage(10))
+         if (!getTdMasterData().getRecurringFlag() && !validatePage(10))
          {
             activeTab = 0;
             subtab = 1;
@@ -603,56 +621,46 @@ public class TdFundEdit extends BaseTD
          WSCallStatus wsstatus;
          WSCallResult wsCallResult;
 
-         String product=getWebutil().getWebprofile().getWebInfo().get("SERVICE.CUSTODY").toString();
-         String mode=getWebutil().getWebprofile().getWebInfo().get("SERVICE.DOCUSIGN.MODE").toString();
+         String product = getWebutil().getWebprofile().getWebInfo().get("SERVICE.CUSTODY").toString();
+         String mode = getWebutil().getWebprofile().getWebInfo().get("SERVICE.DOCUSIGN.MODE").toString();
 
 
-         if(!getTdMasterData().getOptFund())
+         if (!getTdMasterData().getOptFund())
          {
             if (getTdMasterData().getFundType() != null && getTdMasterData().getFundType().equalsIgnoreCase("PMACH"))// for ACH acocunt
-               getCustodySaveDAO().tdsaveACHData(getTdMasterData(), "ACH","EDIT");
+            {
+               getCustodySaveDAO().tdsaveACHData(getTdMasterData(), "ACH", "EDIT");
+            }
             else if (getTdMasterData().getFundType() != null && getTdMasterData().getFundType().equalsIgnoreCase("PMFEDW"))
-               getCustodySaveDAO().tdSaveACAT(getTdMasterData(), getTdMasterData().getAcctnum(), getTdMasterData().getAcatDetails(),"EDIT");
+            {
+               getCustodySaveDAO().tdSaveACAT(getTdMasterData(), getTdMasterData().getAcctnum(), getTdMasterData().getAcatDetails(), "EDIT");
+            }
 
             else if (getTdMasterData().getFundType() != null && getTdMasterData().getFundType().equalsIgnoreCase("TDTRF"))
-               getCustodySaveDAO().tdSaveTDTransferData(getTdMasterData(), getTdMasterData().getAcctnum(), getTdMasterData().getTdTransferDetails(),"EDIT");
+            {
+               getCustodySaveDAO().tdSaveTDTransferData(getTdMasterData(), getTdMasterData().getAcctnum(), getTdMasterData().getTdTransferDetails(), "EDIT");
+            }
          }
-         if(!getTdMasterData().getRecurringFlag())
+         if (!getTdMasterData().getRecurringFlag())
          {
             getCustodySaveDAO().tdSaveEFTEdit(getTdMasterData());
          }
 
          System.out.println("#################################################### Funding DC Request Start ##########################################");
-         System.out.println("Product "+product);
-         System.out.println("Mode "+mode);
-         System.out.println("Advisor "+getTdMasterData().getCustomerData().getProfileInstance().getAdvisor());
-         System.out.println("Rep "+ getTdMasterData().getCustomerData().getProfileInstance().getRep());
-         System.out.println("Account No "+ getTdMasterData().getAcctnum());
+         System.out.println("Product " + product);
+         System.out.println("Mode " + mode);
+         System.out.println("Advisor " + getTdMasterData().getCustomerData().getProfileInstance().getAdvisor());
+         System.out.println("Rep " + getTdMasterData().getCustomerData().getProfileInstance().getRep());
+         System.out.println("Account No " + getTdMasterData().getAcctnum());
          String eventRef = processDCRequest(getTdMasterData().getCustomerData().getProfileInstance().getAdvisor(), getTdMasterData().getCustomerData().getProfileInstance().getRep(), getTdMasterData().getAcctnum(), getTdMasterData().getRequest().getEventNum(), DCConstants.ACTION_FUNDING);
          System.out.println("Docusign Event Return " + eventRef);
          if (eventRef != null)
          {
             String eventNo[] = eventRef.split(",");
-            int eventnum = Integer.parseInt(eventNo[0]);
-            System.out.println("Docusign First event No " + eventnum);
-            wsCallResult = getDcWebLayer().processDCRequest(new ServiceRequest(product, mode), getTdMasterData().getAcctnum(), eventnum);
-            System.out.println("Docusign wsCallResult " + wsCallResult);
-            if (wsCallResult.getWSCallStatus().getErrorCode() != 0)
+            for (int i = 0; i < eventNo.length; i++)
             {
-               msg = wsCallResult.getWSCallStatus().getErrorMessage();
-               getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", msg);
-            }
-            else
-            {
-//               DCResponse dcResponse = (DCResponse) wsCallResult.getGenericObject();
-//               System.out.println("dcResponse = " + dcResponse);
-               sendAlertMessage("P");
-               getUiLayout().doMenuAction("custody", "tdconfirmation.xhtml");
-            }
-            eventnum = Integer.parseInt(eventNo[1]);
-            System.out.println("Docusign Second event No " + eventnum);
-            if (eventnum != 0)
-            {
+               int eventnum = Integer.parseInt(eventNo[i]);
+               System.out.println("Docusign event No " + eventnum);
                wsCallResult = getDcWebLayer().processDCRequest(new ServiceRequest(product, mode), getTdMasterData().getAcctnum(), eventnum);
                System.out.println("Docusign wsCallResult " + wsCallResult);
                if (wsCallResult.getWSCallStatus().getErrorCode() != 0)
@@ -662,8 +670,6 @@ public class TdFundEdit extends BaseTD
                }
                else
                {
-//               DCResponse dcResponse = (DCResponse) wsCallResult.getGenericObject();
-//               System.out.println("dcResponse = " + dcResponse);
                   sendAlertMessage("P");
                   getUiLayout().doMenuAction("custody", "tdconfirmation.xhtml");
                }
