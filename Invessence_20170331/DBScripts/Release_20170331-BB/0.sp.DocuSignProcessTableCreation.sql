@@ -55,10 +55,10 @@ ADD COLUMN subaction varchar(45) DEFAULT NULL after action;
 -- insertion for relation of product,advisorid & repId in dc_advisor_details
 
 -- INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('1', 'AGWQ', 'BB', 'CATCHALL', 'Tradition Capital Management', 'N/A', 'operations@traditioncm.com');
-UPDATE `invdb`.`dc_advisor_details` SET `advisorName`='BB', `repId`='CATCHALL' WHERE `id`='1';
-INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('2', 'TCM100', 'BB-TCM', '100', 'Tradition Capital Management', 'N/A', 'operations@traditioncm.com');
-INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('3', 'TCM200', 'BB-TCM', '200', 'Tradition Capital Management', 'N/A', 'operations@traditioncm.com');
-INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('4', 'TCMDEF', 'BB-TCM', 'CATCHALL', 'Tradition Capital Management', 'N/A', 'operations@traditioncm.com');
+UPDATE `invdb`.`dc_advisor_details` SET `advisorName`='BB', `repId`='CATCHALL', `primaryContact` = 'BB' WHERE `id`='1';
+INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('2', 'AGWQ', 'BB-TCM', '100', 'Tradition Capital Management', 'Direct', 'operations@traditioncm.com');
+INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('3', 'AGWQ', 'BB-TCM', '200', 'Tradition Capital Management', 'External', 'operations@traditioncm.com');
+INSERT INTO `invdb`.`dc_advisor_details` (`id`, `advisorCode`, `advisorName`, `repId`, `firmName`, `primaryContact`, `email`) VALUES ('4', 'AGWQ', 'BB-TCM', 'CATCHALL', 'Tradition Capital Management', 'Advisor Direct', 'operations@traditioncm.com');
 
 -- insertion for docusign forms in adv_request_document_mappings
 set sql_safe_updates=0;
