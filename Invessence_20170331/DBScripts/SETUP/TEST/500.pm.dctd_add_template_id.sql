@@ -38,10 +38,10 @@ BEGIN
 		IF (tFunction = 'U')
 			THEN
 				UPDATE `invdb`.`dc_advisor_details`
-				SET`advisorCode` = p_advisorCode,
-					`firmName` = p_firmname,
-					`primaryContact` = p_primaryContact,
-					`email` = p_ops_email,
+				SET`advisorCode` = IFNULL(p_advisorCode, `dc_advisor_details`.`advisorCode`),
+					`firmName` = IFNULL(p_firmname, `dc_advisor_details`.`firmName`),
+					`primaryContact` = IFNULL(p_primaryContact, `dc_advisor_details`.`primaryContact`),
+					`email` = IFNULL(p_ops_email, `dc_advisor_details`.`email`),
 					`updated` = now(),
 					`updatedBy` = 'SYSTEM'
 				WHERE `dc_advisor_details`.`advisorName` = p_advisor

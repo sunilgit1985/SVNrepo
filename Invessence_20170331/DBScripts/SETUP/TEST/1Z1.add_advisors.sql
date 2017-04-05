@@ -49,7 +49,7 @@ CALL `testing`.`invite_advisor`(
 	,null,null);
 
 CALL `testing`.`invite_advisor`(
-	118,'michael.advisor.D','Mciccone@traditioncm.com' ,'Michael','Ciccone'
+	118,'michael.advisor.D','Mciccone+d@traditioncm.com' ,'Michael','Ciccone'
 	,'BB-TCM','105D','Tradition Capital Management, LLC','Michael Ciccone','Direct'
 	,null,null);
 
