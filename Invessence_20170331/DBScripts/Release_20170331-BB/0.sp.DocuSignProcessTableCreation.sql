@@ -143,3 +143,26 @@ INSERT INTO `invdb`.`adv_request_document_mappings` (`advisorid`, `action`, `sub
 INSERT INTO `invdb`.`adv_request_document_mappings` (`advisorid`, `action`, `subaction`, `reqType`, `envelopeHeading`, `seqno`, `formType`) VALUES ('4', 'ACCT_OPEN', 'DEFAULT', 'TCM_ADV_2AB', 'Please sign account opening document.', '98', 'ADV');
 INSERT INTO `invdb`.`adv_request_document_mappings` (`advisorid`, `action`, `subaction`, `reqType`, `envelopeHeading`, `seqno`, `formType`) VALUES ('4', 'ACCT_OPEN', 'DEFAULT', 'TCM_PRIVACY_NOTICE', 'Please sign account opening document.', '99', 'ADV');
 INSERT INTO `invdb`.`adv_request_document_mappings` (`advisorid`, `action`, `subaction`, `reqType`, `envelopeHeading`, `seqno`, `formType`) VALUES ('4', 'CHNG_ADDR', 'CHNG_ADDR', 'ACCT_CHNG_ADDR', 'Please sign change address document.', '1000', 'DC');
+
+
+
+ALTER TABLE `invdb`.`dc_advisor_details`
+ADD COLUMN `templateId` VARCHAR(100) NULL AFTER `firmName`;
+
+update dc_advisor_details set templateId=primaryContact;
+
+UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='1';
+UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='2';
+UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='3';
+UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='4';
+
+
+-- desc adv_request_document_mappings;
+-- select * from adv_request_document_mappings where templateId <5;
+set sql_safe_updates=0;
+delete from adv_request_document_mappings where templateId >4;
+
+update adv_request_document_mappings set templateId='BB' where templateId='1';
+update adv_request_document_mappings set templateId='Direct' where templateId='2';
+update adv_request_document_mappings set templateId='External' where templateId='3';
+update adv_request_document_mappings set templateId='Advisor Direct' where templateId='4';
