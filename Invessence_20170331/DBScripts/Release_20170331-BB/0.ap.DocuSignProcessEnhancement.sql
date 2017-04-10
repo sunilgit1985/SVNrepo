@@ -48,7 +48,7 @@ END$$
 DELIMITER ;
 
 
-
+-- ---------
 
 DROP VIEW `vwdc_requests`;
 
@@ -550,6 +550,6 @@ INSERT INTO `service`.`service_operation_details` (`company`, `service`, `operat
 INSERT INTO `service`.`service_operation_details` (`company`, `service`, `operation`, `vendor`, `status`, `priority`, `refValue`) VALUES ('TCM', 'DOCUSIGN-SERVICES', 'GENE_EMAIL_MESSAGE', 'DOCUSIGN', 'A', '0', 'GENE_EMAIL_MESSAGE');
 
 
-insert into adv_request_document_mappings
-select advisorid, action, 'DEFAULT', 'GENE_EMAIL_MESSAGE', envelopeHeading, 100, 'ADV'
-from adv_request_document_mappings where reqType='ACCT_APPLI_NEW' order by advisorId, action, seqno;
+insert into invdb.adv_request_document_mappings
+select templateId, action, 'DEFAULT', 'GENE_EMAIL_MESSAGE', envelopeHeading, 100, 'ADV'
+from invdb.adv_request_document_mappings where reqType='ACCT_APPLI_NEW' order by templateId, action, seqno;

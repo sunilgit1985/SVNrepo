@@ -21,12 +21,12 @@ BEGIN
 
 	SELECT
     COUNT(`adv_request_document_mappings`.`templateId`)
-INTO tTemplateID FROM
-    `adv_request_document_mappings`
-WHERE
+	INTO tTemplateID 
+	FROM `adv_request_document_mappings`
+	WHERE
     `adv_request_document_mappings`.`templateId` = p_templateID;
 
-    IF (p_templateID is null or tTemplateID =0 )
+    IF (p_templateID is null or tTemplateID = 0 )
     THEN
 		SELECT "Not sufficient data to create new ID.  Either Template ID has to be provided or can only update data.";
 	ELSE
@@ -73,7 +73,8 @@ WHERE
 						now(),
 						'SYSTEM'
 					FROM `invdb`.`dc_advisor_details`
-					WHERE `dc_advisor_details`.`id` = tTemplateID;
+					WHERE `dc_advisor_details`.`templateId` = p_templateID
+                    LIMIT 1;
 				END IF;
 		END IF;
 

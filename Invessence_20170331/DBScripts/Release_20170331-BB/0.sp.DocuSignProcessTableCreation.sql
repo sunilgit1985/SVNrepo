@@ -156,6 +156,8 @@ UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='2';
 UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='3';
 UPDATE `invdb`.`dc_advisor_details` SET `primaryContact`='N/A' WHERE `id`='4';
 
+ALTER TABLE `invdb`.`adv_request_document_mappings` 
+CHANGE COLUMN `advisorid` `templateId` VARCHAR(20) NOT NULL ;
 
 -- desc adv_request_document_mappings;
 -- select * from adv_request_document_mappings where templateId <5;

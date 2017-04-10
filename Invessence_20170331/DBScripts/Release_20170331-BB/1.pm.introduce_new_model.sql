@@ -102,7 +102,7 @@ WHERE `sec_fixed_projectionchart`.`theme` like '%BB';
 
 INSERT INTO `invdb`.`sec_fixed_performancechart`
 (`theme`,
-`model`,
+`level`,
 `year`,
 `5percent`,
 `25percent`,
@@ -110,7 +110,7 @@ INSERT INTO `invdb`.`sec_fixed_performancechart`
 `75percent`,
 `95percent`)
 SELECT REPLACE(`sec_fixed_performancechart`.`theme`,'BB','TA'),
-    `sec_fixed_performancechart`.`model`,
+    `sec_fixed_performancechart`.`level`,
     `sec_fixed_performancechart`.`year`,
     `sec_fixed_performancechart`.`5percent`,
     `sec_fixed_performancechart`.`25percent`,
