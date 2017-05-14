@@ -1062,6 +1062,7 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
          {
             if(webutil.isUserLoggedIn() || getDoesUserHavaLogonID()) {
                setDoesUserHavaLogonID(true);
+               setLogonid(webutil.getLogonid());
             }
             else {
                setDoesUserHavaLogonID(false);
