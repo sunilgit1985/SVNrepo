@@ -1023,7 +1023,7 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
 
          if (getDoesUserHavaLogonID() && getEditable())
          {
-            uiLayout.doCustody(getLogonid(), getAcctnum()); // Open Custody account.
+            doCustody();
          }
          else
          {
@@ -1564,10 +1564,13 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
 
    public void gotoCustody() {
       if (registerUser()) {
-         if (getBeanLogonID() != null && getBeanAcctnum() != null)
-            uiLayout.doCustody(getBeanLogonID(), getBeanAcctnum());
+         doCustody();
       }
+   }
 
+   public void doCustody() {
+      if (getLogonid() != null && getAcctnum() != null)
+         uiLayout.doCustody(getLogonid(), getAcctnum());
    }
 
    private Boolean registerUser() {
