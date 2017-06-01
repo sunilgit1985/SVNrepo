@@ -1,6 +1,6 @@
 ## Insertion script for dc_template_details mode=UAT & product=TCM
 
-delete from `service`.`dc_template_details` where mode='UAT' and product='TCM' and service='DOCUSIGN-SERVICES';
+delete from `service`.`dc_template_details` where mode='UAT' and company='TCM' and service='DOCUSIGN-SERVICES';
 
 INSERT INTO `service`.`dc_template_details` (`mode`, `company`, `service`, `tempCode`, `tempId`, `tempName`, `authRequired`, `status`) VALUES ('UAT', 'TCM', 'DOCUSIGN-SERVICES', 'ADV_DIRECT_DISC_BOOK', 'd71203fe-3987-4592-a270-12c8ba7987b5', 'AdvisorDirect Disclosure Brochure, Rev. April', 'Y', 'A');
 INSERT INTO `service`.`dc_template_details` (`mode`, `company`, `service`, `tempCode`, `tempId`, `tempName`, `authRequired`, `status`) VALUES ('UAT', 'TCM', 'DOCUSIGN-SERVICES', 'ADV_DIRECT_DISC_BOOK2', 'd71203fe-3987-4592-a270-12c8ba7987b5', 'AdvisorDirect Disclosure Brochure, Rev. April', 'Y', 'A');
