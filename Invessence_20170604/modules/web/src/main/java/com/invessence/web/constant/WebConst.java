@@ -16,6 +16,7 @@ public class WebConst
    public static String LOGONID_PARAM = "p_logonid";
    public static String ACCTNO_PARAM = "p_acctnum";
    public static String USER_INFO = "userinfo";
+   public static String WEB_INFO = "webinfo";
    public static String USERLOGON_ATTEMPTS = "attempts";
    public static String USERLOGON_ACCTTYPE = "accttype";
    public static String USERLOGON_ACCESS = "access";
