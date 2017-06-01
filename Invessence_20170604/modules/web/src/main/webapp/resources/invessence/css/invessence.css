@@ -1128,7 +1128,7 @@ thead > tr > .multipleSelectionChkList > .ui-chkbox > .ui-chkbox-box {
 .ui-confirm-dialog .ui-dialog-footer {
 	background: #fff!important;
 	border-top: 0!important;
-	padding: 0px 55px!important;
+	padding: 1px 55px!important;
 }
 
 .ui-confirm-dialog .ui-button {
