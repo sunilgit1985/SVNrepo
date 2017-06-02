@@ -13,4 +13,3 @@ ADD COLUMN converted_prev_monthly_adjusted DOUBLE NULL AFTER prev_monthly_adjust
 
 ALTER TABLE rbsa.rbsa_daily
 ADD COLUMN converted_prev_adjusted DOUBLE NULL AFTER prev_close_price;
-
