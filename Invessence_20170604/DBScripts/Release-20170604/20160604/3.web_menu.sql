@@ -5,9 +5,9 @@ CREATE TABLE `invdb`.`web_menu` (
   `access` 		varchar(20) DEFAULT NULL,
   `permission`  varchar(20) DEFAULT NULL,
   `label` 		varchar(30) NOT NULL,
-  `icon`		varchar(40) NOT NULL,
-  `level` 		INTEGER NOT NULL,
-  `sublevel` 	INTEGER NOT NULL,
+  `icon`		varchar(40) DEFAULT NULL,
+  `level` 		INTEGER DEFAULT 1,
+  `sublevel` 	INTEGER DEFAULT 1,
   `seq`     	INTEGER,
   `status` 		varchar(1) DEFAULT NULL,
   `destdir`  	varchar(20) NULL,
@@ -21,10 +21,10 @@ CREATE TABLE `invdb`.`web_menu` (
 INSERT INTO `invdb`.`web_menu` 
 ( `product`, `access`, `permission`, `label`, `icon`, `level`, `sublevel`, `seq`, `status`, `destdir`, `htmlpage`, `command`, `created`)
 VALUES 
- ('uwealth', 'User',      null, 		'Account',		null, 1, null, 1, 'A', 'consumer',	 'cadd.xhtml?app=N',	 null, now())
-,('uwealth', 'User',      null, 		'Aggregation',	null, 1, null, 2, 'A', 'consumer',	 'aggregration.xhtml',	 null, now())
-,('uwealth', 'User',      null, 		'Help Desk',	null, 1, null, 3, 'A', null,		  'http://www.teamviewer.com/link/?url=505374&amp;id=35279493', null, now())
-,('uwealth', 'Advisor',   null, 		'Marketing',	null, 1, null, 1, 'A', 'advisor',	 'marketing.xhtml',		 null, now())
+ ('uwealth', 'User',      '', 		'Account',		null, 1, null, 1, 'A', 'consumer',	 'cadd.xhtml?app=N',	 null, now())
+,('uwealth', 'User',      '', 		'Aggregation',	null, 1, null, 2, 'A', 'consumer',	 'aggregration.xhtml',	 null, now())
+,('uwealth', 'User',      '', 		'Help Desk',	null, 1, null, 3, 'A', null,		  'http://www.teamviewer.com/link/?url=505374&amp;id=35279493', null, now())
+,('uwealth', 'Advisor',   '', 		'Marketing',	null, 1, null, 1, 'A', 'advisor',	 'marketing.xhtml',		 null, now())
 ,('uwealth', 'Advisor',   'Operations', 'Trade',		null, 1, null, 2, 'A', 'advisor',	 'trade.xhtml',			 null, now())
 ,('uwealth', 'Advisor',   'Operations', 'Model',		null, 1, null, 3, 'A', 'advisor' ,	 'assetworkflow.xhtml',	 null, now())
 ;

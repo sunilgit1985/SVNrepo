@@ -1,3 +1,5 @@
+USE invdb;
+
 CREATE OR REPLACE
 VIEW `vw_primeassets` AS
     SELECT 

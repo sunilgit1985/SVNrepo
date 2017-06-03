@@ -1,7 +1,26 @@
 ## Alter Table rbsa.rbsa_daily
 
-ALTER TABLE  rbsa.rbsa_daily  
-CHANGE COLUMN  volume   volume  BIGINT(20) NULL DEFAULT NULL AFTER  adjusted_price ,
-ADD COLUMN  prev_month_businessdate  DATE NULL AFTER  daily_return ,
-ADD COLUMN  prev_monthly_adjusted  DOUBLE NULL AFTER  prev_month_businessdate ,
-ADD COLUMN  exchange_symbol  VARCHAR(20) NULL AFTER  monthly_return ;
+DROP TABLE IF EXISTS `rbsa`.``rbsa_daily`;
+
+CREATE TABLE `rbsa`.`rbsa_daily` (
+  `dest_currency` varchar(20) NOT NULL,
+  `ticker` varchar(20) NOT NULL,
+  `businessdate` varchar(10) NOT NULL,
+  `open_price` double DEFAULT NULL,
+  `close_price` double DEFAULT NULL,
+  `high_price` double DEFAULT NULL,
+  `low_price` double DEFAULT NULL,
+  `adjusted_price` double DEFAULT NULL,
+  `converted_adjusted_price` double DEFAULT NULL,
+  `volume` bigint(20) DEFAULT NULL,
+  `prev_businessdate` date DEFAULT NULL,
+  `prev_close_price` double DEFAULT NULL,
+  `converted_prev_adjusted` double DEFAULT NULL,
+  `daily_return` double DEFAULT NULL,
+  `prev_month_businessdate` date DEFAULT NULL,
+  `prev_monthly_adjusted` double DEFAULT NULL,
+  `converted_prev_monthly_adjusted` double DEFAULT NULL,
+  `monthly_return` double DEFAULT NULL,
+  PRIMARY KEY (`dest_currency`,`ticker`,`businessdate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
