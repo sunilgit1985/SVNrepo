@@ -11,7 +11,6 @@ VALUES
 (3,'tcm.advisor','c39680887e67fa9860fd197f1279805d','A','TCMDemo','Adviser','tcm.adviser@invessence.com','NJ','BB-TCM','','HTML','advisor',now()),
 (4,'uob.advisor','c39680887e67fa9860fd197f1279805d','A','UOB','Advisor','uob.advisor@invessence.com','NJ','UOB','','HTML','advisor',now()),
 (5,'citi.advisor','c39680887e67fa9860fd197f1279805d','A','UOB','Advisor','citi.advisor@invessence.com','NJ','CITI','','HTML','advisor',now()),
-(6,'ey.advisor','c39680887e67fa9860fd197f1279805d','A','UOB','Advisor','ey.advisor@invessence.com','NJ','EY','','HTML','advisor',now()),
 (10,'tcmintrep.advisor','c39680887e67fa9860fd197f1279805d','A','TCMIntRep100','Advisor','tcmintrep.advisor@invessence.com','NJ','BB-TCM','100','HTML','advisor',now()),
 (11,'tcmextrep.advisor','c39680887e67fa9860fd197f1279805d','A','TCMExtRep200','Advisor','tcmextrep.advisor@invessence.com','NJ','BB-TCM','200','HTML','advisor',now()),
 (12,'csi.advisor','c39680887e67fa9860fd197f1279805d','A','CSI','Advisor','csi.advisor@invessence.com','NJ','UOB','','HTML','advisor',now())
@@ -24,7 +23,6 @@ VALUES
 ('3', 'BB-TCM', 'CATCHALL', 'REP', 'Tradition Advisors', 'Tradition Advisor', now()),
 ('4', 'UOB', 'CATCHALL', 'REP', 'UOB Kay Hain', 'UOB Kay Hain', now()),
 ('5', 'CITI', 'CATCHALL', 'REP', 'Citi Bank', 'Citi Bank', now()),
-('6', 'EY', 'CATCHALL', 'REP', 'Ernst and Young', 'Ernst and Young', now()),
 ('10', 'BB-TCM', '100', 'REP', 'Tradition Adviseres', 'TCMIntRep100 Advisor', now()),
 ('11', 'BB-TCM', '200', 'REP', 'Tradition Adviseres', 'TCMExtRep200 Advisor', now()),
 ('12', 'UOB', 'DEMO', 'REP', 'CSI', 'CSI Advisor', now())
@@ -38,7 +36,6 @@ VALUES
 ('3', 'BB-TCM', '%', 'V', now()),
 ('4', 'UOB', '%', 'V', now()),
 ('5', 'CITI', '%', 'V', now()),
-('6', 'EY', '%', 'V', now()),
 ('10', 'BB-TCM', '100', 'V', now()),
 ('11', 'BB-TCM', '200', 'V', now()),
 ('12', '%', '%', 'V', now());
@@ -52,11 +49,9 @@ VALUES
 ('3', 'Demo', 'A'),
 ('4', 'Demo', 'A'),
 ('5', 'Demo', 'A'),
-('6', 'Demo', 'A'),
 ('10', 'Demo', 'A'),
 ('11', 'Demo', 'A'),
 ('12', 'Demo', 'A')
-
 ;
 
 
@@ -71,10 +66,23 @@ VALUES
 (64,'tcmextrep.user','c39680887e67fa9860fd197f1279805d','A','TCMExtRep','User','tcmextrepuser@invessence.com','BB-TCM','200','NJ','HTML','user',now()),
 (65,'uob.user','c39680887e67fa9860fd197f1279805d','A','UOB','User','uobuser@invessence.com','UOB','','NJ','HTML','user',now()),
 (66,'citi.user','c39680887e67fa9860fd197f1279805d','A','CITI','User','citiuser@invessence.com','CITI','','NJ','HTML','user',now()),
-(67,'ey.user','c39680887e67fa9860fd197f1279805d','A','EY','User','eyuser@invessence.com','EY','','NJ','HTML','user',now()),
 (70,'bbqa.user','c39680887e67fa9860fd197f1279805d','A','BBQA','User','bbqauser@invessence.com','BB','','NJ','HTML','user',now()),
 (71,'tcmintrepqa.user','c39680887e67fa9860fd197f1279805d','A','TCMIntRepQa','User','tcmintrepqauser@invessence.com','BB-TCM','100','NJ','HTML','user',now()),
 (72,'tcmextrepqa.user','c39680887e67fa9860fd197f1279805d','A','TCMExtRepQa','User','tcmextrepqauser@invessence.com','BB-TCM','200','NJ','HTML','user',now());
 
 
+INSERT INTO `invdb`.`role`
+(`logonid`,`role`,`status`)
+VALUES
+('61', 'Demo', 'A'),
+('62', 'Demo', 'A'),
+('63', 'Demo', 'A'),
+('64', 'Demo', 'A'),
+('65', 'Demo', 'A'),
+('66', 'Demo', 'A'),
+('70', 'Demo', 'A'),
+('71', 'Demo', 'A'),
+('72', 'Demo', 'A')
+
+;
 

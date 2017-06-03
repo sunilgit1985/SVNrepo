@@ -28,17 +28,3 @@ INSERT INTO invdb.sec_exchangerate_source (symbol, status, source, created) VALU
 INSERT INTO invdb.sec_exchangerate_source (symbol, status, source, created) VALUES ('SGDUSD', 'A', 'FIS', now());
 INSERT INTO invdb.sec_exchangerate_source (symbol, status, source, created) VALUES ('USDEUR', 'A', 'FIS', now());
 INSERT INTO invdb.sec_exchangerate_source (symbol, status, source, created) VALUES ('USDGBP', 'A', 'FIS', now());
-
-## Insert data invdb.sec_source_mapping
-
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('IPXJ.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('IMEU.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('EIMI.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('SJPA.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('IHYG.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('KV4.SI', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('ES3.SI', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('VUSD.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('2821.HK', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('IHYU.L', 'FIS', 'Y', 'GBPSGD');
-INSERT INTO invdb.sec_source_mapping (ticker, tickersource, pricing_required, currency_exchange_cd) VALUES ('IUAG.L', 'FIS', 'Y', 'GBPSGD');
