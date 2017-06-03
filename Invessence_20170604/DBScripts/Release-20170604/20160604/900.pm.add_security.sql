@@ -1,0 +1,1 @@
+INSERT INTO `invdb`.`sec_master` (`instrumentid`, `status`, `securityStatus`, `ticker`, `name`, `assetclass`, `subclass`, `base_currency`) VALUES ('152', 'A', 'A', 'MGCIX', 'Mirae Asia Great Consumer Fund', 'Equity', 'International', 'USD');
