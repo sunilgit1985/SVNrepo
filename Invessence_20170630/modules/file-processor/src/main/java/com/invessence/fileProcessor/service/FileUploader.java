@@ -7,7 +7,7 @@ import java.util.*;
 
 import com.invessence.fileProcessor.bean.DBParameters;
 import com.invessence.fileProcessor.dao.FileProcessorDao;
-import com.invessence.fileProcessor.util.GPGUtil;
+import com.invessence.fileProcessor.util.*;
 import com.invessence.service.bean.ServiceRequest;
 import com.invessence.service.bean.fileProcessor.*;
 import com.invessence.service.util.*;
@@ -30,10 +30,13 @@ public class FileUploader
    @Autowired
    FileProcessorDao fileProcessorDao;
 
+   @Autowired
+   FileProcessorUtil fileProcessorUtil;
+
    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
    SimpleDateFormat sdfFileParsing = new SimpleDateFormat("yyyyMMdd");
 
-   File localDirectory = null;
+   //File localDirectory = null;
 
    public boolean upload(ServiceRequest serviceRequest, FileDetails fileDetails, LinkedHashMap<String,FileRules> fileRules, StringBuilder mailAlertMsg, Map<String, DBParameters> dbParamMap){
       ChannelSftp channel = null;
@@ -59,7 +62,7 @@ public class FileUploader
 
          String a1 = ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "UPLOAD_SFTP_SRC_DIRECTORY")+"/"+fileDetails.getSourcePath();
 
-         Path p= Paths.get(FileProcessor.getFilePath(serviceRequest,fileDetails,"SFTP",businessDate));
+         Path p= Paths.get(fileProcessorUtil.getFilePath(serviceRequest,fileDetails,"SFTP",businessDate));
 
          String fileName = p.getFileName().toString();
          String directory = p.getParent().toString().replaceAll("\\\\","/");
@@ -113,29 +116,43 @@ public class FileUploader
                      logger.info("Downloading :" + fileToDownload + " file.");
                      InputStream in = channel.get(fileToDownload);
                      // setting local file --
-                     localDirectory = new File(ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "UPLOAD_LOCAL_SRC_DIRECTORY")+"/"+fileDetails.getDownloadDir() + "/");
-                     Path p1= Paths.get(FileProcessor.getFilePath(serviceRequest, fileDetails, "LOCAL", businessDate));
+                     //localDirectory = new File(ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "UPLOAD_LOCAL_SRC_DIRECTORY")+"/"+fileDetails.getDownloadDir() + "/");
+                     Path p1= Paths.get(fileProcessorUtil.getFilePath(serviceRequest, fileDetails, "LOCAL", businessDate));
 
                      String fileName1 = p1.getFileName().toString();
                      String directory1 = p1.getParent().toString().replaceAll("\\\\","/");
                      System.out.println("directory = " + directory1+ " fileName = " + fileName1);
 
-                     logger.info("Local directory path to stored the files :" + localDirectory);
+                     logger.info("Local directory path to stored the files :" + directory1);
                      // if the directory does not exist, create it
-                     if (!localDirectory.exists())
+//                     if (!directory1.exists())
+//                     {
+//                        try
+//                        {
+//                           logger.info("Creating local directory :" + directory1);
+//                           directory1.mkdirs();
+//                        }
+//                        catch (Exception e)
+//                        {
+//                           logger.error("Creating local directory :" + directory1 + " \n" + e.getMessage());
+//                           e.printStackTrace();
+//                        }
+//                     }
+                     File file = new File(fileProcessorUtil.getFilePath(serviceRequest,fileDetails,"LOCAL",businessDate));
+                     if (!file.getParentFile().exists())
                      {
                         try
                         {
-                           logger.info("Creating local directory :" + localDirectory);
-                           localDirectory.mkdirs();
+                           logger.info("Creating local upload directory :" + file);
+                           file.getParentFile().mkdirs();
                         }
                         catch (Exception e)
                         {
-                           logger.error("Creating local directory :" + localDirectory + " \n" + e.getMessage());
-                           e.printStackTrace();
+                           logger.error("Creating local upload directory :" + file + " \n" + e.getMessage());
                         }
                      }
-                     String localFileName = localDirectory + "/" + fileToDownload;
+
+                     String localFileName = directory1 + "/" + fileToDownload;
 
                      try
                      {
@@ -170,7 +187,7 @@ public class FileUploader
                         else
                         {
                            //(InputStream in, OutputStream out, InputStream secKeyIn, InputStream pubKeyIn, char[] pass)
-                           String decryptedFileName = localDirectory + "/" + fileToDownload.replace(fileDetails.getFileExtension(), fileDetails.getLoadFormat());
+                           String decryptedFileName = file + "/" + fileToDownload.replace(fileDetails.getFileExtension(), fileDetails.getLoadFormat());
                            try
                            {
                               if (fileDetails.getEncryptionMethod().equalsIgnoreCase("pgp"))
