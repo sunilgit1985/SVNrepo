@@ -121,28 +121,28 @@ BEGIN
 		lastUpdated)
             SELECT
               tClientAccountID AS clientAccountID,
-              dc_acct_owners_details.acctnum,
+               daod.acctnum,
               'P',
               NULL,
-              dc_acct_owners_details.emailAddress,
-              dc_acct_details.acctTypeId,
-              dc_acct_owners_details.firstName,
+              daod.emailAddress,
+              dad.acctTypeId,
+              daod.firstName,
               NULL,
-              dc_acct_owners_details.lastName,
-              dc_acct_owners_details.physicalAddressStreet,
+              daod.lastName,
+              daod.physicalAddressStreet,
               NULL,
               NULL,
-              dc_acct_owners_details.physicalAddressCity,
-              dc_acct_owners_details.physicalAddressState,
-              dc_acct_owners_details.physicalAddressZipCode,
+              daod.physicalAddressCity,
+              daod.physicalAddressState,
+              daod.physicalAddressZipCode,
               'USA',
-              dc_acct_owners_details.phoneNumber,
-              dc_acct_owners_details.secondPhoneNumber,
+              daod.phoneNumber,
+              daod.secondPhoneNumber,
               NULL, -- worknumber
               NULL, -- faxnum
-              dc_acct_owners_details.ssn,
-              invdb.funct_strdate2inv_date(dc_acct_owners_details.dob, '%m/%d/%Y'),
-              dc_m_lookup.displayName,-- acctType,
+              daod.ssn,
+              invdb.funct_strdate2inv_date(daod.dob, '%m/%d/%Y'),
+              dml.displayName,-- acctType,
               NULL, -- taxable
               NULL, -- objective
               invdb.funct_date2inv_date(now()) as performanceInceptionDate, -- dateOpened
@@ -151,7 +151,7 @@ BEGIN
             FROM invdb.dc_acct_owners_details AS daod
               , invdb.dc_acct_details dad
               , invdb.dc_m_lookup dml
-            WHERE dc_acct_owners_details.acctnum = p_acctnum
+            WHERE daod.acctnum = p_acctnum
                   AND daod.acctOwnerId = 1
                   AND daod.acctnum = dad.acctnum
                   AND dad.acctTypeId = dml.lookupCode
