@@ -6,7 +6,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 import com.invessence.converter.*;
 import com.invessence.web.bean.consumer.InvessenceCharts;
@@ -518,6 +518,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
       try
       {
          resetDataForm();
+         setSaveVisitor(true);
          if (getBeanAcctnum() != null && getBeanAcctnum() > 0L)
          {
             setDoesUserHavaLogonID(true);
@@ -536,11 +537,8 @@ public class UOBProfileBean extends CustomerData implements Serializable
             else {
                // 2 - If user is not registered get the get New customer info.
                // NOTE: getDoesUserHavaLogonID returns false if it is null.
-               if (! getDoesUserHavaLogonID())
-               {
-                  setDoesUserHavaLogonID(false); // If it is null, we are forcing to be false.
-                  loadNewClientData();
-               }
+               setDoesUserHavaLogonID(false); // If it is null, we are forcing to be false.
+               loadNewClientData();
             }
 //            loadNewClientData();
 
@@ -629,7 +627,10 @@ public class UOBProfileBean extends CustomerData implements Serializable
       formEdit = true;
       createAssetPortfolio(1);
       setSliderAllocationIndex(getAllocationIndex());
-      setFlagforInvestShow(true);
+//      if(isAllDataEntered())
+//      {
+         setFlagforInvestShow(true);
+//      }
    }
 
    public void onPortfolioSlider(SlideEndEvent event)
@@ -640,7 +641,10 @@ public class UOBProfileBean extends CustomerData implements Serializable
       formEdit = true;
       createAssetPortfolio(1);
       // createPortfolio(1);    // Due to fixed allocaton, we have to do both (asset and portfolio)
-      setFlagforInvestShow(true);
+//      if(isAllDataEntered())
+//      {
+         setFlagforInvestShow(true);
+//      }
    }
 
    public void doAllocReset()
@@ -845,6 +849,34 @@ public class UOBProfileBean extends CustomerData implements Serializable
 
    }
 
+   private void saveVisitor()
+   {
+
+      try
+      {
+         if (getSaveVisitor())
+         {
+            UserData data = new UserData();
+            data.setIp(webutil.getClientIpAddr((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()));
+            ;
+            data.setAcctnum(getAcctnum());
+            data.setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
+            data.setRep(webutil.getWebprofile().getDefaultRep());
+            data.setEmail(null);
+            if (saveDAO != null)
+            {
+               saveDAO.saveVisitor(data);
+            }
+            setSaveVisitor(false);
+         }
+      }
+      catch (Exception ex)
+      {
+
+      }
+   }
+
+
    public void saveProfile()
    {
       long acctnum;
@@ -858,6 +890,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
             acctnum = saveDAO.saveProfileData(getInstance());
             if (acctnum > 0)
             {
+               saveVisitor();
                setAcctnum(acctnum);
                saveDAO.saveFinancials(getInstance());
                saveDAO.saveRiskProfile(acctnum, riskCalculator);
@@ -1142,16 +1175,23 @@ public class UOBProfileBean extends CustomerData implements Serializable
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.wages.required", "Salary/Wages are required", null));
             }
-            if (getAccountFinancials().getLiquidnetworth() == null)
+            if (getAccountFinancials().getLiquidnetworth() == null ||getAccountFinancials().getLiquidnetworth() == 0)
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.liquid.asset.required", "Liquid Assets are required", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.liquid.asset.required", "Liquid assets are required", null));
             }
-            if (getAccountFinancials().getInvestment() == null)
+            if (getAccountFinancials().getInvestment() == null || getAccountFinancials().getInvestment() == 0)
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.other.investments.required", "Other Investments are required.", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.other.investments.required", "Other investments are required.", null));
             }
+            if (getAccountFinancials().getEquityOtherProperties() == null || getAccountFinancials().getEquityOtherProperties() == 0)
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.other.investmentsProp.required", "Investment properties are required.", null));
+            }
+
+
             break;
          case 2:
             if (getAccountFinancials().getTotalExpense() == null || getAccountFinancials().getTotalExpense() == 0)
@@ -1159,7 +1199,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.total.expenses.required", "Total expenses are required.", null));
             }
-            if (getAccountFinancials().getTotalDebt() == null)
+            if (getAccountFinancials().getTotalDebt() == null || getAccountFinancials().getTotalDebt() == 0)
             {
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.total.debt.required", "Total debt is required.", null));
@@ -1190,7 +1230,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
             if (this.riskCalculator.getAnswerValue(pagenum) == 0)
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.level.investment.required", "level of investment is required.", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.level.investment.required", "Level of investment is required.", null));
             }
             break;
          case 7:
@@ -1211,7 +1251,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
             if (this.riskCalculator.getAnswerValue(pagenum) == 0)
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.long-term.investment.required", "long-term investment is required.", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.long-term.investment.required", "Long-term investment is required.", null));
             }
             break;
       }
@@ -1342,9 +1382,13 @@ public class UOBProfileBean extends CustomerData implements Serializable
    public void gotoCustodyInfoForm() {
       if (!getDoesUserHavaLogonID())
       {
-         registerUser();
+         if (registerUser()) {
+            uiLayout.doMenuAction("consumer", "forward.xhtml");
+         }
       }
+      else {
          uiLayout.doMenuAction("consumer", "forward.xhtml");
+      }
 
    }
 
@@ -1388,6 +1432,8 @@ public class UOBProfileBean extends CustomerData implements Serializable
             }
             userdata.setLogonID(loginID);
             setLogonid(loginID);
+            webutil.sendConfirmation(userdata,"W");
+
             setDoesUserHavaLogonID(true);
             return true;
          }

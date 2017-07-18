@@ -84,8 +84,7 @@ public class FileDownloader
             }
 
             if(fileData.size()>0){
-               generateFile(fileData, fileDetails, serviceRequest, dbParamMap.get("BUSINESS_DATE").getValue().toString(), mailAlertMsg);
-               returnValue = true;
+               return generateFile(fileData, fileDetails, serviceRequest, dbParamMap.get("BUSINESS_DATE").getValue().toString(), mailAlertMsg);
             }else{
                logger.warn("Data not available for "+fileDetails.getFileName()+" file.");
             }
@@ -135,9 +134,9 @@ public class FileDownloader
       }
       return sb.toString();
    }
-   private void generateFile(List<String> fileData, FileDetails fileDetails, ServiceRequest serviceRequest, String businessDate, StringBuilder mailAlertMsg)throws Exception{
+   private boolean generateFile(List<String> fileData, FileDetails fileDetails, ServiceRequest serviceRequest, String businessDate, StringBuilder mailAlertMsg)throws Exception{
       System.out.println("FileDownloader.generateFile");
-
+      boolean result=false;
       try{
          Iterator<String> fileDataItr=fileData.iterator();
 
@@ -171,6 +170,9 @@ public class FileDownloader
             if(fileDetails.getFileProcessType()!=null && !fileDetails.getFileProcessType().equals("")&& fileDetails.getFileProcessType().equals("SFTP")){
                copyFileToSFTPServer(serviceRequest, file, fileDetails, businessDate, mailAlertMsg);
             }
+            fileProcessorUtil.deleteFilesFromLocal(fileDetails, fileProcessorUtil.getListOfFiles(file.getParent(), fileDetails.getFileName()), businessDate, file.getParent(), mailAlertMsg);
+
+            result=true;
          } catch (IOException e) {
             mailAlertMsg.append("Issue while creating file " + fileDetails.getFileName() + " to local directory from processId "+fileDetails.getProcessId()+" \n");
             e.printStackTrace();
@@ -186,12 +188,14 @@ public class FileDownloader
       }catch(Exception e){
          e.printStackTrace();
       }
-
+      return result;
    }
 
-   private void copyFileToSFTPServer(ServiceRequest serviceRequest, File f, FileDetails fileDetails, String businessDate, StringBuilder mailAlertMsg){
+   private boolean copyFileToSFTPServer(ServiceRequest serviceRequest, File f, FileDetails fileDetails, String businessDate, StringBuilder mailAlertMsg){
+      logger.info("FileDownloader.copyFileToSFTPServer");
       Session session = null;
 //      Channel channel = null;
+      boolean result=false;
       ChannelSftp channel = null;
       try{
          JSch jsch = new JSch();
@@ -216,10 +220,41 @@ public class FileDownloader
          String directory = p.getParent().toString().replaceAll("\\\\","/");
          System.out.println("directory = " + directory+ " fileName = " + fileName);
 
-         channel.mkdir(directory);
+         //channel.mkdir(directory);
          channel.cd(directory);
          channel.put(new FileInputStream(f), fileName);
 
+         List<String> fileNameLst = new ArrayList<String>();
+         StringBuilder searchString=new StringBuilder();
+         if(fileDetails.getFileNameAppender().equalsIgnoreCase("PREFIX")){
+            searchString.append("*_").append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
+         }else if(fileDetails.getFileNameAppender().equalsIgnoreCase("POSTFIX")){
+            searchString.append(fileDetails.getFileName()).append("_*").append("."+fileDetails.getFileExtension());
+         }else{
+            searchString.append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
+         }
+         System.out.println("SearchString = " + searchString +" to fetch files from Server.");
+         Vector v = channel.ls(searchString.toString());
+
+         logger.info("Fetching list of " + searchString.toString() + " files from server" + v.size());
+         ChannelSftp.LsEntry entry = null;
+         for (int i = 0; i < v.size(); i++)
+         {
+            entry = (ChannelSftp.LsEntry) v.get(i);
+            fileNameLst.add(entry.getFilename());
+         }
+         logger.info("Fetching list of " + fileDetails.getFileName() + " files from server" + v.size());
+         if (fileNameLst == null || fileNameLst.size() == 0)
+         {
+            logger.info(fileDetails.getFileName() + " files are not available on server for delete, for Advisor " + fileDetails.getVendor() + "\n");
+         }
+         else
+         {
+            Collections.sort(fileNameLst);
+            fileProcessorUtil.deleteFilesFromServer(fileDetails, fileNameLst, channel, businessDate, mailAlertMsg);
+         }
+
+         result=true;
          channel.disconnect();
          session.disconnect();
 
@@ -233,6 +268,7 @@ public class FileDownloader
          session.disconnect();
          System.out.println("Host Session disconnected.");
       }
+      return result;
    }
 
    private String createFileName(FileDetails fileDetails){

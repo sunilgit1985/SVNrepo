@@ -137,6 +137,7 @@ public class SessionController implements Serializable
                // On logon, if the Advisor and rep is defined to the user, then use that instead.  Removed this check on May 17th, 2017
                // resetUserCIDByAdvisor(webutil.getUserInfoData().getAdvisor());  // Since user is loging on, use the User's Advisor's Setup
                resetCIDByURL(null);  // Use the URL Mapping (May 17th, 2017)
+               loadWebMenu(webutil.getWebprofile().getUrl());
                if (webutil.getUserInfoData().getAdvisor() != null)
                {
                   webutil.getWebprofile().setDefaultAdvisor(webutil.getUserInfoData().getAdvisor());
@@ -267,6 +268,18 @@ public class SessionController implements Serializable
          }
       }
    }
+
+   private void loadWebMenu(String url)
+   {
+      // logger.info("Load WEB property for:" + url);
+      if(webutil.isUserLoggedIn())
+      {
+         Map<String, String> webMap=commonDAO.getWebMenuDetails(url, webutil.getAccess());
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(WebConst.WEB_MENU);
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(WebConst.WEB_MENU, webMap);
+      }
+   }
+
 
    private void loadAdvisorProfile(String advisor)
    {
@@ -404,7 +417,7 @@ public class SessionController implements Serializable
          cstmSessionTimeout = webutil.getWebprofile().getSessionTimeout();
 
          cstmSessionTimeout = cstmSessionTimeout * 60 * 1000;
-          System.out.println("SessionController.getCustomSessionTimeout session timeout " + cstmSessionTimeout);
+         // System.out.println("SessionController.getCustomSessionTimeout session timeout " + cstmSessionTimeout);
       }
       catch (Exception e)
       {
@@ -417,10 +430,11 @@ public class SessionController implements Serializable
 
    public int getSessionCountdownTime()
    {
-      int sessionCountdownTime = 60 ;
+      int sessionCountdownTime;
       try
       {
-         sessionCountdownTime = webutil.getWebprofile().getSessionCountdownTimeout();
+         // If the properties are not loaded, then no timeout.
+         sessionCountdownTime = (webutil.getWebprofile() == null) ? -1: webutil.getWebprofile().getSessionCountdownTimeout();
 
          sessionCountdownTime = sessionCountdownTime * 60 ;
          // System.out.println("SessionController.getSessionCountdownTime session countdown time" + sessionCountdownTime);
