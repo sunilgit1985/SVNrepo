@@ -34,31 +34,31 @@
                 <h:form id="tradeForm">
                     <p:growl id="growltrademsg" closable="true" style="top: 25%"/>
 
-                    <p:panel styleClass="invNBgrid tabborderbottom">
+                    <p:panel styleClass="invNBgrid">
                         <ui:fragment rendered="#{tradeBean.isTradeActive}">
-                            <div class="Fs30 Fleft summaryHeader mainHeaderUOB activetabetrade"
+                            <div class="Fs30 Fleft summaryHeader mainHeaderUOB RPHeadings1 active"
                                  style="cursor: pointer;">Trade</div>
                         </ui:fragment>
                         <ui:fragment rendered="#{! tradeBean.isTradeActive}">
-                            <p:commandLink actionListener="#{tradeBean.setTradeUI('T')}" id="tradeBtn">
-                                <div class="Fs30 Fleft summaryHeader mainHeaderUOB activetabetrade"
+                            <p:commandLink actionListener="#{tradeBean.setTradeUI('T')}">
+                                <div class="Fs30 Fleft summaryHeader mainHeaderUOB RPHeadings1"
                                      style="cursor: pointer;">Trade</div>
                             </p:commandLink>
                         </ui:fragment>
                         <ui:fragment rendered="#{tradeBean.isReviewActive}">
-                            <div class="Fs30 Fleft detailHeader mainHeaderUOB  active inactivetabreview"
+                            <div class="Fs30 Fleft detailHeader mainHeaderUOB RPHeadings2 active"
                                  style="cursor: pointer;">Review</div>
                         </ui:fragment>
                         <ui:fragment rendered="#{! tradeBean.isReviewActive}">
-                            <p:commandLink actionListener="#{tradeBean.setTradeUI('R')}" id="reviewBtn">
-                                <div class="Fs30 Fleft detailHeader mainHeaderUOB  inactivetabreview"
+                            <p:commandLink actionListener="#{tradeBean.setTradeUI('R')}">
+                                <div class="Fs30 Fleft detailHeader mainHeaderUOB RPHeadings2"
                                      style="cursor: pointer;">Review</div>
                             </p:commandLink>
                         </ui:fragment>
                     </p:panel>
 
                     <p:panel id="tradePanel" styleClass="invNBgrid">
-                        <div class="Container100"     style="margin-bottom: 20px;">
+                        <div class="Container100">
                             <div class="Fleft filterMBBlock margintoptrade">
 
 
