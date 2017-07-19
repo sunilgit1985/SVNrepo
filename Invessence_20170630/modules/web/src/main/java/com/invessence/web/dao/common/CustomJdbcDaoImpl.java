@@ -249,7 +249,7 @@ public class CustomJdbcDaoImpl extends JdbcDaoImpl
                userdata.setEmail(savedemail);
                userdata.setLogonID(logonID);
                userdata.setResetID(resetID);
-               webutl.sendConfirmation(userdata);
+               webutl.sendConfirmation(userdata,"L");
                throw new BadCredentialsException("Too many attemps.  Account Locked!");
             }
          }
@@ -257,7 +257,7 @@ public class CustomJdbcDaoImpl extends JdbcDaoImpl
       else {
          if (exception != null)
             attempts = 0;
-            throw new BadCredentialsException(exception);
+         throw new BadCredentialsException(exception);
       }
 
       // Note:  We are always re-createating userINFO
