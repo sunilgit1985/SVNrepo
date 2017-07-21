@@ -166,7 +166,7 @@ public class UILayout implements Serializable
       }
       else
       {
-            dashboard = webutil.getWebprofile().getHomepage();
+         dashboard = webutil.getWebprofile().getHomepage();
       }
       return dashboard;
 
@@ -231,20 +231,20 @@ public class UILayout implements Serializable
       {
          String custody_service =  webutil.getWebprofile().getWebInfo().get("CUSTODY.SERVICE");
          if (custody_service != null) {
-           if (custody_service.equalsIgnoreCase("URL")) {
-              String custodyURL =  webutil.getWebprofile().getWebInfo().get("CUSTODY.URL");
-              if (custodyURL != null && !custodyURL.isEmpty()) {
+            if (custody_service.equalsIgnoreCase("URL")) {
+               String custodyURL =  webutil.getWebprofile().getWebInfo().get("CUSTODY.URL");
+               if (custodyURL != null && !custodyURL.isEmpty()) {
                   forwardURL(custodyURL);
-                 return;
-              }
-           }
-           else if (custody_service.equalsIgnoreCase("INTERNAL")) {
+                  return;
+               }
+            }
+            else if (custody_service.equalsIgnoreCase("INTERNAL")) {
                if (webutil.getWebprofile().getCustodydir() != null && !webutil.getWebprofile().getCustodydir().isEmpty()) {
                   doMenuAction("custody", "index.xhtml?l="+logonid.toString()+"&acct="+acctnum.toString());
                   // tdcto.startCTO(logonid,acctnum);
                   return;
                }
-           }
+            }
          }
          String msgheader = "custody.100";
          webutil.redirecttoMessagePage("ERROR", "Service Error", msgheader);
@@ -334,7 +334,7 @@ public class UILayout implements Serializable
          return;
       }
 
-      if (access.equalsIgnoreCase("admin"))
+      if (access.equalsIgnoreCase("superadmin"))
       {
          doMenuAction("advisor", pageinfo);
          return;
