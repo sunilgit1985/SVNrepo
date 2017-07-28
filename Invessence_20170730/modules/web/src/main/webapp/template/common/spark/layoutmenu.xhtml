@@ -19,6 +19,7 @@
                     e.preventDefault();
                     $(this).toggleClass("active");
                     $(".nav").toggle();
+                    $(".navoverlay").toggle();
                 });
                 adjustMenu();
             })
@@ -34,8 +35,10 @@
                     $(".toggleMenu").css("display", "inline-block");
                     if (!$(".toggleMenu").hasClass("active")) {
                         $(".nav").hide();
+                        $(".navoverlay").hide();
                     } else {
                         $(".nav").show();
+                        $(".navoverlay").show();
                     }
 
                     $(".nav li").unbind('mouseenter mouseleave click');
@@ -65,7 +68,7 @@
 
 
         <a class="toggleMenu"  href="#" style="display: none;">Menu</a>
-
+        <div class="navoverlay" style="display: none;"></div>
             <ul class="nav" id="menuMainNavigation" >
 
 
