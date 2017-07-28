@@ -68,6 +68,7 @@
 
             <ul class="nav" id="menuMainNavigation" >
 
+
                 <ui:fragment rendered="#{webutil.hasMenu('Account') and webutil.hasAccess('User')}">
                     <li  id="newaccountMenuHighlight">
                         <p:commandLink rendered="true" id="menunewacctbtn"
@@ -96,6 +97,7 @@
                         </ul>
                     </li>
                 </ui:fragment>
+
 
                 <ui:fragment rendered="#{(webutil.hasSubMenu('Admin')) and ((webutil.hasAccess('Advisor') and webutil.hasRole('Admin')) or webutil.hasAccess('SuperAdmin'))}">
                     <li  class="">
@@ -159,8 +161,29 @@
                     </li>
                 </ui:fragment>
 
-                <li  class="test" id="dashboardMenuHighlight" style="float: right;">
-                    <i class="fa fa-home"></i> <a href="#{uiLayout.defaultHome}" id="menudashboardbtn">Dashboard</a>
+
+
+
+
+                <li  class="test mobileonly" id="dashboardMenuHighlight">
+                    <i class="fa fa-cog"></i> <a> Setting</a>
+                    <ul>
+                        <li><i class="fa fa-dashboard"></i> <a  href="/pages/common/myprofile.xhtml"> My Profile</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li  class="test" id="dashboardMenuHighlight">
+                    <i class="fa fa-home"></i> <a href="#{uiLayout.defaultHome}" id="menudashboardbtn"> Dashboard</a>
+
+
+                </li>
+                <li  class="test mobileonly" id="dashboardMenuHighlight" style="float: right">
+
+                    <h:commandLink actionListener="#{sessionControl.logout}" style="" styleClass="">
+                        Logout
+                    </h:commandLink>
 
                 </li>
 
