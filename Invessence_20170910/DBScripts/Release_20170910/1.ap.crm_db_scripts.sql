@@ -205,3 +205,8 @@ INSERT INTO `invdb`.`web_menu` (`url`, `access`, `permission`, `label`, `level`,
 INSERT INTO `invdb`.`web_menu` (`url`, `access`, `permission`, `label`, `level`, `sublevel`, `seq`, `status`, `availOnMobile`, `destdir`, `htmlpage`, `created`) VALUES ('www.traditionadvisers.net', 'Advisor', 'CRM', 'RedTail', '0', '0', '7', 'A', 'N', 'advisor', 'assetworkflow.xhtml', '2017-08-04 04:01:55');
 INSERT INTO `invdb`.`web_menu` (`url`, `access`, `permission`, `label`, `level`, `sublevel`, `seq`, `status`, `availOnMobile`, `destdir`, `htmlpage`, `created`) VALUES ('www.traditionadvisers.net', 'Advisor', 'CRM', 'SalesFource', '0', '0', '3', 'N', 'N', 'advisor/operations', 'trade.xhtml', '2017-08-04 04:01:55');
 
+
+
+INSERT INTO `invdb`.`role` (`logonid`, `role`, `status`) VALUES (2,'CRM','A');
+INSERT INTO `invdb`.`role` (`logonid`, `role`, `status`) VALUES (3,'CRM','A');
+INSERT INTO `invdb`.`role` (`logonid`, `role`, `status`) VALUES (101,'CRM','A');
