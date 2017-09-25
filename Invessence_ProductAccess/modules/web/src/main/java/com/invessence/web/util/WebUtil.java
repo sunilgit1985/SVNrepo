@@ -128,9 +128,9 @@ public class WebUtil implements Serializable
       }
       else
       {
-         if (uri.equalsIgnoreCase("localhost")) {
+       //  if (uri.equalsIgnoreCase("localhost")) {
             uri += ':' + port;
-         }
+        // }
          return uri;
       }
    }
