@@ -15,7 +15,7 @@ import com.invessence.web.data.common.*;
 import org.apache.commons.logging.*;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
 import org.springframework.security.web.authentication.logout.*;
@@ -128,9 +128,9 @@ public class WebUtil implements Serializable
       }
       else
       {
-       //  if (uri.equalsIgnoreCase("localhost")) {
+         //if (uri.equalsIgnoreCase("localhost")) {
             uri += ':' + port;
-        // }
+         //}
          return uri;
       }
    }
@@ -416,6 +416,14 @@ public class WebUtil implements Serializable
          {
             return null;
          }
+//         if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(WebConst.USER_INFO)==null){
+//            return null;
+//
+//         }else{
+//            return (UserInfoData)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(WebConst.USER_INFO);
+//         }
+
+
 
       }
       catch (Exception ex)
@@ -430,7 +438,7 @@ public class WebUtil implements Serializable
 
    public void setUserInfoData(Long logonID, String userID, String  password,
                                String advisor, String rep, Collection<GrantedAuthority> authorities) {
-      UserInfoData userInfo = new UserInfoData(logonID,userID, password, advisor,rep,authorities);
+      UserInfoData userInfo = new UserInfoData(logonID, userID, password, advisor, rep, authorities);
       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(WebConst.USER_INFO);
       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(WebConst.USER_INFO, userInfo);
    }

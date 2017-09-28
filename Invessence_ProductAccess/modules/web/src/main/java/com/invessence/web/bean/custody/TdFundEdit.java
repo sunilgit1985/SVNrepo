@@ -1,28 +1,14 @@
 package com.invessence.web.bean.custody;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.*;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
-import com.invessence.converter.JavaUtil;
 import com.invessence.service.bean.ServiceRequest;
 import com.invessence.web.constant.*;
-import com.invessence.web.dao.common.CommonDAO;
-import com.invessence.web.dao.consumer.ConsumerListDataDAO;
-import com.invessence.web.dao.custody.*;
-import com.invessence.web.data.common.UserData;
 import com.invessence.web.data.custody.TDMasterData;
-import com.invessence.web.data.custody.td.*;
 import com.invessence.web.util.Impl.PagesImpl;
-import com.invessence.web.util.*;
 import com.invessence.ws.bean.*;
-import com.invessence.ws.provider.td.bean.DCResponse;
-import com.invessence.ws.service.ServiceLayerImpl;
-import org.apache.commons.logging.*;
-import org.primefaces.event.*;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,6 +53,8 @@ public class TdFundEdit extends BaseTD
 
             getTdMasterData().getCustomerData().setAcctnum(getLongBeanacctnum());
             getTdMasterData().getCustomerData().setLogonid(getWebutil().getLogonid());
+            getTdMasterData().getCustomerData().setAdvisor(getWebutil().getUserInfoData().getAdvisor());
+            getTdMasterData().getCustomerData().setRep(getWebutil().getUserInfoData().getRep());
 
             loadCustomerProfileData();
 

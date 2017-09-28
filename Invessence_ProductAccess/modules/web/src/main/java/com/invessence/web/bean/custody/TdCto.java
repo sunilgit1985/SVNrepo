@@ -5,11 +5,10 @@ import javax.faces.context.FacesContext;
 
 import com.invessence.service.bean.ServiceRequest;
 import com.invessence.web.constant.DCConstants;
-import com.invessence.web.data.custody.*;
+import com.invessence.web.data.custody.TDMasterData;
 import com.invessence.web.util.Impl.PagesImpl;
 import com.invessence.ws.bean.*;
-import com.invessence.ws.provider.td.bean.DCResponse;
-import org.primefaces.event.*;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -468,8 +467,14 @@ public class TdCto extends BaseTD
 
       getTdMasterData().getCustomerData().setAcctnum(getLongBeanacctnum());
       getTdMasterData().getCustomerData().setLogonid(logonid);
-      getTdMasterData().getCustomerData().setAdvisor(getWebutil().getUserInfoData().getAdvisor());
-      getTdMasterData().getCustomerData().setRep(getWebutil().getUserInfoData().getRep());
+      if(getWebutil().getUserInfoData()==null)
+      {
+         getTdMasterData().getCustomerData().setAdvisor(getWebutil().getWebprofile().getDefaultAdvisor());
+         getTdMasterData().getCustomerData().setRep(getWebutil().getWebprofile().getDefaultRep());
+      }else{
+         getTdMasterData().getCustomerData().setAdvisor(getWebutil().getUserInfoData().getAdvisor());
+         getTdMasterData().getCustomerData().setRep(getWebutil().getUserInfoData().getRep());
+      }
       loadCustomerProfileData();
 
       if (getTdMasterData().getCustomerData().getUserid() == null)
@@ -534,7 +539,9 @@ public class TdCto extends BaseTD
          System.out.println("Advisor " + getTdMasterData().getCustomerData().getProfileInstance().getAdvisor());
          System.out.println("Rep " + getTdMasterData().getCustomerData().getProfileInstance().getRep());
          System.out.println("Account No " + getTdMasterData().getAcctnum());
-         String eventRef = processDCRequest(getTdMasterData().getCustomerData().getProfileInstance().getAdvisor(), getTdMasterData().getCustomerData().getProfileInstance().getRep(), getTdMasterData().getAcctnum(), getTdMasterData().getRequest().getEventNum(), DCConstants.ACTION_ACCT_OPEN);
+         String eventRef = processDCRequest(getTdMasterData().getCustomerData().getProfileInstance().getAdvisor(),
+                                            getTdMasterData().getCustomerData().getProfileInstance().getRep(),
+                                            getTdMasterData().getAcctnum(), getTdMasterData().getRequest().getEventNum(), DCConstants.ACTION_ACCT_OPEN);
 
          System.out.println("Docusign Event Return " + eventRef);
          if (eventRef != null)

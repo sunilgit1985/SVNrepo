@@ -7,9 +7,7 @@ import com.invessence.service.bean.ServiceRequest;
 import com.invessence.web.constant.*;
 import com.invessence.web.data.custody.TDMasterData;
 import com.invessence.web.data.custody.td.AcctOwnersDetails;
-import com.invessence.web.util.Impl.PagesImpl;
-import com.invessence.ws.bean.*;
-import com.invessence.ws.provider.td.bean.DCResponse;
+import com.invessence.ws.bean.WSCallResult;
 
 /**
  * Created by sagar on 1/5/2017.
@@ -47,6 +45,8 @@ public class TDChangeAddr extends BaseTD
 
             getTdMasterData().getCustomerData().setAcctnum(getLongBeanacctnum());
             getTdMasterData().getCustomerData().setLogonid(getWebutil().getLogonid());
+            getTdMasterData().getCustomerData().setAdvisor(getWebutil().getUserInfoData().getAdvisor());
+            getTdMasterData().getCustomerData().setRep(getWebutil().getUserInfoData().getRep());
 
             loadCustomerProfileData();
             loadTDAccountDetails();
