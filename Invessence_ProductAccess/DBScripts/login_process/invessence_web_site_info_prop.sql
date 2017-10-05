@@ -184,5 +184,9 @@ INSERT INTO `invdb`.`user_advisor_access` (`logonid`, `advisor`, `rep`, `privile
 INSERT INTO `invdb`.`user_advisor_access` (`logonid`, `advisor`, `rep`, `privileges`, `created`) VALUES ('8', '%', '%', 'V', '2017-09-15 07:17:32');
 INSERT INTO `invdb`.`user_advisor_access` (`logonid`, `advisor`, `rep`, `privileges`, `created`) VALUES ('9', '%', '%', 'V', '2017-09-15 07:17:32');
 
+UPDATE `invdb`.`user_logon` SET `advisor`='DEMO' WHERE `logonid`='1';
+UPDATE `invdb`.`user_logon` SET `advisor`='DEMO' WHERE `logonid`='61';
+
+
 
 
