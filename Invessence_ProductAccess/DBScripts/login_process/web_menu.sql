@@ -15,7 +15,7 @@ select url, 'Advisor', 'CRM', 'SalesFource', '0', '0', '3', 'N', 'N', 'advisor/o
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
 select url, 'Advisor', 'Operations', 'Model', '0', '0', '7', 'N', 'N', 'advisor', 'assetworkflow.xhtml', now() from invdb.web_site_info group by url;
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
-select url, 'Advisor', 'Operations', 'Trade', '0', '0', '3', 'A', 'N', 'advisor/operations', 'trade.xhtml',now() from invdb.web_site_info group by url;
+select url, 'Advisor', 'Operations', 'Trade', '0', '0', '3', 'N', 'N', 'advisor/operations', 'trade.xhtml',now() from invdb.web_site_info group by url;
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
 select url, 'SuperAdmin', 'ProductAdmin', 'Account Emulation', '0', '0', '12', 'A', 'N', 'productadmin', 'accountEmulation.xhtml',now() from invdb.web_site_info group by url;
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
@@ -23,7 +23,7 @@ select url, 'SuperAdmin', 'ProductAdmin', 'File Processing', '0', '0', '11', 'A'
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
 select url, 'User', 'User', 'Account', '0', '0', '11', 'A', 'N', 'consumer', 'cadd.xhtml',now() from invdb.web_site_info group by url;
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
-select url, 'User', 'User', 'Aggregation', '0', '0', '11', 'A', 'N', '', '', now() from invdb.web_site_info group by url;
+select url, 'User', 'User', 'Aggregation', '0', '0', '11', 'N', 'N', '', '', now() from invdb.web_site_info group by url;
 INSERT INTO invdb.web_menu (url, access, permission, label, level, sublevel, seq, status, availOnMobile, destdir, htmlpage, created) 
 select url, 'User', 'User', 'Reports', '0', '0', '11', 'N', 'N', 'consumer', 'creports.xhtml',now() from invdb.web_site_info group by url;
 
