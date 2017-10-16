@@ -50,7 +50,7 @@ INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.LOGOSIZE', 'A', '200px', 'N', '2017-06-03 13:31:07', null);
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.MODE', 'A', 'PROD', 'N', '2017-06-03 13:31:07', null);
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.SESSION.COUNTDOWNTIME', 'A', '2', 'N', '2017-06-03 14:14:13', null);
-INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.SESSION.TIMEOUT', 'A', '60', 'N', '2017-06-03 14:14:13', null);
+INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.SESSION.TIMEOUT', 'A', '15', 'N', '2017-06-03 14:14:13', null);
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.SSLSEAL', 'A', null, 'N', '2017-06-03 13:31:07', null);
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.THEME', 'A', 'invessence', 'N', '2017-06-03 13:31:07', null);
 INSERT INTO `invdb`.`web_site_info` (`url`, `name`, `status`, `value`, `encrFlag`, `created`, `updated`) VALUES ('invessence', 'WEB.THEMELIB', 'A', 'invessence', 'N', '2017-06-03 13:31:07', null);
