@@ -931,7 +931,7 @@
                                             <p:panel id="nwPriHldEmpOtrDtlPnl" style="border-color: transparent;" class="Container50">
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplNwPriEmpOtrDtlPnl}">
                                                     <div class="Container100"><span class="title_line">Other Qualification</span></div>
-                                                    <div class="Container100">
+                                                    <div class="Container100 ">
                                                         <p:inputText id="nwPriHldrQualOtr" placeholder="Other"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.qualificationsSpecify}"/>
                                                         <label for="nwPriHldrQualOtr">Other</label>
@@ -942,21 +942,21 @@
                                         <p:panel id="nwPriHldEmpMnPnl" style="border-color: transparent;">
                                             <ui:fragment rendered="#{uobCustodyBean.dsplNwPriEmpMnPnl}">
                                                 <div class="acc_holder_dtl_block">
-                                                    <div class="Container100">
+                                                    <div class="Container100 width99">
                                                         <p:inputText id="nwPriHldrOcc" placeholder="Occupation"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerEmploymentDetails.occupation}"/>
                                                         <label for="nwPriHldrOcc">Occupation</label>
                                                     </div>
                                                 </div>
                                                 <div class="acc_holder_dtl_block">
-                                                    <div class="Container100">
+                                                    <div class="Container100 width99">
                                                         <p:inputText id="nwPriHldrEmpNm" placeholder="Name of Employer"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerEmploymentDetails.employerName}"/>
                                                         <label for="nwPriHldrEmpNm">Name of Employer</label>
                                                     </div>
                                                 </div>
                                                 <div class="acc_holder_dtl_block">
-                                                    <div class="Container100">
+                                                    <div class="Container100 width99">
                                                         <p:inputText id="nwPriHldrEmpAddr" placeholder="Employer Address" maxlength="120"
                                                                      value="#{uobCustodyBean.priHldrEmpAddr}"/>
                                                         <label for="nwPriHldrEmpAddr">Employer Address</label>
@@ -1779,8 +1779,6 @@
                                                 </p:selectOneRadio>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </p:tab>
                             </p:tabView>

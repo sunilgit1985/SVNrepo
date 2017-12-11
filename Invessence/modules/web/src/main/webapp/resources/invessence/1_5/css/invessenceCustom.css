@@ -5396,6 +5396,36 @@ span.output_review {
     color: green;
     text-align: left;
 }
+.grey_alert {
+    margin-right: -18px;
+}
+
+/*** 11/12/2017 file upload css**/
+.upload_file .ui-fileupload-content {
+    width: 203px;
+    /* left: -55%; */
+    top: -11px;
+    margin-left: 100%;
+    position: absolute;
+}
+.upload_file span.ui-messages-error-detail {
+    display: none;
+}
+.Container20.check_file {
+    height: 30px;
+    margin-top: 5px;
+}
+.upload_file .ui-button.ui-state-active .ui-button-text,
+.upload_file .ui-button.ui-state-focus .ui-button-text{
+    background: #a4332f;
+}
+.Container10.upload_file {
+    position: relative;
+}
+.file_submit button {
+    margin: 0 15px;
+}
+
 /*** responsive**/
 
 /** 16/10/2017***/

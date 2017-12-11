@@ -24,7 +24,7 @@
                         <f:attribute name="foo" value="#{updLst.fileType}" />
                              </p:fileUpload>
                   </div>
-                  <p:panel id="updSucces" style="border-color: transparent;">
+                  <p:panel id="updSucces" style="border-color: transparent;" class="Container20">
                   <ui:fragment rendered="#{uobCustodyBean.isFileUpd(updLst.fileType)}">
                   <div class="Container20 check_file">
                      <span class="ui-button-icon-center ui-icon ui-c fa fa-check" ></span>
@@ -33,7 +33,7 @@
                   </p:panel>
                </div>
             </p:repeat>
-            <div class="Container20 Responsive100 submit_acc_dtl">
+            <div class="Container20 Responsive100 submit_acc_dtl file_submit">
                <p:commandButton id="uobUpdBkBtn"
                                 value="Back"
                                 styleClass="uob_button" disabled="#{uobCustodyBean.dsblSubmtBtn}"
