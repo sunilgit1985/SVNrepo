@@ -5381,8 +5381,9 @@ span.output_review {
     background: #fcf8e3;
     padding: 10px;
     margin: 0px 0 2%;
-    text-align: center;
+   /* text-align: center;*/
     color: #8a6d3b;
+    line-height:1.60;
 }
 .upload_file .ui-button-text {
     background-color: #a4332f;
@@ -5403,9 +5404,9 @@ span.output_review {
 /*** 11/12/2017 file upload css**/
 .upload_file .ui-fileupload-content {
     width: 203px;
-    /* left: -55%; */
-    top: -11px;
-    margin-left: 100%;
+   /*  left: 215%;*/
+    top: -10px;
+    margin-left: 700%;
     position: absolute;
 }
 .upload_file span.ui-messages-error-detail {
@@ -5414,7 +5415,8 @@ span.output_review {
 .Container20.check_file {
     height: 30px;
     margin-top: 5px;
-}
+    position: absolute;
+    right: -38px;}
 .upload_file .ui-button.ui-state-active .ui-button-text,
 .upload_file .ui-button.ui-state-focus .ui-button-text{
     background: #a4332f;
@@ -5425,6 +5427,30 @@ span.output_review {
 .file_submit button {
     margin: 0 15px;
 }
+.uplaod_note li {
+    list-style: disc;
+    line-height: 1.70;
+}
+.Container100.file_nm {
+    text-align: center;
+}
+.Container100.upload_file {
+    text-align: center;
+    margin: 10px 0;
+}
+.upload_file .ui-fileupload-buttonbar .ui-button {
+    width: 200px;
+    margin: 0 auto;
+}
+.file_dtls{text-align: center;
+    /* padding: 0 35%; */
+    width: auto;
+    margin: 1% 41% 3%;
+   position:relative;
+
+}
+
+
 
 /*** responsive**/
 
