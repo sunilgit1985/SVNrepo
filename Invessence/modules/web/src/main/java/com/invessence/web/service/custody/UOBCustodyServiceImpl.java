@@ -227,6 +227,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
                Map rs = (Map) rows.get(i);
                objCustodyFileDetails.setSeqno(convert.getIntData(rs.get("seqno")));
                objCustodyFileDetails.setFileName(convert.getStrData(rs.get("fileName")));
+               objCustodyFileDetails.setFileLabel(convert.getStrData(rs.get("fileLabel")));
                objCustodyFileDetails.setFileType(convert.getStrData(rs.get("fileType")));
                objCustodyFileDetails.setFileExtensions(convert.getStrData(rs.get("fileExtensions")));
                objCstdFileLst.add(objCustodyFileDetails);

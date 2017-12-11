@@ -1,5 +1,6 @@
 package com.invessence.web.bean.custody;
 
+import java.io.*;
 import java.lang.reflect.*;
 import java.text.*;
 import java.util.*;
@@ -11,12 +12,15 @@ import com.invessence.custody.uob.UOBDataMaster;
 import com.invessence.custody.uob.data.*;
 import com.invessence.service.util.*;
 import com.invessence.util.AddressSplitter;
+import com.invessence.web.dao.consumer.ConsumerListDataDAO;
+import com.invessence.web.data.common.CustomerData;
 import com.invessence.web.service.custody.CustodyService;
+import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.PagesImpl;
-import com.invessence.web.util.WebUtil;
 import com.invessence.service.bean.Generic.Country;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.logging.*;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  * Created by abhangp on 11/10/2017.
@@ -32,9 +36,13 @@ public class UOBCustodyBean
    @ManagedProperty("#{webutil}")
    private WebUtil webutil;
 
+   @ManagedProperty("#{consumerListDataDAO}")
+   private ConsumerListDataDAO listDAO;
+
+
    private UOBDataMaster uobDataMaster;
    private PagesImpl pagemanager = new PagesImpl(8);
-   private long beanAcctNum;
+   private long beanAcctNum,beanLogonId;
    private boolean dsplExtIndAcctCat = false, dsplExtIndAcctInp = false, dsplExtJntAcctCat = false, dsplExtJntAcctInp = false, dsplAcctTyp = false;
    private boolean dspExtAcctPnl = false, dspNewAcctPnl = false, dspIntroAcctPnl = false, dsblSubmtBtn = true, dspJntTab = false;
    private String acctCat, extAcctJnt, clientAcctId, slsPrsnNm, selIndAcctTyp, selJntAcctTyp;
@@ -56,6 +64,10 @@ public class UOBCustodyBean
    private Map<String, String> repMap = new HashMap<String, String>();
    private boolean dspDocUpdPnl=false;
    private List<CustodyFileDetails> updFileMstrLst=new ArrayList<CustodyFileDetails>();
+   private String cstdyUpdPath=null;
+   private boolean dsblUpdSubmtBtn=true;
+
+   private Map<String,String> fileupdSucc=new HashMap<String,String>() ;
 
    public void cleanUpAll()
    {
@@ -110,6 +122,9 @@ public class UOBCustodyBean
       dispTaxAddBtn = false;
       dispTaxUpdBtn = false;
       dspDocUpdPnl=false;
+      cstdyUpdPath=null;
+      fileupdSucc=new HashMap<String,String>() ;
+      dsblUpdSubmtBtn=true;
    }
 
    public void initCustody()
@@ -119,16 +134,36 @@ public class UOBCustodyBean
       {
          if (!FacesContext.getCurrentInstance().isPostback())
          {
-            if (getBeanAcctNum() == 0)
+            if (getBeanAcctNum()==0)
             {
                msgheader = "dctd.100";
                getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
                return;
             }
+            String valOutput=isValidAcctNum();
+
+            // If account is managed
+            if (valOutput.equalsIgnoreCase("ACCOUNTMANAGED"))
+            {
+               msgheader = "dctd.103";
+               getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
+               return;
+            }
+
+            if (!valOutput.equalsIgnoreCase("success"))
+            {
+               // msgheader = "dctd.102";
+               // webutil.redirecttoMessagePage("ERROR", "Access Denied", msgheader);
+               getWebutil().accessdenied();
+               return;
+            }
+//Need To Remove
+            updFileMstrLst=custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),beanAcctNum);
             cleanUpAll();
             uobDataMaster = custodyService.fetch(getBeanAcctNum(), false);
             uobDataMaster.getAccountDetails().setAcctnum(getBeanAcctNum());
             repMap = custodyService.fetchSalesRepList(getWebutil().getWebprofile().getWebInfo().get("DEFAULT.ADVISOR").toString());
+            cstdyUpdPath=getWebutil().getWebprofile().getWebInfo().get("CUSTODY.UPLOAD.PATH").toString();
             if (repMap != null && repMap.size() > 0)
             {
                repList = new ArrayList<String>(repMap.keySet());
@@ -177,6 +212,33 @@ public class UOBCustodyBean
       catch (Exception ex)
       {
          logger.info("Exception: raised during Starting TD CTO process.");
+      }
+   }
+
+   private String isValidAcctNum()
+   {
+      String retValue = "";
+      ArrayList<CustomerData> selAccountList=null;
+      if(getWebutil().getUserInfoData()==null)
+      {
+         selAccountList=listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getWebprofile().getDefaultAdvisor(), webutil.getWebprofile().getDefaultRep());
+      }else{
+         beanLogonId=getWebutil().getUserInfoData().getLogonID();
+         selAccountList=listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
+      }
+      if(selAccountList==null || selAccountList.size()==0){
+
+         retValue = "NOACCOUNTMAP";
+         return retValue;
+      }
+      if (selAccountList!=null
+       && selAccountList.get(0).getUnopened())
+      {
+         retValue = "success";
+         return retValue;
+      }else{
+         retValue = "ACCOUNTMANAGED";
+         return retValue;
       }
    }
 
@@ -490,7 +552,7 @@ public class UOBCustodyBean
             repid = "CATCHALL";
          }
          uobDataMaster.getAccountDetails().setRepId(repid);
-         custodyService.saveAcctDetails(uobDataMaster.getAccountDetails(), getWebutil().getUserInfoData().getLogonID().toString());
+         custodyService.saveAcctDetails(uobDataMaster.getAccountDetails(), ""+getBeanLogonId());
          saveActAdditionalDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails(), uobDataMaster.getAccountDetails().getAcctnum(), "ao_acct_misc_details");
          dspIntroAcctPnl = false;
          getPagemanager().setPage(0);
@@ -1004,23 +1066,23 @@ public class UOBCustodyBean
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, getWebutil().getUserInfoData().getLogonID().toString(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
                }
                else
                {
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, getWebutil().getUserInfoData().getLogonID().toString(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, ""+getBeanLogonId(), ownDtls);
                }
                break;
             case 1:// New Account ADDRESS
-               saveAddrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, getWebutil().getUserInfoData().getLogonID().toString(), ownDtls);
+               saveAddrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
                break;
             case 2:// New Account TAX RESIDENCE INFORMATION
                break;
             case 3:// New Account EMPLOYMENT
-               saveEmpDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, getWebutil().getUserInfoData().getLogonID().toString(), ownDtls);
+               saveEmpDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
                break;
             case 4:// New Account SECURITY QUESTION
 //               saveSecDtls(ownDtls); Need changes for joint
@@ -1049,14 +1111,14 @@ public class UOBCustodyBean
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   // uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, getWebutil().getUserInfoData().getLogonID().toString(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
                }
                else
                {
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 //                  uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, getWebutil().getUserInfoData().getLogonID().toString(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2,""+getBeanLogonId(), ownDtls);
                }
                break;
             case 1:// Existing Account TAX RESIDENCE INFORMATION
@@ -2159,6 +2221,43 @@ public class UOBCustodyBean
 
 
    }
+
+   public void handleFileUpload(FileUploadEvent event){
+      try
+      {
+         System.out.println("File NAme " + event.getFile().getFileName());
+
+         InputStream is = null;
+         is = event.getFile().getInputstream();
+//         byte[] buffer = new byte[is.available()];
+         File targetFile = new File(cstdyUpdPath+""+getBeanAcctNum()+"_"+event.getFile().getFileName());
+         OutputStream outStream = new FileOutputStream(targetFile);
+//         outStream.write(buffer);
+
+         byte[] buffer = new byte[8 * 1024];
+         int bytesRead;
+         while ((bytesRead = is.read(buffer)) != -1) {
+            outStream.write(buffer, 0, bytesRead);
+         }
+         outStream.close();
+
+         String foo = (String) event.getComponent().getAttributes().get("foo"); // bar
+         fileupdSucc.put(foo,foo);
+         System.out.println("File Write ["+foo+"]" );
+         if(updFileMstrLst.size()==fileupdSucc.size()){
+            dsblUpdSubmtBtn=false;
+         }
+      }catch (Exception e){
+         System.out.println("Exception " + e);
+      }
+   }
+public boolean isFileUpd(String fileType)
+{
+   if(!fileupdSucc.isEmpty() && fileupdSucc.containsKey(fileType)){
+      return true;
+   }
+   return false;
+}
    public WebUtil getWebutil()
    {
       return webutil;
@@ -2747,5 +2846,55 @@ public class UOBCustodyBean
    public void setUpdFileMstrLst(List<CustodyFileDetails> updFileMstrLst)
    {
       this.updFileMstrLst = updFileMstrLst;
+   }
+
+   public long getBeanLogonId()
+   {
+      return beanLogonId;
+   }
+
+   public void setBeanLogonId(long beanLogonId)
+   {
+      this.beanLogonId = beanLogonId;
+   }
+
+   public ConsumerListDataDAO getListDAO()
+   {
+      return listDAO;
+   }
+
+   public void setListDAO(ConsumerListDataDAO listDAO)
+   {
+      this.listDAO = listDAO;
+   }
+
+   public String getCstdyUpdPath()
+   {
+      return cstdyUpdPath;
+   }
+
+   public void setCstdyUpdPath(String cstdyUpdPath)
+   {
+      this.cstdyUpdPath = cstdyUpdPath;
+   }
+
+   public Map<String, String> getFileupdSucc()
+   {
+      return fileupdSucc;
+   }
+
+   public void setFileupdSucc(Map<String, String> fileupdSucc)
+   {
+      this.fileupdSucc = fileupdSucc;
+   }
+
+   public boolean isDsblUpdSubmtBtn()
+   {
+      return dsblUpdSubmtBtn;
+   }
+
+   public void setDsblUpdSubmtBtn(boolean dsblUpdSubmtBtn)
+   {
+      this.dsblUpdSubmtBtn = dsblUpdSubmtBtn;
    }
 }

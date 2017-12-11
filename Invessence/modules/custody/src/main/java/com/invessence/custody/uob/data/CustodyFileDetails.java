@@ -14,6 +14,7 @@ public class CustodyFileDetails
    private String fileType;
    private String fileExtensions;
    private String isActive;
+   private String fileLabel;
 
    public String getProduct()
    {
@@ -103,5 +104,15 @@ public class CustodyFileDetails
    public void setIsActive(String isActive)
    {
       this.isActive = isActive;
+   }
+
+   public String getFileLabel()
+   {
+      return fileLabel;
+   }
+
+   public void setFileLabel(String fileLabel)
+   {
+      this.fileLabel = fileLabel;
    }
 }

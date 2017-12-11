@@ -244,7 +244,7 @@ public class CustodySP extends StoredProcedure
       inputMap.put("p_mailingAddressStreet4", ownerDetails.getMailingAddressStreet4());
       inputMap.put("p_mailingAddressCity", ownerDetails.getMailingAddressCity());
       inputMap.put("p_mailingAddressState", ownerDetails.getMailingAddressState());
-      inputMap.put("p_mailingAddressZipCode", ownerDetails.getPhysicalAddressZipCode());
+      inputMap.put("p_mailingAddressZipCode", ownerDetails.getMailingAddressZipCode());
       inputMap.put("p_mailingAddressCountry", ownerDetails.getMailingAddressCountry());
       inputMap.put("p_logonId", p_logonId);
       return execute(inputMap);

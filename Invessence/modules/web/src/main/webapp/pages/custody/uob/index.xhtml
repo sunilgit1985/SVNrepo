@@ -8,6 +8,7 @@
 
     <f:metadata>
         <f:viewParam name="acct" value="#{uobCustodyBean.beanAcctNum}"/>
+        <f:viewParam name="l" value="#{uobCustodyBean.beanLogonId}"/>
         <f:event type="preRenderView" listener="#{uobCustodyBean.initCustody}"/>
     </f:metadata>
     <ui:define name="content">
