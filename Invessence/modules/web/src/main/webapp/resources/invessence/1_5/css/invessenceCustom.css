@@ -1538,8 +1538,12 @@ input {
 
 .ui-panelgrid-content, .ui-fieldset-content, .ui-datatable table tbody tr td, .ui-panel .ui-panel-content, .ui-selectoneradio label {
     color: #000000 !important;
+    font-size: 17px;
 }
-
+.tax_info td a {
+    float: left;
+    margin: 5px;
+}
 .input, .ui-selectonemenu, .ui-selectcheckboxmenu {
     color: #546e7a !important;
 }
@@ -5430,6 +5434,7 @@ span.output_review {
 .uplaod_note li {
     list-style: disc;
     line-height: 1.70;
+    font-size:18px;
 }
 .file_nm {
     text-align: center;
