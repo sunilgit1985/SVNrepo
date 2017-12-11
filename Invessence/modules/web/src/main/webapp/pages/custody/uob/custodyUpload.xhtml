@@ -9,7 +9,16 @@
    <div class="layout-portlets-box">
       <div class="Container100 Responsive100 acc_holder_form">
          <div class="ContainerIndent">
-            <div class="Container100 uplaod_note">Upload 5mb file</div>
+            <div class="Container100 uplaod_note">
+               The documents requested below are used to verify your identity and place of residence, as required by securities regulations.
+               • Please note that submission of additional pages could result in your application being delayed or denied.
+               • Please ensure that the documents don't contain passwords.
+               • Please ensure that the documents are black and white with no highlighting.
+               • Allowable extension types - bmp, gif, tif, tiff, pdf, jpeg, jpg, doc, docx, xls, xlsx.
+               • Files cannot exceed 2 MB.
+               • A government ID may be submitted instead of a passport for residents of certain countries.
+               Submitting an invalid form of ID could result in your application being delayed or denied.
+            </div>
             <p:repeat value="#{uobCustodyBean.updFileMstrLst}" var="updLst" id="uirep" varStatus="status">
                <div class="Container100 file_dtls" >
                   <div class="Container50 file_nm" >
@@ -20,7 +29,8 @@
                                    dragDropSupport="false"
                                    update=":cstdyFrm:uobIpdSubBtn,cstdyFrm:uirep:#{status.index}:updSucces" sizeLimit="250000" fileLimit="10"
                                    auto="true"
-                                   allowTypes="/(\.|\/)(bmp|gif|tif|tiff|pdf|jpeg|jpg|doc|docx|xls|xlsx|png|csv)$/" id="idwant#{status.index}">
+                                   allowTypes="/(\.|\/)(bmp|gif|tif|tiff|pdf|jpeg|jpg|doc|docx|xls|xlsx|png|csv)$/" id="idwant#{status.index}"
+                                   messageTemplate="Invalid file">
                         <f:attribute name="foo" value="#{updLst.fileType}" />
                              </p:fileUpload>
                   </div>
