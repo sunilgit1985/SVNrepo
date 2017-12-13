@@ -66,6 +66,7 @@ public class UOBCustodyBean
    private List<CustodyFileDetails> updFileMstrLst=new ArrayList<CustodyFileDetails>();
    private String cstdyUpdPath=null;
    private boolean dsblUpdSubmtBtn=true;
+   private String currentAcctHolder=null;
 
    private Map<String,String> fileupdSucc=new HashMap<String,String>() ;
 
@@ -125,6 +126,7 @@ public class UOBCustodyBean
       cstdyUpdPath=null;
       fileupdSucc=new HashMap<String,String>() ;
       dsblUpdSubmtBtn=true;
+      currentAcctHolder=null;
    }
 
    public void initCustody()
@@ -136,7 +138,7 @@ public class UOBCustodyBean
          {
             if (getBeanAcctNum()==0)
             {
-               msgheader = "dctd.100";
+               msgheader = "dctd.200";
                getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
                return;
             }
@@ -168,7 +170,7 @@ public class UOBCustodyBean
             {
                repList = new ArrayList<String>(repMap.keySet());
             }
-            onChngNation();
+            onChngNation(false);
             onChngOtrCntry();
             loadIntroPage();
             onChngRelDtls();
@@ -179,6 +181,7 @@ public class UOBCustodyBean
             owTaxDtls = new OwnerTaxationDetails();
             countries = new ArrayList<String>();
             countries = new ArrayList<String>(countryDetails.keySet());
+            setCurrentAcctHolder("Individual");
 
             if (uobDataMaster.getIndividualOwnersDetails().getOwnerTaxationDetails() != null &&
                uobDataMaster.getIndividualOwnersDetails().getOwnerTaxationDetails().size() > 0)
@@ -347,7 +350,8 @@ public class UOBCustodyBean
             dsplExtIndAcctCat = false;
          }
          uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
-         uobDataMaster.getAccountDetails().setClientAccountID(null);
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setSalesPersonName(null);
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setExistingTradeAcctNumber(null);
          dsplExtIndAcctInp = false;
          dsplExtJntAcctCat = false;
       }
@@ -802,7 +806,7 @@ public class UOBCustodyBean
       activeTab = getPagemanager().getPage();
    }
 
-   public void onChngNation()
+   public void onChngNation(boolean bflag)
    {
       try
       {
@@ -829,6 +833,21 @@ public class UOBCustodyBean
             dsplOtrCntry = true;
             dsplIcNoInp = false;
             dsplPspNoInp = false;
+         }
+         if(bflag){
+            if(getCurrentAcctHolder().equalsIgnoreCase("Individual"))
+            {
+               uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setNric(null);
+               uobDataMaster.getIndividualOwnersDetails().getOwnerCitizenshipDetails().setNationalitySpecify(null);
+               uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setIcno(null);
+               uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setPassport(null);
+            }else if(getCurrentAcctHolder().equalsIgnoreCase("Joint"))
+            {
+               uobDataMaster.getJointOwnersDetails().getOwnerIdentificationDetails().setNric(null);
+               uobDataMaster.getJointOwnersDetails().getOwnerCitizenshipDetails().setNationalitySpecify(null);
+               uobDataMaster.getJointOwnersDetails().getOwnerIdentificationDetails().setIcno(null);
+               uobDataMaster.getJointOwnersDetails().getOwnerIdentificationDetails().setPassport(null);
+            }
          }
       }
       catch (Exception e)
@@ -1148,11 +1167,12 @@ public class UOBCustodyBean
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrEmpAddr, 3, 40);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrEmpAddr, 4, 60);
 
          ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress1(addrdtls[0]);
          ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress2(addrdtls[1]);
          ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress3(addrdtls[2]);
+         ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress4(addrdtls[3]);
       }
 
       custodyService.saveEmploymentDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
@@ -1166,21 +1186,23 @@ public class UOBCustodyBean
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrPhyAddr, 3, 40);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrPhyAddr, 4, 60);
 
          ownerDetails.setPhysicalAddressStreet1(addrdtls[0]);
          ownerDetails.setPhysicalAddressStreet2(addrdtls[1]);
          ownerDetails.setPhysicalAddressStreet3(addrdtls[2]);
+         ownerDetails.setPhysicalAddressStreet4(addrdtls[3]);
       }
       if (hasRequiredData(priHldrMlAddr))
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrMlAddr, 3, 40);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrMlAddr, 4, 60);
 
          ownerDetails.setMailingAddressStreet1(addrdtls[0]);
          ownerDetails.setMailingAddressStreet2(addrdtls[1]);
          ownerDetails.setMailingAddressStreet3(addrdtls[2]);
+         ownerDetails.setMailingAddressStreet4(addrdtls[3]);
       }
       custodyService.saveAddressDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
       saveAdditionalDtls(ownerDetails.getOwnerMiscDetails(), acctNum, acctOwnerId, "ao_owners_misc_details");
@@ -1311,8 +1333,7 @@ public class UOBCustodyBean
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify() == null ||
-               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Select")))
+               && !hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()))
             {
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.otrNatCtry", "Other nationality country is required!", null));
@@ -1322,7 +1343,7 @@ public class UOBCustodyBean
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify() != null &&
+               && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
                ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
                && (ownerDetails.getOwnerIdentificationDetails().getIcno() == null ||
                ownerDetails.getOwnerIdentificationDetails().getIcno().trim().equalsIgnoreCase("")))
@@ -1335,7 +1356,7 @@ public class UOBCustodyBean
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify() != null &&
+               && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
                !ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
                && (ownerDetails.getOwnerIdentificationDetails().getPassport() == null ||
                ownerDetails.getOwnerIdentificationDetails().getPassport().trim().equalsIgnoreCase("")))
@@ -1486,8 +1507,7 @@ public class UOBCustodyBean
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify() == null ||
-               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("")))
+               && !hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()))
             {
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.otrNatCtry", "Other nationality country is required!", null));
@@ -1497,7 +1517,7 @@ public class UOBCustodyBean
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify() != null &&
+               && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
                ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
                && (ownerDetails.getOwnerIdentificationDetails().getIcno() == null ||
                ownerDetails.getOwnerIdentificationDetails().getIcno().trim().equalsIgnoreCase("")))
@@ -1510,7 +1530,7 @@ public class UOBCustodyBean
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify() != null &&
+               && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
                !ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
                && (ownerDetails.getOwnerIdentificationDetails().getPassport() == null ||
                ownerDetails.getOwnerIdentificationDetails().getPassport().trim().equalsIgnoreCase("")))
@@ -2114,6 +2134,22 @@ public class UOBCustodyBean
       return MySortStrings;
    }
 
+   public List<String> getOtherCountries(String query)
+   {
+      List<String> MySortStrings = new ArrayList<String>();
+      if (query.length() > 2)
+      {
+         for (int i = 0; i < countries.size(); i++)
+         {
+            if (countries.get(i).toLowerCase().contains(query.toLowerCase()) && !countries.get(i).equalsIgnoreCase("Singapore"))
+            {
+               MySortStrings.add(countries.get(i));
+            }
+         }
+      }
+      return MySortStrings;
+   }
+
    public List<String> completeRepText(String query)
    {
       List<String> MySortStrings = new ArrayList<String>();
@@ -2218,8 +2254,20 @@ public class UOBCustodyBean
       dspExtAcctPnl=false;
       dspIntroAcctPnl=false;
       updFileMstrLst=custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),beanAcctNum);
+   }
 
-
+   public void prevDataForm(){
+      dspDocUpdPnl=false;
+      if (getAcctCat().equalsIgnoreCase("yes"))
+      {
+         dspExtAcctPnl = true;
+         dspNewAcctPnl = false;
+      }else {
+         dspExtAcctPnl = false;
+         dspNewAcctPnl = true;
+      }
+      dspIntroAcctPnl=false;
+      updFileMstrLst=custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),beanAcctNum);
    }
 
    public void handleFileUpload(FileUploadEvent event){
@@ -2896,5 +2944,15 @@ public boolean isFileUpd(String fileType)
    public void setDsblUpdSubmtBtn(boolean dsblUpdSubmtBtn)
    {
       this.dsblUpdSubmtBtn = dsblUpdSubmtBtn;
+   }
+
+   public String getCurrentAcctHolder()
+   {
+      return currentAcctHolder;
+   }
+
+   public void setCurrentAcctHolder(String currentAcctHolder)
+   {
+      this.currentAcctHolder = currentAcctHolder;
    }
 }
