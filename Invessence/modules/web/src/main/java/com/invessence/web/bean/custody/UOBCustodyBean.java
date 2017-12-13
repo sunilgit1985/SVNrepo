@@ -42,7 +42,7 @@ public class UOBCustodyBean
 
    private UOBDataMaster uobDataMaster;
    private PagesImpl pagemanager = new PagesImpl(8);
-   private long beanAcctNum,beanLogonId;
+   private long beanAcctNum, beanLogonId;
    private boolean dsplExtIndAcctCat = false, dsplExtIndAcctInp = false, dsplExtJntAcctCat = false, dsplExtJntAcctInp = false, dsplAcctTyp = false;
    private boolean dspExtAcctPnl = false, dspNewAcctPnl = false, dspIntroAcctPnl = false, dsblSubmtBtn = true, dspJntTab = false;
    private String acctCat, extAcctJnt, clientAcctId, slsPrsnNm, selIndAcctTyp, selJntAcctTyp;
@@ -62,13 +62,13 @@ public class UOBCustodyBean
    Map<String, Country> countryDetails = (Map<String, Country>) ServiceDetails.genericDetails.get(Constant.GENERIC_DETAILS.COUNTRY.toString());
    private List<String> countries, repList;
    private Map<String, String> repMap = new HashMap<String, String>();
-   private boolean dspDocUpdPnl=false;
-   private List<CustodyFileDetails> updFileMstrLst=new ArrayList<CustodyFileDetails>();
-   private String cstdyUpdPath=null;
-   private boolean dsblUpdSubmtBtn=true;
-   private String currentAcctHolder=null;
+   private boolean dspDocUpdPnl = false;
+   private List<CustodyFileDetails> updFileMstrLst = new ArrayList<CustodyFileDetails>();
+   private String cstdyUpdPath = null;
+   private boolean dsblUpdSubmtBtn = true;
+   private String currentAcctHolder = null;
 
-   private Map<String,String> fileupdSucc=new HashMap<String,String>() ;
+   private Map<String, String> fileupdSucc = new HashMap<String, String>();
 
    public void cleanUpAll()
    {
@@ -122,11 +122,11 @@ public class UOBCustodyBean
       disTaxBtn = false;
       dispTaxAddBtn = false;
       dispTaxUpdBtn = false;
-      dspDocUpdPnl=false;
-      cstdyUpdPath=null;
-      fileupdSucc=new HashMap<String,String>() ;
-      dsblUpdSubmtBtn=true;
-      currentAcctHolder=null;
+      dspDocUpdPnl = false;
+      cstdyUpdPath = null;
+      fileupdSucc = new HashMap<String, String>();
+      dsblUpdSubmtBtn = true;
+      currentAcctHolder = null;
    }
 
    public void initCustody()
@@ -136,13 +136,13 @@ public class UOBCustodyBean
       {
          if (!FacesContext.getCurrentInstance().isPostback())
          {
-            if (getBeanAcctNum()==0)
+            if (getBeanAcctNum() == 0)
             {
                msgheader = "dctd.200";
                getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
                return;
             }
-            String valOutput=isValidAcctNum();
+            String valOutput = isValidAcctNum();
 
             // If account is managed
             if (valOutput.equalsIgnoreCase("ACCOUNTMANAGED"))
@@ -160,12 +160,12 @@ public class UOBCustodyBean
                return;
             }
 //Need To Remove
-            updFileMstrLst=custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),beanAcctNum);
+            updFileMstrLst = custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum);
             cleanUpAll();
             uobDataMaster = custodyService.fetch(getBeanAcctNum(), false);
             uobDataMaster.getAccountDetails().setAcctnum(getBeanAcctNum());
             repMap = custodyService.fetchSalesRepList(getWebutil().getWebprofile().getWebInfo().get("DEFAULT.ADVISOR").toString());
-            cstdyUpdPath=getWebutil().getWebprofile().getWebInfo().get("CUSTODY.UPLOAD.PATH").toString();
+            cstdyUpdPath = getWebutil().getWebprofile().getWebInfo().get("CUSTODY.UPLOAD.PATH").toString();
             if (repMap != null && repMap.size() > 0)
             {
                repList = new ArrayList<String>(repMap.keySet());
@@ -221,25 +221,30 @@ public class UOBCustodyBean
    private String isValidAcctNum()
    {
       String retValue = "";
-      ArrayList<CustomerData> selAccountList=null;
-      if(getWebutil().getUserInfoData()==null)
+      ArrayList<CustomerData> selAccountList = null;
+      if (getWebutil().getUserInfoData() == null)
       {
-         selAccountList=listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getWebprofile().getDefaultAdvisor(), webutil.getWebprofile().getDefaultRep());
-      }else{
-         beanLogonId=getWebutil().getUserInfoData().getLogonID();
-         selAccountList=listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
+         selAccountList = listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getWebprofile().getDefaultAdvisor(), webutil.getWebprofile().getDefaultRep());
       }
-      if(selAccountList==null || selAccountList.size()==0){
+      else
+      {
+         beanLogonId = getWebutil().getUserInfoData().getLogonID();
+         selAccountList = listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
+      }
+      if (selAccountList == null || selAccountList.size() == 0)
+      {
 
          retValue = "NOACCOUNTMAP";
          return retValue;
       }
-      if (selAccountList!=null
-       && selAccountList.get(0).getUnopened())
+      if (selAccountList != null
+         && selAccountList.get(0).getUnopened())
       {
          retValue = "success";
          return retValue;
-      }else{
+      }
+      else
+      {
          retValue = "ACCOUNTMANAGED";
          return retValue;
       }
@@ -446,7 +451,7 @@ public class UOBCustodyBean
    {
       try
       {
-         if(owTaxDtls.getIsTINAvailable() != null)
+         if (owTaxDtls.getIsTINAvailable() != null)
          {
             if (owTaxDtls.getIsTINAvailable().equalsIgnoreCase("Yes"))
             {
@@ -458,9 +463,11 @@ public class UOBCustodyBean
                dsplPriHldrTaxTin = false;
                dsplPriHldrTaxRsnPnl = true;
             }
-         }else{
-            dsplPriHldrTaxTin=false;
-            dsplPriHldrTaxRsnPnl=false;
+         }
+         else
+         {
+            dsplPriHldrTaxTin = false;
+            dsplPriHldrTaxRsnPnl = false;
          }
       }
       catch (Exception e)
@@ -556,13 +563,14 @@ public class UOBCustodyBean
             repid = "CATCHALL";
          }
          uobDataMaster.getAccountDetails().setRepId(repid);
-         custodyService.saveAcctDetails(uobDataMaster.getAccountDetails(), ""+getBeanLogonId());
+         custodyService.saveAcctDetails(uobDataMaster.getAccountDetails(), "" + getBeanLogonId());
          saveActAdditionalDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails(), uobDataMaster.getAccountDetails().getAcctnum(), "ao_acct_misc_details");
          dspIntroAcctPnl = false;
          getPagemanager().setPage(0);
-         if(getAcctCat().equalsIgnoreCase("yes") &&
-            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()!=null &&
-            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No")){
+         if (getAcctCat().equalsIgnoreCase("yes") &&
+            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null &&
+            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
+         {
             setAcctCat("No");
          }
 
@@ -738,7 +746,7 @@ public class UOBCustodyBean
    {
       Boolean dataOK = true;
       StringBuilder sb = new StringBuilder();
-      taxError=null;
+      taxError = null;
       if (!hasRequiredData(owTaxDtls.getJurisdictionOfTaxResidence()) || owTaxDtls.getJurisdictionOfTaxResidence().trim().equalsIgnoreCase(""))
       {
          sb.append("Country / Jurisdiction of tax residence is required.<br/>");
@@ -756,7 +764,7 @@ public class UOBCustodyBean
          sb.append("Reason for no Tax identification number is required.<br/>");
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("No") &&
-         (owTaxDtls.getTinUnavailableReason()!=null && owTaxDtls.getTinUnavailableReason().equalsIgnoreCase("B")) &&
+         (owTaxDtls.getTinUnavailableReason() != null && owTaxDtls.getTinUnavailableReason().equalsIgnoreCase("B")) &&
          !hasRequiredData(owTaxDtls.getTinUnavailableValue()))
       {
          sb.append("Explaination for Reason B is required.<br/>");
@@ -771,7 +779,7 @@ public class UOBCustodyBean
          dataOK = true;
          taxError = null;
       }
-      sb=null;
+      sb = null;
       return dataOK;
    }
 
@@ -782,10 +790,10 @@ public class UOBCustodyBean
       {
          saveDetails(getPagemanager().getPage(), getAcctCat(), false);
          getPagemanager().clearAllErrorMessage();
-         if (getPagemanager().getPage()+1==getPagemanager().getMaxNoofPages())
+         if (getPagemanager().getPage() + 1 == getPagemanager().getMaxNoofPages())
          {
             dsblSubmtBtn = false;
-            activeTab = getPagemanager().getPage()+1;
+            activeTab = getPagemanager().getPage() + 1;
          }
          else
          {
@@ -834,14 +842,16 @@ public class UOBCustodyBean
             dsplIcNoInp = false;
             dsplPspNoInp = false;
          }
-         if(bflag){
-            if(getCurrentAcctHolder().equalsIgnoreCase("Individual"))
+         if (bflag)
+         {
+            if (getCurrentAcctHolder().equalsIgnoreCase("Individual"))
             {
                uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setNric(null);
                uobDataMaster.getIndividualOwnersDetails().getOwnerCitizenshipDetails().setNationalitySpecify(null);
                uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setIcno(null);
                uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setPassport(null);
-            }else if(getCurrentAcctHolder().equalsIgnoreCase("Joint"))
+            }
+            else if (getCurrentAcctHolder().equalsIgnoreCase("Joint"))
             {
                uobDataMaster.getJointOwnersDetails().getOwnerIdentificationDetails().setNric(null);
                uobDataMaster.getJointOwnersDetails().getOwnerCitizenshipDetails().setNationalitySpecify(null);
@@ -1085,23 +1095,23 @@ public class UOBCustodyBean
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                }
                else
                {
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, ""+getBeanLogonId(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, "" + getBeanLogonId(), ownDtls);
                }
                break;
             case 1:// New Account ADDRESS
-               saveAddrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
+               saveAddrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                break;
             case 2:// New Account TAX RESIDENCE INFORMATION
                break;
             case 3:// New Account EMPLOYMENT
-               saveEmpDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
+               saveEmpDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                break;
             case 4:// New Account SECURITY QUESTION
 //               saveSecDtls(ownDtls); Need changes for joint
@@ -1130,14 +1140,14 @@ public class UOBCustodyBean
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   // uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ""+getBeanLogonId(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                }
                else
                {
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 //                  uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
-                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2,""+getBeanLogonId(), ownDtls);
+                  saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, "" + getBeanLogonId(), ownDtls);
                }
                break;
             case 1:// Existing Account TAX RESIDENCE INFORMATION
@@ -1238,7 +1248,7 @@ public class UOBCustodyBean
       try
       {
          Map<String, Object> obMap = getFieldNames(obj, false);
-         System.out.print("Query gen"+getAddtnlFldsInsrtQry(obj,false,table,acctNum,acctOwnerId));
+         System.out.print("Query gen" + getAddtnlFldsInsrtQry(obj, false, table, acctNum, acctOwnerId));
          for (Map.Entry<String, Object> entry : obMap.entrySet())
          {
             String name = entry.getKey();
@@ -2055,12 +2065,12 @@ public class UOBCustodyBean
       return lst;
    }
 
-   public static String getAddtnlFldsInsrtQry(final Object obj, boolean publicOnly,String table,long acctnum,int acctOwnerId)
+   public static String getAddtnlFldsInsrtQry(final Object obj, boolean publicOnly, String table, long acctnum, int acctOwnerId)
       throws IllegalArgumentException, IllegalAccessException
    {
       Class<? extends Object> c1 = obj.getClass();
       Field[] fields = c1.getDeclaredFields();
-      StringBuilder sb=new StringBuilder();
+      StringBuilder sb = new StringBuilder();
       sb.append("insert into ").append(table).append("(acctnum,acctOwnerId,name,value) values ");
       for (int i = 0; i < fields.length; i++)
       {
@@ -2070,8 +2080,9 @@ public class UOBCustodyBean
             if (Modifier.isPublic(fields[i].getModifiers()))
             {
                Object value = fields[i].get(obj);
-               if(value!=null){
-                  sb.append("("+acctnum).append(",").append(acctOwnerId).append(",'").append(name).append("','").append(value).append("'),");
+               if (value != null)
+               {
+                  sb.append("(" + acctnum).append(",").append(acctOwnerId).append(",'").append(name).append("','").append(value).append("'),");
                }
             }
          }
@@ -2079,15 +2090,16 @@ public class UOBCustodyBean
          {
             fields[i].setAccessible(true);
             Object value = fields[i].get(obj);
-            if(value!=null){
-               sb.append("("+acctnum).append(",").append(acctOwnerId).append(",'").append(name).append("','").append(value).append("'),");
+            if (value != null)
+            {
+               sb.append("(" + acctnum).append(",").append(acctOwnerId).append(",'").append(name).append("','").append(value).append("'),");
             }
          }
       }
-      String retString=sb.toString();
-      int ind1=retString.lastIndexOf(",");
-      retString=retString.substring(0,ind1);
-      retString=retString+";";
+      String retString = sb.toString();
+      int ind1 = retString.lastIndexOf(",");
+      retString = retString.substring(0, ind1);
+      retString = retString + ";";
       return retString;
    }
 
@@ -2248,29 +2260,34 @@ public class UOBCustodyBean
       }
    }
 
-   public void submitDataForm(){
-      dspDocUpdPnl=true;
-      dspNewAcctPnl=false;
-      dspExtAcctPnl=false;
-      dspIntroAcctPnl=false;
-      updFileMstrLst=custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),beanAcctNum);
+   public void submitDataForm()
+   {
+      dspDocUpdPnl = true;
+      dspNewAcctPnl = false;
+      dspExtAcctPnl = false;
+      dspIntroAcctPnl = false;
+      updFileMstrLst = custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum);
    }
 
-   public void prevDataForm(){
-      dspDocUpdPnl=false;
+   public void prevDataForm()
+   {
+      dspDocUpdPnl = false;
       if (getAcctCat().equalsIgnoreCase("yes"))
       {
          dspExtAcctPnl = true;
          dspNewAcctPnl = false;
-      }else {
+      }
+      else
+      {
          dspExtAcctPnl = false;
          dspNewAcctPnl = true;
       }
-      dspIntroAcctPnl=false;
-      updFileMstrLst=custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),beanAcctNum);
+      dspIntroAcctPnl = false;
+      updFileMstrLst = custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum);
    }
 
-   public void handleFileUpload(FileUploadEvent event){
+   public void handleFileUpload(FileUploadEvent event)
+   {
       try
       {
          System.out.println("File NAme " + event.getFile().getFileName());
@@ -2278,34 +2295,41 @@ public class UOBCustodyBean
          InputStream is = null;
          is = event.getFile().getInputstream();
 //         byte[] buffer = new byte[is.available()];
-         File targetFile = new File(cstdyUpdPath+""+getBeanAcctNum()+"_"+event.getFile().getFileName());
+         File targetFile = new File(cstdyUpdPath + "" + getBeanAcctNum() + "_" + event.getFile().getFileName());
          OutputStream outStream = new FileOutputStream(targetFile);
 //         outStream.write(buffer);
 
          byte[] buffer = new byte[8 * 1024];
          int bytesRead;
-         while ((bytesRead = is.read(buffer)) != -1) {
+         while ((bytesRead = is.read(buffer)) != -1)
+         {
             outStream.write(buffer, 0, bytesRead);
          }
          outStream.close();
 
          String foo = (String) event.getComponent().getAttributes().get("foo"); // bar
-         fileupdSucc.put(foo,foo);
-         System.out.println("File Write ["+foo+"]" );
-         if(updFileMstrLst.size()==fileupdSucc.size()){
-            dsblUpdSubmtBtn=false;
+         fileupdSucc.put(foo, foo);
+         System.out.println("File Write [" + foo + "]");
+         if (updFileMstrLst.size() == fileupdSucc.size())
+         {
+            dsblUpdSubmtBtn = false;
          }
-      }catch (Exception e){
+      }
+      catch (Exception e)
+      {
          System.out.println("Exception " + e);
       }
    }
-public boolean isFileUpd(String fileType)
-{
-   if(!fileupdSucc.isEmpty() && fileupdSucc.containsKey(fileType)){
-      return true;
+
+   public boolean isFileUpd(String fileType)
+   {
+      if (!fileupdSucc.isEmpty() && fileupdSucc.containsKey(fileType))
+      {
+         return true;
+      }
+      return false;
    }
-   return false;
-}
+
    public WebUtil getWebutil()
    {
       return webutil;
