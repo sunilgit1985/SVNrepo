@@ -2,31 +2,29 @@ package com.invmodel.risk.data;
 
 import java.util.*;
 
-import com.invmodel.risk.dao.RiskFetchDAO;
-
 /**
  * Created by prashant on 11/14/2017.
  */
 public class RiskCalc
 {
-   public UserRisk userRisk;
+   public UserRiskProfile userRiskProfile;
 
    private Calendar cal = Calendar.getInstance();
 
    public RiskCalc()
    {
-      this.userRisk = null;
+      this.userRiskProfile = null;
    }
 
-   public RiskCalc(UserRisk userRisk)
+   public RiskCalc(UserRiskProfile userRiskProfile)
    {
-      this.userRisk = userRisk;
+      this.userRiskProfile = userRiskProfile;
    }
 
-   public RiskCalc(UserRisk userRisk, Long acctnum)
+   public RiskCalc(UserRiskProfile userRiskProfile, Long acctnum)
    {
-      this.userRisk = userRisk;
-      userRisk.setAcctnum(acctnum);
+      this.userRiskProfile = userRiskProfile;
+      userRiskProfile.setAcctnum(acctnum);
    }
 
    private String getDateValue(Integer increment)
@@ -41,66 +39,54 @@ public class RiskCalc
 
    public void setAssetRisk(Integer year, Double score)
    {
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
          year = (year == null) ? 0 : year;
-         userRisk.setAssetScore(year, score);
+         userRiskProfile.setAssetScore(year, score);
       }
    }
 
    public void setPortfolioRisk(Integer year, Double score)
    {
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
          year = (year == null) ? 0 : year;
-         userRisk.setPortfolioScore(year, score);
+         userRiskProfile.setPortfolioScore(year, score);
       }
    }
 
    public void setStandardScore(Integer year, Double score)
    {
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
          year = (year == null) ? 0 : year;
-         userRisk.setStandardScore(year, score);
+         userRiskProfile.setStandardScore(year, score);
       }
    }
 
    public void setAllCashFlag(Integer year, Boolean allCashFlag)
    {
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
          year = (year == null) ? 0 : year;
-         userRisk.setAllCashFlag(year, allCashFlag);
+         userRiskProfile.setAllCashFlag(year, allCashFlag);
       }
    }
 
    public ArrayList<RiskScore> getAllScores()
    {
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
-         userRisk.getALLRiskScores();
+         userRiskProfile.getALLRiskScores();
       }
       return null;
-   }
-
-   public Boolean isCalcFormula_C()
-   {
-      if (userRisk != null)
-      {
-         if (userRisk.getAnswer(RiskConst.CALCFORMULA) != null)
-         {
-            return userRisk.getAnswer(RiskConst.CALCFORMULA).equalsIgnoreCase(RiskConst.CALCFORMALA_C);
-         }
-      }
-      return true;
    }
 
    public Boolean getKnockOutFlag()
    {
       try
       {
-         return (userRisk.getKnockout() > 0) ? true : false;
+         return (userRiskProfile.getKnockout() > 0) ? true : false;
       }
       catch (Exception ex)
       {
@@ -118,9 +104,9 @@ public class RiskCalc
          return 0.0;
       }
 
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
-         return userRisk.getScore(year);
+         return userRiskProfile.getScore(year);
       }
       return 0.0;
    }
@@ -133,9 +119,9 @@ public class RiskCalc
          return 0.0;
       }
 
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
-         return userRisk.getStandardScore(year);
+         return userRiskProfile.getStandardScore(year);
       }
       return 0.0;
    }
@@ -148,9 +134,9 @@ public class RiskCalc
          return 0.0;
       }
 
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
-         return userRisk.getAssetScore(year);
+         return userRiskProfile.getAssetScore(year);
       }
       return 0.0;
    }
@@ -163,63 +149,32 @@ public class RiskCalc
          return 0.0;
       }
 
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
-         return userRisk.getPortfolioScore(year);
+         return userRiskProfile.getPortfolioScore(year);
       }
       return 0.0;
    }
 
-   public Integer getCalcMethod()
-   {
-      if (userRisk != null)
-      {
-         if (userRisk.getAnswer(RiskConst.CALCMETHOD).equalsIgnoreCase(RiskConst.CALCMETHOD_STANDARD))
-         {
-            return 1;
-         }
-         if (userRisk.getAnswer(RiskConst.CALCMETHOD).equalsIgnoreCase(RiskConst.CALCMETHOD_AGETIME))
-         {
-            return 2;
-         }
-         if (userRisk.getAnswer(RiskConst.CALCMETHOD).equalsIgnoreCase(RiskConst.CALCMETHOD_CUSTOM))
-         {
-            return 9;
-         }
+   public Double presentValue(Double futureValue, Double interestRate, Integer years) {
+      try {
+         Double presentvalue = futureValue / (Math.pow((1.0 + (interestRate/100.0)), years.doubleValue()));
+         return presentvalue;
       }
-      return 0;
+      catch (Exception ex) {
+         return 0.0;
+      }
    }
-
 
    public Double ageTimeFormula(Integer age, Integer horizon)
    {
       Double value;
-      Double agePowerValue = 1.7;
-      Double ageWeight = 1.0;
-      Double maxDuration = 15.0; // This could be a constant
-      Double maxScore = 100.0;
-      try
+     try
       {
-         String advisor = userRisk.getAdvisor();
-         if (userRisk != null && userRisk.getAdvisorRiskMaster() != null)
-         {
-            if (userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.AGEPOWERVALUE))
-            {
-               agePowerValue = userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.AGEPOWERVALUE).getDefaultDoubleValue();
-            }
-            if (userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.AGEWEIGHT))
-            {
-               ageWeight = userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.AGEWEIGHT).getDefaultDoubleValue();
-            }
-            if (userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.MAXDURATION))
-            {
-               maxDuration = userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.MAXDURATION).getDefaultDoubleValue();
-            }
-            if (userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.MAXSCORE))
-            {
-               maxScore = userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.MAXSCORE).getDefaultDoubleValue();
-            }
-         }
+         Double agePowerValue = userRiskProfile.getDefaultDoubleValue(RiskConst.AGEPOWERVALUE, 1.7);
+         Double ageWeight = userRiskProfile.getDefaultDoubleValue(RiskConst.AGEWEIGHT, 1.0);
+         Double maxDuration = userRiskProfile.getDefaultDoubleValue(RiskConst.MAXDURATION, 15.0);
+         Double maxScore = userRiskProfile.getMaxScore();
 
          age = (age == null) ? 30 : age;
          horizon = (horizon == null) ? 1 : horizon;
@@ -250,42 +205,42 @@ public class RiskCalc
 
    public Double getUserRiskQuestionsWeight(Integer question)
    {
-      return userRisk.getRiskAnswerWeight(question);
+      return userRiskProfile.getRiskAnswerWeight(question);
    }
 
    public void setQuestionsRisk(Integer question, Integer answer, Double weight)
    {
       Integer prevanswer;
       Integer knockoutanswer;
-      if (userRisk != null && userRisk.getAdvisorRiskMaster() != null && userRisk.getAdvisorRiskMaster().getAdvisorMasterdata() != null)
+      if (userRiskProfile != null && userRiskProfile.getAdvisorRiskMaster() != null && userRiskProfile.getAdvisorRiskMaster().getAdvisorMasterdata() != null)
       {
          if (question == 0) {
-            userRisk.setRiskAnswer(question, answer, weight);
+            userRiskProfile.setRiskAnswer(question, answer, weight);
          }
          else
          {
-            Integer lastQuestion = userRisk.getRiskQuestion();
+            Integer lastQuestion = userRiskProfile.getRiskQuestion();
             if (question > 0 && question <= lastQuestion)
             {
-               knockoutanswer = userRisk.getAdvisorRiskMaster().getAdvisorMappings().get(question).getKnockoutQuestion();
-               prevanswer = userRisk.getRiskAnswer(question);
-               weight = (weight == null) ? userRisk.getAdvisorRiskMaster().getAdvisorMappings().get(question).getWeight(answer) : weight;
+               knockoutanswer = userRiskProfile.getAdvisorRiskMaster().getAdvisorMappings().get(question).getKnockoutQuestion();
+               prevanswer = userRiskProfile.getRiskAnswer(question);
+               weight = (weight == null) ? userRiskProfile.getAdvisorRiskMaster().getAdvisorMappings().get(question).getWeight(answer) : weight;
                if (prevanswer != answer)
                {
                   if (prevanswer == knockoutanswer && knockoutanswer > 0)
                   {
-                     userRisk.removeKnockout();
+                     userRiskProfile.removeKnockout();
 
                   }
                   else
                   {
                      if (answer == knockoutanswer && knockoutanswer > 0)
                      {
-                        userRisk.addKnockout();
+                        userRiskProfile.addKnockout();
                         weight = 0.0;
                      }
                   }
-                  userRisk.setRiskAnswer(question, answer, weight);
+                  userRiskProfile.setRiskAnswer(question, answer, weight);
                }
             }
          }
@@ -294,9 +249,9 @@ public class RiskCalc
 
    public void setRisk0(Double score)
    {
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
-         // Double score = ageTimeFormula(age, userRisk.getHorizon());
+         // Double score = ageTimeFormula(age, userRiskProfile.getHorizon());
          setQuestionsRisk(0, 0, score);
       }
    }
@@ -308,29 +263,30 @@ public class RiskCalc
       try
       {
 
-         if (userRisk == null)
+         if (userRiskProfile == null)
          {
             return;
          }
 
-         if (userRisk.getKnockout() > 0)
+         if (userRiskProfile.getKnockout() > 0)
          {
-            userRisk.setAllCashFlag(year, true);
+            userRiskProfile.setAllCashFlag(year, true);
+            return;
          }
 
-         if (userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.MAXSCORE))
+         if (userRiskProfile.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.MAXSCORE))
          {
-            maxScore = userRisk.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.MAXSCORE).getDefaultDoubleValue();
+            maxScore = userRiskProfile.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.MAXSCORE).getDefaultDoubleValue();
          }
 
-         Integer numberofQuestions = userRisk.getRiskQuestion();
+         Integer numberofQuestions = userRiskProfile.getRiskQuestion();
          Double tempWeight = 0.0;
          value = ageTimeFormula(age, horizon);
          setRisk0(value); // Save this as default value for Risk 0 as starting point.
          // The reason, we are starting with Zero, is because the Zero represents Age/Horizon Risk default.
          for (int loop = 1; loop <= numberofQuestions + 1; loop++)
          {
-            tempWeight = userRisk.getRiskAnswerWeight(loop);
+            tempWeight = userRiskProfile.getRiskAnswerWeight(loop);
             if (tempWeight != null)
             {
                value = (tempWeight > value) ? tempWeight : value;
@@ -340,16 +296,12 @@ public class RiskCalc
          value = (value < 0.0) ? 0.0 : value;
          value = (value > maxScore) ? maxScore : value;
          value = (maxScore - value);
-         userRisk.setRiskScores(year, userRisk.getCalcFormula(), false,
-                                value, value, value, value, 0.0
-         );
+         userRiskProfile.setStandardScore(year, value);
 
       }
       catch (Exception ex)
       {
-         userRisk.setRiskScores(year, userRisk.getCalcFormula(), true,
-                                value, value, value, value, 0.0
-         );
+         userRiskProfile.setAllCashFlag(year, true);
       }
 
    }
@@ -358,32 +310,14 @@ public class RiskCalc
    {
       Integer age;
       Integer horizon;
-      if (isCalcFormula_C())
+      if (userRiskProfile.getCalcFormula() == RiskConst.CALCFORMULAS.CALCULATED)
       {
          years = (years == null || years < 1) ? 1 : years;
-         age = userRisk.getAge();
-         horizon = userRisk.getHorizon();
+         age = userRiskProfile.getAge();
+         horizon = userRiskProfile.getHorizon();
 
          for (Integer thisyear = 0 ; thisyear <= years - 1 ; thisyear++)  {
-            switch (getCalcMethod())
-            {
-               case 0:
-               case 1:
-               case 2:
-               case 3:
-               case 4:
-               case 5:
-               case 6:
-               case 7:
-               case 8:
-                  calcAgeTime(thisyear, age, horizon);
-                  break;
-               case 9:
-               default:
-                  userRisk.setRiskScores(thisyear, userRisk.getCalcFormula(), false,
-                                         0.0, 0.0, 0.0, 0.0, 0.0);
-                  break;
-            }
+            calcAgeTime(thisyear, age, horizon);
             age++;
             horizon--;
          }

@@ -68,7 +68,7 @@ public class PortfolioModel
       return invCapital;
    }
 
-   public Portfolio[] buildPortfolio(AssetClass[] assetData, UserRisk userRisk, ProfileData profileData)
+   public Portfolio[] buildPortfolio(AssetClass[] assetData, UserRiskProfile userRiskProfile, ProfileData profileData)
    {
 
 
@@ -77,11 +77,11 @@ public class PortfolioModel
       {
          if (fixedOptimizer.isThisFixedTheme(theme))
          {
-            return createFixedPortfolio(assetData, userRisk, profileData);
+            return createFixedPortfolio(assetData, userRiskProfile, profileData);
          }
       }
 
-      return getOptimizedPortfolio(assetData, profileData, userRisk);
+      return getOptimizedPortfolio(assetData, profileData, userRiskProfile);
 
    }
 
@@ -256,28 +256,22 @@ public class PortfolioModel
       return offset;
    }
 
-   public Double getPortfolioScore(UserRisk userRisk, ProfileData pdata, Integer year)
+   public Double getPortfolioScore(UserRiskProfile userRiskProfile, ProfileData pdata, Integer year)
    {
-      Integer riskFormula;
       Double score;
 
-      RiskScore riskScore = userRisk.getRiskScoreObj(year);
-      riskFormula = userRisk.convertCalcFormula2Int(riskScore.getCalcFormula());
+      RiskScore riskScore = userRiskProfile.getRiskScoreObj(year);
 
-      switch (riskFormula)
+      RiskConst.CALCFORMULAS formula;
+      ;
+
+      if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.CALCULATED)
       {
-         case 1:
-            score = riskScore.getScore();
-            break;
-         case 2:
-            score = riskScore.getPortfolioScore();
-            break;
-         case 3:
-            score = riskScore.getPortfolioScore();
-            break;
-         default:
-            score = riskScore.getScore();
-            break;
+         score = riskScore.getScore();
+      }
+      else
+      {
+         score = riskScore.getPortfolioScore();
       }
 
       if (score == null)
@@ -397,7 +391,7 @@ public class PortfolioModel
 
    }
 
-   private Portfolio[] getOptimizedPortfolio(AssetClass[] assetData, ProfileData pdata, UserRisk userRisk)
+   private Portfolio[] getOptimizedPortfolio(AssetClass[] assetData, ProfileData pdata, UserRiskProfile userRiskProfile)
    {
       String assetName;
       Double actualInvestment, reinvestment;
@@ -412,9 +406,9 @@ public class PortfolioModel
          theme = pdata.getTheme();
          advisor = pdata.getAdvisor();
          actualInvestment = pdata.getActualInvestment();
-         reinvestment = userRisk.getRecurringInvestment();
+         reinvestment = pdata.getRecurringInvestment().doubleValue();
 
-         numofPortfolio = numofPortfoliosToCreate(assetData, userRisk);
+         numofPortfolio = numofPortfoliosToCreate(assetData, userRiskProfile);
 
          portfolioclass = new Portfolio[numofPortfolio];
 
@@ -447,7 +441,7 @@ public class PortfolioModel
          for (int investmentYear = 0; investmentYear < numofPortfolio; investmentYear++)
          {
 
-            portfolioclass[investmentYear] = createPortfolio(assetData[investmentYear], pdata, userRisk, investmentYear);
+            portfolioclass[investmentYear] = createPortfolio(assetData[investmentYear], pdata, userRiskProfile, investmentYear);
 
             // Total Money = Investment + Projection
             if (investmentYear == 0)
@@ -489,7 +483,7 @@ public class PortfolioModel
 
    }
 
-   private Portfolio createPortfolio(AssetClass assetClass, ProfileData pdata, UserRisk userRisk, Integer year)
+   private Portfolio createPortfolio(AssetClass assetClass, ProfileData pdata, UserRiskProfile userRiskProfile, Integer year)
    {
       Portfolio pclass;
       String advisor, theme;
@@ -517,11 +511,11 @@ public class PortfolioModel
 
          theme = pdata.getTheme();
          advisor = pdata.getAdvisor();
-         keepLiquidCash = userRisk.getKeepLiquidCash();
+         keepLiquidCash = userRiskProfile.getKeepLiquidCash();
 
          pclass = new Portfolio();
          pclass.setTheme(theme);
-         Double score = getPortfolioScore(userRisk, pdata, year);
+         Double score = getPortfolioScore(userRiskProfile, pdata, year);
 
          //Initially, all of the money is in Cash bucket (including the keep liquid)
          pclass.setCashMoney(investment);
@@ -1082,14 +1076,14 @@ public class PortfolioModel
 */
    }
 
-   private Integer numofPortfoliosToCreate(AssetClass[] assetData, UserRisk userRisk)
+   private Integer numofPortfoliosToCreate(AssetClass[] assetData, UserRiskProfile userRiskProfile)
    {
       Integer numofPortfolio = 1;
-      if (userRisk != null)
+      if (userRiskProfile != null)
       {
          if (assetData != null)
          {
-            numofPortfolio = userRisk.getALLRiskScores().size();
+            numofPortfolio = userRiskProfile.getALLRiskScores().size();
             numofPortfolio = (assetData.length < numofPortfolio) ? assetData.length : numofPortfolio;
          }
       }
@@ -1139,10 +1133,10 @@ public class PortfolioModel
 
    }
 
-   private Portfolio[] createCashOnlyPortfolio(AssetClass[] assetData, UserRisk userRisk, ProfileData pdata)
+   private Portfolio[] createCashOnlyPortfolio(AssetClass[] assetData, UserRiskProfile userRiskProfile, ProfileData pdata)
    {
       Portfolio[] portfolio = null;
-      Integer numofPortfolio = numofPortfoliosToCreate(assetData, userRisk);
+      Integer numofPortfolio = numofPortfoliosToCreate(assetData, userRiskProfile);
 
       numofPortfolio = (numofPortfolio == null || numofPortfolio < 1) ? 1 : numofPortfolio;
       portfolio = new Portfolio[numofPortfolio];
@@ -1154,7 +1148,7 @@ public class PortfolioModel
       return portfolio;
    }
 
-   private Portfolio[] createFixedPortfolio(AssetClass[] assetData, UserRisk userRisk, ProfileData pdata)
+   private Portfolio[] createFixedPortfolio(AssetClass[] assetData, UserRiskProfile userRiskProfile, ProfileData pdata)
    {
 
       String theme = pdata.getTheme();
@@ -1172,20 +1166,20 @@ public class PortfolioModel
          Integer numofPortfolio;
 
 
-         numofPortfolio = userRisk.getALLRiskScores().size();
+         numofPortfolio = userRiskProfile.getALLRiskScores().size();
          if (numofPortfolio == null || numofPortfolio < 0)
          {
             return null;
          }
 
          portfolio = new Portfolio[numofPortfolio];
-         // Integer riskFormula = userRisk.convertCalcFormula2Int(userRisk.getCalcFormula());  Not used in the current process.
+         // Integer riskFormula = userRiskProfile.convertCalcFormula2Int(userRiskProfile.getCalcFormula());  Not used in the current process.
          Double score;
          FMData fixedModelData;
 
          for (Integer counter = 0; counter < numofPortfolio; counter++)
          {
-            score = getPortfolioScore(userRisk, pdata, counter);
+            score = getPortfolioScore(userRiskProfile, pdata, counter);
             fixedModelData = fixedOptimizer.getTheme(theme, score);
             // For first one, set the properties in profileData (Code should be on Portfolio)
             if (counter == 0)
@@ -1195,7 +1189,7 @@ public class PortfolioModel
                pdata.setHasRisk(true);
             }
 
-            score = getPortfolioScore(userRisk, pdata, counter);
+            score = getPortfolioScore(userRiskProfile, pdata, counter);
 
             fixedModelData = fixedOptimizer.getTheme(theme, score);
             Portfolio thisportfolio = new Portfolio();
@@ -1294,12 +1288,12 @@ public class PortfolioModel
 
             // This this portfolio and create next one based on next risk and additional investment.
             portfolio[counter] = thisportfolio;
-            investment = investment + userRisk.getRecurringInvestment();
+            investment = investment + pdata.getRecurringInvestment();
          }
       }
       catch (Exception ex)
       {
-         return createCashOnlyPortfolio(assetData, userRisk, pdata);
+         return createCashOnlyPortfolio(assetData, userRiskProfile, pdata);
       }
 
 

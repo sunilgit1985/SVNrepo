@@ -2,10 +2,8 @@ package com.invmodel.model;
 
 import java.util.*;
 
-import com.invmodel.Const.InvConst;
 import com.invmodel.asset.AssetAllocationModel;
 import com.invmodel.asset.data.AssetClass;
-import com.invmodel.dao.invdb.SecurityCollection;
 import com.invmodel.inputData.ProfileData;
 import com.invmodel.model.dynamic.PortfolioOptimizer;
 import com.invmodel.model.fixedmodel.FixedModelOptimizer;
@@ -15,7 +13,7 @@ import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.PortfolioModel;
 import com.invmodel.portfolio.data.Portfolio;
 import com.invmodel.rebalance.TLHSecurityCollection;
-import com.invmodel.risk.data.UserRisk;
+import com.invmodel.risk.data.UserRiskProfile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -72,7 +70,7 @@ public class ModelUtil
       this.projectiondata = projectiondata;
    }
 
-   public AssetClass[] buildAllocation(UserRisk userrisk, ProfileData pdata)
+   public AssetClass[] buildAllocation(UserRiskProfile userrisk, ProfileData pdata)
    {
       return assetmodel.buildAllocation(userrisk, pdata);
 
@@ -123,7 +121,7 @@ public class ModelUtil
       return null;
    }
 
-   public Portfolio[] buildPortfolio(AssetClass[] assetData, UserRisk userrisk, ProfileData profileData)
+   public Portfolio[] buildPortfolio(AssetClass[] assetData, UserRiskProfile userrisk, ProfileData profileData)
    {
       return portfolioModel.buildPortfolio(assetData, userrisk, profileData);
    }

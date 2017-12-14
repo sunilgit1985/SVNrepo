@@ -7,6 +7,7 @@ import com.invmodel.asset.data.*;
 import com.invmodel.model.fixedmodel.data.FMData;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.Portfolio;
+import com.invmodel.risk.data.UserRiskProfile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,7 +42,7 @@ public class
    public Double exchangeRate;
    private GoalsData goalData = new GoalsData();
    private Integer keepLiquid;
-   private Integer recurringInvestment;
+   public Integer recurringInvestment;
    private Integer experience = 2; // 1 = Experienced, 2 = inExperienced (See method strExpeience)
    private Integer objective = 2; // 1 = Preservation, 2 = Accumulation; (See method strObjective)
    private String advisor;
@@ -84,6 +85,8 @@ public class
    private AssetClass[] assetData;
    private Portfolio[] portfolioData;   // Although the arrary is not required, we are using to show performace data.
    private ProjectionData[] projectionData;
+
+   public UserRiskProfile riskProfile;
 
    private String iblinkmaster = "https://www.interactivebrokers.com/Universal/servlet/formWelcome?&partnerID=Invessence&invitedBy=dmNtMDMxNzE2";
    // Invessence version with PartnerID = Invessence and invitedBy=NDE4aW52ZXN0
@@ -390,6 +393,8 @@ public class
       //   setStayInvested((horizon <= 5) ? ((getAccountTaxable() ? 2 : 1)) : 1);
       //}
       this.horizon = horizon;
+      riskProfile.setHorizon(horizon);
+
    }
 
    public Integer getCalendarYear()
@@ -510,11 +515,6 @@ public class
       return initialInvestment;
    }
 
-   public void setOnlyInitialInvestment(Integer initialInvestment)
-   {
-      this.initialInvestment = initialInvestment;
-   }
-
    public void setInitialInvestment(Integer initialInvestment)
    {
       this.initialInvestment = initialInvestment;
@@ -522,6 +522,9 @@ public class
       {
          getGoalData().setActualInitialAmount(initialInvestment.doubleValue());
       }
+      if (initialInvestment == null)
+         initialInvestment = 0;
+      riskProfile.setInitialInvestment(initialInvestment.doubleValue());
    }
 
    public Double getActualInvestment()
@@ -581,6 +584,10 @@ public class
       {
          getGoalData().setActualRecurringAmount(recurringInvestment.doubleValue());
       }
+
+      if (recurringInvestment == null)
+         recurringInvestment = 0;
+      riskProfile.setRecurringInvestment(recurringInvestment.doubleValue());
    }
 
    public Integer getExperience()
@@ -789,6 +796,7 @@ public class
    public void setAge(Integer age)
    {
       this.age = age;
+      riskProfile.setAge(age);
    }
 
    public void setTaxrate(double taxrate)
@@ -1252,6 +1260,10 @@ public class
       editableAsset = new ArrayList<Asset>();
    }
 
+   public void setDefault() {
+      goalData = new GoalsData();
+   }
+
    public void resetPortfolioData()
    {
       setLogonid(null);
@@ -1265,8 +1277,7 @@ public class
       resetPortfolio();
    }
 
-   public void resetPortfolio()
-   {
+   public void resetData() {
       setYearly(12);
       setGoal(null);
       setAccountType(null);
@@ -1324,5 +1335,10 @@ public class
 
       setIblink("https://www.clientam.com/Universal/servlet/formWelcome?partnerID=Invessence&invitation_id=6596230&token=56551&invitedBy=NDE4aW52ZXN0&.");
 
+   }
+
+   public void resetPortfolio()
+   {
+      resetData();
    }
 }

@@ -26,10 +26,12 @@ public class AdvisorRiskMaster
       this.advisor = advisor;
       masterdata = new HashMap<String, AdvisorRiskMasterData>();
       mappingdata = new HashMap<Integer, AdvisorRiskMapping>();
-      initAdvisorMaster();
    }
 
-   public void initAdvisorMaster() {
+   public void initAdvisorMaster(String advisor) {
+      this.advisor = advisor;
+      mappingdata.clear();
+      mappingdata.clear();
       riskfetchDAO.fetchAdvisorRiskMaster(this);
    }
 

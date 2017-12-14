@@ -119,18 +119,18 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       }
    }
 
-   public void fetchRiskData(UserRisk riskdata)
+   public void fetchRiskData(UserRiskProfile riskprofile)
    {
       // DataSource ds = getDataSource();
 
       if (ds == null)
          return;
 
-      if (riskdata == null)
+      if (riskprofile == null)
          return;
 
-      RiskFetchSP sp = new RiskFetchSP(ds, "sel_user_risk_data", 2);
-      Map outMap = sp.fetchRiskData(riskdata.getAcctnum());
+      RiskFetchSP sp = new RiskFetchSP(ds, "sel_user_risk_profile", 2);
+      Map outMap = sp.fetchRiskData(riskprofile.getAcctnum());
       try
       {
          if (outMap != null)
@@ -142,15 +142,15 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
                for (Map<String, Object> map : rows)
                {
                   Map rs = (Map) rows.get(i);
-
+                  UserRiskData data = new UserRiskData(
+                              convert.getIntData(rs.get("sortorder")),
+                              convert.getStrData(rs.get("key")),
+                              convert.getStrData(rs.get("answer")),
+                              convert.getStrData(rs.get("answerType")),
+                              convert.getDoubleData(rs.get("riskScore")));
                   // Body of code ...
 
-                  riskdata.setAnswer(
-                     convert.getStrData(rs.get("key")),
-                     convert.getStrData(rs.get("answer")),
-                     convert.getStrData(rs.get("answerType")),
-                     convert.getDoubleData(rs.get("riskScore"))
-                  );
+                  riskprofile.setRiskData(data);
                   i++;
                }
             }
@@ -162,7 +162,7 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       }
    }
 
-   public void fetchRiskScores(UserRisk riskdata)
+   public void fetchRiskScores(UserRiskProfile riskdata)
    {
       // DataSource ds = getDataSource();
 

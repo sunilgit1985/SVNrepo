@@ -15,7 +15,7 @@ public class NewRiskCalc
 
    static RiskFetchDAO riskfetchDAO = new RiskFetchDAO();
    static ModelUtil modelUtil = ModelUtil.getInstance();
-   static UserRisk userRisk;
+   static UserRiskProfile userRiskProfile;
    static AdvisorRiskMaster advisorRiskMaster;
    static RiskCalc riskCalc;
 
@@ -33,65 +33,62 @@ public class NewRiskCalc
       advisorRiskMaster = new AdvisorRiskMaster(advisor);
 
       // Use existing account to collect data
-      if (acctnum != null )
-      {
-         userRisk = new UserRisk(advisor, acctnum);
-      }
-      else {
-         userRisk = new UserRisk(advisorRiskMaster);
-      }
+      userRiskProfile = new UserRiskProfile(advisor, acctnum);
 
-      overrideRisk(userRisk);
-      riskCalc = new RiskCalc(userRisk);
+      overrideRisk(userRiskProfile);
+      riskCalc = new RiskCalc(userRiskProfile);
       modelUtil.refreshData();
 
       // Data needed for Profiledata
       ProfileData profileData = new ProfileData();
-      profileData.setActualInvestment(userRisk.getRiskData().get(RiskConst.INITIALINVESTMENT).getAnswerDouble());
+      if (userRiskProfile.getRiskData().containsKey(RiskConst.INITIALINVESTMENT))
+         profileData.setActualInvestment(userRiskProfile.getRiskData().get(RiskConst.INITIALINVESTMENT).getAnswerDouble());
+      else
+         profileData.setActualInvestment(100000.0);
       profileData.setAdvisor(advisor);
-      profileData.setTheme(userRisk.getAnswer(RiskConst.THEME));
+      profileData.setTheme(userRiskProfile.getAnswer(RiskConst.THEME));
       // ----
 
       calculateRisks(10);
-      AssetClass[] aamc = modelUtil.buildAllocation(userRisk, profileData);
+      AssetClass[] aamc = modelUtil.buildAllocation(userRiskProfile, profileData);
       profileData.setAssetData(aamc);
-      Portfolio[] pfclass = modelUtil.buildPortfolio(aamc, userRisk, profileData);
+      Portfolio[] pfclass = modelUtil.buildPortfolio(aamc, userRiskProfile, profileData);
       profileData.setPortfolioData(pfclass);
       System.out.print("Done");
    }
 
    public static void calculateRisks(Integer years) {
-      // riskCalc.setAgeRisk(userRisk.getAge());
-      // riskCalc.setHorizonRisk(userRisk.getHorizon());
-      for (Integer loop = 1; loop <= userRisk.getRiskQuestion(); loop ++) {
+      // riskCalc.setAgeRisk(userRiskProfile.getAge());
+      // riskCalc.setHorizonRisk(userRiskProfile.getHorizon());
+      for (Integer loop = 1; loop <= userRiskProfile.getRiskQuestion(); loop ++) {
          riskCalc.setQuestionsRisk(loop, 1, null);
       }
       riskCalc.calculate(years);
    }
 
 
-   public static void overrideRisk(UserRisk userRisk) {
-      // userRisk.setAnswer(RiskConst.ADVISOR, "UOB", "T");  This is already defined in default Init process
-      userRisk.setAnswer(RiskConst.THEME, "0.SGWealthSGD", "T");
-      userRisk.setAnswer(RiskConst.GOAL,"Retirement","T");
-      userRisk.setAnswer(RiskConst.AGE,"45","I");
-      userRisk.setAnswer(RiskConst.HORIZON,"20","I");
-      userRisk.setAnswer(RiskConst.TRADECURRENCY,"SGD","T");
-      userRisk.setAnswer(RiskConst.SETTLECURRENCY,"SGD","T");
-      userRisk.setAnswer(RiskConst.INITIALINVESTMENT,"100000","D");
-      userRisk.setAnswer(RiskConst.RECURRINGINVESTMENT,"5000","D");
-      userRisk.setAnswer(RiskConst.RECURRINGTERM,"YEARLY","T");
-      userRisk.setAnswer(RiskConst.RECURRINGPERIOD,"1","I");
-      userRisk.setAnswer(RiskConst.WITHDRAWALPERIOD,"10","I");
-      userRisk.setAnswer(RiskConst.KEEPLIQUID,"0","D");
-      userRisk.setAnswer(RiskConst.KNOCKOUT,"FALSE","I");
-      userRisk.setAnswer(RiskConst.TAXABLE,"FALSE","B");
-      userRisk.setAnswer(RiskConst.TAXRATE,"0.20","D");
-      userRisk.setAnswer(RiskConst.EXPERIENCE,"1","I");
+   public static void overrideRisk(UserRiskProfile userRiskProfile) {
+      // userRiskProfile.setAnswer(RiskConst.ADVISOR, "UOB", "T");  This is already defined in default Init process
+      userRiskProfile.setAnswer(RiskConst.THEME, "0.SGWealthSGD");
+      userRiskProfile.setAnswer(RiskConst.GOAL, "Retirement");
+      userRiskProfile.setAnswer(RiskConst.AGE, 45);
+      userRiskProfile.setAnswer(RiskConst.HORIZON, 20);
+      userRiskProfile.setAnswer(RiskConst.TRADECURRENCY, "SGD");
+      userRiskProfile.setAnswer(RiskConst.SETTLECURRENCY, "SGD");
+      userRiskProfile.setAnswer(RiskConst.INITIALINVESTMENT, 100000.0);
+      userRiskProfile.setAnswer(RiskConst.RECURRINGINVESTMENT, 5000.0);
+      userRiskProfile.setAnswer(RiskConst.RECURRINGTERM, "YEARLY");
+      userRiskProfile.setAnswer(RiskConst.RECURRINGPERIOD, 1);
+      userRiskProfile.setAnswer(RiskConst.WITHDRAWALPERIOD, 10);
+      userRiskProfile.setAnswer(RiskConst.KEEPLIQUID, 0.0);
+      userRiskProfile.setAnswer(RiskConst.KNOCKOUT, false);
+      userRiskProfile.setAnswer(RiskConst.TAXABLE, false);
+      userRiskProfile.setAnswer(RiskConst.TAXRATE, 0.20);
+      userRiskProfile.setAnswer(RiskConst.EXPERIENCE, 1);
 
-      userRisk.setAnswer(RiskConst.RISKQUESTIONS,"7","I");
-      userRisk.setAnswer(RiskConst.CALCMETHOD,RiskConst.CALCMETHOD_AGETIME,"T");
-      userRisk.setAnswer(RiskConst.CALCFORMULA, RiskConst.CALCFORMALA_C, "C");
+      userRiskProfile.setAnswer(RiskConst.RISKQUESTIONS, 7);
+      userRiskProfile.setAnswer(RiskConst.CALCMETHOD, RiskConst.CALCMETHODS.AGETIME.toString());
+      userRiskProfile.setAnswer(RiskConst.CALCFORMULA, RiskConst.CALCFORMULAS.CALCULATED.toString().substring(1, 1));
 
    }
 

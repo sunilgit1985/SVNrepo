@@ -52,7 +52,7 @@ public class AssetAllocationModel
       this.fixedOptimizer = fixedOptimizer;
    }
 
-   public AssetClass[] buildAllocation(UserRisk userrisk, ProfileData pdata)
+   public AssetClass[] buildAllocation(UserRiskProfile userrisk, ProfileData pdata)
    {
       if (fixedOptimizer != null)
       {
@@ -114,7 +114,7 @@ public class AssetAllocationModel
    }
 
 
-   public AssetClass[] getOptimizedAssets(UserRisk userrisk, ProfileData pdata)
+   public AssetClass[] getOptimizedAssets(UserRiskProfile userrisk, ProfileData pdata)
    {
       AssetClass[] assetclass;
       String theme;
@@ -155,21 +155,15 @@ public class AssetAllocationModel
                assetclass[numofAllocation] = setThisAssetToCash(theme, investment);
             }
             else {
-               riskFormula = userrisk.convertCalcFormula2Int(riskScore.getCalcFormula());
-               switch (riskFormula) {
-                  case 1:
-                     score = riskScore.getScore();
-                     break;
-                  case 2:
-                     score = riskScore.getAssetScore();
-                     break;
-                  case 3:
-                     score = riskScore.getAssetScore();
-                     break;
-                  default:
-                     score = riskScore.getScore();
-                     break;
+               if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.CALCULATED)
+               {
+                  score = riskScore.getScore();
                }
+               else
+               {
+                  score = riskScore.getAssetScore();
+               }
+
                Double offset = (score == null) ? InvConst.ASSET_DEFAULT_POINT : score;
                //Offset is now a slider (Just moving along the points)
                // offset = InvConst.ASSET_INTERPOLATION - offset;
@@ -185,7 +179,7 @@ public class AssetAllocationModel
             }
             numofAllocation--;
             counter++;
-            investment = investment + userrisk.getRecurringInvestment();
+            investment = investment + pdata.getRecurringInvestment();
          }
          return assetclass;
       }
@@ -343,7 +337,7 @@ public class AssetAllocationModel
 
    }
 
-   private AssetClass[] buildAllCashAsset(UserRisk userrisk, ProfileData pdata)
+   private AssetClass[] buildAllCashAsset(UserRiskProfile userrisk, ProfileData pdata)
    {
 
       Integer numofAssets = 1;
@@ -515,7 +509,7 @@ public class AssetAllocationModel
    }
 
 
-   public AssetClass[] fixedModelAllocation(UserRisk userrisk, ProfileData pdata)
+   public AssetClass[] fixedModelAllocation(UserRiskProfile userrisk, ProfileData pdata)
    {
 
       Integer age =  userrisk.getDefaultAge();
@@ -555,21 +549,15 @@ public class AssetAllocationModel
                assetclassarray[numofassets] = setThisAssetToCash(theme, investment);
             }
             else {
-               riskFormula = userrisk.convertCalcFormula2Int(riskScore.getCalcFormula());
-               switch (riskFormula) {
-                  case 1:
-                     score = riskScore.getScore();
-                     break;
-                  case 2:
-                     score = riskScore.getAssetScore();
-                     break;
-                  case 3:
-                     score = riskScore.getAssetScore();
-                     break;
-                  default:
-                     score = riskScore.getScore();
-                     break;
+               if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.CALCULATED)
+               {
+                  score = riskScore.getScore();
                }
+               else
+               {
+                  score = riskScore.getAssetScore();
+               }
+
                fixedModelData = fixedOptimizer.getThemeByIndex(theme, score.intValue());
                assetclassarray[numofassets].initAssetClass(age, horizon, score, theme);
                if (fixedModelData != null)
@@ -635,7 +623,7 @@ public class AssetAllocationModel
             }
             age++;
             horizon --;
-            investment = investment + userrisk.getRecurringInvestment();
+            investment = investment + pdata.getRecurringInvestment();
          }
 
          return assetclassarray;
