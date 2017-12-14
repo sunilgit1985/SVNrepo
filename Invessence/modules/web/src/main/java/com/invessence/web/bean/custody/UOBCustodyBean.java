@@ -1645,7 +1645,7 @@ public class UOBCustodyBean
       if (ownerDetails.getOwnerMiscDetails().getNameOfPrimarySchool() == null || ownerDetails.getOwnerMiscDetails().getNameOfPrimarySchool().trim().equalsIgnoreCase(""))
       {
          dataOK = false;
-         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.sclNm", "Name of Primary School Attend is required!", null));
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.sclNm", "Name of Primary School Attended is required!", null));
       }
       return dataOK;
    }

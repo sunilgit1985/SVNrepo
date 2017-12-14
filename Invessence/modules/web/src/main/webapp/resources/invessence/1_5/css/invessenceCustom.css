@@ -68,7 +68,7 @@ img.riskImage:hover {
 .errorText {
     background-color: transparent;
     color: #dd4b39;
-    font-size: 13px;
+    font-size: 18px;
     text-align: left;
 }
 
@@ -5332,7 +5332,8 @@ span.output_review {
 .select_item .ui-autocomplete {
     width: 100%;
 }
-.go-bottom .acc_holder_dtl_block .select_item input {
+.go-bottom .acc_holder_dtl_block .select_item input,
+.go-bottom .padding_type.select_item input  {
     padding: 5px !important;
 }
 .select_item .ui-autocomplete .ui-button-icon-only .ui-button-text {
@@ -5457,7 +5458,13 @@ span.output_review {
 }
 
 
-
+.ui-notificationbar{
+    display: block;
+    background: #fff;
+    /* opacity: 0.9; */
+    /* font-size: 23px; */
+    box-shadow: 0px 0px 3px 2px #b3a7a7;
+}
 /*** responsive**/
 
 /** 16/10/2017***/

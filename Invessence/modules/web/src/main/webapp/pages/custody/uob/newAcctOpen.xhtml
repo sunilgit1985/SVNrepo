@@ -199,6 +199,12 @@
                                                 <label for="nwPriHldrEmailId">Email Address</label>
                                             </div>
                                         </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container100 width99">
+                                                <p:inputText id="verifyemailid" placeholder="Verify Email Address"/>
+                                                <label for="verifyemailid">Verify Email Address</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </p:tab>
                                 <!--  joint account holder -->
@@ -446,6 +452,12 @@
                                         <p:panel id="nwPriHldAddrPnl" style="border-color: transparent; " class="Container100">
                                             <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrMlPnl}">
                                                 <div class="acc_holder_dtl_block">
+                                                    <div class="Container100 width99">
+                                                        <p:inputText id="reasondiffmail" placeholder="Please Specify The Reason Of Different Mailing Address"/>
+                                                        <label for="reasondiffmail">The Reason Of Different Mailing Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="acc_holder_dtl_block">
                                                     <div class="Container100">
                                                         <p:inputTextarea id="nwPriHldrMlAddr"
                                                                          placeholder="Mailing Address" value="#{uobCustodyBean.priHldrMlAddr}" maxlength="240"/>
@@ -616,7 +628,7 @@
                                                         <p:column headerText="Jurisdiction Of Tax">
                                                             <h:outputText value="#{taxDtls.jurisdictionOfTaxResidence}"/>
                                                         </p:column>
-                                                        <p:column headerText="Tax Id">
+                                                        <p:column headerText="Tax Identification Number">
                                                             <h:outputText value="#{taxDtls.taxIdentificationNumber}"  rendered='#{taxDtls.tinFlag}'/>
                                                             <h:outputText value="-" rendered='#{!taxDtls.tinFlag}'/>
                                                         </p:column>
@@ -913,6 +925,12 @@
                                                     <f:selectItem itemLabel="Self-Employed" itemValue="Self-Employed"></f:selectItem>
                                                     <f:selectItem itemLabel="Unemployed" itemValue="Unemployed"></f:selectItem>
                                                 </p:selectOneRadio>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container100 width99">
+                                                <p:inputText id="unempreason" placeholder="Please Specify The Reason Of Unemployment"/>
+                                                <label for="unempreason">The Reason Of Unemployment</label>
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
