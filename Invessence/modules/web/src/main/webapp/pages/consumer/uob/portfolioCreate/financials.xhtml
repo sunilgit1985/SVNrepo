@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Assets and Liabilities</div>
+            <div class="header_link prenext_btn Container70">
+                <p:outputPanel id="fbuttonArea" style="border: 0px; background: transparent">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoNextPage}"> Next </p:commandLink>
+                    </div>
+                    <div class="Container50 pre_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
+                    </div>
+                </p:outputPanel>
+
+            </div>
+
+        </div>
+        <div class="Container100 tab_dtl assets_liabilityTab">
+            <div class="Container50 assets">
+                <div class="Conatiner100 tab_title">
+                    Assets
+                </div>
+                <div class="Conatiner100">
+                    Value of Primary Residence <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                </div>
+                <div class="Conatiner100">
+                    Investible Assets (excluding primary residence) <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                </div>
+                <div class="Conatiner100">
+                    Employment Income / Income from Business <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                </div>
+                <div class="Conatiner100">
+                    Other Source of Income <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                </div>
+            </div>
+            <div class="Container50 liability">
+                <div class="Conatiner100 tab_title">
+                    Liabilities
+                </div>
+                <div class="Conatiner100">
+                    Mortgage Loan on Primary Residence <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                </div>
+                <div class="Conatiner100">
+                    Liabilities (Loan excluding mortgage loan on primary residence) <br/> S$ <p:inputNumber class="input_no_type"
+                                                                                                            placeholder="0"></p:inputNumber>
+                </div>
+                <div class="Conatiner100 tab_title networth">
+                    Net Worth
+                </div>
+                <div class="Conatiner100">
+                    Current net worth <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

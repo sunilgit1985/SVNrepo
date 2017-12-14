@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!--
+    <div class="ring_widget">
+        <p:ring id="introRing" value="#{uobProfile.goalsdata}" var="goal" autoplay="true" autoplayDuration="2000"
+                styleClass="image-ring" easing="easeInOutBack">
+            <p:graphicImage name="#{goal.image}" library="#{uiLayout.webProfile.cssdir}"/>
+            <p:outputPanel style="text-align: center;" layout="block">#{goal.displayName}</p:outputPanel>
+
+        </p:ring>
+    </div>
+-->
+
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Personal Information</div>
+
+            <p:outputPanel id="p1buttonArea" style="border: 0px; background: transparent">
+                <div class="header_link prenext_btn Container70">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoNextPage}"> Next
+                        </p:commandLink>
+                    </div>
+                </div>
+            </p:outputPanel>
+
+        </div>
+        <div class="Container100 tab_dtl">
+            <p>
+                Hi, what is your full name ?
+                <p:inputText style="width:190px;" value="#{uobProfile.customer.name}"
+                             id="uobCustomerName" placeholder="Enter Your Full Name"
+                             maxlength="60">
+                    <p:ajax listener="#{uobProfile.onChangeName}"
+                            update=":ceForm:introPanel"/>
+
+                </p:inputText>
+            </p>
+            <p:outputPanel id="introPanel" style="border: 0px; background: transparent">
+                <p>
+                    <!--<span class="input_value">Sam</span> ,--> What is your e-mail address?
+                    <p:inputText style="width:190px;" value="#{uobProfile.customer.email}"
+                                 id="uobCustomerEmail" placeholder="Enter Your Email"
+                                 maxlength="60">
+                    </p:inputText>
+                </p>
+                <p>
+                    <span class="input_value">#{uobProfile.printName}</span> How old are you?
+                    <p:inputNumber value="#{uobProfile.customer.age}"
+                                   minValue="0" maxValue="110"
+                                   id="uobAge"
+                                   maxlength="3" decimalPlaces="0">
+                    </p:inputNumber>
+                </p>
+            </p:outputPanel>
+        </div>
+
+
+    </div>
+
+</ui:composition>

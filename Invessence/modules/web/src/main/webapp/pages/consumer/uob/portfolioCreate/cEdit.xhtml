@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:panel id="inputArea" style="border: 0px; background: transparent;">
+        <div class="layout-portlets-box open_client_layout portfolio_layout">
+            <div class="Container100 Responsive100">
+                <p:outputPanel id="graphArea" style="border: 0px; background: transparent">
+                    <div class="portfolio_selection">
+                        <div class="Container30"><p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
+                                                                 width="80px"/><span>Goal</span></div>
+                        <div class="Container30"><p:graphicImage name="images/portfolio/riskMeter.png" library="#{uiLayout.webProfile.cssdir}"
+                                                                 width="120px"/></div>
+                        <div class="Container30">
+                            <span class="sapn_review">Review</span>
+                            <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
+                            <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
+
+                                <ui:fragment rendered="#{!uobdash.dispNoRcrd}">
+
+                                    <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+                                        <script>
+                                            $(document).ready(function ()
+                                                              {
+                                                                  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                                  {
+                                                                      if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                                      {
+                                                                          draw2dDonut1lyrChartDyna('CNFPrflo');
+                                                                      }
+                                                                  }
+
+                                                              });
+
+                                        </script>
+
+                                        <div class="Container100 donutChartGraph review_graph">
+                                            <div id="2dDonutChartCnf"></div>
+                                            <h:inputHidden
+                                                    value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
+                                                    id="twodDonutValueChartCnf"/>
+                                            <h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
+
+                                        </div>
+
+
+                                    </p:panel>
+
+                                </ui:fragment>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="portfolio_progress_bar">
+                        <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
+                    </div>
+                </p:outputPanel>
+
+                <ui:fragment rendered="#{uobProfile.currentPage == 0}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/intro.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 1}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/goal.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 2}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/investment.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 3}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/financials.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 4}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk1.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 5}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk3.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 6}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk4.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 7}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk5.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 8}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk6.xhtml"/>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobProfile.currentPage == 9}">
+                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk7.xhtml"/>
+                </ui:fragment>
+
+            </div>
+        </div>
+    </p:panel>
+
+</ui:composition>

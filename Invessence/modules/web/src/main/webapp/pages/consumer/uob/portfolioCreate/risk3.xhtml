@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Risk Tolerance</div>
+            <div class="header_link prenext_btn Container70">
+                <p:outputPanel id="p4buttonArea" style="border: 0px; background: transparent">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoNextPage}"> Next </p:commandLink>
+                    </div>
+                    <div class="Container50 pre_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
+                    </div>
+                </p:outputPanel>
+            </div>
+
+        </div>
+        <div class="Container100 tab_dtl RTQ">
+            <p>To achieve your goal, which of the following best describes your investment strategy and level of investment risk you are willing to take? </p>
+            <div class="selectRadio">
+                <p:selectOneRadio id="riskQ3" value="#{uobProfile.riskAns3}" styleClass=""
+                                  layout="pageDirection">
+                    <p:ajax listener="#{uobProfile.onChangeValue}"
+                            update=":ceForm:graphArea"/>
+                    <f:selectItem id="r3a1"
+                                  itemLabel="Aggressive : An aggressive strategy accepts higher levels of risks in order to obtain greater potential returns. An aggressive investor is comfortable with investments that are more volatile and bear a higher risk of loss of capital."
+                                  itemValue="1"></f:selectItem>
+                    <f:selectItem id="r3a2"
+                                  itemLabel="Moderate : A moderate strategy seeks a balance of capital growth and regular income from his/her investments. A moderate investor is prepared to accept moderate amounts of risk to earn moderate potential returns.   "
+                                  itemValue="2"></f:selectItem>
+                    <f:selectItem id="r3a3"
+                                  itemLabel="Conservative : A conservative strategy accepts lower potential returns for a lower risk of loss of capital. "
+                                  itemValue="3"></f:selectItem>
+                    <f:selectItem id="r3a4"
+                                  itemLabel="This strategy requires 100% capital preservation and is unable to take any risk of loss. "
+                                  itemValue="4"></f:selectItem>
+                </p:selectOneRadio>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>

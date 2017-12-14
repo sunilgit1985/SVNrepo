@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Lets talk about your contribution towards your goal to <span class="change_goal">education</span>
+            </div>
+            <div class="header_link prenext_btn Container70">
+                <div class="Container50 next_btn">
+                    <p:outputPanel id="ibuttonArea" style="border: 0px; background: transparent">
+                        <div class="Container50 next_btn">
+                            <p:commandLink rendered="true" class="next_pg_link"
+                                           update=":ceForm:workArea"
+                                           actionListener="#{uobProfile.gotoNextPage}"> Next </p:commandLink>
+                        </div>
+                        <div class="Container50 pre_btn">
+                            <p:commandLink rendered="true" class="next_pg_link"
+                                           update=":ceForm:workArea"
+                                           actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
+                        </div>
+                    </p:outputPanel>
+                </div>
+            </div>
+
+        </div>
+        <div class="Container100 tab_dtl">
+            <div class="selectList">
+                I like to invest in
+                <p:selectOneMenu id="title" value="Years" name="title">
+                    <f:selectItem itemLabel="SGD" itemValue="SGD"/>
+                    <f:selectItem itemLabel="USD" itemValue="USD"/>
+
+                </p:selectOneMenu>
+            </div>
+            <p>
+                My initial investment in this account will be <p:inputNumber class="input_no_type" placeholder="S$ 0"></p:inputNumber>
+            </p>
+            <p>
+                I intend to contribute
+            </p>
+            <p>
+                <p:inputNumber class="input_no_type" placeholder="S$ 0"></p:inputNumber> per annum to this investment account over the next <input
+                    style="width:55px;" type="text" placeholder="Years"></input> years
+            </p>
+
+        </div>
+
+
+    </div>
+
+</ui:composition>

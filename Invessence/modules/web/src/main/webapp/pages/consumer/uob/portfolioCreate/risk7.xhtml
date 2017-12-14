@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Risk Tolerance</div>
+            <div class="header_link prenext_btn Container70">
+                <p:outputPanel id="p8buttonArea" style="border: 0px; background: transparent">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoNextPage}"> Next </p:commandLink>
+                    </div>
+                    <div class="Container50 pre_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
+                    </div>
+                </p:outputPanel>
+            </div>
+
+        </div>
+
+
+        <div class="Container100 tab_dtl RTQ">
+            <p>For your investment portfolio outside this investment account, an investor may choose to include
+                Singapore-based assets, including equities, stock and cash. The implication of the inclusion is that your
+                overall investment portfolio, including your assets outside this investment account, will be less diversified due
+                to its increased exposure of Singaporean assets.
+                <br/>Please choose if you wish to include Singapore-based assets in your portfolio</p>
+            <div class="selectRadio">
+                <p:selectOneRadio id="riskQ7" value="#{uobProfile.riskAns7}" styleClass=""
+                                  layout="pageDirection">
+                    <p:ajax listener="#{uobProfile.onChangeValue}"
+                            update=":ceForm:graphArea"/>
+                    <f:selectItem id="r7a1"
+                                  itemLabel="I have sufficient exposure to Singapore-based asstes. I do not wants Singapore-based assets to be included as a significant part of the portfolio allocated to me."
+                                  itemValue="1"></f:selectItem>
+                    <f:selectItem id="r7a2"
+                                  itemLabel="I want Singapore-based assets to be included as a significant part (in the range 5% - 50%) of the global portfolio allocated to me. "
+                                  itemValue="2"></f:selectItem>
+                 </p:selectOneRadio>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</ui:composition>
