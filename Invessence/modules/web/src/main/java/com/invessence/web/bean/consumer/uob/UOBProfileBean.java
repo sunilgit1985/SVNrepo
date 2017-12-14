@@ -2,14 +2,13 @@ package com.invessence.web.bean.consumer.uob;
 
 import java.io.Serializable;
 import java.util.*;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
 import javax.servlet.http.*;
 
 import com.invessence.converter.*;
-import com.invessence.web.bean.consumer.InvessenceCharts;
+import com.invessence.web.bean.consumer.PrimefacesCharts;
 import com.invessence.web.constant.*;
 import com.invessence.web.controller.HighChartsController;
 import com.invessence.web.dao.common.PositionDAO;
@@ -54,7 +53,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
    private Integer pageNo;
    private Integer imageSelected;
    private JavaUtil jutil;
-   private InvessenceCharts charts;
+   private PrimefacesCharts charts;
    private HighChartsController highChartsController;
    private UOBRiskCalculator riskCalculator;
    private boolean altrOnChngStrategy;
@@ -75,7 +74,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
       super();
       riskCalculator = new UOBRiskCalculator();
       highChartsController = new HighChartsController();
-      charts = new InvessenceCharts();
+      charts = new PrimefacesCharts();
       jutil = new JavaUtil();
       formEdit = false;
       disablegraphtabs = true;
@@ -220,7 +219,7 @@ public class UOBProfileBean extends CustomerData implements Serializable
       return canOpenAccount;
    }
 
-   public InvessenceCharts getCharts()
+   public PrimefacesCharts getCharts()
    {
       return charts;
    }
@@ -739,14 +738,12 @@ public class UOBProfileBean extends CustomerData implements Serializable
 
    }
 
-
-   @Override
    public void loadProfileData(Long acctnum, RiskCalculator riskCalculator)
    {
 
       try
       {
-         super.loadProfileData(acctnum, riskCalculator);
+         super.loadProfileData(acctnum);
          Double riskIndex = getRiskCalculator().calculateRisk();
          createAssetPortfolio(1, riskIndex);
          formEdit = false;

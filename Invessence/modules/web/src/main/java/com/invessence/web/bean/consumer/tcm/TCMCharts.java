@@ -3,16 +3,11 @@ package com.invessence.web.bean.consumer.tcm;
 import java.io.Serializable;
 import java.util.*;
 
-import com.invessence.converter.JavaUtil;
-import com.invessence.web.bean.consumer.InvessenceCharts;
-import com.invessence.web.controller.HighChartsController;
+import com.invessence.web.bean.consumer.PrimefacesCharts;
 import com.invessence.web.data.common.*;
 import com.invmodel.asset.data.*;
-import com.invmodel.inputData.GoalsData;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.Portfolio;
-import org.primefaces.model.chart.*;
-import com.google.gson.Gson;  //JSon for HighChart
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +17,7 @@ import com.google.gson.Gson;  //JSon for HighChart
  * To change this template use File | Settings | File Templates.
  */
 
-public class TCMCharts extends InvessenceCharts implements Serializable
+public class TCMCharts extends PrimefacesCharts implements Serializable
 {
    private ChartData chartdata;
    private GenerateHighChartsData highCharts = new GenerateHighChartsData();

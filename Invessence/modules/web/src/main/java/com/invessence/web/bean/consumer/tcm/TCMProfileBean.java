@@ -711,12 +711,13 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
    }
 
    @Override
-   public void loadProfileData(Long acctnum, RiskCalculator riskCalculator)
+   public void loadProfileData(Long acctnum)
    {
 
       try
       {
-         super.loadProfileData(acctnum, riskCalculator);
+         super.loadProfileData(acctnum);
+         super.loadRiskData(acctnum, riskCalculator);
 
          setFixedModelPortfolioList(getInstance().getTheme());
          setFmDataLinkedHashMap(getInstance().getTheme());
@@ -954,7 +955,7 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
          if (getBeanAcctnum() != null && getBeanAcctnum() > 0L)
          {
             setDoesUserHavaLogonID(true);
-            loadProfileData(getBeanAcctnum(), getRiskCalculator());
+            loadProfileData(getBeanAcctnum());
             riskCalculator.setInvestmentobjective(getGoal());  // Goal needs to be restored to use the proper calculator
             displayGoalText = true;
             Double riskIndex = riskCalculator.calculateRisk();

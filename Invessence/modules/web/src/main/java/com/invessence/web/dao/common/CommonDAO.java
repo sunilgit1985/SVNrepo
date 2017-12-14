@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import com.invessence.converter.SQLData;
 import com.invessence.web.data.common.*;
+import com.invessence.web.util.*;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 @ManagedBean(name = "commonDAO")
@@ -354,18 +355,20 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
       return null;
    }
 
-   public ArrayList<NotificationData> getNotificationDtls(Long logonid, String messageType, String status, String access,boolean bflag,long acctnum)
+   public ArrayList<NotificationData> getNotificationDtls(Long logonid, String messageType, String status, String access, boolean bflag, long acctnum)
    {
       DataSource ds = getDataSource();
       CommonSP sp = null;
       if (access.equalsIgnoreCase("Advisor"))
       {
-         sp = new CommonSP(ds, "sel_notification_advisor",9);
+         sp = new CommonSP(ds, "sel_notification_advisor", 9);
       }
       else if (access.equalsIgnoreCase("User"))
       {
          sp = new CommonSP(ds, "sel_notification_consumer", 9);
-      }else{
+      }
+      else
+      {
          return null;
       }
       ArrayList<NotificationData> notificationList = new ArrayList<NotificationData>();
@@ -376,11 +379,11 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
          ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
          if (rows != null)
          {
-            int i = 0,j=0;
+            int i = 0, j = 0;
             for (Map<String, Object> map : rows)
             {
                Map rs = (Map) rows.get(i);
-               if(!bflag)
+               if (!bflag)
                {
                   NotificationData ndata = new NotificationData(
                      convert.getLongData(rs.get("messageid")),
@@ -398,7 +401,9 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
                   );
                   notificationList.add(j, ndata);
                   j++;
-               }else if(bflag && convert.getStrData(rs.get("noticetype")).equalsIgnoreCase("H") && convert.getLongData(rs.get("acctnum"))==acctnum){
+               }
+               else if (bflag && convert.getStrData(rs.get("noticetype")).equalsIgnoreCase("H") && convert.getLongData(rs.get("acctnum")) == acctnum)
+               {
                   NotificationData ndata = new NotificationData(
                      convert.getLongData(rs.get("messageid")),
                      convert.getStrData(rs.get("status")),
@@ -424,10 +429,48 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
       return notificationList;
    }
 
-   public void saveConsumerNotification(NotificationData data,long logonid)
+   public void saveConsumerNotification(NotificationData data, long logonid)
    {
       DataSource ds = getDataSource();
       CommonSP sp = new CommonSP(ds, "sav_notification_consumer", 10);
-      sp.saveConsumerNotification(data,logonid);
+      sp.saveConsumerNotification(data, logonid);
+   }
+
+   public WebMenuList loadWebPagesMenuItems(String advisor)
+   {
+      DataSource ds = getDataSource();
+      CommonSP sp = null;
+      sp = new CommonSP(ds, "sel_webpages_menu_items", 11);
+
+      WebMenuList dbWebMenuList = new WebMenuList();
+
+      Map outMap = sp.loadWebPagesMenuItems(advisor);
+      if (outMap != null)
+      {
+         ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
+         if (rows != null)
+         {
+            int i = 0;
+            for (Map<String, Object> map : rows)
+            {
+               Map rs = (Map) rows.get(i);
+               WebMenuItem item = new WebMenuItem(
+                  convert.getStrData(rs.get("key")),
+                  convert.getIntData(rs.get("sortorder")),
+                  convert.getStrData(rs.get("displayname")),
+                  convert.getStrData(rs.get("selectedValue")),
+                  convert.getStrData(rs.get("dataType")),
+                  convert.getStrData(rs.get("image")),
+                  convert.getStrData(rs.get("shortname")),
+                  convert.getStrData(rs.get("description"))
+               );
+               dbWebMenuList.addToMenuList(item);
+               i++;
+            }
+
+         }
+      }
+      return dbWebMenuList;
+
    }
 }

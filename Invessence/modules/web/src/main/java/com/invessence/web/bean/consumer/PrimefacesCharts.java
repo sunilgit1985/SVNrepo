@@ -17,7 +17,7 @@ import org.primefaces.model.chart.*;
  * To change this template use File | Settings | File Templates.
  */
 
-public class InvessenceCharts implements Serializable
+public class PrimefacesCharts implements Serializable
 {
    JavaUtil jutil = new JavaUtil();
    public Integer year;
@@ -30,7 +30,8 @@ public class InvessenceCharts implements Serializable
    public BarChartModel riskbarChart;
    public LineChartModel goalChart;
    private String resultChart;
-   public InvessenceCharts()
+
+   public PrimefacesCharts()
    {
       resetCharts();
    }

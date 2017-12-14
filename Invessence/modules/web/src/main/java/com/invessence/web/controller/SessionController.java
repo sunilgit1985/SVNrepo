@@ -14,6 +14,7 @@ import com.invessence.web.dao.*;
 import com.invessence.web.dao.common.CommonDAO;
 import com.invessence.web.data.common.*;
 import com.invessence.web.util.*;
+import com.invmodel.risk.data.AdvisorRiskMaster;
 import org.apache.commons.logging.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
@@ -34,6 +35,7 @@ public class SessionController implements Serializable
    private int cstmSessionTimeout;
    private boolean allowVisitorReg;
    private List<UserRepData> lstUserRepDetails;
+   private AdvisorRiskMaster advisorRiskMaster = null;
 
    private String site, mode;
 
@@ -341,6 +343,7 @@ public class SessionController implements Serializable
       if(webutil.isUserLoggedIn())
       {
          Map<String, String> webMap=commonDAO.getWebMenuDetails(url, webutil.getAccess());
+
          lstUserRepDetails=commonDAO.getUserRepDetails(webutil.getLogonid());
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(WebConst.WEB_MENU);
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(WebConst.WEB_MENU, webMap);
@@ -355,6 +358,16 @@ public class SessionController implements Serializable
          logger.info("Load WEB Advisor for:" + advisor);
          webutil.getWebprofile().addToMap(commonDAO.getAdvisorWebInfo(advisor));
       }
+      if (advisorRiskMaster == null) {
+         advisorRiskMaster = new AdvisorRiskMaster(advisor);
+         advisorRiskMaster.initAdvisorMaster(advisor);
+      }
+      else {
+         if (! advisorRiskMaster.getAdvisor().equalsIgnoreCase(advisor)) {
+            advisorRiskMaster.initAdvisorMaster(advisor);
+         }
+      }
+      FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(WebConst.WEB_ADVISOR_INFO, advisorRiskMaster);
    }
 
    private void resetUserCIDByAdvisor(String advisor)

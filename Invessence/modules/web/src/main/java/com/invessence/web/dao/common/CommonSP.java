@@ -74,6 +74,9 @@ public class CommonSP extends StoredProcedure
             declareParameter(new SqlParameter("p_message", Types.VARCHAR));
             declareParameter(new SqlParameter("p_link", Types.VARCHAR));
             break;
+         case 11: // SP: sel_webpages_menu_items
+            declareParameter(new SqlParameter("p_advisor", Types.VARCHAR));
+            break;
          case 99: // SP: sel_notificationInfo
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
             break;
@@ -191,4 +194,12 @@ public class CommonSP extends StoredProcedure
 
       super.execute(inputMap);
    }
+
+   public Map loadWebPagesMenuItems(String advisor)
+   {
+      Map inputMap = new HashMap();
+      inputMap.put("p_advisor", advisor);
+      return super.execute(inputMap);
+   }
+
 }

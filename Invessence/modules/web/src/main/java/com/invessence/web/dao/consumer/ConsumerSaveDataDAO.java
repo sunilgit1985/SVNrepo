@@ -9,6 +9,7 @@ import com.invessence.converter.SQLData;
 import com.invessence.web.data.common.*;
 import com.invessence.web.data.consumer.CTO.ClientData;
 import com.invessence.web.data.consumer.RiskCalculator;
+import com.invmodel.risk.data.UserRiskProfile;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 @ManagedBean(name = "consumerSaveDataDAO")
@@ -58,6 +59,7 @@ public class ConsumerSaveDataDAO extends JdbcDaoSupport implements Serializable
       }
    }
 
+
    public void saveRiskProfile(Long acctnum, RiskCalculator data)
    {
       try
@@ -70,6 +72,7 @@ public class ConsumerSaveDataDAO extends JdbcDaoSupport implements Serializable
          ex.printStackTrace();
       }
    }
+
 
    public void saveAllocation(CustomerData mgoal )
    {
@@ -134,5 +137,21 @@ public class ConsumerSaveDataDAO extends JdbcDaoSupport implements Serializable
          ex.printStackTrace();
       }
    }
+
+   public void saveRiskProfile(UserRiskProfile userrisk)
+   {
+      try
+      {
+         DataSource ds = getDataSource();
+         ConsumerSaveSP sp = new ConsumerSaveSP(ds, "sav_user_risk_profile", 20);
+         sp.saveRiskProfile(userrisk);
+         sp = new ConsumerSaveSP(ds, "sav_user_risk_profile", 21);
+         sp.saveRiskScores(userrisk);
+      }
+      catch (Exception ex) {
+         ex.printStackTrace();
+      }
+   }
+
 
 }

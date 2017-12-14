@@ -707,13 +707,12 @@ public class NestEggProfileBean extends NestEggCustomer implements Serializable
       }
    }
 
-   @Override
    public void loadProfileData(Long acctnum, RiskCalculator riskCalculator)
    {
 
       try
       {
-         super.loadProfileData(acctnum, riskCalculator);
+         super.loadProfileData(acctnum);
 
          setFixedModelPortfolioList(getInstance().getTheme());
          setFmDataLinkedHashMap(getInstance().getTheme());

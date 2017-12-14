@@ -9,7 +9,7 @@ import javax.faces.event.*;
 import javax.servlet.http.*;
 
 import com.invessence.emailer.data.MsgData;
-import com.invessence.web.bean.consumer.InvessenceCharts;
+import com.invessence.web.bean.consumer.PrimefacesCharts;
 import com.invessence.web.constant.*;
 import com.invessence.converter.SQLData;
 import com.invessence.web.dao.advisor.*;
@@ -29,7 +29,7 @@ public class AdvisorBean extends AdvisorData implements Serializable
 {
    private static final long serialVersionUID = 100001L;
    private String beanAcctnum;
-   private InvessenceCharts invessenceCharts = new InvessenceCharts();
+   private PrimefacesCharts invessenceCharts = new PrimefacesCharts();
 
    @ManagedProperty("#{advisorListDataDAO}")
    private AdvisorListDataDAO listAdvisorDAO;
@@ -209,7 +209,8 @@ public class AdvisorBean extends AdvisorData implements Serializable
       return true;
    }
 
-   public String saveProfile()
+   @Override
+   public void saveProfile()
    {
       try
       {
@@ -226,7 +227,6 @@ public class AdvisorBean extends AdvisorData implements Serializable
       {
         ex.printStackTrace();
       }
-      return "success";
    }
 
    public void resetAllocation()
@@ -376,7 +376,7 @@ public class AdvisorBean extends AdvisorData implements Serializable
       this.scseriesColor = scseriesColor;
    }
 
-   public InvessenceCharts getInvessenceCharts()
+   public PrimefacesCharts getInvessenceCharts()
    {
       return invessenceCharts;
    }

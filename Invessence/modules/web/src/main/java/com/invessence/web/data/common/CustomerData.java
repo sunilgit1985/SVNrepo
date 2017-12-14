@@ -23,6 +23,7 @@ import com.invmodel.model.ModelUtil;
 import com.invmodel.performance.OptHistoricalReport;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.*;
+import com.invmodel.risk.data.*;
 import org.apache.commons.logging.*;
 
 /**
@@ -121,6 +122,21 @@ public class CustomerData extends ProfileData
 
    private String customName;
 
+   public void initDao(WebUtil webutil,ModelUtil modelUtil, UILayout uiLayout,
+                       ConsumerListDataDAO listDAO, UserInfoDAO userInfoDAO,
+                       ConsumerSaveDataDAO saveDAO, TradeDAO tradeDAO,
+                       WebMessage messageText) {
+      setWebutil(webutil);
+      setModelUtil(modelUtil);
+      setUiLayout(uiLayout);
+      setListDAO(listDAO);
+      setUserInfoDAO(userInfoDAO);
+      setSaveDAO(saveDAO);
+      setTradeDAO(tradeDAO);
+      setMessageText(messageText);
+   }
+
+
    public void setWebutil(WebUtil webutil)
    {
       this.webutil = webutil;
@@ -201,17 +217,6 @@ public class CustomerData extends ProfileData
       this.usstates = usstates;
    }
 
-   /*
-   @ManagedProperty("#{assetAllocationModel}")
-   public AssetAllocationModel allocModel;
-
-   @ManagedProperty("#{portfolioModel}")
-   public PortfolioModel portfolioModel;
-
-   @ManagedProperty("#{projectionReport}")
-   public ProjectionReport projectionReport;
-*/
-
    public Log getLogger()
    {
       return logger;
@@ -228,7 +233,7 @@ public class CustomerData extends ProfileData
       orderedSubclass = new ArrayList<ManagedSubclassData>();
       excludedSubAsset = new ArrayList<PortfolioSubclass>();
       accountFinancials = new AccountFinancials();
-
+      riskProfile = new UserRiskProfile();
       // resetCustomerData();
    }
 
@@ -624,20 +629,38 @@ public class CustomerData extends ProfileData
       return name;
    }
 
-   public void resetCustomerData() {
+   public void setCalcFormula(String formula) {
+      riskProfile.setCalcFormula(formula);
+   }
 
+   @Override
+   public void setDefault() {
+      super.setDefault();
+      setLogonid(webutil.getLogonid());
+
+      resetAdvisor();  // Reset Advisor
+      loadBasketInfo();
+      riskProfile = new UserRiskProfile(getAdvisor(), getAcctnum());
+
+      accountFinancials = new AccountFinancials();
+
+      setDoesUserHavaLogonID(webutil.isUserLoggedIn());
+      setSaveVisitor(true);
+      setTradeCurrency(webutil.getWebprofile().getInfo("DEFAULT.CURRENCY"));
+   }
+
+   @Override
+   public void resetData() {
       // Manage Goal Data.
       if (getDoesUserHavaLogonID()) {
          resetPortfolio();
       }
       else
       {
-         // Master ProfileData
-         // setName	(null);  Being reset at bottom.
-         resetPortfolioData();
-         // setAcctnum(null);
-         // setClientAccountID(null);
-         // setLogonid(null);
+         resetAdvisor();  // Reset Advisor
+         loadBasketInfo();
+         riskProfile = new UserRiskProfile(getAdvisor(), getAcctnum());
+         super.resetData();
          setUserid(null);
          setPortfolioName(null);
          setAddmodflag(null);
@@ -694,9 +717,11 @@ public class CustomerData extends ProfileData
          accountFinancials = new AccountFinancials();
          setDisplayFTPanel(false);
          setCanSaveData(true);
-         resetAdvisor();  // Reset Advisor
       }
+   }
 
+   public void resetCustomerData() {
+      resetData();
    }
 
    public void resetAdvisor() {
@@ -884,6 +909,11 @@ public class CustomerData extends ProfileData
 
    public void loadBasketInfo()
    {
+
+      if (getTheme() == null) {
+         setTheme(webutil.getWebprofile().getTheme());
+      }
+
       if (getAccountTaxable())
       {
          setAdvisorBasket(listDAO.getBasket(getAdvisor(), "T"));
@@ -893,49 +923,9 @@ public class CustomerData extends ProfileData
          setAdvisorBasket(listDAO.getBasket(getAdvisor(), "R"));
       }
 
-      if (getTheme() != null)
-      {
-         setBasket(getAdvisorBasket().get(getTheme()));
-      }
-      else
-      {
-         selectFirstBasket(); // DO this only first time.
-      }
-
-      if (getBasket() != null)
-      {
-         setPortfolioName(getAdvisorBasket().get(getTheme()));
-      }
+      setBasket(getAdvisorBasket().get(getTheme()));
    }
 
-
-   public void selectFirstBasket()
-   {
-      if (getTheme() == null) {
-         if (getAdvisorBasket() != null) {
-            for (String theme : getAdvisorBasket().keySet()) {
-               setTheme(theme);  // Set the first one...
-               setBasket(getAdvisorBasket().get(getTheme()));
-               break;
-            }
-         }
-      }
-
-      // If it is still null, then set it to default
-      if (getTheme() == null)
-      {
-         if (getAccountTaxable())
-         {
-            setTheme(InvConst.DEFAULT_TAXABLE_THEME);
-            setBasket(InvConst.DEFAULT_TAXABLE_BASKET);
-         }
-         else
-         {
-            setTheme(InvConst.DEFAULT_THEME);
-            setBasket(InvConst.DEFAULT_BASKET);
-         }
-      }
-   }
 
    public void buildAssetClass() {
       AssetClass[] aamc;
@@ -1378,48 +1368,39 @@ public class CustomerData extends ProfileData
 
    }
 
+   @Override
+   public void setAge(Integer age)
+   {
+      age = age;
+      riskProfile.setAge(age);
+   }
+
+
    public void setDefaults()
    {
-      setPortfolioName(null);
-      if (getAge() == null)
+      UserInfoData uid = webutil.getUserInfoData();
+      if (uid != null)
       {
-         setAge(30);
-      }
-      if (getInitialInvestment() == null)
-      {
-         setInitialInvestment(100000);
-      }
-      if (getHorizon() == null)
-      {
-         setHorizon(20);
-      }
-      if (getGoal() == null)
-      {
-         setGoal("Growth");
+         setAdvisor(uid.getAdvisor()); // Portfolio solves the null issue, or blank issue.
+         setRep(uid.getRep()); // Portfolio solves the null issue, or blank issue.
+         setLogonid(uid.getLogonID());
+         loadBasketInfo();
       }
 
-      if (getAccountType() == null)
-      {
-         setAccountTaxable(false);
-         setAccountType();
-      }
+         age = riskProfile.getDefaultAge();
+         horizon = riskProfile.getDefaultHorizon();
+         initialInvestment = riskProfile.getDefaultInitialInvestment().intValue();
+         recurringInvestment = riskProfile.getDefaultRecurringInvestment().intValue();
    }
 
 
    public void loadNewClientData()
    {
-
       try
       {
-         UserInfoData uid = webutil.getUserInfoData();
-         if (uid != null)
-         {
-            setAdvisor(uid.getAdvisor()); // Portfolio solves the null issue, or blank issue.
-            setRep(uid.getRep()); // Portfolio solves the null issue, or blank issue.
-            setLogonid(uid.getLogonID());
-         }
-         setDefaults();
          listDAO.getNewClientProfileData((CustomerData) this.getInstance());
+         riskProfile.fetchUserRiskData(getAdvisor(), getAcctnum());
+         setDefaults();
       }
       catch (Exception ex)
       {
@@ -1428,7 +1409,7 @@ public class CustomerData extends ProfileData
    }
 
 
-   public void loadProfileData(Long acctnum, RiskCalculator riskCalculator)
+   public void loadProfileData(Long acctnum)
    {
 
       try
@@ -1451,7 +1432,6 @@ public class CustomerData extends ProfileData
             }
             setAcctnum(acctnum);
             listDAO.getProfileData(getInstance());
-            loadRiskData(acctnum, riskCalculator);
          }
 
       }
@@ -1459,6 +1439,11 @@ public class CustomerData extends ProfileData
       {
          ex.printStackTrace();
       }
+   }
+
+   public void loadRiskData()
+   {
+      riskProfile.fetchUserRiskData(getAdvisor(), getAcctnum());
    }
 
    public void loadRiskData(Long acctnum, RiskCalculator riskCalculator)
@@ -1473,7 +1458,37 @@ public class CustomerData extends ProfileData
       }
    }
 
+   public void saveProfile()
+   {
+      Long acctnum;
+      try
+      {
+         // setDefaults();
+         acctnum = saveDAO.saveProfileData(getInstance());
+         if (acctnum > 0)
+         {
+            saveVisitor(null);
+            setAcctnum(acctnum);
+            saveDAO.saveRiskProfile(riskProfile);
+            saveDAO.saveFinancials(getInstance());
+            if (getAssetData() != null)
+               saveDAO.saveAllocation(getInstance());
+            if (getPortfolioData() != null)
+               saveDAO.savePortfolio(getInstance());
+         }
+         // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Data Saved", "Data Saved"));
+      }
+      catch (Exception ex)
+      {
+         String stackTrace = ex.getMessage();
+         webutil.alertSupport("CustomerData.saveprofile", "Error:CustomerData.SaveProfile",
+                              "error.saveprofile", stackTrace);
+         ex.printStackTrace();
+      }
 
+   }
+
+   // Deprecated
    public void saveProfile(RiskCalculator riskcalculator)
    {
       Long acctnum;
@@ -1500,6 +1515,29 @@ public class CustomerData extends ProfileData
          ex.printStackTrace();
       }
 
+   }
+
+   public void createAssetPortfolio() {
+      AssetClass[] aamc;
+      Portfolio[] pfclass;
+      try {
+         setAssetData(null);
+         aamc = modelUtil.buildAllocation(riskProfile, getProfileInstance());
+         if (aamc != null)  {
+            setAssetData(aamc);
+            pfclass = modelUtil.buildPortfolio(aamc, riskProfile, getProfileInstance());
+            if (pfclass != null)
+            {
+               setPortfolioData(pfclass);
+               loadPortfolioList(0);
+               rollupAssetClass(pfclass[0]);
+               buildHistoricalReturns();
+            }
+         }
+      }
+      catch (Exception ex) {
+         ex.printStackTrace();
+      }
    }
 
    public void createAssetPortfolio(Integer noOfYears, Double riskIndex)

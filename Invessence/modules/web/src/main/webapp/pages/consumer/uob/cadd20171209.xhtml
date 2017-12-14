@@ -6,13 +6,15 @@
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/template/common/template.xhtml">
     <f:metadata>
-        <f:viewParam name="mode" value="#{uobProfile.interfaceMode}"/>
-        <f:viewParam name="src" value="#{uobProfile.backURL}"/>
-        <f:viewParam name="acct" value="#{uobProfile.beanAcctnum}"/>
-        <f:event type="preRenderView" listener="#{uobProfile.preRenderView}"/>
+        <f:viewParam name="app" value="#{uobpb.newapp}"/>
+        <f:viewParam name="src" value="#{uobpb.backURL}"/>
+        <f:viewParam name="acct" value="#{uobpb.beanAcctnum}"/>
+        <f:event type="preRenderView" listener="#{uobpb.preRenderView}"/>
     </f:metadata>
 
     <ui:define name="content">
+        <h:outputScript name="js/invCharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
         <h:outputScript name="js/uobHighCharts.js"
                         library="#{uiLayout.webProfile.cssdir}"/>
 
@@ -36,11 +38,18 @@
             <p:outputPanel id="workArea">
 
                 <p:inputText type="hidden" id="idHdnAcct" class="idHdnAcctCls"
-                             value="#{uobProfile.customer.acctnum}"/>
+                             value="#{uobpb.acctnum}"/>
 
+                <ui:fragment rendered="#{uobpb.masterpagemanager.page == 0}">
                     <div class="FullContainer">
-                        <ui:include src="/pages/consumer/uob/portfolioCreate/cEdit.xhtml"/>
+                        <ui:include src="/pages/consumer/uob/addon/cEdit.xhtml"/>
                     </div>
+                </ui:fragment>
+                <ui:fragment rendered="#{uobpb.masterpagemanager.page == 1}">
+                    <div class="FullContainer">
+                        <ui:include src="/pages/consumer/uob/addon/register.xhtml"/>
+                    </div>
+                </ui:fragment>
             </p:outputPanel>
         </h:form>
     </ui:define>

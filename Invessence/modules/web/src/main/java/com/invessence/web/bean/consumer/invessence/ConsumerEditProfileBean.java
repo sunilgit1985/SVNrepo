@@ -8,13 +8,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.*;
 import javax.servlet.http.HttpSession;
 
-import com.invessence.web.bean.consumer.InvessenceCharts;
+import com.invessence.web.bean.consumer.PrimefacesCharts;
 import com.invessence.web.constant.*;
 import com.invessence.converter.*;
-import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
 import com.invessence.web.data.consumer.inv.*;
-import com.invessence.web.util.*;
 import com.invmodel.Const.InvConst;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.context.RequestContext;
@@ -47,7 +45,7 @@ public class ConsumerEditProfileBean extends INVCustomer implements Serializable
 
    private Integer imageSelected = 0;
    private JavaUtil jutil = new JavaUtil();
-   private InvessenceCharts charts = new InvessenceCharts();
+   private PrimefacesCharts charts = new PrimefacesCharts();
    private INVRiskCalculator riskCalculator = new INVRiskCalculator();
 
    public Long getBeanAcctnum()
@@ -121,7 +119,7 @@ public class ConsumerEditProfileBean extends INVCustomer implements Serializable
       return canOpenAccount;
    }
 
-   public InvessenceCharts getCharts()
+   public PrimefacesCharts getCharts()
    {
       return charts;
    }

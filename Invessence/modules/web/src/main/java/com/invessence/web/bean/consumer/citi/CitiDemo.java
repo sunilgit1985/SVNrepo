@@ -6,12 +6,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
-import com.invessence.converter.JavaUtil;
-import com.invessence.web.bean.consumer.InvessenceCharts;
+import com.invessence.web.bean.consumer.PrimefacesCharts;
 import com.invessence.web.constant.WebConst;
 import com.invessence.web.controller.HighChartsController;
 import com.invessence.web.data.common.*;
-import com.invessence.web.data.consumer.uob.UOBRiskCalculator;
 import com.invessence.web.util.Impl.PagesImpl;
 
 /**
@@ -31,7 +29,7 @@ public class CitiDemo extends CustomerData implements Serializable
    private Boolean formEdit;
    private Boolean displayGoalGraph, displayGoalText;
    private HighChartsController highChartsController;
-   private InvessenceCharts charts;
+   private PrimefacesCharts charts;
    private String watsonISINURL;
 
    private PagesImpl pagemanager;
@@ -60,7 +58,7 @@ public class CitiDemo extends CustomerData implements Serializable
    public void init()
    {
       highChartsController = new HighChartsController();
-      charts = new InvessenceCharts();
+      charts = new PrimefacesCharts();
       formEdit = false;
       displayGoalGraph = false;
       displayGoalText = false;

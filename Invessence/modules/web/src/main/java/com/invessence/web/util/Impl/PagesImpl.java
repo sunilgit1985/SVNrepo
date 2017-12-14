@@ -36,7 +36,7 @@ public class PagesImpl implements Serializable, Pages
    public void initPage(){
       pageNo = 0;
       if(errorMessgage!=null)
-      errorMessgage.clear();
+         errorMessgage.clear();
    }
 
    @Override

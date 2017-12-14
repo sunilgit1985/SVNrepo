@@ -12,6 +12,7 @@ import com.invessence.converter.SQLData;
 import com.invessence.emailer.data.MsgData;
 import com.invessence.web.constant.WebConst;
 import com.invessence.web.data.common.*;
+import com.invmodel.risk.data.*;
 import org.apache.commons.logging.*;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.*;
@@ -59,6 +60,13 @@ public class WebUtil implements Serializable
       WebProfile wp = (WebProfile) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(WebConst.WEB_INFO);
       return (wp);
    }
+
+   public AdvisorRiskMaster getAdvisorRiskMaster()
+   {
+      AdvisorRiskMaster arm = (AdvisorRiskMaster) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(WebConst.WEB_ADVISOR_INFO);
+      return (arm);
+   }
+
 
    public boolean isWebProdMode()
    {

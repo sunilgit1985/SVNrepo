@@ -10,6 +10,7 @@ import com.invessence.web.data.consumer.CTO.ClientData;
 import com.invessence.web.data.consumer.RiskCalculator;
 import com.invmodel.asset.data.AssetClass;
 import com.invmodel.portfolio.data.*;
+import com.invmodel.risk.data.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.object.StoredProcedure;
 
@@ -148,7 +149,8 @@ public class ConsumerSaveSP extends StoredProcedure
             declareParameter(new SqlParameter("p_riskByQuestion", Types.TINYINT));
             declareParameter(new SqlParameter("p_riskOverride", Types.TINYINT));
             break;
-         case 3:   // Not used (Open)
+         case 3:   // SP: sav_user_risk_profile
+
             break;
          case 4:   // del_asset_alloc
             declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
@@ -253,6 +255,24 @@ public class ConsumerSaveSP extends StoredProcedure
             break;
          case 13: // save_user_trade_profile_audit
             declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+            break;
+         case 20:   // SP: sav_user_risk_profile
+            declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+            declareParameter(new SqlParameter("p_key", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_answer", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_answerType", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_riskScore", Types.DOUBLE));
+            break;
+         case 21:   // SP: sav_user_risk_score
+            declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+            declareParameter(new SqlParameter("p_year", Types.INTEGER));
+            declareParameter(new SqlParameter("p_calcFormula", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_allCashFlag", Types.BOOLEAN));
+            declareParameter(new SqlParameter("p_score", Types.DOUBLE));
+            declareParameter(new SqlParameter("p_standardScore", Types.DOUBLE));
+            declareParameter(new SqlParameter("p_assetScore", Types.DOUBLE));
+            declareParameter(new SqlParameter("p_portfolioScore", Types.DOUBLE));
+            declareParameter(new SqlParameter("p_adjustment", Types.DOUBLE));
             break;
          default:
       }
@@ -698,9 +718,43 @@ public class ConsumerSaveSP extends StoredProcedure
    public void archiveAllProfileData(Long acctnum)
    {
       Map inputMap = new HashMap();
-
       inputMap.put("p_acctnum", acctnum);
       super.execute(inputMap);
+   }
+
+   @SuppressWarnings({"unchecked", "rawtypes"})
+   public void saveRiskProfile(UserRiskProfile riskProfile)
+   {
+      Map inputMap;
+      for (UserRiskData data: riskProfile.getRiskData().values()) {
+         inputMap = new HashMap();
+         inputMap.put("p_acctnum", riskProfile.getAcctnum());
+         inputMap.put("p_key", data.getKey());
+         inputMap.put("p_answer", data.getAnswer());
+         inputMap.put("p_answerType", data.getAnswerType());
+         inputMap.put("p_riskScore", data.getRiskScore());
+         super.execute(inputMap);
+      }
+    }
+
+   @SuppressWarnings({"unchecked", "rawtypes"})
+   public void saveRiskScores(UserRiskProfile riskProfile)
+   {
+      Map inputMap = new HashMap();
+
+      for (RiskScore data: riskProfile.getALLRiskScores()) {
+         inputMap = new HashMap();
+         inputMap.put("p_acctnum", riskProfile.getAcctnum());
+         inputMap.put("p_year", data.getYear());
+         inputMap.put("p_calcFormula", data.getCalcFormula());
+         inputMap.put("p_allCashFlag", data.getAllCashFlag());
+         inputMap.put("p_score", data.getScore());
+         inputMap.put("p_standardScore", data.getStandardScore());
+         inputMap.put("p_assetScore", data.getAssetScore());
+         inputMap.put("p_portfolioScore", data.getPortfolioScore());
+         inputMap.put("p_adjustment", data.getAdjustment());
+         super.execute(inputMap);
+      }
    }
 
 }
