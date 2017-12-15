@@ -1041,9 +1041,10 @@ public class ServiceDetails
                      else if (property.equalsIgnoreCase(Constant.ADDITIONAL_DETAILS.FILE_DETAILS.toString()))
                      {
                         LinkedHashMap<String, LinkedList<FileDetails>> scd = (LinkedHashMap<String, LinkedList<FileDetails>>) tmp.get(Constant.ADDITIONAL_DETAILS.FILE_DETAILS.toString());
-
-
-
+                        return scd; //scd.get(mode);
+                     }else if (property.equalsIgnoreCase(Constant.ADDITIONAL_DETAILS.PDF_FILE_DETAILS.toString()))
+                     {
+                        LinkedHashMap<String, LinkedList<PDFFileDetails>> scd = (LinkedHashMap<String, LinkedList<PDFFileDetails>>) tmp.get(Constant.ADDITIONAL_DETAILS.PDF_FILE_DETAILS.toString());
                         return scd; //scd.get(mode);
                      }
                   }

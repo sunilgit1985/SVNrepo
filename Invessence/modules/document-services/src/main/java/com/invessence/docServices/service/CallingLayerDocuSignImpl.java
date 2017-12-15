@@ -1,5 +1,6 @@
 package com.invessence.docServices.service;
 
+import com.invessence.custody.data.AORequest;
 import com.invessence.service.bean.*;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class CallingLayerDocuSignImpl implements CallingLayer
 {
 
    @Override
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object)
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, AORequest aoRequest)
    {
       return null;
    }

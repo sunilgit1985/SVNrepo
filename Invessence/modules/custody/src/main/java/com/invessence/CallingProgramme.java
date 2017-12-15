@@ -21,7 +21,7 @@ public class CallingProgramme
       {
 
          WSCallStatus wsCallStatus=null;
-         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("webServicesConfig.xml");
+         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("custodyConfig.xml");
          UOBDaoImpl uobDao = (UOBDaoImpl) context.getBean("uobDaoImpl");
          UOBDataMaster uobDataMaster=(UOBDataMaster) uobDao.fetch(new Long(123));
          System.out.println("uobDataMaster = " + uobDataMaster);

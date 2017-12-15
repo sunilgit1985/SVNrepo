@@ -1,7 +1,6 @@
 package com.invessence.docServices.service;
 
-import java.util.List;
-
+import com.invessence.custody.data.AORequest;
 import com.invessence.service.bean.*;
 
 /**
@@ -9,6 +8,6 @@ import com.invessence.service.bean.*;
  */
 public interface DocumentServiceTraffic
 {
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object);
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, AORequest aoRequest);
    public WSCallResult sendDoc(ServiceRequest serviceRequest, Object object);
 }

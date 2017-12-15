@@ -15,7 +15,7 @@ public class TestClass
    public static void main(String[] args) throws Exception
    {
       WSCallStatus wsCallStatus=null;
-      ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("webServicesConfig.xml");
+      ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("custodyConfig.xml");
       DCWebLayerClass dcWebLayer= (DCWebLayerClassImpl) context.getBean("dcWebLayerClass");
       WSCallResult wsCallResult= dcWebLayer.processDCRequest(new ServiceRequest("BUILDINGBENJAMINS", "UAT"),
                                                              new Long(3157), 1);

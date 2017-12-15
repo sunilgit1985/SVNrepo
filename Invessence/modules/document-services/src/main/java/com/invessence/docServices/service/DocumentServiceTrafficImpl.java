@@ -1,5 +1,6 @@
 package com.invessence.docServices.service;
 
+import com.invessence.custody.data.AORequest;
 import com.invessence.emailer.util.EmailCreator;
 import com.invessence.service.bean.*;
 import com.invessence.service.util.*;
@@ -69,11 +70,11 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 //   }
 
    @Override
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object)
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, AORequest aoRequest)
    {
       System.out.println("serviceRequest = " + serviceRequest);
       callingLayer=getCallingLayer(serviceRequest.getProduct());
-      callingLayer.createDoc(serviceRequest, object);
+      callingLayer.createDoc(serviceRequest, object, aoRequest);
       System.out.println("DocumentServiceTrafficImpl.createDoc");
       return null;
    }

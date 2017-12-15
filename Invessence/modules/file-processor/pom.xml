@@ -228,7 +228,7 @@
 					</archive>
 
                    <!--<finalName>broker-services/broker-services</finalName>-->
-                   <finalName>file-processor/${artifactId}-${version}</finalName>
+                   <!--<finalName>file-processor/${artifactId}-${version}</finalName>-->
 				</configuration>
 			</plugin>
 		</plugins>

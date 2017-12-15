@@ -1,5 +1,6 @@
 package com.invessence.docServices.service;
 
+import com.invessence.custody.data.AORequest;
 import com.invessence.service.bean.*;
 
 /**
@@ -7,6 +8,6 @@ import com.invessence.service.bean.*;
  */
 public interface CallingLayer
 {
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object dataObject);
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object dataObject, AORequest aoRequest);
    public WSCallResult sendDoc(ServiceRequest serviceRequest, Object dataObject);
 }

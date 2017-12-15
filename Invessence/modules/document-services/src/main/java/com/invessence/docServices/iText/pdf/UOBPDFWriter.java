@@ -5,7 +5,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import com.invessence.custody.uob.UOBDataMaster;
-import com.invessence.service.bean.documentServices.iText.PDFFileRules;
+import com.invessence.service.bean.documentServices.iText.*;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +21,16 @@ public class UOBPDFWriter
 {
    @Autowired
    PDFWriter pdfWriter;
-   public void  writPDF(Map<String, List<PDFFileRules>> pdfRules, Object dataObject)
+   public void  writPDF(PDFFileDetails pdfFileDetails, Map<String, List<PDFFileRules>> pdfRules, Object dataObject)
    {
 // List of Files Object Parsing..
-      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObject + "]");
+//      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObject + "]");
       try
       {
          UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
-         PdfReader reader = new PdfReader("D:\\Project\\Abhang\\work\\trunc\\Invessence\\UOBKH Individual & Joint Application for ROBO Advisor Account _New Client_ 27 Oct 2017.pdf");
+         PdfReader reader = new PdfReader("pdf\\"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
 
-         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(uobDataMaster.getAccountDetails().getAcctnum()+".pdf"));
+         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream("pdf\\"+uobDataMaster.getAccountDetails().getAcctnum()+".pdf"));
          Iterator<Map.Entry<String,List<PDFFileRules>>> entries6 = pdfRules.entrySet().iterator();
          while (entries6.hasNext())
          {
@@ -53,6 +53,23 @@ public class UOBPDFWriter
          stamper.close();
 
        }catch (Exception e){
+         e.printStackTrace();
+      }
+   }
+
+   public void  copyPDF(PDFFileDetails pdfFileDetails, Object dataObject)
+   {
+
+      try
+      {
+         UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
+         PdfReader reader = new PdfReader("pdf\\"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
+
+         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream("pdf\\"+uobDataMaster.getAccountDetails().getAcctnum()+"_"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension()));
+
+         stamper.close();
+
+      }catch (Exception e){
          e.printStackTrace();
       }
    }

@@ -1,6 +1,5 @@
 package com.invessence.ws;
 
-import java.io.*;
 import java.util.Scanner;
 
 import com.invessence.ws.service.ServiceLayerImpl;
@@ -22,7 +21,7 @@ public class ProcessDocuSignRequest
       String eventNum = scanner.nextLine();
       System.out.println("Entered acctNum is: " + acctNum+" and eventNum is: " + eventNum);
 
-      ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("webServicesConfig.xml");
+      ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("custodyConfig.xml");
       ServiceLayerImpl serviceLayer = (ServiceLayerImpl) context.getBean("serviceLayerImpl");
 
       serviceLayer.processDCRequest(new Long(acctNum), Integer.parseInt(eventNum));

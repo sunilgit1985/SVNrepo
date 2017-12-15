@@ -1,7 +1,10 @@
 package com.invessence.converter;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
+
+import com.invessence.util.Reflection;
+import org.apache.log4j.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,7 +15,10 @@ import java.util.Date;
  */
 public class SQLData implements Serializable
 {
+   private static final Logger logger = Logger.getLogger(SQLData.class);
    private static final long serialVersionUID = -1983L;
+
+   Reflection reflection=new Reflection();
 
    public String getStrData(Object dataobj)
    {
@@ -84,6 +90,24 @@ public class SQLData implements Serializable
       return val;
    }
 
+   public Float getFloatData(Object dataobj)
+   {
+      Float val = null;
+      try
+      {
+         if (dataobj == null)
+            return 0.0f;
+         else
+            val = Float.parseFloat(dataobj.toString());
+      }
+      catch (Exception ex)
+      {
+         return null;
+      }
+      return val;
+   }
+
+
    public String getDateData(Object dataobj)
    {
       String val = "";
@@ -138,6 +162,149 @@ public class SQLData implements Serializable
       catch (Exception ex)
       {
          return false;
+      }
+   }
+
+   public void getObjectFormROW(ArrayList<LinkedHashMap<String, Object>> dbRows, Object object, String column, Object value) {
+      Boolean isDetailsAvailable=false;
+      Iterator<LinkedHashMap<String, Object>> itr = dbRows.iterator();
+
+      while (itr.hasNext())
+      {
+         StringBuilder fileRow = new StringBuilder();
+         LinkedHashMap<String, Object> map = itr.next();
+//         System.out.println(map.get("name") + ":" + map.get("value"));
+//         for (Map.Entry<String, Object> entry : map.entrySet()) {
+//            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+         try
+         {
+            if(map.get(column).equals(value))
+            {
+               isDetailsAvailable = true;
+//               System.out.println(" column = [" + column + "], value = [" + value + "]");
+               reflection.setInstanceValue(object, map.get("name").toString(), map.get("value"));
+            }
+         }
+         catch (NoSuchFieldException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+         catch (ClassNotFoundException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+         catch (IllegalAccessException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+//         }
+
+      }
+//      if(isDetailsAvailable.equals(false)){
+//         object=null;
+//         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//
+//      }
+   }
+
+   public void getObjectFormROW(ArrayList<LinkedHashMap<String, Object>> dbRows, Object object){
+
+      Iterator<LinkedHashMap<String, Object>> itr = dbRows.iterator();
+
+      while (itr.hasNext())
+      {
+         StringBuilder fileRow=new StringBuilder();
+         LinkedHashMap<String, Object> map = itr.next();
+         System.out.println(map.get("name")+":"+map.get("value"));
+//         for (Map.Entry<String, Object> entry : map.entrySet()) {
+//            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+         try
+         {
+            reflection.setInstanceValue(object,map.get("name").toString(),map.get("value"));
+         }
+         catch (NoSuchFieldException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+         catch (ClassNotFoundException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+         catch (IllegalAccessException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+//         }
+
+      }
+   }
+
+   public void getObjectFormCOLUMN(ArrayList<LinkedHashMap<String, Object>> dbRow, Object object){
+      Iterator<LinkedHashMap<String, Object>> itr = dbRow.iterator();
+
+      while (itr.hasNext())
+      {
+         StringBuilder fileRow = new StringBuilder();
+         LinkedHashMap<String, Object> map = itr.next();
+
+         for (Map.Entry<String, Object> entry : map.entrySet())
+         {
+            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            try
+            {
+               reflection.setInstanceValue(object, entry.getKey(), entry.getValue());
+            }
+            catch (NoSuchFieldException e)
+            {
+               logger.error(e.getMessage());
+//               e.printStackTrace();
+            }
+            catch (ClassNotFoundException e)
+            {
+               logger.error(e.getMessage());
+//               e.printStackTrace();
+            }
+            catch (IllegalAccessException e)
+            {
+               logger.error(e.getMessage());
+//               e.printStackTrace();
+            }
+
+         }
+      }
+   }
+
+   public void getObjectFormCOLUMN(LinkedHashMap<String, Object> dbRow, Object object){
+
+
+      for (Map.Entry<String, Object> entry : dbRow.entrySet()) {
+         System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+         try
+         {
+            reflection.setInstanceValue(object,entry.getKey(),entry.getValue());
+         }
+         catch (NoSuchFieldException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+         catch (ClassNotFoundException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+         catch (IllegalAccessException e)
+         {
+            logger.error(e.getMessage());
+//               e.printStackTrace();
+         }
+
       }
    }
 

@@ -3,12 +3,14 @@ package com.invessence.web.service.documentServices;
 import java.lang.reflect.*;
 import java.util.*;
 
-import javax.swing.*;
-
+import com.invessence.custody.dao.*;
+import com.invessence.custody.data.AORequest;
 import com.invessence.custody.uob.UOBDataMaster;
-import com.invessence.custody.uob.dao.UOBDaoImpl;
+import com.invessence.custody.uob.dao.*;
 import com.invessence.docServices.service.*;
 import com.invessence.service.bean.ServiceRequest;
+import com.invessence.ws.bean.WSCallResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -19,18 +21,38 @@ public class DocProcessMain
 {
    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException
    {
+      try
+      {
 
 //      (new String[] {"Spring-Common.xml","Spring-Connection.xml","Spring-ModuleA.xml"})
-      ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"webServicesConfig.xml","documentServicesConfig.xml"});
-      UOBDaoImpl uobDao = (UOBDaoImpl) context.getBean("uobDaoImpl");
-      UOBDataMaster uobDataMaster=(UOBDataMaster) uobDao.fetch(new Long(123));
-      System.out.println("uobDataMaster = " + uobDataMaster);
-      ServiceRequest serviceRequest= new ServiceRequest("UOB", "UAT");
+         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"custodyConfig.xml", "documentServicesConfig.xml"});
+         Long acctNum = new Long(3367); // 3367
+         int eventNum = 1;
+         ServiceRequest serviceRequest = new ServiceRequest("UOB", "UAT");
 
-      DocumentServiceTraffic dst=(DocumentServiceTrafficImpl)context.getBean("documentServices");
-      dst.createDoc(serviceRequest, uobDataMaster);
-      context.close();
 
+         CustodyDaoLayerImpl custodyDaoLayer = (CustodyDaoLayerImpl) context.getBean("custodyDaoLayerImpl");
+         List<AORequest> aoRequests = custodyDaoLayer.getAORequests(acctNum, eventNum);
+         UOBDaoImpl uobDao = (UOBDaoImpl) context.getBean("uobDaoImpl");
+         for(AORequest aoRequest:aoRequests){
+            System.out.println("aoRequest = " + aoRequest);
+            UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
+//            System.out.println("uobDataMaster = " + uobDataMaster);
+            DocumentServiceTraffic dst = (DocumentServiceTrafficImpl) context.getBean("documentServices");
+            dst.createDoc(serviceRequest, uobDataMaster, aoRequest);
+         }
+
+
+
+         context.close();
+
+
+         WSCallResult wsCallResult = null;
+
+
+      }catch (Exception e){
+         e.printStackTrace();
+      }
 //      System.out.println(UOBDataMaster.class.getField("previousInvestingExperience "));
 //
 //      try

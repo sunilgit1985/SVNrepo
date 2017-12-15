@@ -22,8 +22,8 @@ public class PDFWriter
 try
 {
 
-      Image img = Image.getInstance("watermark.png");
-      img.setAbsolutePosition(200, 400);
+//      Image img = Image.getInstance("pdf\\watermark.png");
+//      img.setAbsolutePosition(200, 400);
    BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
    PdfContentByte under, over;
 
@@ -70,7 +70,7 @@ try
 //         under.addImage(img);
             over = stamper.getOverContent(pdfFileRules.getPageNo());
             over.beginText();
-            over.setFontAndSize(bf, 10);
+            over.setFontAndSize(bf, 9);
             over.setTextMatrix(pdfFileRules.getXcord(), pdfFileRules.getYcord());
 
                over.showText("" + allfv.get(pdfFileRules.getDbColumn()));

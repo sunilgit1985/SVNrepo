@@ -9,15 +9,15 @@ public class PDFFileRules
    private String dataField;
    private String description;
    private Integer pageNo;
-   private Integer xcord;
-   private Integer ycord;
+   private Float xcord;
+   private Float ycord;
    private Integer length;
    private String dbColumn;
    private String role;
    private String isRequired;
    private String needToEncrypt;
 
-   public PDFFileRules(String fileId, String dataField, String description, Integer pageNo, Integer xcord, Integer ycord, Integer length, String dbColumn, String role, String isRequired, String needToEncrypt)
+   public PDFFileRules(String fileId, String dataField, String description, Integer pageNo, Float xcord, Float ycord, Integer length, String dbColumn, String role, String isRequired, String needToEncrypt)
    {
       this.fileId = fileId;
       this.dataField = dataField;
@@ -100,22 +100,22 @@ public class PDFFileRules
       this.pageNo = pageNo;
    }
 
-   public Integer getXcord()
+   public Float getXcord()
    {
       return xcord;
    }
 
-   public void setXcord(Integer xcord)
+   public void setXcord(Float xcord)
    {
       this.xcord = xcord;
    }
 
-   public Integer getYcord()
+   public Float getYcord()
    {
       return ycord;
    }
 
-   public void setYcord(Integer ycord)
+   public void setYcord(Float ycord)
    {
       this.ycord = ycord;
    }

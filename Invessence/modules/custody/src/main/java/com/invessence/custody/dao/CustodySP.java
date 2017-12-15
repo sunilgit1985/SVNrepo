@@ -105,6 +105,10 @@ public class CustodySP extends StoredProcedure
             break;
          case 8:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
+            break;
+         case 8:
+            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_name", Types.VARCHAR));
             declareParameter(new SqlParameter("p_value", Types.VARCHAR));
             declareParameter(new SqlParameter("p_table", Types.VARCHAR));
@@ -124,6 +128,14 @@ public class CustodySP extends StoredProcedure
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
+      return execute(inputMap);
+   }
+
+   public Map getAORequests(Long acctNum, int eventNum)
+   {
+      Map inputMap = new LinkedHashMap();
+      inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_eventnum", eventNum);
       return execute(inputMap);
    }
 

@@ -13,7 +13,7 @@ public class MainPendingAccCreation
    {
       try
       {
-         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("webServicesConfig.xml");
+         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("custodyConfig.xml");
          ServiceLayerImpl serviceLayer = (ServiceLayerImpl) context.getBean("serviceLayerImpl");
          serviceLayer.createPendingUser();
          context.close();
