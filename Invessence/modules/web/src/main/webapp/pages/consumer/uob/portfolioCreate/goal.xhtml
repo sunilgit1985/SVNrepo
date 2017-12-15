@@ -55,7 +55,7 @@
                                            actionListener="#{uobProfile.selectRetireType(1)}"
                                            process="@this"
                                            update=":ceForm:goalInfo"  >
-                                <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter retirement_opt">
+                                <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter #{uobProfile.getSelectedClass(1)}">
                                     <div class="Container70">
                                         <h4>I want to save for retirement</h4>
 
@@ -76,7 +76,7 @@
                                            actionListener="#{uobProfile.selectRetireType(2)}"
                                            process="@this"
                                            update=":ceForm:goalInfo">
-                                <p:panel id="retireP2" styleClass="Wid95 MarCenter tcmPanel-UI">
+                                <p:panel id="retireP2" styleClass="Wid95 MarCenter #{uobProfile.getSelectedClass(2)}">
                                     <div class="Container70">
                                         <h4>I am retired</h4>
 
@@ -207,7 +207,7 @@
                     </div>
 
                 </div>
-                <div class="Container100 tab_dtl">
+                <div class="Container100 tab_dtl legacy_tab_dtl">
                     <p>My objective is legacy planning and I do not intend to withdraw investment funds from this account. I aim to </p>
                     <div class="selectRadio">
                         <p:selectOneRadio id="legacyQ" value="#{uobProfile.legacy}" styleClass=""

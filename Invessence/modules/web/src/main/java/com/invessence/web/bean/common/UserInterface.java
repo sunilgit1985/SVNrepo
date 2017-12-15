@@ -93,4 +93,5 @@ public class UserInterface implements Logger
    public Integer getProgressBar() {
       return progressbar.getProgressBar().intValue();
    }
+
 }

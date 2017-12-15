@@ -1770,7 +1770,7 @@ a {
 
 .FullContainer {
     margin: 10px 0px;
-    padding-top: 50px;
+   /*  padding-top: 50px; */
 }
 .layout-portlets-box.strategy_layout {
     /*margin-top: -50px;*/
@@ -4967,7 +4967,7 @@ td.bullet_td span {
     font-size: 16px !important;
     width: 100px;
     text-align: center;
-    font-weight: bold;
+    font-weight: bold !important;
     position: relative;
     top: -4px;
     box-shadow: none;
@@ -5051,6 +5051,7 @@ span.input_value {
     background: #fff !important;
     top: -3px;
     width: 8px;
+    left:44px;
 }
 .selectList .ui-selectonemenu label.ui-selectonemenu-label {
     background: #fff;
@@ -5209,6 +5210,37 @@ span.change_goal {
 .Container10.Responsive100.nationality_title {
     width: 14%;
 }
+.wid55 input{width:55px!important;}
+.caraousle .Container45 {
+    width: 40%;
+    margin: 1% 25px;
+}
+.caraousle .CustomWidthAccountypePanel .ui-panel-content {
+    padding: 5px 0 0!important;
+    margin:0 !important;
+}
+.caraousle .ui-panel .Container70 {
+    margin-top: 5px;
+}
+.caraousle .selRetGoal {
+    border-radius: 0px;
+    border-top: 4px solid #a4332f;
+    background: #f7eeeecc;
+    border-color: #a4332f;
+}
+.Container100.tab_dtl.legacy_tab_dtl {
+    text-align: left;
+    padding: 12px;
+}
+.selectRadio .ui-radiobutton .ui-radiobutton-box {
+     border: solid 1px #a4332f;
+}
+.selectRadio .ui-icon-bullet {
+    background-color: #a4332f !important;   
+}
+.portfolio_progress_bar .ui-progressbar-value {
+    background-color: #a4332f;}
+
 /** end portfolio creation**/
 /*** 28/11/2017**/
 .acc_holder_form .ui-datatable .ui-datatable-odd {
@@ -5258,6 +5290,7 @@ span.change_goal {
 .Container100.tab_dtl.review_dtl {
     text-align: left;
     padding: 12px;
+    position:relative;
 }
 .review_dtl .Container100 {
     margin: 6px 0;
@@ -5290,7 +5323,7 @@ span.output_review {
 }
 .Container100.donutChartGraph.chart_graph {
     position: relative;
-    top: -132px;
+   /*  top: -132px; */
 }
 .chart_graph .highcharts-series rect {
     fill: #27aae1;
@@ -5464,6 +5497,40 @@ span.output_review {
     /* opacity: 0.9; */
     /* font-size: 23px; */
     box-shadow: 0px 0px 3px 2px #b3a7a7;
+}
+
+/** 15/12/17 for portfolio review sliding tab**/
+#leftpanel{display:none;}
+div.slidePanelleft {
+    position: absolute;
+    background: #a4332f;
+    color: #fff;
+    top: 0;
+    left: 0;
+    padding: 7px;
+    cursor: pointer;
+    width: 110px;
+}
+div#leftpanel {
+    position: absolute;
+    background: #fff;
+    z-index: 1;
+    top: 40px;
+    box-shadow: 1px 1px 1px 1px #ccc;
+    left: 0px;
+    padding: 10px;
+    width: 25%;
+}
+.review_dtl .fa-angle-left {
+    float: left;
+}
+.review_dtl .fa-angle-left:before {
+    content: "\f104";
+    color: #fff;
+    position: absolute;
+    font-size: 21px;
+    tip: -3;
+    font-weight: bold;
 }
 /*** responsive**/
 
@@ -5763,6 +5830,45 @@ span.output_review {
         font-size: 18px;
     }
     .caraousle input{font-size: 20px !important;}
+    /*** 15/12/17***/
+    .image-ring .ui-ring-item img {
+        width: 65% !important;
+        height:auto;
+    }
+    .ring_widget .ui-ring-item-focus .ui-outputpanel{font-weight:bold;}
+    .caraousle input {
+        width: 60% !important;
+    }
+    .review-donut{right:0;}
+    .portfolio_selection .sapn_review{left:0;}
+    .caraousle .Container45 {    width: 100%;}
+    .caraousle .ui-panel .Container70 {
+        width: 70%;
+    }
+    .reviewHeader_title .header_link.prenext_btn.Container70 {
+        width: 100%;
+    }
+    .review_dtl .Container30.donutChartGraph {
+        position: relative;
+        top: 10px;
+        width: 100%;
+    }
+    div.slidePanelleft{width:135px;}
+    div#leftpanel{    width: 85%;
+        font-size: 18px;}
+    .selected_reviewGoal span {
+        font-size: 14px;
+        width: 100%;
+        float: left;
+    }
+    .selected_reviewGoal span {
+        font-size: 14px;
+        width: 100%;
+        float: left;
+    }
+    .caraousle .review_dtl .Container70 {
+        width: 100%;}
+
 
 
 }

@@ -32,6 +32,27 @@
 						library="#{uiLayout.webProfile.cssdir}"/>
 		<h:outputScript name="js/exporting.js"
 						library="#{uiLayout.webProfile.cssdir}"/>
+						
+						<script>
+						 $(document).ready(function() {
+							 $("#slidePanelleft").click(function () {
+
+
+								    // Set the effect type
+								    var effect = 'slide';
+
+								    // Set the options for the effect type chosen
+								    var options = { direction: 'left' };
+
+								    // Set the duration (default: 400 milliseconds)
+								    var duration = 700;
+
+								    $('#leftpanel').toggle(effect, options, duration);
+								     
+								});
+						 });
+						 
+						</script>
 
 
 		<h:form id="ceForm">
@@ -62,8 +83,7 @@
 								<div class="Container30 fine_tune_btn">
 									<ui:fragment rendered="true">
 										<p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
-														 icon="ui-icon-image"
-										>
+														 icon="ui-icon-image"	>
 										</p:commandButton>
 										<span class="ftBtnLabel">Fine Tune</span>
 									</ui:fragment>
@@ -83,7 +103,9 @@
 
 						</div>
 						<div class="Container100 tab_dtl review_dtl">
-							<div class="Container20">
+							<div class="slidePanelleft" id="slidePanelleft"><span class="ui-button-icon-center ui-icon ui-c fa fa-angle-left" ></span>Goal Details</div>
+							
+							<div class="Container20" id="leftpanel"> 
 								<div class="Container100">
 									<div class="Container20 reviewGoal_heding">
 										Goal :
@@ -109,7 +131,7 @@
 									Expected Annual Withdraw at Retirement: <span class="output_review">S$40,000</span>
 								</div>
 							</div>
-							<div class="Container80">
+							<div class="Container100">
 								<div class="Container100 Responsive50 tp20 confirmation_donut_dtl">
 									<!-- ROHIT's CHANGE -->
 									<div class="ContainerIndent">
@@ -194,15 +216,15 @@
 
 
 											</script>
+											<div class="Container100">
+												<div class="Container30 donutChartGraph">
+													<div id="2dDonutChartCnf"></div>
+													<h:inputHidden value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
+																   id="twodDonutValueChartCnf"/>
+													<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
 
-											<div class="Container30 donutChartGraph">
-												<div id="2dDonutChartCnf"></div>
-												<h:inputHidden value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
-															   id="twodDonutValueChartCnf"/>
-												<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
-
-											</div>
-											<div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
+												</div>
+												<div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
 
 												<div class="ContainerIndent ">
 													<p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
@@ -261,6 +283,7 @@
 														</p:columnGroup>
 													</p:dataTable>
 												</div>
+											</div>
 											</div>
 											<div class="Container100 donutChartGraph chart_graph">
 												<div id="container"></div>

@@ -24,6 +24,7 @@ public class ProfileBean extends PortfolioCreationUI
    public WebMenuItem selectedGoal;
    public Integer selectedRetirementGoal;
    private UOBRiskCalc uobCalc;
+   public String selectedClass="";
 
 
    public void buildGoalList(String defaultGoal)
@@ -284,6 +285,16 @@ public class ProfileBean extends PortfolioCreationUI
          return defaultCheckedImage;
 
       }
+
+   public String getSelectedClass(Integer num) {
+      if (num != null)
+      {
+         return ((selectedRetirementGoal != null && selectedRetirementGoal == num) ? "selRetGoal" : "");
+      }
+      else
+         return "";
+
+   }
 
    public String getPrintName() {
       if (getCustomer() != null && getCustomer().getName() != null) {
