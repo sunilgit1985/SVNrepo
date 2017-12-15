@@ -58,7 +58,7 @@
       <property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations">
 			<list>
-				<value>classpath:webServicesParameters.properties</value>
+				<value>classpath:custodyParameters.properties</value>
 			</list>
 		</property>
 	</bean>
