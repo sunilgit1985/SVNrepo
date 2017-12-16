@@ -140,7 +140,7 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_advisorid", Types.NUMERIC));
             declareParameter(new SqlParameter("p_reqType", Types.VARCHAR));
             break;
-         case 20:
+        case 20:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
             break;

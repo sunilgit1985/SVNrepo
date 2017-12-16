@@ -2,14 +2,17 @@ package com.invessence.docServices.iText.pdf;
 
 import java.io.*;
 import java.lang.reflect.*;
+import java.nio.file.Files;
 import java.util.*;
 
 import com.invessence.custody.uob.UOBDataMaster;
+import com.invessence.service.bean.ServiceRequest;
 import com.invessence.service.bean.documentServices.iText.*;
+import com.invessence.service.util.*;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.*;
 
 
 /**
@@ -21,16 +24,24 @@ public class UOBPDFWriter
 {
    @Autowired
    PDFWriter pdfWriter;
-   public void  writPDF(PDFFileDetails pdfFileDetails, Map<String, List<PDFFileRules>> pdfRules, Object dataObject)
+   public void  writPDF(ServiceRequest serviceRequest, PDFFileDetails pdfFileDetails, Map<String, List<PDFFileRules>> pdfRules, Object dataObject)
    {
 // List of Files Object Parsing..
 //      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObject + "]");
       try
       {
-         UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
-         PdfReader reader = new PdfReader("pdf\\"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
 
-         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream("pdf\\"+uobDataMaster.getAccountDetails().getAcctnum()+".pdf"));
+         UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
+
+         String masterPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_MASTER_DIRECTORY");
+         String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
+
+         File file = new File(custPdfDirectory);
+         file.getParentFile().mkdirs();
+
+         PdfReader reader = new PdfReader(masterPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
+
+         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(custPdfDirectory+"/"+pdfFileDetails.getFileName()+".pdf"));
          Iterator<Map.Entry<String,List<PDFFileRules>>> entries6 = pdfRules.entrySet().iterator();
          while (entries6.hasNext())
          {
@@ -57,21 +68,22 @@ public class UOBPDFWriter
       }
    }
 
-   public void  copyPDF(PDFFileDetails pdfFileDetails, Object dataObject)
+   public void  copyPDF(ServiceRequest serviceRequest,PDFFileDetails pdfFileDetails, Object dataObject) throws Exception
    {
+      UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
+      String masterPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_MASTER_DIRECTORY");
+      String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
 
-      try
-      {
-         UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
-         PdfReader reader = new PdfReader("pdf\\"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
-
-         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream("pdf\\"+uobDataMaster.getAccountDetails().getAcctnum()+"_"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension()));
-
-         stamper.close();
-
-      }catch (Exception e){
-         e.printStackTrace();
+      File file = new File(custPdfDirectory);
+      if(!file.getParentFile().exists()){
+         Files.createDirectory(file.toPath());
       }
+
+//      file.getParentFile().mkdirs();
+
+      PdfReader reader = new PdfReader(masterPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
+      PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(custPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension()));
+      stamper.close();
    }
 
    private static HashMap<String, Object> getMemberFields(Object obj, HashMap<String, Object> fieldValues) throws IllegalAccessException,

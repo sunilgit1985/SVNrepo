@@ -73,7 +73,7 @@ try
             over.setFontAndSize(bf, 9);
             over.setTextMatrix(pdfFileRules.getXcord(), pdfFileRules.getYcord());
 
-               over.showText("" + allfv.get(pdfFileRules.getDbColumn()));
+            over.showText("" + allfv.get(pdfFileRules.getDbColumn()));
 
             over.endText();
             }

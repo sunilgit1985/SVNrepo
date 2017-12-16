@@ -1,9 +1,14 @@
 package com.invessence.docServices.service;
 
+import java.util.*;
+
 import com.invessence.custody.data.AORequest;
+import com.invessence.custody.uob.UOBDataMaster;
+import com.invessence.data.ZipFile;
 import com.invessence.emailer.util.EmailCreator;
 import com.invessence.service.bean.*;
 import com.invessence.service.util.*;
+import com.invessence.util.ZipFiles;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
@@ -70,13 +75,33 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 //   }
 
    @Override
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, AORequest aoRequest)
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests)
    {
+      WSCallResult wsCallResult=null;
+      List<ZipFile> filesForZip= new LinkedList<>();
       System.out.println("serviceRequest = " + serviceRequest);
       callingLayer=getCallingLayer(serviceRequest.getProduct());
-      callingLayer.createDoc(serviceRequest, object, aoRequest);
-      System.out.println("DocumentServiceTrafficImpl.createDoc");
-      return null;
+      for(AORequest aoRequest:aoRequests){
+         System.out.println("aoRequest = " + aoRequest);
+         wsCallResult=callingLayer.createDoc(serviceRequest, object, aoRequest);
+         if(wsCallResult.getWSCallStatus().getErrorCode()==1)
+         {
+            filesForZip.add(new ZipFile(wsCallResult.getGenericObject().toString(),wsCallResult.getGenericObject().toString()));
+         }else{
+            return wsCallResult;
+         }
+      }
+      if(wsCallResult.getWSCallStatus().getErrorCode()==1)
+      {
+         if (filesForZip.size() > 0)
+         {
+            String zipDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "ZIP_FILES_DIRECTORY");
+
+            ZipFiles.createZipFile(((UOBDataMaster)object).getAccountDetails().getAcctnum().toString(), zipDirectory, filesForZip);
+         }
+         emailCreator.createEmail("abhangp@invessence.com", "Account Opening Files", "Files related Account Opening Process.", "pdf/abhang.zip");
+      }
+      return wsCallResult;
    }
 
    @Override

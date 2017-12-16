@@ -64,7 +64,7 @@ public class CustodyDaoLayerImpl implements CustodyDaoLayer
       List<AORequest> aoRequests=new LinkedList<>();
       try
       {
-         CustodySP serviceSP = new CustodySP(webServiceJdbcTemplate, "spao_requests", 8);
+         CustodySP serviceSP = new CustodySP(webServiceJdbcTemplate, "spao_requests", 20);
          try
          {
             Map outMap = serviceSP.getAORequests(acctNum, eventNum);

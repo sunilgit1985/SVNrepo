@@ -321,4 +321,27 @@ public class EmailCreator implements MessageSourceAware, Serializable
          ex.printStackTrace();
       }
    }
+
+   public void createEmail(String receiver, String subject, String message, String attachmentPath){
+
+
+      try {
+
+         // In it is warning, error and notification, then send to support desk as well as write to email_alert table.
+
+         MsgData msgData = new MsgData();
+         msgData.setMimeType("TEXT");
+         msgData.setSource("External");
+         msgData.setSubject(subject);
+         msgData.setReceiver(receiver);
+         msgData.setAttachmentFile(attachmentPath);
+         // msgData.setCc();
+         msgData.setSender(ServiceParameters.getConfigProperty(Constant.SERVICES.EMAIL_SERVICE.toString(), ServiceParameters.getServiceProvider(Constant.SERVICES.EMAIL_SERVICE.toString()), "SENDER_EMAIL"));
+         msgData.setMsg(message);
+         msgDAO.saveMsg(msgData);
+      }
+      catch (Exception ex) {
+         ex.printStackTrace();
+      }
+   }
 }

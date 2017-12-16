@@ -15,7 +15,7 @@ import com.invessence.service.util.*;
 import com.invessence.util.AddressSplitter;
 import com.invessence.web.dao.consumer.ConsumerListDataDAO;
 import com.invessence.web.data.common.CustomerData;
-import com.invessence.web.service.custody.CustodyService;
+import com.invessence.web.service.custody.*;
 import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.PagesImpl;
 import com.invessence.service.bean.Generic.Country;
@@ -39,6 +39,9 @@ public class UOBCustodyBean
 
    @ManagedProperty("#{consumerListDataDAO}")
    private ConsumerListDataDAO listDAO;
+
+   @ManagedProperty("#{aoWebLayer}")
+   private AOWebLayer aoWebLayer;
 
 
    private UOBDataMaster uobDataMaster;
@@ -2408,6 +2411,14 @@ public class UOBCustodyBean
 //            int eventnum = Integer.parseInt(eventNo[i]);
             System.out.println("Custody event No " + eventNum);
             System.out.println("Custody req Id " + reqId);
+         try
+         {
+            aoWebLayer.processAORequest(null,null,null);
+         }
+         catch (Exception e)
+         {
+            e.printStackTrace();
+         }
 //            wsCallResult = getDcWebLayer().processDCRequest(new ServiceRequest(product, mode), getTdMasterData().getAcctnum(), eventnum);
 //            System.out.println("Docusign wsCallResult " + wsCallResult);
 //            if (wsCallResult.getWSCallStatus().getErrorCode() != 0)
@@ -3198,5 +3209,15 @@ public class UOBCustodyBean
    public void setReqType(String reqType)
    {
       this.reqType = reqType;
+   }
+
+   public AOWebLayer getAoWebLayer()
+   {
+      return aoWebLayer;
+   }
+
+   public void setAoWebLayer(AOWebLayer aoWebLayer)
+   {
+      this.aoWebLayer = aoWebLayer;
    }
 }
