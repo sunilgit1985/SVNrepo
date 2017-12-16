@@ -40,6 +40,4 @@
     </property>
 	</bean>
 
- <bean id="documentServices" class="com.invessence.docServices.service.DocumentServiceTrafficImpl" />
-
-</beans>
+ </beans>
