@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import com.invessence.custody.uob.UOBDataMaster;
 import com.invessence.custody.uob.data.*;
+import com.invessence.service.bean.ServiceRequest;
 import com.invessence.service.util.*;
 import com.invessence.util.AddressSplitter;
 import com.invessence.web.dao.consumer.ConsumerListDataDAO;
@@ -23,7 +24,7 @@ import org.apache.commons.logging.*;
 import org.primefaces.event.FileUploadEvent;
 
 /**
- * Created by abhangp on 11/10/2017.
+ * Created by sagarp on 11/11/2017.
  */
 @ManagedBean(name = "uobCustodyBean")
 @SessionScoped
@@ -64,9 +65,13 @@ public class UOBCustodyBean
    private Map<String, String> repMap = new HashMap<String, String>();
    private boolean dspDocUpdPnl = false;
    private List<CustodyFileDetails> updFileMstrLst = new ArrayList<CustodyFileDetails>();
+   private List<CustodyFileRequest> updFileLst = new ArrayList<CustodyFileRequest>();
    private String cstdyUpdPath = null;
    private boolean dsblUpdSubmtBtn = true;
    private String currentAcctHolder = null;
+   private String beanAccount=null;
+   private String saveandOpenError;
+   private String reqType;
 
    private Map<String, String> fileupdSucc = new HashMap<String, String>();
 
@@ -127,6 +132,7 @@ public class UOBCustodyBean
       fileupdSucc = new HashMap<String, String>();
       dsblUpdSubmtBtn = true;
       currentAcctHolder = null;
+      beanAccount=null;
    }
 
    public void initCustody()
@@ -136,12 +142,18 @@ public class UOBCustodyBean
       {
          if (!FacesContext.getCurrentInstance().isPostback())
          {
-            if (getBeanAcctNum() == 0)
+            if (getBeanAccount() == null || getBeanAccount().isEmpty())
             {
                msgheader = "dctd.200";
                getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
                return;
             }
+            if(getWebutil().getWebprofile()==null){
+
+               getWebutil().accessdenied();
+               return;
+            }
+            setBeanAcctNum(Long.parseLong(getBeanAccount()));
             String valOutput = isValidAcctNum();
 
             // If account is managed
@@ -160,7 +172,8 @@ public class UOBCustodyBean
                return;
             }
 //Need To Remove
-            updFileMstrLst = custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum);
+//            updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+//            updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
             cleanUpAll();
             uobDataMaster = custodyService.fetch(getBeanAcctNum(), false);
             uobDataMaster.getAccountDetails().setAcctnum(getBeanAcctNum());
@@ -210,12 +223,66 @@ public class UOBCustodyBean
                DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                dtPriHldrDob = df.parse(uobDataMaster.getIndividualOwnersDetails().getDob());
             }
+//            Integer currentPage = getPagemanager().getPage();
+//            getPagemanager().initPage();
+//            resetActiveTab(0);
+//            getPagemanager().setLastPageVisited(currentPage);
+//            getPagemanager().clearAllErrorMessage();
+            saveandOpenError = null;
          }
       }
       catch (Exception ex)
       {
          logger.info("Exception: raised during Starting TD CTO process.");
       }
+   }
+
+   public Boolean validateAllPage()
+   {
+      Integer currentPage = getPagemanager().getPage();
+      Boolean status;
+      saveandOpenError = null;
+
+//      validate(getPagemanager().getPage(), getAcctCat(), false))
+
+//      saveDetails(getPagemanager().getPage(), getAcctCat(), false);
+
+      getPagemanager().setPage(0);
+      status = true;
+      while (getPagemanager().getPage() <= getPagemanager().getMaxNoofPages())
+      {
+         currentPage=getPagemanager().getPage();
+         if (validate(getPagemanager().getPage(), getAcctCat(), false))
+         {
+//            saveDetails(getPagemanager().getPage(), getAcctCat(), false);
+            if (getPagemanager().isLastPage())
+            {
+               break;
+            }
+            getPagemanager().nextPage();
+//            pageControl(getPagemanager().getPage());
+            currentPage=getPagemanager().getPage();
+//            activeTab = getPagemanager().getPage() + 1;
+
+         }
+         else
+         {
+            currentPage = getPagemanager().getPage();
+            status = false;
+            break;
+         }
+
+      }
+//      getPagemanager().setLastPageVisited(currentPage);
+      getPagemanager().setPage(currentPage-1);
+//      resetActiveTab(getPagemanager().getPage());
+      activeTab=currentPage;
+      if (!status)
+      {
+         saveandOpenError = "Please fill appropriate forms above.";
+      }
+
+      return status;
    }
 
    private String isValidAcctNum()
@@ -349,10 +416,12 @@ public class UOBCustodyBean
          if (getAcctCat().equalsIgnoreCase("yes"))
          {
             dsplExtIndAcctCat = true;
+            setReqType("ACCT_OPEN_EXISTING_USER");
          }
          else
          {
             dsplExtIndAcctCat = false;
+            setReqType("ACCT_OPEN_NEW_USER");
          }
          uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
          uobDataMaster.getAccountDetails().getAccountMiscDetails().setSalesPersonName(null);
@@ -375,11 +444,13 @@ public class UOBCustodyBean
             uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber() == "")
          {
             setAcctCat("No");
+            setReqType("ACCT_OPEN_NEW_USER");
             uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
          }
          else
          {
             setAcctCat("Yes");
+            setReqType("ACCT_OPEN_EXISTING_USER");
          }
          setSelIndAcctTyp("Individual");
          if (getAcctCat().equalsIgnoreCase("yes"))
@@ -598,6 +669,8 @@ public class UOBCustodyBean
          {
             System.out.println("Need to add in validation condition");
          }
+
+         //Boolean status = validateAllPage();
          inpSalesPrnNm = null;
          repid = null;
       }
@@ -2033,8 +2106,52 @@ public class UOBCustodyBean
 
    private void resetActiveTab(Integer pagenum)
    {
-//      Integer nextTab = pageControl(pagenum);
-//      activeTab = nextTab;
+      Integer nextTab = pageControl(pagenum);
+      activeTab = nextTab;
+   }
+
+   private Integer pageControl(Integer pagenum)
+   {
+      Integer newTab;
+      if (pagenum == null)
+      {
+         return 1;
+      }
+      switch (pagenum) // Note: The switch is based on pagenum
+      {
+         case 0:
+            newTab = 0;
+            break;
+         case 1:
+            newTab = 1;
+            break;
+         case 2:
+            newTab = 2;
+            break;
+         case 3:
+            newTab = 3;
+            break;
+         case 4:
+            newTab = 4;
+            break;
+         case 5:
+            newTab = 5;
+            break;
+         case 6:
+            newTab = 6;
+            break;
+         case 7:
+            newTab = 7;
+            break;
+         case 8:
+            newTab = 8;
+            break;
+         default:
+            newTab = null;
+            break;
+      }
+
+      return newTab;
    }
 
    public static Map<String, Object> getFieldNames(final Object obj, boolean publicOnly)
@@ -2266,7 +2383,52 @@ public class UOBCustodyBean
       dspNewAcctPnl = false;
       dspExtAcctPnl = false;
       dspIntroAcctPnl = false;
-      updFileMstrLst = custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum);
+      updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+
+      fileupdSucc=new HashMap<String,String>();
+      if(updFileLst!=null && updFileLst.size()>0){
+         for(int i=0;i<updFileLst.size();i++){
+
+            fileupdSucc.put(updFileLst.get(i).getReqType(), updFileLst.get(i).getReqType());
+         }
+      }
+   }
+
+   public void  submitUploadFrm(){
+      String eventRef = custodyService.saveCustodyDocReq(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,1l,getReqType());
+
+      System.out.println("Custody Doc Request Return " + eventRef);
+      if (eventRef != null)
+      {
+         String eventDtl[] = eventRef.split(",");
+         int reqId=Integer.parseInt(eventDtl[0]);
+         int eventNum=Integer.parseInt(eventDtl[1]);
+//         for (int i = 0; i < eventNo.length; i++)
+//         {
+//            int eventnum = Integer.parseInt(eventNo[i]);
+            System.out.println("Custody event No " + eventNum);
+            System.out.println("Custody req Id " + reqId);
+//            wsCallResult = getDcWebLayer().processDCRequest(new ServiceRequest(product, mode), getTdMasterData().getAcctnum(), eventnum);
+//            System.out.println("Docusign wsCallResult " + wsCallResult);
+//            if (wsCallResult.getWSCallStatus().getErrorCode() != 0)
+//            {
+//               msg = wsCallResult.getWSCallStatus().getErrorMessage();
+//               getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", msg);
+//            }
+//            else
+//            {
+//               if (i==(eventNo.length-1))
+//               {
+//                  sendAlertMessage("P");
+//                  getUiLayout().doMenuAction("custody", "tdconfirmation.xhtml");
+//               }
+//            }
+//         }
+      }
+      else
+      {
+         getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", "Error occurred while document request generation");
+      }
    }
 
    public void prevDataForm()
@@ -2283,7 +2445,7 @@ public class UOBCustodyBean
          dspNewAcctPnl = true;
       }
       dspIntroAcctPnl = false;
-      updFileMstrLst = custodyService.fetchFileUpdList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum);
+      updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
    }
 
    public void handleFileUpload(FileUploadEvent event)
@@ -2291,25 +2453,53 @@ public class UOBCustodyBean
       try
       {
          System.out.println("File NAme " + event.getFile().getFileName());
-
          InputStream is = null;
          is = event.getFile().getInputstream();
-//         byte[] buffer = new byte[is.available()];
-         File targetFile = new File(cstdyUpdPath + "" + getBeanAcctNum() + "_" + event.getFile().getFileName());
-         OutputStream outStream = new FileOutputStream(targetFile);
-//         outStream.write(buffer);
+         String updFileTyp = (String) event.getComponent().getAttributes().get("updFileTyp");
+         int updFileSqNo = (Integer) event.getComponent().getAttributes().get("updFileSqNo");
+         String tempFileName= event.getFile().getFileName();
+         String fileArray[]=tempFileName.split("\\.");
 
+         String fileName=getBeanAcctNum() + "_" + updFileTyp+"."+fileArray[1];
+         File targetFile = new File(cstdyUpdPath + "" +fileName);
+         OutputStream outStream = new FileOutputStream(targetFile);
          byte[] buffer = new byte[8 * 1024];
          int bytesRead;
+
          while ((bytesRead = is.read(buffer)) != -1)
          {
             outStream.write(buffer, 0, bytesRead);
          }
          outStream.close();
+         fileupdSucc.put(updFileTyp, updFileTyp);
+         CustodyFileRequest objCustodyFileRequest=new CustodyFileRequest();
+         if(updFileLst!=null && updFileLst.size()>0){
+            for(int i=0;i<updFileLst.size();i++){
+               if(updFileLst.get(i).getReqType().equalsIgnoreCase(updFileTyp)){
+                  objCustodyFileRequest=updFileLst.get(i);
+                  File file = new File(objCustodyFileRequest.getFilePath()+""+objCustodyFileRequest.getFileName());
+                  file.delete();
+                  objCustodyFileRequest.setFilePath(cstdyUpdPath);
+                  objCustodyFileRequest.setSeqno(updFileSqNo);
+                  objCustodyFileRequest.setFileName(fileName);
+                  break;
+               }
+            }
+         }else{
+            objCustodyFileRequest.setAcctnum(beanAcctNum);
+            objCustodyFileRequest.setAction(getReqType());
+            objCustodyFileRequest.setRequestFor("Upload");
+            objCustodyFileRequest.setFileName(fileName);
+            objCustodyFileRequest.setFilePath(cstdyUpdPath);
+            objCustodyFileRequest.setReqType(updFileTyp);
+            objCustodyFileRequest.setSeqno(updFileSqNo);
+         }
+         custodyService.saveCustodyFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,
+                                         ""+getBeanLogonId(),objCustodyFileRequest);
+         updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+         System.out.println("File Write [" + updFileTyp+ "]");
 
-         String foo = (String) event.getComponent().getAttributes().get("foo"); // bar
-         fileupdSucc.put(foo, foo);
-         System.out.println("File Write [" + foo + "]");
+
          if (updFileMstrLst.size() == fileupdSucc.size())
          {
             dsblUpdSubmtBtn = false;
@@ -2978,5 +3168,35 @@ public class UOBCustodyBean
    public void setCurrentAcctHolder(String currentAcctHolder)
    {
       this.currentAcctHolder = currentAcctHolder;
+   }
+
+   public String getBeanAccount()
+   {
+      return beanAccount;
+   }
+
+   public void setBeanAccount(String beanAccount)
+   {
+      this.beanAccount = beanAccount;
+   }
+
+   public List<CustodyFileRequest> getUpdFileLst()
+   {
+      return updFileLst;
+   }
+
+   public void setUpdFileLst(List<CustodyFileRequest> updFileLst)
+   {
+      this.updFileLst = updFileLst;
+   }
+
+   public String getReqType()
+   {
+      return reqType;
+   }
+
+   public void setReqType(String reqType)
+   {
+      this.reqType = reqType;
    }
 }

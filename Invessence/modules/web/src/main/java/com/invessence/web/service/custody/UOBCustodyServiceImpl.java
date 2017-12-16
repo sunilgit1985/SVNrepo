@@ -207,7 +207,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
    }
 
    @Override
-   public List<CustodyFileDetails> fetchFileUpdList(String Product, Long acctNum)
+   public List<CustodyFileDetails> fetchFileUpdMasterList(String product, Long acctNum,String reqType)
    {
       List<CustodyFileDetails> objCstdFileLst=null;
       try
@@ -216,7 +216,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
          SQLData convert = new SQLData();
          jdbcTemplate = new JdbcTemplate(dataSource);
          CustodySP sp = new CustodySP(jdbcTemplate, "sel_custody_file_master_list", 10);
-         Map outMap = sp.fetchFileUpdList( Product,  acctNum);
+         Map outMap = sp.fetchFileUpdMasterList( product,  acctNum,reqType);
          if (outMap != null)
          {
             ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
@@ -228,7 +228,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
                objCustodyFileDetails.setSeqno(convert.getIntData(rs.get("seqno")));
                objCustodyFileDetails.setFileName(convert.getStrData(rs.get("fileName")));
                objCustodyFileDetails.setFileLabel(convert.getStrData(rs.get("fileLabel")));
-               objCustodyFileDetails.setFileType(convert.getStrData(rs.get("fileType")));
+               objCustodyFileDetails.setReqType(convert.getStrData(rs.get("reqType")));
                objCustodyFileDetails.setFileExtensions(convert.getStrData(rs.get("fileExtensions")));
                objCstdFileLst.add(objCustodyFileDetails);
                i++;
@@ -237,9 +237,97 @@ public class UOBCustodyServiceImpl  implements CustodyService
       }
       catch (Exception ex)
       {
-         System.out.println("UOBCustodyServiceImpl.fetchSalesRepList Exception " + ex);
+         System.out.println("UOBCustodyServiceImpl.fetchFileUpdMasterList Exception " + ex);
          ex.printStackTrace();
       }
       return objCstdFileLst;
    }
+
+   @Override
+   public List<CustodyFileRequest> fetchUploadedFiles(String Product, Long acctNum,String action)
+   {
+      List<CustodyFileRequest> objCstdFileLst=null;
+      try
+      {
+         objCstdFileLst=new ArrayList<CustodyFileRequest>();
+         SQLData convert = new SQLData();
+         jdbcTemplate = new JdbcTemplate(dataSource);
+         CustodySP sp = new CustodySP(jdbcTemplate, "sel_custody_file_rqst_dtls", 12);
+         Map outMap = sp.fetchUploadedFiles(  Product,  acctNum, action);
+         if (outMap != null)
+         {
+            ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
+            int i = 0;
+            for (Map<String, Object> map : rows)
+            {
+               CustodyFileRequest custodyFileRequest=new CustodyFileRequest();
+               Map rs = (Map) rows.get(i);
+               custodyFileRequest.setReqId(convert.getLongData(rs.get("reqId")));
+               custodyFileRequest.setProduct(convert.getStrData(rs.get("product")));
+               custodyFileRequest.setAcctnum(convert.getLongData(rs.get("acctnum")));
+               custodyFileRequest.setAction(convert.getStrData(rs.get("action")));
+               custodyFileRequest.setRequestFor(convert.getStrData(rs.get("requestFor")));
+               custodyFileRequest.setSeqno(convert.getIntData(rs.get("seqno")));
+               custodyFileRequest.setFileName(convert.getStrData(rs.get("fileName")));
+               custodyFileRequest.setFilePath(convert.getStrData(rs.get("filePath")));
+               custodyFileRequest.setReqType(convert.getStrData(rs.get("reqType")));
+               objCstdFileLst.add(custodyFileRequest);
+               i++;
+            }
+         }
+      }
+      catch (Exception ex)
+      {
+         System.out.println("UOBCustodyServiceImpl.fetchUploadedFiles Exception " + ex);
+         ex.printStackTrace();
+      }
+      return objCstdFileLst;
+   }
+   @Override
+   public void saveCustodyFiles(String Product,Long acctNum,String logonId,CustodyFileRequest custodyFileRequest)
+   {
+      try {
+         jdbcTemplate = new JdbcTemplate(dataSource);
+         CustodySP sp = new CustodySP(jdbcTemplate, "save_custody_file_rqst",11);
+         Map outMap = sp.saveCustodyFiles(  Product, acctNum, logonId, custodyFileRequest);
+      }
+      catch (Exception ex) {
+         System.out.println("UOBCustodyServiceImpl.saveCustodyFiles Exception "+ex);
+         ex.printStackTrace();
+      }
+   }
+
+   @Override
+   public String saveCustodyDocReq(String product,Long acctNum,Long advisorId,String reqType)
+   {
+      String eventNo =null;
+      try {
+         jdbcTemplate = new JdbcTemplate(dataSource);
+         CustodySP sp = new CustodySP(jdbcTemplate, "save_ao_document_request",13);
+         Map outMap = sp.saveCustodyDocReq( product, acctNum,advisorId,reqType);
+
+         if (outMap != null)
+         {
+            SQLData convert = new SQLData();
+            Integer whichAcct;
+            ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
+            if (rows == null)
+               eventNo =null;
+            int i = 0;
+            for (Map<String, Object> map : rows)
+            {
+               Map rs = (Map) rows.get(i);
+               eventNo=convert.getStrData(rs.get("EventNo"));
+            }
+         }
+      }
+      catch (Exception ex) {
+         System.out.println("UOBCustodyServiceImpl.saveCustodyDocReq Exception "+ex);
+         ex.printStackTrace();
+      }
+      return eventNo;
+   }
 }
+
+
+

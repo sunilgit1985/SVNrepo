@@ -15,7 +15,7 @@ public class CustodyFileRequest
    private Integer seqno;
    private String fileName;
    private String filePath;
-   private String fileType;
+   private String reqType;
 
    public Long getReqId()
    {
@@ -97,13 +97,13 @@ public class CustodyFileRequest
       this.filePath = filePath;
    }
 
-   public String getFileType()
+   public String getReqType()
    {
-      return fileType;
+      return reqType;
    }
 
-   public void setFileType(String fileType)
+   public void setReqType(String reqType)
    {
-      this.fileType = fileType;
+      this.reqType = reqType;
    }
 }

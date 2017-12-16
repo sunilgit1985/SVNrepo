@@ -36,11 +36,12 @@
                                    auto="true"
                                    allowTypes="/(\.|\/)(bmp|gif|tif|tiff|pdf|jpeg|jpg|doc|docx|xls|xlsx|png|csv)$/" id="idwant#{status.index}"
                                    messageTemplate="Invalid file" label="Select file to upload">
-                        <f:attribute name="foo" value="#{updLst.fileType}" />
+                        <f:attribute name="updFileTyp" value="#{updLst.reqType}" />
+                        <f:attribute name="updFileSqNo" value="#{updLst.seqno}" />
                              </p:fileUpload>
                   </div>
                   <p:panel id="updSucces" style="border-color: transparent;" class="Container20">
-                  <ui:fragment rendered="#{uobCustodyBean.isFileUpd(updLst.fileType)}">
+                  <ui:fragment rendered="#{uobCustodyBean.isFileUpd(updLst.reqType)}">
                   <div class="Container20 check_file">
                      <span class="ui-button-icon-center ui-icon ui-c fa fa-check" ></span>
                   </div>
@@ -57,7 +58,7 @@
                   <p:commandButton id="uobIpdSubBtn"
                                    value="Submit"
                                    styleClass="uob_button" disabled="#{uobCustodyBean.dsblUpdSubmtBtn}"
-                                   actionListener="#{uobpb.goBack}">
+                                   actionListener="#{uobCustodyBean.submitUploadFrm}">
                   </p:commandButton>
             </div>
          </div>

@@ -105,10 +105,6 @@ public class CustodySP extends StoredProcedure
             break;
          case 8:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
-            declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
-            break;
-         case 8:
-            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_name", Types.VARCHAR));
             declareParameter(new SqlParameter("p_value", Types.VARCHAR));
             declareParameter(new SqlParameter("p_table", Types.VARCHAR));
@@ -119,11 +115,40 @@ public class CustodySP extends StoredProcedure
          case 10:
             declareParameter(new SqlParameter("p_product", Types.VARCHAR));
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_reqType", Types.VARCHAR));
+            break;
+         case 11:
+            declareParameter(new SqlParameter("p_reqId", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_product", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_action", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_requestFor", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_fileName", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_filePath", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_reqType", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_logonId", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_seqno", Types.NUMERIC));
+            break;
+         case 12:
+            declareParameter(new SqlParameter("p_product", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_action", Types.VARCHAR));
+            break;
+         case 13:
+            declareParameter(new SqlParameter("p_product", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_advisorid", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_reqType", Types.VARCHAR));
+            break;
+         case 20:
+            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
             break;
          default:  // All other (no arg)
             break;
       }
    }
+
    public Map fetchData(Long acctNum)
    {
       Map inputMap = new LinkedHashMap();
@@ -139,7 +164,7 @@ public class CustodySP extends StoredProcedure
       return execute(inputMap);
    }
 
-   public Map saveAcctDetails(AccountDetails accountDetails,String p_logonId)
+   public Map saveAcctDetails(AccountDetails accountDetails, String p_logonId)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", accountDetails.getAcctnum());
@@ -152,7 +177,7 @@ public class CustodySP extends StoredProcedure
       return execute(inputMap);
    }
 
-   public Map saveAcctHolderDetails(Long acctNum, int acctOwnerId , String p_logonId, OwnerDetails ownerDetails)
+   public Map saveAcctHolderDetails(Long acctNum, int acctOwnerId, String p_logonId, OwnerDetails ownerDetails)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
@@ -168,7 +193,7 @@ public class CustodySP extends StoredProcedure
       return execute(inputMap);
    }
 
-   public Map saveAcctAdditionalDetails(Long acctNum,int acctOwnerId,String name,String value,String table)
+   public Map saveAcctAdditionalDetails(Long acctNum, int acctOwnerId, String name, String value, String table)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
@@ -179,7 +204,7 @@ public class CustodySP extends StoredProcedure
       return execute(inputMap);
    }
 
-   public Map saveAcctMiscDetails(Long acctNum,String name,String value,String table)
+   public Map saveAcctMiscDetails(Long acctNum, String name, String value, String table)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
@@ -190,53 +215,53 @@ public class CustodySP extends StoredProcedure
    }
 
 
-   public Map saveAcctEmpDetails(Long acctNum, int acctOwnerId , String p_logonId, OwnerDetails ownerDetails)
+   public Map saveAcctEmpDetails(Long acctNum, int acctOwnerId, String p_logonId, OwnerDetails ownerDetails)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
       inputMap.put("p_acctOwnerId", acctOwnerId);
       inputMap.put("p_emplId", ownerDetails.getOwnerEmploymentDetails().getEmplId());
-      inputMap.put("p_emplTypeId",ownerDetails.getOwnerEmploymentDetails().getEmplTypeId());
-      inputMap.put("p_sourceOfIncome",ownerDetails.getOwnerEmploymentDetails().getSourceOfIncome());
-      inputMap.put("p_employerName",ownerDetails.getOwnerEmploymentDetails().getEmployerName());
-      inputMap.put("p_occupation",ownerDetails.getOwnerEmploymentDetails().getOccupation());
-      inputMap.put("p_typeOfBusiness",ownerDetails.getOwnerEmploymentDetails().getTypeOfBusiness());
-      inputMap.put("p_employerStreetAddress1",ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress1());
-      inputMap.put("p_employerStreetAddress2",ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress2());
-      inputMap.put("p_employerStreetAddress3",ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress3());
-      inputMap.put("p_employerStreetAddress4",ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress4());
-      inputMap.put("p_employerCity",ownerDetails.getOwnerEmploymentDetails().getEmployerCity());
-      inputMap.put("p_employerState",ownerDetails.getOwnerEmploymentDetails().getEmployerState());
-      inputMap.put("p_employerZipCode",ownerDetails.getOwnerEmploymentDetails().getEmployerZipCode());
-      inputMap.put("p_employerZipCountry",ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry());
-      inputMap.put("p_fromDate",ownerDetails.getOwnerEmploymentDetails().getFromDate());
-      inputMap.put("p_toDate",ownerDetails.getOwnerEmploymentDetails().getToDate());
+      inputMap.put("p_emplTypeId", ownerDetails.getOwnerEmploymentDetails().getEmplTypeId());
+      inputMap.put("p_sourceOfIncome", ownerDetails.getOwnerEmploymentDetails().getSourceOfIncome());
+      inputMap.put("p_employerName", ownerDetails.getOwnerEmploymentDetails().getEmployerName());
+      inputMap.put("p_occupation", ownerDetails.getOwnerEmploymentDetails().getOccupation());
+      inputMap.put("p_typeOfBusiness", ownerDetails.getOwnerEmploymentDetails().getTypeOfBusiness());
+      inputMap.put("p_employerStreetAddress1", ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress1());
+      inputMap.put("p_employerStreetAddress2", ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress2());
+      inputMap.put("p_employerStreetAddress3", ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress3());
+      inputMap.put("p_employerStreetAddress4", ownerDetails.getOwnerEmploymentDetails().getEmployerStreetAddress4());
+      inputMap.put("p_employerCity", ownerDetails.getOwnerEmploymentDetails().getEmployerCity());
+      inputMap.put("p_employerState", ownerDetails.getOwnerEmploymentDetails().getEmployerState());
+      inputMap.put("p_employerZipCode", ownerDetails.getOwnerEmploymentDetails().getEmployerZipCode());
+      inputMap.put("p_employerZipCountry", ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry());
+      inputMap.put("p_fromDate", ownerDetails.getOwnerEmploymentDetails().getFromDate());
+      inputMap.put("p_toDate", ownerDetails.getOwnerEmploymentDetails().getToDate());
       inputMap.put("p_logonId", p_logonId);
       return execute(inputMap);
    }
 
-   public Map saveSetMiscDtls(Long acctNum, int acctOwnerId,int id,String category,String name,String value)
+   public Map saveSetMiscDtls(Long acctNum, int acctOwnerId, int id, String category, String name, String value)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
       inputMap.put("p_acctOwnerId", acctOwnerId);
-      inputMap.put("p_category",category);
-      inputMap.put("p_id",id);
+      inputMap.put("p_category", category);
+      inputMap.put("p_id", id);
       inputMap.put("p_name", name);
       inputMap.put("p_value", value);
       return execute(inputMap);
    }
 
-   public Map deleteSetMiscDtls(Long acctNum, int acctOwnerId,String category)
+   public Map deleteSetMiscDtls(Long acctNum, int acctOwnerId, String category)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
       inputMap.put("p_acctOwnerId", acctOwnerId);
-      inputMap.put("p_category",category);
+      inputMap.put("p_category", category);
       return execute(inputMap);
    }
 
-   public Map saveAcctAddrDetails(Long acctNum, int acctOwnerId , String p_logonId, OwnerDetails ownerDetails)
+   public Map saveAcctAddrDetails(Long acctNum, int acctOwnerId, String p_logonId, OwnerDetails ownerDetails)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
@@ -268,16 +293,55 @@ public class CustodySP extends StoredProcedure
       inputMap.put("p_advisor", advisor);
       return execute(inputMap);
    }
-   public Map fetchFileUpdList(String Product, Long acctNum)
+
+   public Map fetchFileUpdMasterList(String Product, Long acctNum,String reqType)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_product", Product);
       inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_reqType", reqType);
+      return execute(inputMap);
+   }
+
+   public Map saveCustodyFiles(String Product, Long acctNum, String logonId, CustodyFileRequest custodyFileRequest)
+   {
+      Map inputMap = new LinkedHashMap();
+      inputMap.put("p_reqId", custodyFileRequest.getReqId());
+      inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_product", Product);
+      inputMap.put("p_action", custodyFileRequest.getAction());
+      inputMap.put("p_requestFor", custodyFileRequest.getRequestFor());
+      inputMap.put("p_fileName", custodyFileRequest.getFileName());
+      inputMap.put("p_filePath", custodyFileRequest.getFilePath());
+      inputMap.put("p_reqType", custodyFileRequest.getReqType());
+      inputMap.put("p_logonId", logonId);
+      inputMap.put("p_seqno", custodyFileRequest.getSeqno());
       return execute(inputMap);
    }
 
 
-   public Map nonParamProcCall() {
+   public Map fetchUploadedFiles(String Product, Long acctNum, String action)
+   {
+      Map inputMap = new LinkedHashMap();
+      inputMap.put("p_product", Product);
+      inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_action", action);
+      return execute(inputMap);
+   }
+
+   public Map saveCustodyDocReq(String product, Long acctNum, Long advisorId, String reqType)
+   {
+
+      Map inputMap = new LinkedHashMap();
+      inputMap.put("p_product", product);
+      inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_advisorid", advisorId);
+      inputMap.put("p_reqType", reqType);
+      return execute(inputMap);
+   }
+
+   public Map nonParamProcCall()
+   {
 
       return super.execute();
    }

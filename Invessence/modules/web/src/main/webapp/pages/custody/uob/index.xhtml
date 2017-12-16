@@ -7,7 +7,7 @@
                 template="/template/common/template.xhtml">
 
     <f:metadata>
-        <f:viewParam name="acct" value="#{uobCustodyBean.beanAcctNum}"/>
+        <f:viewParam name="acct" value="#{uobCustodyBean.beanAccount}"/>
         <f:viewParam name="l" value="#{uobCustodyBean.beanLogonId}"/>
         <f:event type="preRenderView" listener="#{uobCustodyBean.initCustody}"/>
     </f:metadata>

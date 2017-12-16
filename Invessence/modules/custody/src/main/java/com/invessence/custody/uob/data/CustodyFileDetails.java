@@ -11,7 +11,7 @@ public class CustodyFileDetails
    private String requestFor;
    private Integer seqno;
    private String fileName;
-   private String fileType;
+   private String reqType;
    private String fileExtensions;
    private String isActive;
    private String fileLabel;
@@ -76,14 +76,14 @@ public class CustodyFileDetails
       this.fileName = fileName;
    }
 
-   public String getFileType()
+   public String getReqType()
    {
-      return fileType;
+      return reqType;
    }
 
-   public void setFileType(String fileType)
+   public void setReqType(String reqType)
    {
-      this.fileType = fileType;
+      this.reqType = reqType;
    }
 
    public String getFileExtensions()

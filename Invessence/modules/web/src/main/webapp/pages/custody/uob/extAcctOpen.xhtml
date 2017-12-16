@@ -447,7 +447,8 @@
                         <p:commandButton id="uobSubmitBtn"
                                          value="Next"
                                          styleClass="uob_button" disabled="#{uobCustodyBean.dsblSubmtBtn}"
-                                         actionListener="#{uobpb.investnow}">
+                                         update="@form"
+                                         actionListener="#{uobCustodyBean.submitDataForm}">
                         </p:commandButton>
 
                     </h:form>
