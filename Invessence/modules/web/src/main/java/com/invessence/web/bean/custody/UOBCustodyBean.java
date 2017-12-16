@@ -2494,7 +2494,7 @@ public class UOBCustodyBean
          outStream.close();
          fileupdSucc.put(updFileTyp, updFileTyp);
          CustodyFileRequest objCustodyFileRequest=new CustodyFileRequest();
-         boolean bflag=false;
+         boolean bflag=true;
          if(updFileLst!=null && updFileLst.size()>0){
             for(int i=0;i<updFileLst.size();i++){
                if(updFileLst.get(i).getReqType().equalsIgnoreCase(updFileTyp)){
@@ -2504,7 +2504,7 @@ public class UOBCustodyBean
                   objCustodyFileRequest.setFilePath(cstdyUpdPath);
                   objCustodyFileRequest.setSeqno(updFileSqNo);
                   objCustodyFileRequest.setFileName(fileName);
-                  bflag=true;
+                  bflag=false;
                   break;
                }
             }
