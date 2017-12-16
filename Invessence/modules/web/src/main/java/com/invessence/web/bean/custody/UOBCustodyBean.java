@@ -175,8 +175,7 @@ public class UOBCustodyBean
                return;
             }
 //Need To Remove
-//            updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
-//            updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+
             cleanUpAll();
             uobDataMaster = custodyService.fetch(getBeanAcctNum(), false);
             uobDataMaster.getAccountDetails().setAcctnum(getBeanAcctNum());
@@ -194,6 +193,13 @@ public class UOBCustodyBean
             onChngAddr();
             onChngObj();
             onChngSrcOfInc();
+            updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+            updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+            if(updFileLst!=null && updFileMstrLst!=null && updFileMstrLst.size()==updFileLst.size()){
+               dsblUpdSubmtBtn=false;
+            }else{
+               dsblUpdSubmtBtn=true;
+            }
             owTaxDtls = new OwnerTaxationDetails();
             countries = new ArrayList<String>();
             countries = new ArrayList<String>(countryDetails.keySet());
@@ -2488,6 +2494,7 @@ public class UOBCustodyBean
          outStream.close();
          fileupdSucc.put(updFileTyp, updFileTyp);
          CustodyFileRequest objCustodyFileRequest=new CustodyFileRequest();
+         boolean bflag=false;
          if(updFileLst!=null && updFileLst.size()>0){
             for(int i=0;i<updFileLst.size();i++){
                if(updFileLst.get(i).getReqType().equalsIgnoreCase(updFileTyp)){
@@ -2497,10 +2504,14 @@ public class UOBCustodyBean
                   objCustodyFileRequest.setFilePath(cstdyUpdPath);
                   objCustodyFileRequest.setSeqno(updFileSqNo);
                   objCustodyFileRequest.setFileName(fileName);
+                  bflag=true;
                   break;
                }
             }
          }else{
+            bflag=true;
+         }
+         if(bflag){
             objCustodyFileRequest.setAcctnum(beanAcctNum);
             objCustodyFileRequest.setAction(getReqType());
             objCustodyFileRequest.setRequestFor("Upload");
