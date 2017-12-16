@@ -43,7 +43,7 @@ public class CallingLayerITextImpl implements CallingLayer
          File file = new File(custPdfDirectory);
          if(!file.exists()){
             Files.createDirectory(file.toPath());
-            file.getParentFile().mkdirs();
+            file.mkdirs();
          }
 
 

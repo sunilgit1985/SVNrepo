@@ -39,7 +39,7 @@ public class UOBPDFWriter
          File file = new File(custPdfDirectory);
          if(!file.exists()){
             Files.createDirectory(file.toPath());
-            file.getParentFile().mkdirs();
+            file.mkdirs();
          }
 
          PdfReader reader = new PdfReader(masterPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
@@ -80,7 +80,7 @@ public class UOBPDFWriter
       File file = new File(custPdfDirectory);
       if(!file.exists()){
          Files.createDirectory(file.toPath());
-         file.getParentFile().mkdirs();
+         file.mkdirs();
       }
 
       PdfReader reader = new PdfReader(masterPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
