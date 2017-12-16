@@ -44,6 +44,16 @@ public class UOBCustodyBean
    private AOWebLayer aoWebLayer;
 
 
+   @ManagedProperty("#{uiLayout}")
+   private UILayout uiLayout;
+   public void setUiLayout(UILayout uiLayout)
+   {
+      this.uiLayout = uiLayout;
+   }
+   public UILayout getUiLayout()
+   {
+      return uiLayout;
+   }
    private UOBDataMaster uobDataMaster;
    private PagesImpl pagemanager = new PagesImpl(8);
    private long beanAcctNum, beanLogonId;
@@ -2433,9 +2443,9 @@ public class UOBCustodyBean
             else
             {
 //               msg = wsCallResult.getWSCallStatus().getErrorMessage();
-               getWebutil().redirecttoMessagePage("SUCCESS", "Document generated successfully", "Success");
+//               getWebutil().redirecttoMessagePage("SUCCESS", "Document generated successfully", "Success");
 //               sendAlertMessage("P");
-//               getUiLayout().doMenuAction("custody", "tdconfirmation.xhtml");
+               getUiLayout().doMenuAction("custody", "custodyConfirmation.xhtml");
 
 //               msg = wsCallResult.getWSCallStatus().getErrorMessage();
 //               getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", msg);
