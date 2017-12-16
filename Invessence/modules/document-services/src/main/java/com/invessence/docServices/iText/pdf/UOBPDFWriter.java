@@ -38,7 +38,7 @@ public class UOBPDFWriter
 
          File file = new File(custPdfDirectory);
          if(!file.exists()){
-//            Files.createDirectory(file.toPath());
+            Files.createDirectory(file.toPath());
             file.getParentFile().mkdirs();
          }
 
@@ -79,7 +79,7 @@ public class UOBPDFWriter
 
       File file = new File(custPdfDirectory);
       if(!file.exists()){
-//         Files.createDirectory(file.toPath());
+         Files.createDirectory(file.toPath());
          file.getParentFile().mkdirs();
       }
 

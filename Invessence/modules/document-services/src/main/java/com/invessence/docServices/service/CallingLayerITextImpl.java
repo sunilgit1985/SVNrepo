@@ -42,7 +42,7 @@ public class CallingLayerITextImpl implements CallingLayer
          String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
          File file = new File(custPdfDirectory);
          if(!file.exists()){
-//            Files.createDirectory(file.toPath());
+            Files.createDirectory(file.toPath());
             file.getParentFile().mkdirs();
          }
 

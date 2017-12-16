@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 import com.invessence.emailer.dao.MsgDAO;
 import com.invessence.emailer.data.MsgData;
+import com.invessence.service.bean.ServiceRequest;
 import com.invessence.service.util.*;
 import org.springframework.context.*;
 
@@ -322,7 +323,7 @@ public class EmailCreator implements MessageSourceAware, Serializable
       }
    }
 
-   public void createEmail(String receiver, String subject, String message, String attachmentPath){
+   public void createEmail(ServiceRequest serviceRequest,String receiver, String subject, String message, String attachmentPath){
 
 
       try {
@@ -336,7 +337,8 @@ public class EmailCreator implements MessageSourceAware, Serializable
          msgData.setReceiver(receiver);
          msgData.setAttachmentFile(attachmentPath);
          // msgData.setCc();
-         msgData.setSender(ServiceParameters.getConfigProperty(Constant.SERVICES.EMAIL_SERVICE.toString(), ServiceParameters.getServiceProvider(Constant.SERVICES.EMAIL_SERVICE.toString()), "SENDER_EMAIL"));
+         String senderEmail=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.EMAIL_SERVICE.toString(), serviceRequest.getMode(), "SENDER_EMAIL");
+         msgData.setSender(senderEmail);
          msgData.setMsg(message);
          msgDAO.saveMsg(msgData);
       }

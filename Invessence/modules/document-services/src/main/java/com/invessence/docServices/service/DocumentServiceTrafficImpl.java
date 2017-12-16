@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * Created by abhangp on 3/11/2016.
  */
 
-@Service
+@Service("documentServiceTraffic")
 public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 {
    private static final Logger logger = Logger.getLogger(DocumentServiceTrafficImpl.class);
@@ -81,6 +81,7 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
       List<ZipFile> filesForZip= new LinkedList<>();
       System.out.println("serviceRequest = " + serviceRequest);
       callingLayer=getCallingLayer(serviceRequest.getProduct());
+      UOBDataMaster uobDataMaster = (UOBDataMaster) object;
       for(AORequest aoRequest:aoRequests){
          System.out.println("aoRequest = " + aoRequest);
          wsCallResult=callingLayer.createDoc(serviceRequest, object, aoRequest);
@@ -93,13 +94,15 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
       }
       if(wsCallResult!=null && wsCallResult.getWSCallStatus().getErrorCode()==1)
       {
+
          if (filesForZip.size() > 0)
          {
             String zipDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "ZIP_FILES_DIRECTORY");
-
-            ZipFiles.createZipFile(((UOBDataMaster)object).getAccountDetails().getAcctnum().toString(), zipDirectory, filesForZip);
+            String zipFileName=uobDataMaster.getAccountDetails().getAcctnum().toString();
+            ZipFiles.createZipFile(zipFileName, zipDirectory, filesForZip);
+            emailCreator.createEmail(serviceRequest, uobDataMaster.getIndividualOwnersDetails().getEmailAddress(), "Account Opening Files", "Files related Account Opening Process.", zipDirectory+"/"+zipFileName+".zip");
          }
-         emailCreator.createEmail("abhangp@invessence.com", "Account Opening Files", "Files related Account Opening Process.", "pdf/abhang.zip");
+
       }
       return wsCallResult;
    }
