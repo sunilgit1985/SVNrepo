@@ -37,7 +37,10 @@ public class UOBPDFWriter
          String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
 
          File file = new File(custPdfDirectory);
-         file.getParentFile().mkdirs();
+         if(!file.getParentFile().exists()){
+            Files.createDirectory(file.toPath());
+            file.getParentFile().mkdirs();
+         }
 
          PdfReader reader = new PdfReader(masterPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
 
@@ -77,9 +80,8 @@ public class UOBPDFWriter
       File file = new File(custPdfDirectory);
       if(!file.getParentFile().exists()){
          Files.createDirectory(file.toPath());
+         file.getParentFile().mkdirs();
       }
-
-//      file.getParentFile().mkdirs();
 
       PdfReader reader = new PdfReader(masterPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension());
       PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(custPdfDirectory+"/"+pdfFileDetails.getFileName()+"."+pdfFileDetails.getFileExtension()));

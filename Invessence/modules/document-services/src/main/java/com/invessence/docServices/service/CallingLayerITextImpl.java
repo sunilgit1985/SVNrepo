@@ -1,6 +1,7 @@
 package com.invessence.docServices.service;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.*;
 
 import com.invessence.custody.data.AORequest;
@@ -40,7 +41,10 @@ public class CallingLayerITextImpl implements CallingLayer
          UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
          String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
          File file = new File(custPdfDirectory);
-         file.getParentFile().mkdirs();
+         if(!file.getParentFile().exists()){
+            Files.createDirectory(file.toPath());
+            file.getParentFile().mkdirs();
+         }
 
 
          if (pdfFileRulesDetails.containsKey(pdfCode) && pdfFileDetails.containsKey(pdfCode))

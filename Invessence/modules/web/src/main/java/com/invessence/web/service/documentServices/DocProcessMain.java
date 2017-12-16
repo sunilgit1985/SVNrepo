@@ -26,9 +26,9 @@ public class DocProcessMain
 
 //      (new String[] {"Spring-Common.xml","Spring-Connection.xml","Spring-ModuleA.xml"})
          ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"custodyConfig.xml", "documentServicesConfig.xml"});
-         Long acctNum = new Long(3367); // 3367
+         Long acctNum = new Long(3552); // 3367
          int eventNum = 1;
-         ServiceRequest serviceRequest = new ServiceRequest("UOB", "DEV");
+         ServiceRequest serviceRequest = new ServiceRequest("UOB", "UAT");
 
 
          CustodyDaoLayerImpl custodyDaoLayer = (CustodyDaoLayerImpl) context.getBean("custodyDaoLayerImpl");
@@ -36,7 +36,7 @@ public class DocProcessMain
          UOBDaoImpl uobDao = (UOBDaoImpl) context.getBean("uobDaoImpl");
          UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
 
-         DocumentServiceTraffic dst = (DocumentServiceTrafficImpl) context.getBean("documentServices");
+         DocumentServiceTraffic dst = (DocumentServiceTrafficImpl) context.getBean("documentServiceTrafficImpl");
          System.out.println(dst.createDoc(serviceRequest, uobDataMaster, aoRequests));
 
 //         for(AORequest aoRequest:aoRequests){
