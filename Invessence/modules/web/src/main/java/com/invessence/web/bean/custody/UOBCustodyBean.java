@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 
 import com.invessence.custody.uob.UOBDataMaster;
 import com.invessence.custody.uob.data.*;
-import com.invessence.service.bean.ServiceRequest;
+import com.invessence.service.bean.*;
 import com.invessence.service.util.*;
 import com.invessence.util.AddressSplitter;
 import com.invessence.web.dao.consumer.ConsumerListDataDAO;
@@ -2398,8 +2398,9 @@ public class UOBCustodyBean
    }
 
    public void  submitUploadFrm(){
-      String eventRef = custodyService.saveCustodyDocReq(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,1l,getReqType());
+      String eventRef = custodyService.saveCustodyDocReq(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,4l,getReqType());
 
+      WSCallResult wsCallResult;
       System.out.println("Custody Doc Request Return " + eventRef);
       if (eventRef != null)
       {
@@ -2413,28 +2414,31 @@ public class UOBCustodyBean
             System.out.println("Custody req Id " + reqId);
          try
          {
-            aoWebLayer.processAORequest(null,null,null);
+            String msg;
+            wsCallResult = aoWebLayer.processAORequest(new ServiceRequest(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),
+                                                                          getWebutil().getWebprofile().getWebInfo().get("SERVICE.DOCUMENT.MODE").toString()),
+                                                       beanAcctNum, eventNum);
+            System.out.println("Custody wsCallResult " + wsCallResult);
+            if (wsCallResult.getWSCallStatus().getErrorCode() != 1)
+            {
+               msg = wsCallResult.getWSCallStatus().getErrorMessage();
+               getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", msg);
+            }
+            else
+            {
+//               msg = wsCallResult.getWSCallStatus().getErrorMessage();
+               getWebutil().redirecttoMessagePage("SUCCESS", "Document generated successfully", "Success");
+//               sendAlertMessage("P");
+//               getUiLayout().doMenuAction("custody", "tdconfirmation.xhtml");
+
+//               msg = wsCallResult.getWSCallStatus().getErrorMessage();
+//               getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", msg);
+            }
          }
          catch (Exception e)
          {
             e.printStackTrace();
          }
-//            wsCallResult = getDcWebLayer().processDCRequest(new ServiceRequest(product, mode), getTdMasterData().getAcctnum(), eventnum);
-//            System.out.println("Docusign wsCallResult " + wsCallResult);
-//            if (wsCallResult.getWSCallStatus().getErrorCode() != 0)
-//            {
-//               msg = wsCallResult.getWSCallStatus().getErrorMessage();
-//               getWebutil().redirecttoMessagePage("ERROR", "Failed to Save", msg);
-//            }
-//            else
-//            {
-//               if (i==(eventNo.length-1))
-//               {
-//                  sendAlertMessage("P");
-//                  getUiLayout().doMenuAction("custody", "tdconfirmation.xhtml");
-//               }
-//            }
-//         }
       }
       else
       {

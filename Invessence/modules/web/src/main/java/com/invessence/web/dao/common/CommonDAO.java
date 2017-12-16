@@ -355,17 +355,21 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
       return null;
    }
 
-   public ArrayList<NotificationData> getNotificationDtls(Long logonid, String messageType, String status, String access, boolean bflag, long acctnum)
+   public ArrayList<NotificationData> getNotificationDtls(Long logonid, String messageType, String status, String access, boolean bflag, long acctnum,String advisor,String rep)
    {
       DataSource ds = getDataSource();
       CommonSP sp = null;
+      Map outMap = null;
       if (access.equalsIgnoreCase("Advisor"))
       {
          sp = new CommonSP(ds, "sel_notification_advisor", 9);
+         outMap = sp.getNotificationDtls(logonid, messageType, status,advisor,rep);
       }
       else if (access.equalsIgnoreCase("User"))
       {
-         sp = new CommonSP(ds, "sel_notification_consumer", 9);
+         sp = new CommonSP(ds, "sel_notification_consumer", 12);
+
+            outMap = sp.getNotificationConsumerDtls(logonid, messageType, status);
       }
       else
       {
@@ -373,7 +377,7 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
       }
       ArrayList<NotificationData> notificationList = new ArrayList<NotificationData>();
 
-      Map outMap = sp.getNotificationDtls(logonid, messageType, status);
+
       if (outMap != null)
       {
          ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");

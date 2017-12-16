@@ -94,7 +94,7 @@ public class ConsumerDashBean extends CustomerData implements Serializable
             accoutListZize=0;
          }
 
-         highNotification = commonDAO.getNotificationDtls(webutil.getLogonid(), "M", "N",webutil.getAccess(),true,selAcctNum);
+         highNotification = commonDAO.getNotificationDtls(webutil.getLogonid(), "M", "N",webutil.getAccess(),true,selAcctNum, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
          if(highNotification!=null && highNotification.size()>0){
             dispHghAlrt=true;
          }else{

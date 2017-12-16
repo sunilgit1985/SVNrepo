@@ -61,6 +61,8 @@ public class CommonSP extends StoredProcedure
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
             declareParameter(new SqlParameter("p_messagetype", Types.VARCHAR));
             declareParameter(new SqlParameter("p_archive", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_advisor", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_rep", Types.VARCHAR));
             break;
          case 10: // SP: sav_notification_consumer
             declareParameter(new SqlParameter("p_messageid", Types.BIGINT));
@@ -76,6 +78,11 @@ public class CommonSP extends StoredProcedure
             break;
          case 11: // SP: sel_webpages_menu_items
             declareParameter(new SqlParameter("p_advisor", Types.VARCHAR));
+            break;
+         case 12: // sel_notification_advisor or sel_notification_consumer
+            declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
+            declareParameter(new SqlParameter("p_messagetype", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_archive", Types.VARCHAR));
             break;
          case 99: // SP: sel_notificationInfo
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
@@ -169,7 +176,19 @@ public class CommonSP extends StoredProcedure
       return super.execute(inputMap);
    }
 
-   public Map getNotificationDtls(Long logonid, String messageType, String status)
+   public Map getNotificationDtls(Long logonid, String messageType, String status,String advisor,String rep)
+   {
+      Map inputMap = new HashMap();
+      inputMap.put("p_logonid", logonid);
+      inputMap.put("p_messagetype", messageType);
+      inputMap.put("p_archive", status);
+      inputMap.put("p_advisor", advisor);
+      inputMap.put("p_rep", rep);
+      return super.execute(inputMap);
+   }
+
+
+   public Map getNotificationConsumerDtls(Long logonid, String messageType, String status)
    {
       Map inputMap = new HashMap();
       inputMap.put("p_logonid", logonid);
@@ -177,6 +196,9 @@ public class CommonSP extends StoredProcedure
       inputMap.put("p_archive", status);
       return super.execute(inputMap);
    }
+
+
+
 
    public void saveConsumerNotification(NotificationData data,long logonid)
    {
