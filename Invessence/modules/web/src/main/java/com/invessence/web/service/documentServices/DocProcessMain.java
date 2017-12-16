@@ -28,7 +28,7 @@ public class DocProcessMain
          ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"custodyConfig.xml", "documentServicesConfig.xml"});
          Long acctNum = new Long(3367); // 3367
          int eventNum = 1;
-         ServiceRequest serviceRequest = new ServiceRequest("UOB", "UAT");
+         ServiceRequest serviceRequest = new ServiceRequest("UOB", "DEV");
 
 
          CustodyDaoLayerImpl custodyDaoLayer = (CustodyDaoLayerImpl) context.getBean("custodyDaoLayerImpl");

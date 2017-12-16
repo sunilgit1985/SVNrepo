@@ -91,7 +91,7 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
             return wsCallResult;
          }
       }
-      if(wsCallResult.getWSCallStatus().getErrorCode()==1)
+      if(wsCallResult!=null && wsCallResult.getWSCallStatus().getErrorCode()==1)
       {
          if (filesForZip.size() > 0)
          {

@@ -186,6 +186,7 @@
     <orderEntry type="library" name="Maven: com.lowagie:itext:2.1.7" level="project" />
     <orderEntry type="module" module-name="file-processor" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-core:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-sql:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.49" level="project" />
