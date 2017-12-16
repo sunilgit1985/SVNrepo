@@ -37,8 +37,8 @@ public class UOBPDFWriter
          String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
 
          File file = new File(custPdfDirectory);
-         if(!file.getParentFile().exists()){
-            Files.createDirectory(file.toPath());
+         if(!file.exists()){
+//            Files.createDirectory(file.toPath());
             file.getParentFile().mkdirs();
          }
 
@@ -75,11 +75,11 @@ public class UOBPDFWriter
    {
       UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
       String masterPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_MASTER_DIRECTORY");
-      String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum();
+      String custPdfDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "PDF_FILES_CUST_DIRECTORY")+"/"+uobDataMaster.getAccountDetails().getAcctnum()+"/";
 
       File file = new File(custPdfDirectory);
-      if(!file.getParentFile().exists()){
-         Files.createDirectory(file.toPath());
+      if(!file.exists()){
+//         Files.createDirectory(file.toPath());
          file.getParentFile().mkdirs();
       }
 
