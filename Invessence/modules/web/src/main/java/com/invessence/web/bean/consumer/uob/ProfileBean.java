@@ -23,7 +23,6 @@ public class ProfileBean extends PortfolioCreationUI
    private List<WebMenuItem> goalsdata = null;
    public WebMenuItem selectedGoal;
    public Integer selectedRetirementGoal;
-   private UOBRiskCalc uobCalc;
    public String selectedClass="";
 
 
@@ -47,11 +46,21 @@ public class ProfileBean extends PortfolioCreationUI
 
    }
 
+   public void setAdvisor(String advisor) {
+      if (advisor != null)
+      {
+         loadWebMenuList(customer.getAdvisor());
+         customer.setAdvisor(advisor);
+         customer.riskProfile.setAdvisor(advisor);
+         riskCalc = new UOBRiskCalc(customer.riskProfile);
+      }
+   }
+
    public void setDefault() {
-      loadWebMenuList(getCustomer().getAdvisor());
+      setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
       buildGoalList(null);  // This process will reload new Goals
-      uobCalc = new UOBRiskCalc(getCustomer().riskProfile);
       pagemanager.initPage();
+      createAssetPortfolio();
    }
 
    @Override
@@ -77,10 +86,13 @@ public class ProfileBean extends PortfolioCreationUI
       }
    }
 
+   public Integer getAge() {
+      return getCustomer().getAge();
+   }
 
    public void setAge(Integer age)
    {
-      getCustomer().setHorizon(age);
+      getCustomer().setAge(age);
       adjustInitialRisk();
    }
 
@@ -163,10 +175,10 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setRiskAns1(Boolean value) {
       if (value) {
-         uobCalc.setQuestionsRisk(1,1,0.0);
+         riskCalc.setQuestionsRisk(1,1,0.0);
       }
       else {
-         uobCalc.setQuestionsRisk(1,2,0.0);
+         riskCalc.setQuestionsRisk(1,2,0.0);
       }
    }
 
@@ -185,10 +197,10 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setRiskAns2(Boolean value) {
       if (value) {
-         uobCalc.setQuestionsRisk(2,1,0.0);
+         riskCalc.setQuestionsRisk(2,1,0.0);
       }
       else {
-         uobCalc.setQuestionsRisk(2,2,0.0);
+         riskCalc.setQuestionsRisk(2,2,0.0);
       }
    }
 
@@ -196,7 +208,7 @@ public class ProfileBean extends PortfolioCreationUI
       Integer ans;
       if (value != null) {
          ans = converter.getIntData(value);
-         uobCalc.setQuestionsRisk(3, ans, 0.0);
+         riskCalc.setQuestionsRisk(3, ans, 0.0);
       }
    }
 
@@ -247,7 +259,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void onChangeValue()
    {
       formEdit = true;
-      uobCalc.calculate();
+      riskCalc.calculate();
       createAssetPortfolio();
    }
 

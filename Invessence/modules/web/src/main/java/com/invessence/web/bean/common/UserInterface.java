@@ -1,10 +1,9 @@
 package com.invessence.web.bean.common;
 
+import java.util.Map;
 import javax.faces.bean.ManagedProperty;
 
 import com.invessence.converter.*;
-import com.invessence.web.bean.consumer.PrimefacesCharts;
-import com.invessence.web.controller.HighChartsController;
 import com.invessence.web.dao.common.CommonDAO;
 import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.*;
@@ -33,8 +32,7 @@ public class UserInterface implements Logger
    public WebMenuList webMenuList;
 
    // Charts
-   public PrimefacesCharts charts;
-   public HighChartsController highChartsController;
+   public Chart chart;
 
    // Utils
    public SQLData converter;
@@ -50,8 +48,7 @@ public class UserInterface implements Logger
       webMenuList = new WebMenuList();
       jutil = new JavaUtil();
       converter = new SQLData();
-      charts = new PrimefacesCharts();
-      highChartsController = new HighChartsController();
+      chart = new Chart();
    }
 
    @Override
@@ -93,5 +90,11 @@ public class UserInterface implements Logger
    public Integer getProgressBar() {
       return progressbar.getProgressBar().intValue();
    }
+
+   public Chart getChart()
+   {
+      return chart;
+   }
+
 
 }

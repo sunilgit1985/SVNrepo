@@ -8,7 +8,6 @@ import javax.faces.event.*;
 
 import com.invessence.web.bean.common.UserInterface;
 import com.invessence.web.constant.*;
-import com.invessence.web.controller.HighChartsController;
 import com.invessence.web.dao.common.*;
 import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
@@ -84,8 +83,8 @@ public class PortfolioCreationUI extends UserInterface
    public String interfaceMode;
 
    private CustomerData savedCustomer = null;
-   private CustomerData customer = null;
-   private RiskCalc riskCalc = null;
+   public CustomerData customer = null;
+   public RiskCalc riskCalc = null;
 
    // UI management variables
    public Boolean formEdit = false;
@@ -186,8 +185,6 @@ public class PortfolioCreationUI extends UserInterface
    }
 
    public void initUI() {
-      highChartsController = new HighChartsController();
-      charts = new PrimefacesCharts();
       formEdit = false;
       disablegraphtabs = true;
       disabledetailtabs = true;
@@ -210,7 +207,7 @@ public class PortfolioCreationUI extends UserInterface
       {
          if (!FacesContext.getCurrentInstance().isPostback())
          {
-            customer.setCalcFormula(RiskConst.CALCFORMULAS.CALCULATED.toString());
+            customer.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
             // For both new and existing client, this fetch is called.  It determines the default values.
             fetchClientData();
 
@@ -307,7 +304,7 @@ public class PortfolioCreationUI extends UserInterface
    public void onAllocSlider(SlideEndEvent event)
    {
 //      System.out.println(event.getValue());
-      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.DIRECT.name());
+      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       customer.riskProfile.setScore(event.getValue());
       customer.riskProfile.setAssetScore(event.getValue());
       formEdit = true;
@@ -317,7 +314,7 @@ public class PortfolioCreationUI extends UserInterface
    public void onPortfolioSlider(SlideEndEvent event)
    {
       //setDefaultRiskIndex(event.getValue());
-      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.DIRECT.name());
+      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       customer.riskProfile.setPortfolioScore(event.getValue());
       formEdit = true;
       createAssetPortfolio();
@@ -325,7 +322,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void doAllocReset()
    {
-      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.CALCULATED.name());
+      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
       createAssetPortfolio();
 //      System.out.println(" doAllocReset ind "+getAllocationIndex());
       customer.setSliderAllocationIndex(customer.riskProfile.getStandardScore(0).intValue());
@@ -344,43 +341,7 @@ public class PortfolioCreationUI extends UserInterface
          formEdit = true;
          riskCalc.calculate(1);
          customer.createAssetPortfolio();
-         createCharts();
-      }
-      catch (Exception ex)
-      {
-         ex.printStackTrace();
-      }
-   }
-
-   private void createCharts()
-   {
-
-      try
-      {
-         Map<String, String> configMap = webutil.getWebprofile().getWebInfo();
-         customer.setTypeOfChart(configMap.get("CHART.ASSET.ALLOCATION"));// HIGHCHART.2DDONUT for highchart and PRIMEFACES.2DDONUT for primfaces
-         if (configMap.get("CHART.ASSET.ALLOCATION") != null &&
-            configMap.get("CHART.ASSET.ALLOCATION").equalsIgnoreCase("HIGHCHART.2DDONUT"))
-         {
-            customer.setResultChart(highChartsController.highChartrequesthandler(customer.getPortfolioData(), customer.getAssetData(), configMap));
-         }
-         if (configMap.get("CHART.RECOMMENDED.ASSET.ALLOCATION") != null && configMap.get("CHART.ASSET.ALLOCATION") != null &&
-            configMap.get("CHART.RECOMMENDED.ASSET.ALLOCATION").equalsIgnoreCase("PRIMEFACES.BARCHART")
-            || configMap.get("CHART.ASSET.ALLOCATION").equalsIgnoreCase("PRIMEFACES.2DDONUT"))
-         {
-
-            formEdit = true;
-            // charts.setMeterGuage(getMeterRiskIndicator());
-            if (customer.getAssetData() != null)
-            {
-               charts.createPieModel(customer.getAssetData(), 0);
-               charts.createBarChart(customer.getAssetData(), 0);
-            }
-            else
-            {
-               charts.resetCharts();
-            }
-         }
+         chart.createAssetChart(customer.getAssetData(), webutil);
       }
       catch (Exception ex)
       {
@@ -410,7 +371,6 @@ public class PortfolioCreationUI extends UserInterface
       }
 
    }
-
 
    public void savePrefProfile(ActionEvent event)
    {
@@ -473,7 +433,7 @@ public class PortfolioCreationUI extends UserInterface
 
          if (customer.getDoesUserHavaLogonID())
          {
-            gotoCustodyInfoForm(); // If user is already looged in then redirect to opne account page.
+            gotoCustody(); // If user is already looged in then redirect to opne account page.
          }
          else
          {
@@ -573,7 +533,7 @@ public class PortfolioCreationUI extends UserInterface
 */
    }
 
-   public void gotoCustodyInfoForm() {
+   public void gotoCustody() {
 /*
       if (!getDoesUserHavaLogonID())
       {

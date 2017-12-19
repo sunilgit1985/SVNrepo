@@ -12,8 +12,15 @@
                     <div class="portfolio_selection">
                         <div class="Container30"><p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
                                                                  width="80px"/><span>Goal</span></div>
-                        <div class="Container30"><p:graphicImage name="images/portfolio/riskMeter.png" library="#{uiLayout.webProfile.cssdir}"
-                                                                 width="120px"/></div>
+                        <div class="Container30">
+<!--
+                            <p:chart type="metergauge" model="#{uobProfile.chart.meterGuage}" style="width:170px;height:110px" />
+-->
+
+                            <p:graphicImage name="images/portfolio/riskMeter.png" library="#{uiLayout.webProfile.cssdir}"
+                                                                 width="120px"/>
+
+                        </div>
                         <div class="Container30">
                             <span class="sapn_review">Review</span>
                             <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->

@@ -25,9 +25,9 @@ public class RiskConst
    }
 
    public enum CALCFORMULAS {
-      CALCULATED,
-      DIRECT,
-      ADVISOR
+      C,
+      D,
+      A
    }
 
    public enum CALCMETHODS {

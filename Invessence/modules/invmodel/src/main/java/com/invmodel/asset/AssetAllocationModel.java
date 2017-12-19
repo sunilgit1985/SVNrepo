@@ -155,7 +155,7 @@ public class AssetAllocationModel
                assetclass[numofAllocation] = setThisAssetToCash(theme, investment);
             }
             else {
-               if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.CALCULATED)
+               if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.C)
                {
                   score = riskScore.getScore();
                }
@@ -549,7 +549,7 @@ public class AssetAllocationModel
                assetclassarray[numofassets] = setThisAssetToCash(theme, investment);
             }
             else {
-               if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.CALCULATED)
+               if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.C)
                {
                   score = riskScore.getScore();
                }

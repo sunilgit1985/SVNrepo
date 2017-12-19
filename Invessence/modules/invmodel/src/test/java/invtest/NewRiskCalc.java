@@ -88,7 +88,7 @@ public class NewRiskCalc
 
       userRiskProfile.setAnswer(RiskConst.RISKQUESTIONS, 7);
       userRiskProfile.setAnswer(RiskConst.CALCMETHOD, RiskConst.CALCMETHODS.AGETIME.toString());
-      userRiskProfile.setAnswer(RiskConst.CALCFORMULA, RiskConst.CALCFORMULAS.CALCULATED.toString().substring(1, 1));
+      userRiskProfile.setAnswer(RiskConst.CALCFORMULA, RiskConst.CALCFORMULAS.C.toString().substring(1, 1));
 
    }
 

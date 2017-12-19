@@ -7,14 +7,12 @@ import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
 import com.invessence.web.constant.*;
-import com.invessence.web.controller.HighChartsController;
+import com.invessence.web.data.common.HighChartsController;
 import com.invessence.web.dao.common.*;
 import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
-import com.invessence.web.data.consumer.uob.UOBRiskCalculator;
 import com.invessence.web.util.*;
 import com.invmodel.asset.data.AssetClass;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created with IntelliJ IDEA.

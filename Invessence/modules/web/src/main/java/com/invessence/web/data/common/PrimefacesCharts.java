@@ -1,4 +1,4 @@
-package com.invessence.web.bean.consumer;
+package com.invessence.web.data.common;
 
 import java.io.Serializable;
 import java.util.*;
@@ -139,7 +139,7 @@ public class PrimefacesCharts implements Serializable
       this.meterGuage.setSeriesColors("006699, FFCC00, 990000");
       this.meterGuage.setShowTickLabels(false);
       // this.meterGuage.setLabelHeightAdjust(-25);
-      this.meterGuage.setIntervalOuterRadius(20);
+      // this.meterGuage.setIntervalOuterRadius(20);
    }
 
    public void createLineModel(ProjectionData[] projectionData)

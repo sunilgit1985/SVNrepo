@@ -85,7 +85,7 @@ public class CustomerData extends ProfileData
 
    private String portfolioName;
 
-   private String email, firstname, lastname,regfullname;
+   private String email, firstname, lastname, regfullname;
    public List<DataPortfolio> displayPortfolioList = new ArrayList<DataPortfolio>();
    public DataPortfolio selectedPortfolio;
    public List<DataPortfolio> selectedPortfolioList = null;
@@ -93,7 +93,7 @@ public class CustomerData extends ProfileData
    public Double totalSharesAllocated = 0.0;
    public Double totalMoneyAllocated = 0.0;
 
-   private Double  managedassetAllocationTotal = 0.0;
+   private Double managedassetAllocationTotal = 0.0;
    private Double managedtotalMoney = 0.0;
 
 
@@ -122,10 +122,11 @@ public class CustomerData extends ProfileData
 
    private String customName;
 
-   public void initDao(WebUtil webutil,ModelUtil modelUtil, UILayout uiLayout,
+   public void initDao(WebUtil webutil, ModelUtil modelUtil, UILayout uiLayout,
                        ConsumerListDataDAO listDAO, UserInfoDAO userInfoDAO,
                        ConsumerSaveDataDAO saveDAO, TradeDAO tradeDAO,
-                       WebMessage messageText) {
+                       WebMessage messageText)
+   {
       setWebutil(webutil);
       setModelUtil(modelUtil);
       setUiLayout(uiLayout);
@@ -259,7 +260,7 @@ public class CustomerData extends ProfileData
 
    public Boolean isUnopened()
    {
-      return (isUnopened == null)? false : isUnopened;
+      return (isUnopened == null) ? false : isUnopened;
    }
 
    public Boolean getUnopened()
@@ -274,7 +275,7 @@ public class CustomerData extends ProfileData
 
    public Boolean getEditable()
    {
-      return ((editable == null)? true : editable);
+      return ((editable == null) ? true : editable);
    }
 
    public void setEditable(Boolean editable)
@@ -282,16 +283,22 @@ public class CustomerData extends ProfileData
       this.editable = editable;
    }
 
-   public Boolean getCanIEditAccount() {
-      try {
-         if (webutil.isUserLoggedIn()) {
+   public Boolean getCanIEditAccount()
+   {
+      try
+      {
+         if (webutil.isUserLoggedIn())
+         {
             if (getRole().equalsIgnoreCase(WebConst.ROLE_OWNER) ||
                (getRole().equalsIgnoreCase(WebConst.ROLE_USER) && getPrivileges().equalsIgnoreCase(WebConst.ACCESS_USER_FULL)))
+            {
                return true;
+            }
          }
          return false;
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
          return false;
       }
    }
@@ -389,13 +396,19 @@ public class CustomerData extends ProfileData
       this.savedAllocSliderIndex = savedAllocSliderIndex;
    }
 
-   public Double getTotalRisk() {
+   public Double getTotalRisk()
+   {
       Double value = 0.0;
-      if (getPortfolioData() != null) {
-        if (getAssetyear() != null && getPortfolioData().length > getAssetyear())
-           value = getPortfolioData()[getAssetyear()].getTotalRisk();
-        else
-           value = getPortfolioData()[0].getTotalRisk();
+      if (getPortfolioData() != null)
+      {
+         if (getAssetyear() != null && getPortfolioData().length > getAssetyear())
+         {
+            value = getPortfolioData()[getAssetyear()].getTotalRisk();
+         }
+         else
+         {
+            value = getPortfolioData()[0].getTotalRisk();
+         }
       }
       return value;
    }
@@ -415,23 +428,31 @@ public class CustomerData extends ProfileData
       return ((doesUserHavaLogonID == null) ? false : doesUserHavaLogonID);
    }
 
-   public Double getTotalExpectedReturns() {
+   public Double getTotalExpectedReturns()
+   {
       Double value = 0.0;
-      if (getPortfolioData() != null) {
+      if (getPortfolioData() != null)
+      {
          if (getAssetyear() != null && getPortfolioData().length > getAssetyear())
+         {
             value = getPortfolioData()[getAssetyear()].getExpReturns();
+         }
          else
+         {
             value = getPortfolioData()[0].getExpReturns();
+         }
       }
       return value;
    }
 
-   public Double getEstimatedGoal() {
+   public Double getEstimatedGoal()
+   {
       Double value = accountFinancials.getInvestment().doubleValue();
       Integer finalyear;
-      if (getProjectionData() != null) {
+      if (getProjectionData() != null)
+      {
          finalyear = getProjectionData().length;
-         value = getProjectionData()[finalyear-1].getTotalCapitalWithGains();
+         value = getProjectionData()[finalyear - 1].getTotalCapitalWithGains();
       }
       return value;
    }
@@ -547,11 +568,16 @@ public class CustomerData extends ProfileData
    }
 
 
-   public Integer convertNumber(Integer num) {
+   public Integer convertNumber(Integer num)
+   {
       if (num == null)
+      {
          return 0;
+      }
       else
+      {
          return num;
+      }
    }
 
    public AccountFinancials getAccountFinancials()
@@ -614,27 +640,37 @@ public class CustomerData extends ProfileData
       this.lastname = lastname;
    }
 
-   public String getFullName() {
+   public String getFullName()
+   {
       String name = null;
       if (getLastname() != null)
+      {
          name = getLastname();
+      }
 
-      if (getFirstname() != null) {
+      if (getFirstname() != null)
+      {
          if (name != null)
+         {
             name = name + ", " + getFirstname();
+         }
          else
-            name =  getFirstname();
+         {
+            name = getFirstname();
+         }
       }
 
       return name;
    }
 
-   public void setCalcFormula(String formula) {
+   public void setCalcFormula(String formula)
+   {
       riskProfile.setCalcFormula(formula);
    }
 
    @Override
-   public void setDefault() {
+   public void setDefault()
+   {
       super.setDefault();
       setLogonid(webutil.getLogonid());
 
@@ -650,9 +686,11 @@ public class CustomerData extends ProfileData
    }
 
    @Override
-   public void resetData() {
+   public void resetData()
+   {
       // Manage Goal Data.
-      if (getDoesUserHavaLogonID()) {
+      if (getDoesUserHavaLogonID())
+      {
          resetPortfolio();
       }
       else
@@ -682,12 +720,16 @@ public class CustomerData extends ProfileData
          setPhone(null);
 
          if (displayPortfolioList != null)
+         {
             displayPortfolioList.clear();
+         }
 
          setSelectedPortfolio(null);
 
          if (selectedPortfolioList != null)
+         {
             selectedPortfolioList.clear();
+         }
 
          setAssetAllocationTotal(0.0);
          setTotalSharesAllocated(0.0);
@@ -696,16 +738,24 @@ public class CustomerData extends ProfileData
          setManagedtotalMoney(0.0);
 
          if (excludedSubAsset != null)
+         {
             excludedSubAsset.clear();
-         if (subassetList != null)
-            subassetList.clear();
-         if (orderedSubclass != null)
-            orderedSubclass.clear();
-
-         if (advisorBasket == null) {
-            advisorBasket = new HashMap<String,String>();
          }
-         else {
+         if (subassetList != null)
+         {
+            subassetList.clear();
+         }
+         if (orderedSubclass != null)
+         {
+            orderedSubclass.clear();
+         }
+
+         if (advisorBasket == null)
+         {
+            advisorBasket = new HashMap<String, String>();
+         }
+         else
+         {
             advisorBasket.clear();
          }
          sliderAllocationIndex = 0;
@@ -720,50 +770,61 @@ public class CustomerData extends ProfileData
       }
    }
 
-   public void resetCustomerData() {
+   public void resetCustomerData()
+   {
       resetData();
    }
 
-   public void resetAdvisor() {
+   public void resetAdvisor()
+   {
 
       if (webutil != null)
       {
          if (webutil.isUserLoggedIn())
          {
             if (getAdvisor() == null)
+            {
                setAdvisor(webutil.getUserInfoData().getAdvisor());
+            }
             if (getRep() == null)
+            {
                setRep(webutil.getUserInfoData().getRep());
+            }
          }
          else
          {
             if (webutil.getWebprofile() != null)
             {
                if (getAdvisor() == null || getAdvisor().isEmpty())
+               {
                   setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
+               }
                if (getRep() == null || getRep().isEmpty())
+               {
                   setRep(webutil.getWebprofile().getDefaultRep());
+               }
             }
          }
       }
    }
 
-   public void copyData(CustomerData newgoals) {
+   public void copyData(CustomerData newgoals)
+   {
       // Master ProfileData
       //setName(newgoals.getName());  Being set at bottom
       setPortfolioName(newgoals.getPortfolioName());
       setAge(newgoals.getAge());
-      setHorizon	(	newgoals.getHorizon	());
-      setInitialInvestment	(	newgoals.getInitialInvestment	());
-      setRecurringInvestment	(	newgoals.getRecurringInvestment	());
-      setExperience	(	newgoals.getExperience	());
-      setObjective	(	newgoals.getObjective	());
-      setStayInvested	(	newgoals.getStayInvested	());
-      setCharitableGoals	(	newgoals.getCharitableGoals	());
-      setDependent	(	newgoals.getDependent	());
-      setAccountTaxable	(	newgoals.getAccountTaxable	());
-      setTaxrate	(	newgoals.getTaxrate	());
-      setRiskIndex	(	newgoals.getRiskIndex	());
+      setHorizon(newgoals.getHorizon());
+      setInitialInvestment(newgoals.getInitialInvestment());
+      setRecurringInvestment(newgoals.getRecurringInvestment());
+      setExperience(newgoals.getExperience());
+      setObjective(newgoals.getObjective());
+      setStayInvested(newgoals.getStayInvested());
+      setCharitableGoals(newgoals.getCharitableGoals());
+      setDependent(newgoals.getDependent());
+      setAccountTaxable(newgoals.getAccountTaxable());
+      setTaxrate(newgoals.getTaxrate());
+      setRiskIndex(newgoals.getRiskIndex());
 
       // ManageGoal Data
       setAcctnum(newgoals.getAcctnum());
@@ -772,11 +833,11 @@ public class CustomerData extends ProfileData
       setAdvisor(newgoals.getAdvisor());
       setRep(newgoals.getRep());
       setAddmodflag(newgoals.getAddmodflag());
-      setGoal  (    newgoals.getGoal());
+      setGoal(newgoals.getGoal());
       setAccountType(newgoals.getAccountType());
       setName(newgoals.getName());
-      setAssetData	(	newgoals.getAssetData	());
-      setPortfolioData	(	newgoals.getPortfolioData	());
+      setAssetData(newgoals.getAssetData());
+      setPortfolioData(newgoals.getPortfolioData());
       setFirstname(newgoals.getFirstname());
       setLastname(newgoals.getLastname());
       setRegisteredState(newgoals.getRegisteredState());
@@ -791,17 +852,28 @@ public class CustomerData extends ProfileData
    public String getHorizonQuestion()
    {
       String question = "How many years do you plan to invest?";
-      if (getGoal() != null) {
+      if (getGoal() != null)
+      {
          if (getGoal().equalsIgnoreCase("retirement"))
+         {
             return "Number of years to your retirement?";
+         }
          if (getGoal().equalsIgnoreCase("home"))
+         {
             return "How many years until you purchase your home?";
+         }
          if (getGoal().equalsIgnoreCase("wedding"))
+         {
             return "Number of years to your wedding?";
+         }
          if (getGoal().equalsIgnoreCase("automobile"))
+         {
             return "How many years until you purchase automobile?";
+         }
          if (getGoal().equalsIgnoreCase("education"))
+         {
             return "How many years to your child's college graduation?";
+         }
       }
       return question;
    }
@@ -819,7 +891,7 @@ public class CustomerData extends ProfileData
 
    public Boolean getUserAssetOverride()
    {
-      return (userAssetOverride == null ? false :  userAssetOverride);
+      return (userAssetOverride == null ? false : userAssetOverride);
    }
 
    public void setUserAssetOverride(Boolean userAssetOverride)
@@ -858,7 +930,8 @@ public class CustomerData extends ProfileData
       this.totalSharesAllocated = totalSharesAllocated;
    }
 
-   public Double getTotalMoneyAllocated() {
+   public Double getTotalMoneyAllocated()
+   {
       return totalMoneyAllocated;
    }
 
@@ -910,8 +983,9 @@ public class CustomerData extends ProfileData
    public void loadBasketInfo()
    {
 
-      if (getTheme() == null) {
-         setTheme(webutil.getWebprofile().getTheme());
+      if (getTheme() == null)
+      {
+         setTheme(webutil.getWebprofile().getModel());
       }
 
       if (getAccountTaxable())
@@ -927,21 +1001,26 @@ public class CustomerData extends ProfileData
    }
 
 
-   public void buildAssetClass() {
+   public void buildAssetClass()
+   {
       AssetClass[] aamc;
-      try {
+      try
+      {
          setAssetData(null);
          aamc = modelUtil.buildAllocation(getProfileInstance());
-         if (aamc != null)  {
+         if (aamc != null)
+         {
             setAssetData(aamc);
          }
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
          ex.printStackTrace();
       }
    }
 
-   public void buildPortfolio() {
+   public void buildPortfolio()
+   {
       AssetClass[] aamc;
       Portfolio[] pfclass;
       MsgData data = new MsgData();
@@ -952,7 +1031,7 @@ public class CustomerData extends ProfileData
          if (aamc != null)
          {
             pfclass = modelUtil.buildPortfolio(aamc,
-                                      getProfileInstance());
+                                               getProfileInstance());
             if (pfclass != null)
             {
                setPortfolioData(pfclass);
@@ -969,22 +1048,29 @@ public class CustomerData extends ProfileData
       }
    }
 
-   public void buildGoalsData() {
+   public void buildGoalsData()
+   {
 
       Integer numOfYears = 20;
-      if (getGoalData() != null && getGoalData().getTerm() != null) {
+      if (getGoalData() != null && getGoalData().getTerm() != null)
+      {
          numOfYears = getGoalData().getTerm().intValue();
       }
-      else {
-         if (getHorizon() == null) {
-               numOfYears = ((65 - getAge()) > 20) ? 20 : (65 - getAge());
+      else
+      {
+         if (getHorizon() == null)
+         {
+            numOfYears = ((65 - getAge()) > 20) ? 20 : (65 - getAge());
          }
-         else {
+         else
+         {
             numOfYears = getHorizon();
          }
 
          if (numOfYears < 5)
+         {
             numOfYears = 5;
+         }
       }
 
 
@@ -1002,19 +1088,23 @@ public class CustomerData extends ProfileData
       Double cashAlloc = 0.0;
       Double adjustment = 0.0;
 
-      if (getEditableAsset() == null) {
+      if (getEditableAsset() == null)
+      {
          recreateEditableAsset();
       }
-      else {
-         if (getAssetData() != null)  {
+      else
+      {
+         if (getAssetData() != null)
+         {
             getEditableAsset().clear();
             totalAlloc = 0.0;
-            for (int loop=0; loop < getAssetData()[offset].getOrderedAsset().size(); loop++) {
+            for (int loop = 0; loop < getAssetData()[offset].getOrderedAsset().size(); loop++)
+            {
                assetname = getAssetData()[offset].getOrderedAsset().get(loop);
                Asset asset = assetdata.get(assetname);
                setEditableAsset(asset);
                assetWeight = asset.getActualweight();
-               totalAlloc =  totalAlloc + assetWeight;
+               totalAlloc = totalAlloc + assetWeight;
             }
             totalAlloc = (Math.round(totalAlloc) * 100.0);
             setAssetAllocationTotal(totalAlloc);
@@ -1022,7 +1112,7 @@ public class CustomerData extends ProfileData
       }
    }
 
-   public void reloadManagedAssetClass(Map<String,Asset> assetdata, int year)
+   public void reloadManagedAssetClass(Map<String, Asset> assetdata, int year)
    {
       Double totalAlloc = 0.0;
       String assetname;
@@ -1033,24 +1123,30 @@ public class CustomerData extends ProfileData
 
       setManagedassetAllocationTotal(0.0);
       setManagedtotalMoney(0.0);
-      if (getEditableAsset() != null) {
-         if (getAssetData() != null)  {
+      if (getEditableAsset() != null)
+      {
+         if (getAssetData() != null)
+         {
             Integer numOfAsset = getAssetData().length;
-            if (numOfAsset >= year) {
+            if (numOfAsset >= year)
+            {
                setManagedassetAllocationTotal(0.0);
                setManagedtotalMoney(0.0);
-               for (int loop=0; loop < getAssetData()[year].getOrderedAsset().size(); loop++) {
+               for (int loop = 0; loop < getAssetData()[year].getOrderedAsset().size(); loop++)
+               {
                   assetname = getAssetData()[year].getOrderedAsset().get(loop);
                   asset = getAssetData()[year].getAsset(assetname);
-                  if (assetdata.containsKey(assetname)) {
+                  if (assetdata.containsKey(assetname))
+                  {
                      asset.setHoldingweight(assetdata.get(assetname).getHoldingweight());
                      asset.setHoldingRisk(assetdata.get(assetname).getHoldingRisk());
                      asset.setHoldingReturn(assetdata.get(assetname).getHoldingReturn());
                      asset.setHoldingValue(assetdata.get(assetname).getHoldingValue());
                      setManagedassetAllocationTotal(getManagedassetAllocationTotal() + assetdata.get(assetname).getHoldingweight());
-                     setManagedtotalMoney(getManagedtotalMoney() + assetdata.get(assetname).getHoldingValue() );
+                     setManagedtotalMoney(getManagedtotalMoney() + assetdata.get(assetname).getHoldingValue());
                   }
-                  else {
+                  else
+                  {
                      asset.setHoldingweight(0.0);
                      asset.setHoldingRisk(0.0);
                      asset.setHoldingReturn(0.0);
@@ -1064,40 +1160,46 @@ public class CustomerData extends ProfileData
 
    public void loadPortfolioList(Integer dataYear)
    {
-         Double totalMoney=0.0;
-         Double addedShares = 0.0;
-         Double addedTotalMoney=0.0;
-         Double weight=0.0;
-         if (getDisplayPortfolioList() == null) {
-            displayPortfolioList = new ArrayList<DataPortfolio>();
-         }
+      Double totalMoney = 0.0;
+      Double addedShares = 0.0;
+      Double addedTotalMoney = 0.0;
+      Double weight = 0.0;
+      if (getDisplayPortfolioList() == null)
+      {
+         displayPortfolioList = new ArrayList<DataPortfolio>();
+      }
 
-         if (getPortfolioData() != null) {
-            displayPortfolioList.clear();
-            int rowSize = getPortfolioData()[dataYear].getPortfolio().size();
-            totalMoney = getPortfolioData()[dataYear].getTotalMoney();
-            for (int loop = 0; loop < rowSize; loop++)
+      if (getPortfolioData() != null)
+      {
+         displayPortfolioList.clear();
+         int rowSize = getPortfolioData()[dataYear].getPortfolio().size();
+         totalMoney = getPortfolioData()[dataYear].getTotalMoney();
+         for (int loop = 0; loop < rowSize; loop++)
+         {
+            PortfolioSecurityData pfList = getPortfolioData()[dataYear].getPortfolio().get(loop);
+            if (totalMoney == 0)
             {
-               PortfolioSecurityData pfList = getPortfolioData()[dataYear].getPortfolio().get(loop);
-               if (totalMoney == 0)
-                   weight=0.0;
-               else
-                    weight = pfList.getMoney()/totalMoney;
-               addedTotalMoney += pfList.getMoney();
-               addedShares +=  pfList.getShares();
-               DataPortfolio dp = new DataPortfolio(pfList.getAssetclass(), pfList.getSubclass(), pfList.getColor(),
-                                                    pfList.getTicker(), pfList.getName(), (int) pfList.getShares(),
-                                                    pfList.getDailyprice(), pfList.getMoney(), pfList.getSortorder(),
-                                                    pfList.getTickerWeights(), weight,
-                                                    pfList.getIsin(), pfList.getCusip(), pfList.getRic(),
-                                                    pfList.getTradeCurrency(), pfList.getExchangeRate(), pfList.getSettleCurrency(),
-                                                    pfList.getSettleShares(), pfList.getSettleMoney(), pfList.getSettleMoney());
-               getDisplayPortfolioList().add(loop, dp);
+               weight = 0.0;
             }
-            addedTotalMoney = Math.round(addedTotalMoney * 100.00) / 100.00; // round off..
-            setTotalMoneyAllocated(addedTotalMoney);
-            setTotalSharesAllocated(addedShares);
+            else
+            {
+               weight = pfList.getMoney() / totalMoney;
+            }
+            addedTotalMoney += pfList.getMoney();
+            addedShares += pfList.getShares();
+            DataPortfolio dp = new DataPortfolio(pfList.getAssetclass(), pfList.getSubclass(), pfList.getColor(),
+                                                 pfList.getTicker(), pfList.getName(), (int) pfList.getShares(),
+                                                 pfList.getDailyprice(), pfList.getMoney(), pfList.getSortorder(),
+                                                 pfList.getTickerWeights(), weight,
+                                                 pfList.getIsin(), pfList.getCusip(), pfList.getRic(),
+                                                 pfList.getTradeCurrency(), pfList.getExchangeRate(), pfList.getSettleCurrency(),
+                                                 pfList.getSettleShares(), pfList.getSettleMoney(), pfList.getSettleMoney());
+            getDisplayPortfolioList().add(loop, dp);
          }
+         addedTotalMoney = Math.round(addedTotalMoney * 100.00) / 100.00; // round off..
+         setTotalMoneyAllocated(addedTotalMoney);
+         setTotalSharesAllocated(addedShares);
+      }
    }
 
    public List<DataPortfolio> getSelectedPortfolioList()
@@ -1109,6 +1211,7 @@ public class CustomerData extends ProfileData
    {
       this.selectedPortfolioList = selectedPortfolioList;
    }
+
    public List<PortfolioSubclass> getExcludedSubAsset()
    {
       return excludedSubAsset;
@@ -1149,12 +1252,12 @@ public class CustomerData extends ProfileData
       this.externalPositionFile = externalPositionFile;
    }
 
-   public Map<String,String> getAdvisorBasket()
+   public Map<String, String> getAdvisorBasket()
    {
       return advisorBasket;
    }
 
-   public void setAdvisorBasket(Map<String,String> advisorBasket)
+   public void setAdvisorBasket(Map<String, String> advisorBasket)
    {
       this.advisorBasket = advisorBasket;
    }
@@ -1167,87 +1270,129 @@ public class CustomerData extends ProfileData
    // This happens in dropdown.  They select the KEY, so we are setting both KEY and value.
    public void setThisBasket(String value)
    {
-      if (value == null) {
+      if (value == null)
+      {
          setBasket(value, InvConst.DEFAULT_BASKET);
          setTheme(InvConst.DEFAULT_THEME);
       }
-      else {
-         if (advisorBasket.containsKey(value)) {
+      else
+      {
+         if (advisorBasket.containsKey(value))
+         {
             setBasket(value, advisorBasket.get(value));
             setTheme(value);
          }
       }
    }
 
-   public void rollupAssetClass(Portfolio pfclass) {
+   public void rollupAssetClass(Portfolio pfclass)
+   {
       Map<String, Asset> tallyAssetclass = new LinkedHashMap<String, Asset>();
       Double totalMoney = 0.0;
-      if (pfclass != null) {
-         for (PortfolioSecurityData seclist: pfclass.getPortfolio()) {
+      Double remainMoney = getActualInvestment();
+      if (pfclass != null)
+      {
+         for (PortfolioSecurityData seclist : pfclass.getPortfolio())
+         {
             String assetname = seclist.getAssetclass();
+            Asset origData = getAssetData()[0].getAsset(assetname);
+            String displayName = origData.getDisplayName();
+            Double allocwght = origData.getAllocweight();
             Double wght = seclist.getWeight();
             Double money = seclist.getMoney();
-            String color = seclist.getColor();
+            String color = origData.getColor();
             Double summoney = 0.0;
 
             totalMoney += money;
+            remainMoney -= money;
 
-            if (! tallyAssetclass.containsKey(assetname)) {
+            if (!tallyAssetclass.containsKey(assetname))
+            {
                Asset asset = new Asset();
-               Double newwght =  money / totalMoneyAllocated;
+               Double newwght = 0.0;
+               if (totalMoneyAllocated > 0.0)
+               {
+                  newwght = money / totalMoneyAllocated;
+               }
+
                asset.setAsset(assetname);
+               asset.setDisplayName(displayName);
                asset.setColor(color);
                asset.setValue(money);
                asset.setActualweight(newwght);
                asset.setUserweight(newwght);
-               asset.setAllocweight(newwght);
+               asset.setAllocweight(allocwght);
                asset.setValue(money);
-               tallyAssetclass.put(assetname,asset);
+               tallyAssetclass.put(assetname, asset);
             }
-            else {
+            else
+            {
                Asset asset = tallyAssetclass.get(assetname);
+               // asset.setDisplayName(origData.getDisplayName());
                summoney = money + asset.getValue();
-               Double newwght =  summoney / totalMoneyAllocated;
+               Double newwght = 0.0;
+               if (totalMoneyAllocated > 0.0)
+               {
+                  newwght = summoney / totalMoneyAllocated;
+               }
                asset.setActualweight(newwght);
                asset.setUserweight(newwght);
-               asset.setAllocweight(wght + asset.getAllocweight());
+               // asset.setAllocweight(wght + asset.getAllocweight());
                asset.setValue(summoney);
-               tallyAssetclass.put(assetname,asset);
+               // asset.setColor(origData.getColor());
+               tallyAssetclass.put(assetname, asset);
+            }
+         }
+
+         // Final adjustements to Cash
+         String cash = "Cash";
+         if (remainMoney > 0) {
+            if (tallyAssetclass.containsKey(cash)) {
+               tallyAssetclass.get(cash).setValue(tallyAssetclass.get(cash).getValue() + remainMoney);
+            }
+            else {
+               // For some reason, no cash was allocated on Portfolio.  So create a cash bucket.
+               Asset asset = tallyAssetclass.get(cash);
+               Double newwght = remainMoney / totalMoneyAllocated;
+               asset.setAsset(asset.getAsset());
+               asset.setDisplayName(asset.getAsset());
+               asset.setColor(asset.getColor());
+               asset.setActualweight(newwght);
+               asset.setUserweight(newwght);
+               asset.setAllocweight(newwght);
+               asset.setValue(remainMoney);
+               tallyAssetclass.put(cash, asset);
             }
          }
 
          // After the tally is done, lets reallocate to whole
-         if (tallyAssetclass.size() > 0) {
+         if (tallyAssetclass.size() > 0)
+         {
             recreateEditableAsset();
             AssetClass[] aamc = new AssetClass[tallyAssetclass.size()];
             Integer i = 0;
             aamc[i] = new AssetClass();
-            for (Asset assetdata : tallyAssetclass.values()) {
-               setEditableAsset(assetdata);
-               Asset origAssetData =  aamc[i].getAssetclass().get(assetdata.getAsset());
-               if (origAssetData != null)
-               {
-                  origAssetData.setUserweight(assetdata.getUserweight());
-                  origAssetData.setActualweight(assetdata.getActualweight());
-                  origAssetData.setValue(assetdata.getValue());
-               }
-               else {
-                  aamc[i].addAssetClass(assetdata.getAsset(),assetdata.getDisplayName(),assetdata.getColor(),
-                                        assetdata.getAllocweight(), assetdata.getAvgReturn());
-                  aamc[i].getAssetclass().get(assetdata.getAsset()).setValue(assetdata.getValue());
-                  aamc[i].getAssetclass().get(assetdata.getAsset()).setUserweight(assetdata.getUserweight());
-                  aamc[i].getAssetclass().get(assetdata.getAsset()).setActualweight(assetdata.getActualweight());
-               }
+            for (Asset newData : tallyAssetclass.values())
+            {
+               // for (Asset assetdata : tallyAssetclass.values()) {
+               String name = newData.getAsset();
+               setEditableAsset(newData);
+               aamc[i].addAssetClass(newData.getAsset(), newData.getDisplayName(), newData.getColor(),
+                                     newData.getAllocweight(), newData.getAvgReturn());
+               aamc[i].getAssetclass().get(newData.getAsset()).setValue(newData.getValue());
+               aamc[i].getAssetclass().get(newData.getAsset()).setUserweight(newData.getUserweight());
+               aamc[i].getAssetclass().get(newData.getAsset()).setActualweight(newData.getActualweight());
+               i++;
             }
-            aamc[i].setTotalInvested(totalMoney);
             setAssetData(aamc);
          }
       }
    }
 
-   public Boolean getHasClientID() {
+   public Boolean getHasClientID()
+   {
 
-      return (getClientAccountID() != null && ! getClientAccountID().isEmpty());
+      return (getClientAccountID() != null && !getClientAccountID().isEmpty());
 
 
    }
@@ -1258,17 +1403,22 @@ public class CustomerData extends ProfileData
          && (getActualInvestment() != null && getActualInvestment() > 0.0);
    }
 
-   public Boolean getReqPrflCnf(){
-      if(getManaged() && getCurrentStatus().equalsIgnoreCase("CONFIRMATION")){
+   public Boolean getReqPrflCnf()
+   {
+      if (getManaged() && getCurrentStatus().equalsIgnoreCase("CONFIRMATION"))
+      {
          return true;
-      }else {
+      }
+      else
+      {
          return false;
       }
    }
 
    public String getDisplayActiveAcctNum()
    {
-      if (getManaged()) {
+      if (getManaged())
+      {
          return getClientAccountID();
       }
       else
@@ -1304,8 +1454,10 @@ public class CustomerData extends ProfileData
       }
    }
 
-   public Boolean registerUser() {
-      try {
+   public Boolean registerUser()
+   {
+      try
+      {
          UserData userdata = new UserData();
          userdata.setFirstName(getFirstname());
          userdata.setLastName(getLastname());
@@ -1320,7 +1472,7 @@ public class CustomerData extends ProfileData
          {
             logger.debug("LOG: Validate UserID failed: " + getEmail());
             msgheader = "signup.U100";
-            msg= webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
          }
          else
@@ -1339,16 +1491,17 @@ public class CustomerData extends ProfileData
             }
             userdata.setLogonID(loginID);
             setLogonid(loginID);
-            webutil.sendConfirmation(userdata,"W");
+            webutil.sendConfirmation(userdata, "W");
 
             setDoesUserHavaLogonID(true);
             return true;
          }
          return false;
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
          String msgheader = "signup.EX.100";
-         String msg= webutil.getMessageText().getDisplayMessage(msgheader, "Exception: Create UserID/Pwd, problem attempting to create simpleuser", null);
+         String msg = webutil.getMessageText().getDisplayMessage(msgheader, "Exception: Create UserID/Pwd, problem attempting to create simpleuser", null);
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
          ex.printStackTrace();
       }
@@ -1387,10 +1540,10 @@ public class CustomerData extends ProfileData
          loadBasketInfo();
       }
 
-         age = riskProfile.getDefaultAge();
-         horizon = riskProfile.getDefaultHorizon();
-         initialInvestment = riskProfile.getDefaultInitialInvestment().intValue();
-         recurringInvestment = riskProfile.getDefaultRecurringInvestment().intValue();
+      age = riskProfile.getDefaultAge();
+      horizon = riskProfile.getDefaultHorizon();
+      initialInvestment = riskProfile.getDefaultInitialInvestment().intValue();
+      recurringInvestment = riskProfile.getDefaultRecurringInvestment().intValue();
    }
 
 
@@ -1472,9 +1625,13 @@ public class CustomerData extends ProfileData
             saveDAO.saveRiskProfile(riskProfile);
             saveDAO.saveFinancials(getInstance());
             if (getAssetData() != null)
+            {
                saveDAO.saveAllocation(getInstance());
+            }
             if (getPortfolioData() != null)
+            {
                saveDAO.savePortfolio(getInstance());
+            }
          }
          // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Data Saved", "Data Saved"));
       }
@@ -1517,13 +1674,16 @@ public class CustomerData extends ProfileData
 
    }
 
-   public void createAssetPortfolio() {
+   public void createAssetPortfolio()
+   {
       AssetClass[] aamc;
       Portfolio[] pfclass;
-      try {
+      try
+      {
          setAssetData(null);
          aamc = modelUtil.buildAllocation(riskProfile, getProfileInstance());
-         if (aamc != null)  {
+         if (aamc != null)
+         {
             setAssetData(aamc);
             pfclass = modelUtil.buildPortfolio(aamc, riskProfile, getProfileInstance());
             if (pfclass != null)
@@ -1535,7 +1695,8 @@ public class CustomerData extends ProfileData
             }
          }
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
          ex.printStackTrace();
       }
    }
@@ -1573,7 +1734,8 @@ public class CustomerData extends ProfileData
          ex.printStackTrace();
       }
    }
-   public void createDynaAssetPortfolio(Integer noOfYears, Double riskIndex,String Theme)
+
+   public void createDynaAssetPortfolio(Integer noOfYears, Double riskIndex, String Theme)
    {
 
       try
@@ -1606,18 +1768,21 @@ public class CustomerData extends ProfileData
       }
    }
 
-   public void buildHistoricalReturns() {
+   public void buildHistoricalReturns()
+   {
       OptHistoricalReport optHistoricalReport = new OptHistoricalReport();
       optHistoricalReport.calcuatePerformance(getTheme(), getPortfolioData());
 
    }
-   public void buildHistoricalReturns(String theme) {
+
+   public void buildHistoricalReturns(String theme)
+   {
       OptHistoricalReport optHistoricalReport = new OptHistoricalReport();
       optHistoricalReport.calcuatePerformance(theme, getPortfolioData());
 
    }
 
-   public void rollupAssetClassByPosList(List<Position> pfclass,Double dtotalMoneyAllocated)
+   public void rollupAssetClassByPosList(List<Position> pfclass, Double dtotalMoneyAllocated)
    {
       Map<String, Asset> tallyAssetclass = new LinkedHashMap<String, Asset>();
       Double totalMoney = 0.0;
@@ -1636,7 +1801,7 @@ public class CustomerData extends ProfileData
             if (!tallyAssetclass.containsKey(assetname))
             {
                Asset asset = new Asset();
-               Double newwght = money ;
+               Double newwght = money;
                asset.setAsset(assetname);
                asset.setColor(color);
                asset.setValue(money);
@@ -1650,7 +1815,7 @@ public class CustomerData extends ProfileData
             {
                Asset asset = tallyAssetclass.get(assetname);
                summoney = money + asset.getValue();
-               Double newwght = summoney ;
+               Double newwght = summoney;
                asset.setActualweight(newwght);
                asset.setUserweight(newwght);
                asset.setAllocweight(wght + asset.getAllocweight());
@@ -1683,11 +1848,11 @@ public class CustomerData extends ProfileData
                                      assetdata.getAllocweight(), assetdata.getAvgReturn());
                aamc[i].getAssetclass().get(assetdata.getAsset()).setValue(assetdata.getValue());
                aamc[i].getAssetclass().get(assetdata.getAsset()).setUserweight(assetdata.getUserweight());
-               aamc[i].getAssetclass().get(assetdata.getAsset()).setActualweight(assetdata.getActualweight()/totalMoney);
+               aamc[i].getAssetclass().get(assetdata.getAsset()).setActualweight(assetdata.getActualweight() / totalMoney);
 
             }
-            assetdata.setActualweight(assetdata.getActualweight()/totalMoney);
-            assetdata.setUserweight(assetdata.getUserweight()/totalMoney);
+            assetdata.setActualweight(assetdata.getActualweight() / totalMoney);
+            assetdata.setUserweight(assetdata.getUserweight() / totalMoney);
             setEditableAsset(assetdata);
          }
          aamc[i].setTotalInvested(totalMoney);
@@ -1698,24 +1863,25 @@ public class CustomerData extends ProfileData
 //      System.out.println("aamc");
    }
 
-public  void updateProfileData(CustomerData objCustomerData){
+   public void updateProfileData(CustomerData objCustomerData)
+   {
 
-   Long acctnum;
-   try
-   {
-      System.out.println("after update acctnum "+objCustomerData.getCustomName());
-      acctnum = saveDAO.saveProfileData(objCustomerData);
-      System.out.println("after update acctnum "+acctnum);
-   }
-   catch (Exception ex)
-   {
-      String stackTrace = ex.getMessage();
+      Long acctnum;
+      try
+      {
+         System.out.println("after update acctnum " + objCustomerData.getCustomName());
+         acctnum = saveDAO.saveProfileData(objCustomerData);
+         System.out.println("after update acctnum " + acctnum);
+      }
+      catch (Exception ex)
+      {
+         String stackTrace = ex.getMessage();
 //      webutil.alertSupport("CustomerData.updateProfileData", "Error:CustomerData.updateProfileData",
 //                           "error.saveprofile", stackTrace);
-      System.out.println("Error while updating profile "+ex);
-      ex.printStackTrace();
+         System.out.println("Error while updating profile " + ex);
+         ex.printStackTrace();
+      }
    }
-}
 
    public String getCstmAccountLabel()
    {

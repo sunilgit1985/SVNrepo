@@ -5,11 +5,10 @@ import javax.faces.bean.*;
 
 import com.google.api.client.util.ArrayMap;
 import com.google.gson.Gson;
-import com.invessence.web.controller.HighChartsController;
 import com.invessence.web.data.DataPortfolio;
+import com.invessence.web.data.common.ChartData;
 import com.invmodel.asset.data.Asset;
 import com.invmodel.performance.data.ProjectionData;
-import org.primefaces.model.chart.*;
 
 /**
  * Created by Akhilesh on 2/20/2017.
@@ -47,10 +46,18 @@ public class GenerateHighChartsData
       {
          ArrayMap<String, Object> map = new ArrayMap<String, Object>();
          map.put("name", stringArrayListOne.getAsset());
-         map.put("y", new Double(stringArrayListOne.getActualweight() * 100));
+         try
+         {
+            map.put("y", new Double(stringArrayListOne.getActualweight() * 100));
+            map.put("amount", (int) stringArrayListOne.getValue());
+         }
+         catch (Exception ex)
+         {
+            map.put("y", new Double(0.0));
+            map.put("amount", (int) 0.0);
+         }
          map.put("drilldown", stringArrayListOne.getAsset());
          map.put("color", stringArrayListOne.getColor());
-         map.put("amount", (int) stringArrayListOne.getValue());
          list.add(map);
       }
 
@@ -253,7 +260,9 @@ public class GenerateHighChartsData
       if (projectionDataAggressive != null)
       {
          maxGraghPlot = (int) ((Math.round((projectionDataAggressive[totalYlabels].getUpperBand2() / dividingFactor) * 100.0)) / 100.0);
-      }else {
+      }
+      else
+      {
          maxGraghPlot = (int) ((Math.round((projectionData[totalYlabels].getUpperBand2() / dividingFactor) * 100.0)) / 100.0);
       }
 

@@ -6,9 +6,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
-import com.invessence.web.bean.consumer.PrimefacesCharts;
+import com.invessence.web.data.common.PrimefacesCharts;
 import com.invessence.web.constant.WebConst;
-import com.invessence.web.controller.HighChartsController;
+import com.invessence.web.data.common.HighChartsController;
 import com.invessence.web.data.common.*;
 import com.invessence.web.util.Impl.PagesImpl;
 

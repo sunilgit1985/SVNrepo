@@ -26,6 +26,7 @@ public class AdvisorRiskMaster
       this.advisor = advisor;
       masterdata = new HashMap<String, AdvisorRiskMasterData>();
       mappingdata = new HashMap<Integer, AdvisorRiskMapping>();
+      initAdvisorMaster(advisor);
    }
 
    public void initAdvisorMaster(String advisor) {

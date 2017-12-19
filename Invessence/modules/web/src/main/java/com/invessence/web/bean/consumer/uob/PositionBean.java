@@ -6,7 +6,7 @@ import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
 import com.invessence.web.bean.consumer.tcm.TCMCharts;
-import com.invessence.web.controller.HighChartsController;
+import com.invessence.web.data.common.HighChartsController;
 import com.invessence.web.data.common.*;
 import com.invmodel.asset.data.*;
 import org.primefaces.model.chart.PieChartModel;

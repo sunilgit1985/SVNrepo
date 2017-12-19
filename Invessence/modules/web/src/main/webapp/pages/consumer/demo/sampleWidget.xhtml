@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <div class="caraousle Container100">
+
+        <div class="header_tab reviewHeader_title">
+            <div class="header_title Container30">
+                <span>Review</span>
+            </div>
+            <div class="header_link prenext_btn Container70 review_btn">
+                <p:outputPanel id="rbuttonArea" style="border: 0px; background: transparent">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       actionListener="#{uiLayout.defaultHome}"> Home </p:commandLink>
+                    </div>
+                </p:outputPanel>
+
+            </div>
+
+        </div>
+        <div class="Container100 ">
+            <p:chart type="metergauge" model="#{demoBean.meterGauge}" style="width:100px;height:100px" />
+        </div>
+        <div class="Container100 ">
+        </div>
+    </div>
+
+
+</ui:composition>

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 
+import org.primefaces.model.chart.MeterGaugeChartModel;
+
 /**
  * Created by Prachi on 11/13/2017.
  */
@@ -49,58 +51,63 @@ public class RingView implements Serializable
    {
       this.selectedCar = selectedCar;
    }
-   public class lstobj{
 
-   private String ID;
-   private String Brand;
-   private Long Year;
-   private String Color;
-
-   public lstobj(String ID,String Brand, Long Year, String Color){
-      ID=this.ID;
-      Brand=this.Brand;
-      Year=this.Year;
-      Color=this.Color;
-   }
-
-   public String getID()
+   public class lstobj
    {
-      return ID;
+
+      private String ID;
+      private String Brand;
+      private Long Year;
+      private String Color;
+
+      public lstobj(String ID, String Brand, Long Year, String Color)
+      {
+         ID = this.ID;
+         Brand = this.Brand;
+         Year = this.Year;
+         Color = this.Color;
+      }
+
+      public String getID()
+      {
+         return ID;
+      }
+
+      public void setID(String ID)
+      {
+         this.ID = ID;
+      }
+
+      public String getBrand()
+      {
+         return Brand;
+      }
+
+      public void setBrand(String brand)
+      {
+         Brand = brand;
+      }
+
+      public Long getYear()
+      {
+         return Year;
+      }
+
+      public void setYear(Long year)
+      {
+         Year = year;
+      }
+
+      public String getColor()
+      {
+         return Color;
+      }
+
+      public void setColor(String color)
+      {
+         Color = color;
+      }
    }
 
-   public void setID(String ID)
-   {
-      this.ID = ID;
-   }
 
-   public String getBrand()
-   {
-      return Brand;
-   }
-
-   public void setBrand(String brand)
-   {
-      Brand = brand;
-   }
-
-   public Long getYear()
-   {
-      return Year;
-   }
-
-   public void setYear(Long year)
-   {
-      Year = year;
-   }
-
-   public String getColor()
-   {
-      return Color;
-   }
-
-   public void setColor(String color)
-   {
-      Color = color;
-   }
-}
 }

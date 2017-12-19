@@ -8,9 +8,9 @@ import javax.faces.event.*;
 import javax.servlet.http.*;
 
 import com.invessence.converter.*;
-import com.invessence.web.bean.consumer.PrimefacesCharts;
+import com.invessence.web.data.common.PrimefacesCharts;
 import com.invessence.web.constant.*;
-import com.invessence.web.controller.HighChartsController;
+import com.invessence.web.data.common.HighChartsController;
 import com.invessence.web.dao.common.PositionDAO;
 import com.invessence.web.data.common.*;
 import com.invessence.web.data.consumer.RiskCalculator;

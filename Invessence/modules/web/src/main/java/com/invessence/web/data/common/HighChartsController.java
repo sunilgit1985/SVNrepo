@@ -1,13 +1,11 @@
-package com.invessence.web.controller;
+package com.invessence.web.data.common;
 
 import java.util.*;
 import javax.faces.bean.*;
 
-import com.invessence.web.data.common.*;
 import com.invessence.web.util.WebUtil;
 import com.invmodel.asset.data.*;
 import com.invmodel.inputData.ProfileData;
-import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.Portfolio;
 
 /**
@@ -20,6 +18,7 @@ public class HighChartsController
 
    ProfileData profileData = new ProfileData();
    WebProfile webProfile = new WebProfile();
+
    @ManagedProperty("#{webutil}")
    private WebUtil webutil;
    private ArrayList<Asset> editableAsset = new ArrayList<Asset>();

@@ -71,26 +71,7 @@ public class WebProfile
       {
          if (webInfo.containsKey(key))
          {
-            if (webInfo.get(key) == null)
-            {
-               return "";
-            }
-            else
-            {
-               if(getInvSiteReq()==true)
-               {
-                  if (key.contains(".MODE"))
-                  {
-                     return getMode();
-                  }
-                  else
-                  {
-                     return webInfo.get(key);
-                  }
-               }else{
-                     return webInfo.get(key);
-               }
-            }
+               return webInfo.get(key);
          }
       }
       return null;
@@ -116,15 +97,49 @@ public class WebProfile
       locked = forced;
    }
 
+   public String getMode(String key)
+   {
+      if (webInfo != null)
+      {
+         if (webInfo.containsKey(key))
+         {
+            if (webInfo.get(key) == null)
+            {
+               return "";
+            }
+            else
+            {
+               if(getInvSiteReq()==true)
+               {
+                  if (key.contains(".MODE"))
+                  {
+                     return getMode();
+                  }
+                  else
+                  {
+                     return webInfo.get(key);
+                  }
+               }else{
+                  return webInfo.get(key);
+               }
+            }
+         }
+      }
+      return null;
+   }
+
+
    public String getMode()
    {
-      if (mode == null)
-         if (webInfo.containsKey("WEB.MODE"))
-            return getInfo("WEB.MODE");
-         else
-            return "DEMO";
-      else
+      if (mode == null) {
+            if (webInfo.containsKey("WEB.MODE"))
+               return webInfo.get("WEB.MODE");
+            else
+               return "DEMO";
+      }
+      else{
          return mode;
+      }
    }
 
    public void setMode(String mode)
@@ -137,12 +152,20 @@ public class WebProfile
       if (defaultAdvisor == null)
       {
          if (webInfo.containsKey("DEFAULT.ADVISOR"))
-            return getInfo("DEFAULT.ADVISOR");
+            return webInfo.get("DEFAULT.ADVISOR");
          else
             return "Invessence";
       }
       else
          return defaultAdvisor;
+   }
+
+   public String getModel()
+   {
+      if (webInfo.containsKey("DEFAULT.MODEL"))
+         return webInfo.get("DEFAULT.MODEL");
+      else
+         return "0.CORE";
    }
 
    public void setDefaultAdvisor(String defaultAdvisor)
@@ -155,7 +178,7 @@ public class WebProfile
       if (defaultRep == null)
       {
          if (webInfo.containsKey("DEFAULT.REP"))
-            return getInfo("DEFAULT.REP");
+            return webInfo.get("DEFAULT.REP");
          else
             return "Invessence";
       }

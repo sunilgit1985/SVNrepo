@@ -3,7 +3,6 @@ package com.invessence.web.bean.consumer.nestegg;
 import java.io.Serializable;
 import java.util.*;
 
-import com.invessence.web.bean.consumer.PrimefacesCharts;
 import com.invessence.web.data.common.*;
 import com.invmodel.asset.data.*;
 import com.invmodel.performance.data.ProjectionData;

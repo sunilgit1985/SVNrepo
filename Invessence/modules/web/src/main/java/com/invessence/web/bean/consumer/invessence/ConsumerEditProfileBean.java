@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.*;
 import javax.servlet.http.HttpSession;
 
-import com.invessence.web.bean.consumer.PrimefacesCharts;
+import com.invessence.web.data.common.PrimefacesCharts;
 import com.invessence.web.constant.*;
 import com.invessence.converter.*;
 import com.invessence.web.data.common.*;

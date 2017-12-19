@@ -265,7 +265,7 @@ public class PortfolioModel
       RiskConst.CALCFORMULAS formula;
       ;
 
-      if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.CALCULATED)
+      if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.C)
       {
          score = riskScore.getScore();
       }
@@ -408,6 +408,9 @@ public class PortfolioModel
          actualInvestment = pdata.getActualInvestment();
          reinvestment = pdata.getRecurringInvestment().doubleValue();
 
+         if (actualInvestment == 0.0) {
+            return createCashOnlyPortfolio(assetData, userRiskProfile, pdata);
+         }
          numofPortfolio = numofPortfoliosToCreate(assetData, userRiskProfile);
 
          portfolioclass = new Portfolio[numofPortfolio];
@@ -440,7 +443,6 @@ public class PortfolioModel
 
          for (int investmentYear = 0; investmentYear < numofPortfolio; investmentYear++)
          {
-
             portfolioclass[investmentYear] = createPortfolio(assetData[investmentYear], pdata, userRiskProfile, investmentYear);
 
             // Total Money = Investment + Projection
@@ -612,7 +614,12 @@ public class PortfolioModel
                   asset.setRisk(assetdata.getPrimeAssetrisk()[offset]);
                }
                asset.setValue(investByAsset);
-               asset.setActualweight(investByAsset / invCapital);
+               if (invCapital == 0.0) {
+                  asset.setActualweight(0.0);
+               }
+               else {
+                  asset.setActualweight(investByAsset / invCapital);
+               }
             }
          }
 
@@ -621,7 +628,13 @@ public class PortfolioModel
             SecurityData sd = secCollection.getSecurity("CASH");
             assetdata = portfolioOptimizer.getAssetData(theme, "Cash");
             asset = assetClass.getAsset("Cash");
-            assetWgt = (remaining2Invest + keepLiquidCash) / invCapital;
+            if (invCapital == 0.0) {
+               assetWgt = 0.0;
+            }
+            else {
+               assetWgt = (remaining2Invest + keepLiquidCash) / invCapital;
+            }
+
             double cash = remaining2Invest + keepLiquidCash;
             double settlecash = cash;
             investByAsset = remaining2Invest;
@@ -660,7 +673,14 @@ public class PortfolioModel
                asset.setRisk(assetdata.getPrimeAssetrisk()[offset]);
             }
             asset.setValue(investByAsset);
-            asset.setActualweight(investByAsset / invCapital);
+            if (invCapital == 0.0) {
+               asset.setActualweight(0.0);
+            }
+            else {
+               asset.setActualweight(investByAsset / invCapital);
+            }
+
+
 
          }
 

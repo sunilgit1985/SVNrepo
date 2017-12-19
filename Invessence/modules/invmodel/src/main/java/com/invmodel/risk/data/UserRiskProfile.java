@@ -45,6 +45,9 @@ public class UserRiskProfile
       riskfetchDAO = new RiskFetchDAO();
       riskData = new HashMap<String, UserRiskData>();
       riskScores = new HashMap<Integer, RiskScore>();
+      if (advisorRiskMaster == null) {
+         advisorRiskMaster = new AdvisorRiskMaster(advisor);
+      }
       this.knockout = 0;
       fetchUserRiskData(advisor, acctnum);
    }
@@ -227,7 +230,6 @@ public class UserRiskProfile
       return null;
    }
 
-
    public void setRiskScores(Integer datevalue, String calcFormula,
                              Boolean allCashFlag, Double score,
                              Double standardScore,
@@ -247,6 +249,19 @@ public class UserRiskProfile
 
          riskScores.put(datevalue, thisScore);
       }
+   }
+
+   public void setRiskCalcFormula(String formula)
+   {
+      if (riskScores.containsKey(0))
+      {
+         riskScores.get(0).setCalcFormula(formula.toString());
+      }
+      else
+      {
+         setScore(0, 0.0);
+      }
+
    }
 
    public void setScore(Integer score)
@@ -285,7 +300,9 @@ public class UserRiskProfile
    }
 
    public void initRiskScore(Integer year, Boolean allCashFlag, Double score) {
-      setRiskScores(year, getAnswer(RiskConst.CALCFORMULA),
+      String formula = getAnswer(RiskConst.CALCFORMULA);
+
+      setRiskScores(year, ((formula == null) ? RiskConst.CALCFORMULAS.C.toString() : formula),
                     false,
                     score, score, score, score, 0.0);
    }
@@ -638,14 +655,18 @@ public class UserRiskProfile
       if (riskData != null)
       {
          String key = RiskConst.RISKQUESTIONKEY + question.toString();
-         if (riskData.containsKey(key))
+         if (answer != null)
          {
-            setRiskData(key, answer.toString(), "I", weight);
-         }
-         else {
-            Integer sortnum = RiskConst.RISKQSORTNUM + question;
-            UserRiskData userdata = new UserRiskData(sortnum, key, answer.toString(), "I", weight );
-            riskData.put(key,userdata);
+            if (riskData.containsKey(key))
+            {
+               setRiskData(key, answer.toString(), "I", weight);
+            }
+            else
+            {
+               Integer sortnum = RiskConst.RISKQSORTNUM + question;
+               UserRiskData userdata = new UserRiskData(sortnum, key, answer.toString(), "I", weight);
+               riskData.put(key, userdata);
+            }
          }
       }
    }
@@ -689,14 +710,20 @@ public class UserRiskProfile
 
    public RiskConst.CALCFORMULAS getCalcFormula()
    {
-      String formula = riskData.get(RiskConst.CALCFORMULA).getAnswer();
-      for (RiskConst.CALCFORMULAS s: RiskConst.CALCFORMULAS.values()) {
-         if (s.toString().startsWith(formula)) {
-            return s;
+      RiskConst.CALCFORMULAS formula = RiskConst.CALCFORMULAS.C;
+      if (riskData.containsKey(RiskConst.CALCFORMULA))
+      {
+         String str = riskData.get(RiskConst.CALCFORMULA).getAnswer();
+         for (RiskConst.CALCFORMULAS s : RiskConst.CALCFORMULAS.values())
+         {
+            if (s.toString().startsWith(str))
+            {
+               formula = s;
+               break;
+            }
          }
       }
-
-      throw new IllegalArgumentException( formula );
+      return formula;
    }
 
    public void setGoals(String goal) {

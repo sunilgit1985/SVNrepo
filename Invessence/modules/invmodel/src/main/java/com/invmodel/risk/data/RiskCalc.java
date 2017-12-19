@@ -19,6 +19,11 @@ public class RiskCalc
    public RiskCalc(UserRiskProfile userRiskProfile)
    {
       this.userRiskProfile = userRiskProfile;
+      if (userRiskProfile != null)
+      {
+         ageTimeFormula(userRiskProfile.getAge(), userRiskProfile.getHorizon());
+      }
+
    }
 
    public RiskCalc(UserRiskProfile userRiskProfile, Long acctnum)
@@ -268,6 +273,7 @@ public class RiskCalc
             return;
          }
 
+         userRiskProfile.initRiskScore(year, false, 0.0);
          if (userRiskProfile.getKnockout() > 0)
          {
             userRiskProfile.setAllCashFlag(year, true);
@@ -282,7 +288,8 @@ public class RiskCalc
          Integer numberofQuestions = userRiskProfile.getRiskQuestion();
          Double tempWeight = 0.0;
          value = ageTimeFormula(age, horizon);
-         setRisk0(value); // Save this as default value for Risk 0 as starting point.
+         setRisk0(value);
+         // Save this as default value for Risk 0 as starting point.
          // The reason, we are starting with Zero, is because the Zero represents Age/Horizon Risk default.
          for (int loop = 1; loop <= numberofQuestions + 1; loop++)
          {
@@ -310,7 +317,7 @@ public class RiskCalc
    {
       Integer age;
       Integer horizon;
-      if (userRiskProfile.getCalcFormula() == RiskConst.CALCFORMULAS.CALCULATED)
+      if (userRiskProfile.getCalcFormula() == RiskConst.CALCFORMULAS.C)
       {
          years = (years == null || years < 1) ? 1 : years;
          age = userRiskProfile.getAge();

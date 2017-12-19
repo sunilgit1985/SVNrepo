@@ -15,6 +15,12 @@ public class UOBRiskCalc extends RiskCalc
    public UOBRiskCalc(UserRiskProfile userRiskProfile)
    {
       super(userRiskProfile);
+      if (userRiskProfile != null)
+      {
+         ageTimeFormula(userRiskProfile.getAge(), userRiskProfile.getHorizon());
+         calculate(1);  // Calculate First year
+      }
+
    }
 
    public UOBRiskCalc(UserRiskProfile userRiskProfile, Long acctnum)

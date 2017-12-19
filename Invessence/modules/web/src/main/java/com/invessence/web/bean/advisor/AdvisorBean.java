@@ -9,7 +9,7 @@ import javax.faces.event.*;
 import javax.servlet.http.*;
 
 import com.invessence.emailer.data.MsgData;
-import com.invessence.web.bean.consumer.PrimefacesCharts;
+import com.invessence.web.data.common.PrimefacesCharts;
 import com.invessence.web.constant.*;
 import com.invessence.converter.SQLData;
 import com.invessence.web.dao.advisor.*;
