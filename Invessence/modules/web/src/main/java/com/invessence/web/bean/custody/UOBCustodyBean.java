@@ -21,7 +21,7 @@ import com.invessence.web.util.Impl.PagesImpl;
 import com.invessence.service.bean.Generic.Country;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.logging.*;
-import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.*;
 
 /**
  * Created by sagarp on 11/11/2017.
@@ -55,7 +55,7 @@ public class UOBCustodyBean
       return uiLayout;
    }
    private UOBDataMaster uobDataMaster;
-   private PagesImpl pagemanager = new PagesImpl(8);
+   private PagesImpl pagemanager = new PagesImpl(9);
    private long beanAcctNum, beanLogonId;
    private boolean dsplExtIndAcctCat = false, dsplExtIndAcctInp = false, dsplExtJntAcctCat = false, dsplExtJntAcctInp = false, dsplAcctTyp = false;
    private boolean dspExtAcctPnl = false, dspNewAcctPnl = false, dspIntroAcctPnl = false, dsblSubmtBtn = true, dspJntTab = false;
@@ -115,7 +115,7 @@ public class UOBCustodyBean
       selIndAcctTyp = null;
       selJntAcctTyp = null;
       introError = null;
-      activeTab = 0;
+      setActiveTab(0);
       dtPriHldrDob = new Date();
       dspIntroAcctPnl = true;
       dsblSubmtBtn = true;
@@ -242,11 +242,7 @@ public class UOBCustodyBean
                DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                dtPriHldrDob = df.parse(uobDataMaster.getIndividualOwnersDetails().getDob());
             }
-//            Integer currentPage = getPagemanager().getPage();
-//            getPagemanager().initPage();
-//            resetActiveTab(0);
-//            getPagemanager().setLastPageVisited(currentPage);
-//            getPagemanager().clearAllErrorMessage();
+
             saveandOpenError = null;
          }
       }
@@ -262,17 +258,14 @@ public class UOBCustodyBean
       Boolean status;
       saveandOpenError = null;
 
-//      validate(getPagemanager().getPage(), getAcctCat(), false))
-
-//      saveDetails(getPagemanager().getPage(), getAcctCat(), false);
-
       getPagemanager().setPage(0);
       status = true;
       while (getPagemanager().getPage() <= getPagemanager().getMaxNoofPages())
       {
-         currentPage=getPagemanager().getPage();
+//         currentPage=getPagemanager().getPage();
          if (validate(getPagemanager().getPage(), getAcctCat(), false))
          {
+//            saveDetails(getPagemanager().getPage(), getAcctCat(), false);
 //            saveDetails(getPagemanager().getPage(), getAcctCat(), false);
             if (getPagemanager().isLastPage())
             {
@@ -280,8 +273,8 @@ public class UOBCustodyBean
             }
             getPagemanager().nextPage();
 //            pageControl(getPagemanager().getPage());
-            currentPage=getPagemanager().getPage();
-//            activeTab = getPagemanager().getPage() + 1;
+//            currentPage=getPagemanager().getPage();
+            pageControl(getPagemanager().getPage());
 
          }
          else
@@ -292,10 +285,9 @@ public class UOBCustodyBean
          }
 
       }
-//      getPagemanager().setLastPageVisited(currentPage);
-      getPagemanager().setPage(currentPage-1);
-//      resetActiveTab(getPagemanager().getPage());
-      activeTab=currentPage;
+
+      getPagemanager().setPage(currentPage);
+      resetActiveTab(getPagemanager().getPage());
       if (!status)
       {
          saveandOpenError = "Please fill appropriate forms above.";
@@ -689,7 +681,21 @@ public class UOBCustodyBean
             System.out.println("Need to add in validation condition");
          }
 
-         //Boolean status = validateAllPage();
+         Boolean status = validateAllPage();
+         if (status)
+         {
+            dsblSubmtBtn = false;
+         }
+         else
+         {
+            dsblSubmtBtn = true;
+         }
+         Integer currentPage = getPagemanager().getPage();
+         getPagemanager().initPage();
+         resetActiveTab(0);
+         getPagemanager().setLastPageVisited(currentPage);
+         getPagemanager().clearAllErrorMessage();
+         saveandOpenError = null;
          inpSalesPrnNm = null;
          repid = null;
       }
@@ -885,14 +891,28 @@ public class UOBCustodyBean
          if (getPagemanager().getPage() + 1 == getPagemanager().getMaxNoofPages())
          {
             dsblSubmtBtn = false;
-            activeTab = getPagemanager().getPage() + 1;
+         }
+         else
+         {
+            dsblSubmtBtn = true;
+         }
+
+         getPagemanager().clearAllErrorMessage();
+         if (getPagemanager().isLastPage() ||
+         (getAcctCat().equalsIgnoreCase("No") &&getPagemanager().getPage() == 7 ) ||
+         (getAcctCat().equalsIgnoreCase("Yes") &&getPagemanager().getPage() == 1 ))
+         {
+            if(getAcctCat().equalsIgnoreCase("Yes")){
+               resetActiveTab(2);
+            }else  if(getAcctCat().equalsIgnoreCase("No"))
+            {
+               resetActiveTab(8);
+            }
          }
          else
          {
             getPagemanager().nextPage();
-            dsblSubmtBtn = true;
-            activeTab = getPagemanager().getPage();
-//            resetActiveTab(getPagemanager().getPage());
+            resetActiveTab(getPagemanager().getPage());
          }
          System.out.println("page next" + getPagemanager().getPage());
       }
@@ -903,7 +923,7 @@ public class UOBCustodyBean
       System.out.println("page current" + getPagemanager().getPage());
       getPagemanager().prevPage();
       System.out.println("page prev" + getPagemanager().getPage());
-      activeTab = getPagemanager().getPage();
+      setActiveTab(getPagemanager().getPage());
    }
 
    public void onChngNation(boolean bflag)
@@ -1594,6 +1614,22 @@ public class UOBCustodyBean
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.ctry", "Country of nationality is required!", null));
             }
          }
+         if (hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationality()))
+         {
+            if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singapore Pr")
+               && ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase(""))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.ctry", "Country of nationality is required!", null));
+            }else if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singapore Pr")
+               && (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
+               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States")))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Invalid Country of nationality is selected!", null));
+            }
+         }
+
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
@@ -1613,6 +1649,12 @@ public class UOBCustodyBean
             {
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.otrNatCtry", "Other nationality country is required!", null));
+            }else if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
+               && (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
+               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States")))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Invalid Country of nationality is selected!", null));
             }
          }
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
@@ -2126,7 +2168,7 @@ public class UOBCustodyBean
    private void resetActiveTab(Integer pagenum)
    {
       Integer nextTab = pageControl(pagenum);
-      activeTab = nextTab;
+      setActiveTab(nextTab);
    }
 
    private Integer pageControl(Integer pagenum)
@@ -2162,8 +2204,8 @@ public class UOBCustodyBean
          case 7:
             newTab = 7;
             break;
-         case 8:
-            newTab = 8;
+         case 8 :
+            newTab=8;
             break;
          default:
             newTab = null;
@@ -2171,6 +2213,61 @@ public class UOBCustodyBean
       }
 
       return newTab;
+   }
+
+
+   public void onTabChange(TabChangeEvent event)
+   {
+      try
+      {
+
+         if (event != null)
+         {
+            String tabname = event.getTab().getId();
+            String tabnum = tabname.substring(3);
+            Integer num = getWebutil().getConverter().getIntData(tabnum);
+//            subtab = 0;
+            switch (num)
+            {
+               case 0:
+                  getPagemanager().setPage(0);
+                  break;
+               case 1:
+                  getPagemanager().setPage(1);
+                  break;
+               case 2:
+                  getPagemanager().setPage(2);
+                  break;
+               case 3:
+                  getPagemanager().setPage(3);
+                  break;
+               case 4:
+                  getPagemanager().setPage(4);
+                  break;
+               case 5:
+                  getPagemanager().setPage(5);
+                  break;
+               case 6:
+                  getPagemanager().setPage(6);
+                  break;
+               case 7:
+                  getPagemanager().setPage(7);
+                  break;
+               default:
+                  getPagemanager().setPage(0);
+
+            }
+            setActiveTab(getPagemanager().getPage());
+         }
+
+      }
+
+      catch (Exception ex)
+      {
+         getPagemanager().setPage(0);
+         //setActiveTab(0);
+
+      }
    }
 
    public static Map<String, Object> getFieldNames(final Object obj, boolean publicOnly)
@@ -2411,6 +2508,12 @@ public class UOBCustodyBean
             fileupdSucc.put(updFileLst.get(i).getReqType(), updFileLst.get(i).getReqType());
          }
       }
+
+      if(getWebutil().hasRole("Test") || updFileLst.size()==updFileMstrLst.size()){
+         dsblUpdSubmtBtn=false;
+      }else{
+         dsblUpdSubmtBtn=true;
+      }
    }
 
    public void  submitUploadFrm(){
@@ -2477,6 +2580,18 @@ public class UOBCustodyBean
       }
       dspIntroAcctPnl = false;
       updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+      Boolean status = validateAllPage();
+      if(status){
+         dsblSubmtBtn=false;
+      }else{
+         dsblSubmtBtn=true;
+      }
+      Integer currentPage = getPagemanager().getPage();
+      getPagemanager().initPage();
+      resetActiveTab(0);
+      getPagemanager().setLastPageVisited(currentPage);
+      getPagemanager().clearAllErrorMessage();
+      saveandOpenError = null;
    }
 
    public void handleFileUpload(FileUploadEvent event)

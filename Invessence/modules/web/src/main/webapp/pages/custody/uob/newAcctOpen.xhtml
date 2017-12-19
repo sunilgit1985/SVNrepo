@@ -4,12 +4,13 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
-
     <div class="layout-portlets-box">
         <div class="Container100 Responsive100 acc_holder_form">
             <div class="ContainerIndent">
-                <p:accordionPanel multiple="true" styleClass="marginZero" activeIndex="#{uobCustodyBean.activeTab}" dynamic="false" id="newAccordian">
-                    <p:tab title="Account Holder">
+                <p:accordionPanel widgetVar="accordionPanel" styleClass="marginZero" activeIndex="#{uobCustodyBean.activeTab}" dynamic="false" id="newAccordian">
+                    <p:ajax event="tabChange"   listener="#{uobCustodyBean.onTabChange}" update=":cstdyFrm:newAccordian"
+                            immediate="true" />
+                    <p:tab id="tab0" title="Account Holder">
                         <div class="Container100 Responsive100 acc_holder_form">
                             <p:tabView id="accHolderNTab">
                                 <p:tab title="Main Account Holder">
@@ -34,7 +35,7 @@
                                                 </p:selectOneMenu>
                                             </div>
                                             <div class="Container80 Responsive100">
-                                                <p:inputText id="nwPriHldrNm" placeholder="Full Name"
+                                                <p:inputText id="nwPriHldrNm" placeholder="Full Name as in Identity Card or Passport" maxlength="60"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.fullName}"/>
                                                 <label for="nwPriHldrNm">Full Name</label>
                                             </div>
@@ -84,7 +85,7 @@
                                                 </div>
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplNricInp}">
                                                     <div class="Container100 Responsive100 margin-top width99">
-                                                        <p:inputText id="nwPriHldrNric" placeholder="NRIC Number"
+                                                        <p:inputText id="nwPriHldrNric" placeholder="Singapore NRIC Number"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}"/>
                                                         <label for="nwPriHldrNric">NRIC Number</label>
                                                     </div>
@@ -98,7 +99,7 @@
                                                         </p:autoComplete>
                                                     </div>
                                                     <div class="Container100 Responsive100 margin-top">
-                                                        <p:inputText id="nwPriHldrSinPrNric" placeholder="NRIC Number"
+                                                        <p:inputText id="nwPriHldrSinPrNric" placeholder="Singapore NRIC Number"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}"/>
                                                         <label for="nwPriHldrNric">NRIC Number</label>
                                                     </div>
@@ -109,7 +110,7 @@
                                                             <span class="title_line">Country Of Nationality</span>
                                                             <p:autoComplete id="nwPriHldrSelCtry" dropdown="true"
                                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerCitizenshipDetails.nationalitySpecify}"
-                                                                            completeMethod="#{uobCustodyBean.getOtherCountries}" >
+                                                                            completeMethod="#{uobCustodyBean.completeText}" >
                                                                 <p:ajax event="itemSelect" update="nwPriHldNtnPnl"   process="@this"
                                                                         listener="${uobCustodyBean.onChngOtrCntry}" />
                                                             </p:autoComplete>
@@ -119,9 +120,9 @@
                                                     	
                                                         <div class="Container30 Responsive100 margin-left ">
                                                         <span class="title_line">Malaysian IC Number</span>
-                                                            <p:inputText id="nwPriHldrIcNo" placeholder="Malaysian IC Number"
+                                                            <p:inputText id="nwPriHldrIcNo" placeholder="Malaysian NRIC"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.icno}"/>
-                                                            <!-- <label for="nwPriHldrIcNo">Malaysian IC Number</label> -->
+                                                             <!--<label for="nwPriHldrIcNo">Malaysian NRIC</label>-->
                                                         </div>
                                                     </ui:fragment>
                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPspNoInp}">
@@ -130,44 +131,44 @@
                                                         <span class="title_line">Passport Number</span>
                                                             <p:inputText id="nwPriHldrPsprtNo" placeholder="Passport Number"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.passport}"/>
-                                                            <!-- <label for="nwPriHldrPsprtNo">Passport Number</label> -->
+                                                             <!--<label for="nwPriHldrPsprtNo">Passport Number</label>-->
                                                         </div>
                                                     </ui:fragment>
                                                 </div>
                                             </div>
                                         </p:panel>
-                                        <div class="acc_holder_dtl_block contact_dtl_block">
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
-                                                    <span>Country Code</span>
-                                                    <p:inputText id="nwPriHldrHmNoCd" placeholder="" maxlength="5"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.homeTelNumberCD}"/>
-                                                </div>
-                                                <div class="Container80 Responsive100">
-                                                    <span>Area Code / Number</span>
-                                                    <div class="Container100">
-                                                        <p:inputText id="nwPriHldrHmNo" placeholder="Home Tel No" maxlength="16"
-                                                                     value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.homeTelNumber}"/>
-                                                        <label for="nwPriHldrHmNo">Home Tel No</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
-                                                    <span>Country Code</span>
-                                                    <p:inputText id="nwPriHldrMobNoCd" placeholder="" maxlength="5"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.mobNumberCD}"/>
-                                                </div>
-                                                <div class="Container80 Responsive100">
-                                                    <span>Area Code / Number</span>
-                                                    <div class="Container100">
-                                                        <p:inputText id="nwPriHldrMobNo" placeholder="Mobile No" maxlength="16"
-                                                                     value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.mobNumber}"/>
-                                                        <label for="nwPriHldrMobNo">Mobile No</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--<div class="acc_holder_dtl_block contact_dtl_block">-->
+                                            <!--<div class="Container50 Responsive100">-->
+                                                <!--<div class="Container20 Responsive100">-->
+                                                    <!--<span>Country Code</span>-->
+                                                    <!--<p:inputText id="nwPriHldrHmNoCd" placeholder="" maxlength="5"-->
+                                                                 <!--value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.homeTelNumberCD}"/>-->
+                                                <!--</div>-->
+                                                <!--<div class="Container80 Responsive100">-->
+                                                    <!--<span>Area Code / Number</span>-->
+                                                    <!--<div class="Container100">-->
+                                                        <!--<p:inputText id="nwPriHldrHmNo" placeholder="Home Tel No" maxlength="16"-->
+                                                                     <!--value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.homeTelNumber}"/>-->
+                                                        <!--<label for="nwPriHldrHmNo">Home Tel No</label>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="Container50 Responsive100">-->
+                                                <!--<div class="Container20 Responsive100">-->
+                                                    <!--<span>Country Code</span>-->
+                                                    <!--<p:inputText id="nwPriHldrMobNoCd" placeholder="" maxlength="5"-->
+                                                                 <!--value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.mobNumberCD}"/>-->
+                                                <!--</div>-->
+                                                <!--<div class="Container80 Responsive100">-->
+                                                    <!--<span>Area Code / Number</span>-->
+                                                    <!--<div class="Container100">-->
+                                                        <!--<p:inputText id="nwPriHldrMobNo" placeholder="Mobile No" maxlength="16"-->
+                                                                     <!--value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.mobNumber}"/>-->
+                                                        <!--<label for="nwPriHldrMobNo">Mobile No</label>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container50 Responsive100">
                                                 <div class="Container20 Responsive100">
@@ -395,7 +396,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Address" disabled="#{uobCustodyBean.isAccordianDisabled(1)}">
+                    <p:tab id="tab1" title="Address" disabled="#{uobCustodyBean.isAccordianDisabled(1)}">
                         <div class="Container100 Responsive100 holder_address acc_holder_form ">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
@@ -597,7 +598,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Tax Residence Information" disabled="#{uobCustodyBean.isAccordianDisabled(2)}" id="idTaxTab">
+                    <p:tab id="tab2" title="Tax Residence Information" disabled="#{uobCustodyBean.isAccordianDisabled(2)}" >
                         <div class="Container100 Responsive100 holder_address acc_holder_form ">
                             <p:tabView id="idTaxTabVw">
                                 <p:tab title="Main Account Holder" id="idTaxTabMn">
@@ -904,7 +905,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Employment" disabled="#{uobCustodyBean.isAccordianDisabled(3)}">
+                    <p:tab id="tab3" title="Employment" disabled="#{uobCustodyBean.isAccordianDisabled(3)}">
                         <div class="Container100 Responsive100 holder_employment acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
@@ -1097,7 +1098,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Security Question" disabled="#{uobCustodyBean.isAccordianDisabled(4)}">
+                    <p:tab id="tab4" title="Security Question" disabled="#{uobCustodyBean.isAccordianDisabled(4)}">
                         <div class="Container100 Responsive100 holder_employment acc_holder_form ">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
@@ -1199,7 +1200,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Financial Information" disabled="#{uobCustodyBean.isAccordianDisabled(5)}">
+                    <p:tab id="tab5" title="Financial Information" disabled="#{uobCustodyBean.isAccordianDisabled(5)}">
                         <div class="Container100 Responsive100 holder_employment acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
@@ -1343,7 +1344,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Account Relationship Details" disabled="#{uobCustodyBean.isAccordianDisabled(6)}">
+                    <p:tab id="tab6" title="Account Relationship Details" disabled="#{uobCustodyBean.isAccordianDisabled(6)}">
                         <div class="Container100 Responsive100 holder_employment acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
@@ -1587,7 +1588,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab title="Trading History/Objectives" disabled="#{uobCustodyBean.isAccordianDisabled(7)}">
+                    <p:tab id="tab7" title="Trading History/Objectives" disabled="#{uobCustodyBean.isAccordianDisabled(7)}">
                         <div class="Container100 Responsive100 acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">

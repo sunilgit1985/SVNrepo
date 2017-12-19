@@ -10,9 +10,10 @@
         <div class="Container100 Responsive100 acc_holder_form">
             <div class="ContainerIndent">
 
-                <p:accordionPanel multiple="true" styleClass="marginZero" activeIndex="#{uobCustodyBean.activeTab}" dynamic="false" id="extAccordian">
-
-
+                <p:accordionPanel widgetVar="accordionPanel" styleClass="marginZero" activeIndex="#{uobCustodyBean.activeTab}" dynamic="false"
+                                  id="extAccordian">
+                    <p:ajax event="tabChange" listener="#{uobCustodyBean.onTabChange}" update=":cstdyFrm:extAccordian"
+                            immediate="true"/>
                     <p:tab title="Account Holder">
                         <div class="Container100 Responsive100 acc_holder_form">
                             <!--  <p:growl id="msgs" showDetail="true" /> -->
@@ -28,9 +29,10 @@
                                         <div class="acc_holder_dtl_block">
 
                                             <div class="Container100 Responsive100">
-                                                <p:inputText id="nwPriHldrNm" placeholder="Name as in your existing securities trading account"
+                                                <p:inputText id="nwPriHldrNm" maxlength="60"
+                                                             placeholder="Full Name as in Identity Card or Passport"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.fullName}"/>
-                                                <label for="nwPriHldrNm">Name as in your existing securities trading account</label>
+                                                <label for="nwPriHldrNm">Full Name</label>
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block ">
@@ -76,7 +78,8 @@
                                         <div class="acc_holder_dtl_block">
 
                                             <div class="Container80 Responsive100">
-                                                <input id="jointname" name="name" type="text" placeholder="Name as in your existing securities trading account"/>
+                                                <input id="jointname" name="name" type="text"
+                                                       placeholder="Name as in your existing securities trading account"/>
                                                 <label for="name">Name as in your existing securities trading account</label>
                                             </div>
                                         </div>
@@ -134,8 +137,6 @@
                             </div>
                         </div>
                     </p:tab>
-
-
                     <p:tab title="Tax Residence Information" disabled="#{uobCustodyBean.isAccordianDisabled(1)}" id="idTaxTab">
                         <div class="Container100 Responsive100 holder_address acc_holder_form ">
                             <p:tabView id="idTaxTabVw">
@@ -156,11 +157,13 @@
                                                                  reflow="false">
                                                         <p:column headerText="delete edit" class="del_edit_col" width="10%">
                                                             <p:commandLink action="#{uobCustodyBean.updTaxDtls(taxDtls)}" process="@this"
-                                                                           update=":cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxDtl,:cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxTab" ajax="true"  disabled="#{uobCustodyBean.disTaxBtn}">
+                                                                           update=":cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxDtl,:cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxTab"
+                                                                           ajax="true" disabled="#{uobCustodyBean.disTaxBtn}">
                                                                 <span class="ui-button-icon-center ui-icon ui-c fa fa-edit del_tax"></span>
                                                             </p:commandLink>
                                                             <p:commandLink action="#{uobCustodyBean.delTaxDtls(taxDtls)}" process="@this"
-                                                                           update=":cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxDtl,:cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxTab" ajax="true" disabled="#{uobCustodyBean.disTaxBtn}">
+                                                                           update=":cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxDtl,:cstdyFrm:extAccordian:idTaxTabVw:nwPriHldTaxTab"
+                                                                           ajax="true" disabled="#{uobCustodyBean.disTaxBtn}">
                                                                 <span class="ui-button-icon-center ui-icon ui-c fa fa-trash del_tax"></span>
                                                             </p:commandLink>
                                                         </p:column>
@@ -168,12 +171,12 @@
                                                             <h:outputText value="#{taxDtls.jurisdictionOfTaxResidence}"/>
                                                         </p:column>
                                                         <p:column headerText="Tax Id">
-                                                            <h:outputText value="#{taxDtls.taxIdentificationNumber}"  rendered='#{taxDtls.tinFlag}'/>
+                                                            <h:outputText value="#{taxDtls.taxIdentificationNumber}" rendered='#{taxDtls.tinFlag}'/>
                                                             <h:outputText value="-" rendered='#{!taxDtls.tinFlag}'/>
                                                         </p:column>
                                                         <p:column headerText="Reason">
-                                                            <h:outputText value="#{taxDtls.reason}"  rendered='#{!taxDtls.tinFlag}'/>
-                                                            <h:outputText value="-"  rendered='#{taxDtls.tinFlag}'/>
+                                                            <h:outputText value="#{taxDtls.reason}" rendered='#{!taxDtls.tinFlag}'/>
+                                                            <h:outputText value="-" rendered='#{taxDtls.tinFlag}'/>
                                                         </p:column>
                                                     </p:dataTable>
                                                 </div>
@@ -189,7 +192,7 @@
                                                 </div>
                                             </ui:fragment>
                                         </p:panel>
-                                        <p:panel id="nwPriHldTaxDtl" >
+                                        <p:panel id="nwPriHldTaxDtl">
                                             <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxDtl}">
                                                 <div class="Container100 panel_block acc_panel_block">
                                                     <div class="panel_close">
@@ -209,8 +212,9 @@
                                                         <div class="Container100"><span
                                                                 class="title_line">Country / Jurisdiction Of Tax Residence</span>
                                                         </div>
-                                                        <p:autoComplete id="priHldrTaxPnlCtry" dropdown="true" value="#{uobCustodyBean.owTaxDtls.jurisdictionOfTaxResidence}"
-                                                                        completeMethod="#{uobCustodyBean.completeText}" >
+                                                        <p:autoComplete id="priHldrTaxPnlCtry" dropdown="true"
+                                                                        value="#{uobCustodyBean.owTaxDtls.jurisdictionOfTaxResidence}"
+                                                                        completeMethod="#{uobCustodyBean.completeText}">
                                                         </p:autoComplete>
                                                     </div>
                                                     <div class="acc_holder_dtl_block ">
@@ -222,7 +226,8 @@
                                                                 <div class="Container20">
                                                                     <p:selectOneRadio id="priHldrTaxPnlTinRad"
                                                                                       value="#{uobCustodyBean.owTaxDtls.isTINAvailable}">
-                                                                        <p:ajax listener="#{uobCustodyBean.onChngTin}" update="nwPriHldTaxTin,nwPriHldTaxRsnPnl"/>
+                                                                        <p:ajax listener="#{uobCustodyBean.onChngTin}"
+                                                                                update="nwPriHldTaxTin,nwPriHldTaxRsnPnl"/>
                                                                         <f:selectItem itemLabel="Yes" itemValue="Yes"></f:selectItem>
                                                                         <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
                                                                     </p:selectOneRadio>
@@ -247,7 +252,8 @@
                                                                 <!--</div>-->
                                                                 <div class="Container100 Responsive100 label_opacity radio_select">
                                                                     <p:selectOneRadio id="priHldrTaxPnlReasRad"
-                                                                                      value="#{uobCustodyBean.owTaxDtls.tinUnavailableReason}" layout="grid" columns="1">
+                                                                                      value="#{uobCustodyBean.owTaxDtls.tinUnavailableReason}"
+                                                                                      layout="grid" columns="1">
                                                                         <p:ajax listener="#{uobCustodyBean.onChngRsn}" update="nwPriHldTaxRsn"/>
                                                                         <f:selectItem
                                                                                 itemLabel="A. The country/jurisdiction where the Account Holder is resident does not issue Tax Identification Number(s) to its residents"
@@ -260,7 +266,8 @@
                                                                                 itemValue="C"></f:selectItem>
                                                                     </p:selectOneRadio>
                                                                 </div>
-                                                                <p:panel id="nwPriHldTaxRsn" style="border-color: transparent;" class="Container100 width99">
+                                                                <p:panel id="nwPriHldTaxRsn" style="border-color: transparent;"
+                                                                         class="Container100 width99">
                                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxRsn}">
                                                                         <div class="Container100 Responsive100">
                                                                             <p:inputText id="priHldrTaxPnlReasExpl" placeholder="Explain"
@@ -434,7 +441,7 @@
                             <div class="Container50 next_btn save_form_btn">
 
                                 <p:commandButton id="extSave" value="Save"
-                                                 update=":cstdyFrm:extAccordian,,cstdyFrm:uobSubmitBtn"
+                                                 update=":cstdyFrm:extAccordian,cstdyFrm:uobExtSubmitBtn"
                                                  actionListener="#{uobCustodyBean.nextPage}">
                                 </p:commandButton>
                             </div>
@@ -443,15 +450,12 @@
                     </p:tab>
                 </p:accordionPanel>
                 <div class="Container20 Responsive100 submit_acc_dtl">
-                    <h:form>
-                        <p:commandButton id="uobSubmitBtn"
-                                         value="Next"
-                                         styleClass="uob_button" disabled="#{uobCustodyBean.dsblSubmtBtn}"
-                                         update="@form"
-                                         actionListener="#{uobCustodyBean.submitDataForm}">
-                        </p:commandButton>
-
-                    </h:form>
+                    <p:commandButton id="uobExtSubmitBtn"
+                                     value="Next"
+                                     styleClass="uob_button" disabled="#{uobCustodyBean.dsblSubmtBtn}"
+                                     update="@form"
+                                     actionListener="#{uobCustodyBean.submitDataForm}">
+                    </p:commandButton>
                 </div>
             </div>
         </div>
