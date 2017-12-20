@@ -91,6 +91,12 @@
                             </div>
                         </div>
                         <div class="Container100">
+                            <div class="Conatiner100 search_trade">
+
+                                <h:outputText value="Search:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+
+                            </div>
                             <p:dataTable id="tradeClientDT" var="filteredClientData" value="#{tradeBean.filteredClientList}"
                                          border="1" styleClass="AdvisorGridtcmLayout"
                                          sortMode="multiple"

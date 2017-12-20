@@ -5602,7 +5602,17 @@ div#leftpanel {
     background-color: #a4332f !important;}
 
 .ui-datatable .ui-datatable-header{background-color: #a4332f !important}
-
+.InfoNewDash > button > span:nth-child(2){border: 2px solid #a4332f;padding: 8px 12px 7px 19px!important;}
+.customMenuButtonDashboard > button > span:nth-child(1){left: -3px;}
+.GreenButton .ui-button-text {
+    background-color: #a4332f;
+}
+.Container100{position:relative;}
+.search_trade{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
 
 
 
