@@ -155,7 +155,7 @@ public class UOBDaoImpl implements UOBDao
       rows = (ArrayList<LinkedHashMap<String, Object>>) map.get("#result-set-10");
       if(rows.size()>0)
       {
-         sqlData.getObjectFormCOLUMN(rows,ownerDetails.getOwnerEmploymentDetails());
+         sqlData.getObjectFormCOLUMN(rows,ownerDetails.getOwnerEmploymentDetails(),"acctOwnerId",ownerDetails.getAcctOwnerId());
       }
 
       rows =null;
@@ -169,7 +169,7 @@ public class UOBDaoImpl implements UOBDao
       rows = (ArrayList<LinkedHashMap<String, Object>>) map.get("#result-set-12");
       if(rows.size()>0)
       {
-         sqlData.getObjectFormCOLUMN(rows,ownerDetails.getOwnerBankDetails());
+         sqlData.getObjectFormCOLUMN(rows,ownerDetails.getOwnerBankDetails(),"acctOwnerId",ownerDetails.getAcctOwnerId());
 
       }
 

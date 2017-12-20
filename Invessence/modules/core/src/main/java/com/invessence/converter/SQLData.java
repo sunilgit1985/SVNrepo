@@ -245,6 +245,49 @@ public class SQLData implements Serializable
       }
    }
 
+   public void getObjectFormCOLUMN(ArrayList<LinkedHashMap<String, Object>> dbRow, Object object, String column, Object value){
+      Boolean isDetailsAvailable=false;
+      Iterator<LinkedHashMap<String, Object>> itr = dbRow.iterator();
+
+      while (itr.hasNext())
+      {
+         StringBuilder fileRow = new StringBuilder();
+         LinkedHashMap<String, Object> map = itr.next();
+
+         for (Map.Entry<String, Object> entry : map.entrySet())
+         {
+            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            try
+            {
+//               reflection.setInstanceValue(object, entry.getKey(), entry.getValue());
+               if(map.get(column).equals(value))
+               {
+                  isDetailsAvailable = true;
+//               System.out.println(" column = [" + column + "], value = [" + value + "]");
+                  reflection.setInstanceValue(object, entry.getKey(), entry.getValue());
+               }
+            }
+            catch (NoSuchFieldException e)
+            {
+               logger.error(e.getMessage());
+//               e.printStackTrace();
+            }
+            catch (ClassNotFoundException e)
+            {
+               logger.error(e.getMessage());
+//               e.printStackTrace();
+            }
+            catch (IllegalAccessException e)
+            {
+               logger.error(e.getMessage());
+//               e.printStackTrace();
+            }
+
+         }
+      }
+   }
+
+
    public void getObjectFormCOLUMN(ArrayList<LinkedHashMap<String, Object>> dbRow, Object object){
       Iterator<LinkedHashMap<String, Object>> itr = dbRow.iterator();
 
