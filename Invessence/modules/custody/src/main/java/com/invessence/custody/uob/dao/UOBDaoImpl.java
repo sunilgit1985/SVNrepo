@@ -165,6 +165,14 @@ public class UOBDaoImpl implements UOBDao
          sqlData.getObjectFormROW(rows,ownerDetails.getOwnerTaxationDetails(),"Taxation","acctOwnerId",ownerDetails.getAcctOwnerId());
       }
 
+      rows =null;
+      rows = (ArrayList<LinkedHashMap<String, Object>>) map.get("#result-set-12");
+      if(rows.size()>0)
+      {
+         sqlData.getObjectFormCOLUMN(rows,ownerDetails.getOwnerBankDetails());
+
+      }
+
    }
 
 }
