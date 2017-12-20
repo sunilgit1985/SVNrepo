@@ -44,6 +44,8 @@ public class OwnerDetails
    private OwnerCitizenshipDetails ownerCitizenshipDetails;
    private OwnerEmploymentDetails ownerEmploymentDetails;
    private List<OwnerTaxationDetails> ownerTaxationDetails;
+   private OwnerBankDetails OwnerBankDetails;
+
 
    public OwnerDetails(){
       setOwnerCitizenshipDetails(new OwnerCitizenshipDetails());
@@ -54,6 +56,17 @@ public class OwnerDetails
       setOwnerMiscDetails(new OwnerMiscDetails());
       setOwnerEmploymentDetails(new OwnerEmploymentDetails());
       setOwnerTaxationDetails(new LinkedList<OwnerTaxationDetails>());
+      setOwnerBankDetails(new OwnerBankDetails());
+   }
+
+   public com.invessence.custody.uob.data.OwnerBankDetails getOwnerBankDetails()
+   {
+      return OwnerBankDetails;
+   }
+
+   public void setOwnerBankDetails(com.invessence.custody.uob.data.OwnerBankDetails ownerBankDetails)
+   {
+      OwnerBankDetails = ownerBankDetails;
    }
 
    public OwnerEmploymentDetails getOwnerEmploymentDetails()
@@ -458,6 +471,7 @@ public class OwnerDetails
          ", ownerCitizenshipDetails=" + ownerCitizenshipDetails +
          ", ownerEmploymentDetails=" + ownerEmploymentDetails +
          ", ownerTaxationDetails=" + ownerTaxationDetails +
+         ", OwnerBankDetails=" + OwnerBankDetails +
          '}';
    }
 }
