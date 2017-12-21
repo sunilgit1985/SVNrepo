@@ -103,7 +103,7 @@ public class TestDistribution
       //profileData.setAdvisor("PrimeAsset");
       //profileData.setTheme("0.Income");
       profileData.setAdvisor("UOB");
-      profileData.setTheme("8.UOB.Sing");
+      profileData.setTheme("8.UOB");
       //profileData.setTheme("8.UOB.UnCons");
       //profileData.setTheme("0.SGWealthSGD");
       //profileData.setTheme("0.SGWealthSGD.Un");
