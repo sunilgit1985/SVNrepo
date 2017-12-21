@@ -1831,7 +1831,7 @@ public class UOBCustodyBean
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnf.requiredMsg", "Confirm Email address is required!", null));
       }
-      if(hasRequiredData(priHldrCnfEmail) && ownerDetails.getEmailAddress().equals(priHldrCnfEmail)){
+      if(hasRequiredData(priHldrCnfEmail) && !ownerDetails.getEmailAddress().equals(priHldrCnfEmail)){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnfMtch.requiredMsg", "Email address and Confirm Email address not matched!", null));
       }

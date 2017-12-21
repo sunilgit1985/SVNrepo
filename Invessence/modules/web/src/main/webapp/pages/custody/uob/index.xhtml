@@ -5,15 +5,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/template/common/template.xhtml">
-    <ui:define name="head">
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('.vrfyEmail').bind("cut copy paste",function(e) {
-                    return false;
-                });
-            });
-        </script>
-    </ui:define>
     <f:metadata>
         <f:viewParam name="acct" value="#{uobCustodyBean.beanAccount}"/>
         <f:viewParam name="l" value="#{uobCustodyBean.beanLogonId}"/>

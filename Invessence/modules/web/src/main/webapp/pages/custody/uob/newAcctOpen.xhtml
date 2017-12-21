@@ -199,10 +199,17 @@
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
                                                 <p:inputText id="nwPriHldrEmailId" placeholder="Email Address"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}" styleClass="vrfyEmail"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}" />
                                                 <label for="nwPriHldrEmailId">Email Address</label>
                                             </div>
                                         </div>
+                                        <script>
+                                            $(document).ready(function (){
+                                              $('.vrfyEmail').bind("cut copy paste",function(e) {
+                                                  return false;
+                                              });
+                                          });
+                                        </script>
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
                                                 <p:inputText id="nwPriHldrVrfEmailId" placeholder="Verify Email Address"
