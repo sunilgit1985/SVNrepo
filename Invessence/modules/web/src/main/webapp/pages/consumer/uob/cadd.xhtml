@@ -6,7 +6,7 @@
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/template/common/template.xhtml">
     <f:metadata>
-        <f:viewParam name="mode" value="#{uobProfile.interfaceMode}"/>
+        <f:viewParam name="app" value="#{uobProfile.interfaceMode}"/>
         <f:viewParam name="src" value="#{uobProfile.backURL}"/>
         <f:viewParam name="acct" value="#{uobProfile.beanAcctnum}"/>
         <f:event type="preRenderView" listener="#{uobProfile.preRenderView}"/>

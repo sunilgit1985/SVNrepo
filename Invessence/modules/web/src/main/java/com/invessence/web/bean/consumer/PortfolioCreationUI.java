@@ -48,16 +48,30 @@ public class PortfolioCreationUI extends UserInterface
       View("V"),
       Advisor("Advisor");
 
-      String mode;
+      String codeValue;
 
-      UIMode(String mode)
+      UIMode(String codeValue)
       {
-         this.mode = mode;
+         this.codeValue = codeValue;
       }
 
-      public String getMode()
+      public String getCodeValue()
       {
-         return mode;
+         return codeValue;
+      }
+
+      private static final Map lookup =
+         new HashMap();
+      static {
+         //Create reverse lookup hash map
+         for(UIMode m : UIMode.values())
+            lookup.put(m.getCodeValue(), m);
+      }
+
+      public static UIMode get(String value) {
+         //the reverse lookup by simply getting
+         //the value from the lookup HsahMap.
+         return (UIMode) lookup.get(value);
       }
    }
 
@@ -164,7 +178,7 @@ public class PortfolioCreationUI extends UserInterface
       this.interfaceMode = interfaceMode;
       if (interfaceMode != null && beanmode == null)
       {
-         beanmode = UIMode.valueOf(interfaceMode);
+         beanmode = UIMode.get(interfaceMode);
       }
    }
 

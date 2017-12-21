@@ -47,7 +47,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void gotoStartOverPage()
    {
       pagemanager.setPage(0);
-      uiLayout.doMenuAction("consumer", "cadd.xhtml?acct=" + getCustomer().getAcctnum() + "&app=" + UIMode.Edit.toString());
+      uiLayout.doMenuAction("consumer", "cadd.xhtml?acct=" + getCustomer().getAcctnum() + "&app=" + UIMode.Edit.getCodeValue());
    }
 
    public void setAdvisor(String advisor) {
