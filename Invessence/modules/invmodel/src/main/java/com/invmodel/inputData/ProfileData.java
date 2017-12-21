@@ -1341,4 +1341,14 @@ public class
    {
       resetData();
    }
+
+   public UserRiskProfile getRiskProfile()
+   {
+      return riskProfile;
+   }
+
+   public void setRiskProfile(UserRiskProfile riskProfile)
+   {
+      this.riskProfile = riskProfile;
+   }
 }
