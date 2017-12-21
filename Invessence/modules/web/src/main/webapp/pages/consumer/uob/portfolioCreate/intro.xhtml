@@ -33,10 +33,19 @@
             </p:outputPanel>
 
         </div>
+        <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                 style="margin-top: 7px;border: 0px; background: transparent"
+                 styleClass="Container100">
+            <h:outputText styleClass="errorText"
+                          value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+            <div class="EmptyBox5"></div>
+        </p:panel>
+
         <div class="Container100 tab_dtl">
             <p>
                 Hi, what is your full name ?
-                <p:inputText style="width:190px;" value="#{uobProfile.customer.name}"
+                <p:inputText style="width:190px;" value="#{uobProfile.customer.fullname}"
                              id="uobCustomerName" placeholder="Enter Your Full Name"
                              maxlength="60">
                     <p:ajax listener="#{uobProfile.onChangeName}"

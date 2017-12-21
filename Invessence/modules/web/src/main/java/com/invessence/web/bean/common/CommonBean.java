@@ -30,10 +30,11 @@ public class CommonBean
 
       try
       {
-//         if (!FacesContext.getCurrentInstance().isPostback())
-//         {
+         if (!FacesContext.getCurrentInstance().isPostback())
+         {
+            if (webutil.isUserLoggedIn())
                reloadData();
-//         }
+         }
       }
       catch (Exception e)
       {
@@ -59,9 +60,16 @@ public class CommonBean
       }
    }
    public void reloadData() {
-      System.out.println("Inside Common Bean");
-      statInfo = commonDAO.getNotificationCount(webutil.getLogonid(),webutil.getAccess());
-      notificationDataList = commonDAO.getNotificationDtls(webutil.getLogonid(), "M", "N",webutil.getAccess(),false,0l, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
+      if (webutil == null)
+         return;
+      if (commonDAO == null)
+         return;
+
+      // System.out.println("Inside Common Bean");
+      statInfo = commonDAO.getNotificationCount(webutil.getLogonid(), webutil.getAccess());
+      notificationDataList = commonDAO.getNotificationDtls(webutil.getLogonid(), "M", "N", webutil.getAccess(),
+                                                           false, 0l, webutil.getUserInfoData().getAdvisor(),
+                                                           webutil.getUserInfoData().getRep());
    }
 
    public void setWebutil(WebUtil webutil)

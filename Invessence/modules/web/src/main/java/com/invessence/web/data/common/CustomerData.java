@@ -85,7 +85,8 @@ public class CustomerData extends ProfileData
 
    private String portfolioName;
 
-   private String email, firstname, lastname, regfullname;
+   private String email, firstname, lastname, fullname;
+   private String customName;
    public List<DataPortfolio> displayPortfolioList = new ArrayList<DataPortfolio>();
    public DataPortfolio selectedPortfolio;
    public List<DataPortfolio> selectedPortfolioList = null;
@@ -120,7 +121,6 @@ public class CustomerData extends ProfileData
 //   private String settleCurrency;
 //   private Double userExchangeRate;
 
-   private String customName;
 
    public void initDao(WebUtil webutil, ModelUtil modelUtil, UILayout uiLayout,
                        ConsumerListDataDAO listDAO, UserInfoDAO userInfoDAO,
@@ -640,27 +640,34 @@ public class CustomerData extends ProfileData
       this.lastname = lastname;
    }
 
-   public String getFullName()
+   public String getFullname()
    {
-      String name = null;
-      if (getLastname() != null)
-      {
-         name = getLastname();
-      }
-
-      if (getFirstname() != null)
-      {
-         if (name != null)
-         {
-            name = name + ", " + getFirstname();
-         }
-         else
+      String name = fullname;
+      if (fullname != null) {
+         if (getFirstname() != null)
          {
             name = getFirstname();
          }
+
+         if (getLastname() != null)
+         {
+            if (name != null)
+            {
+               name = name + ", " + getLastname();
+            }
+            else
+            {
+               name = getLastname();
+            }
       }
+   }
 
       return name;
+   }
+
+   public void setFullname(String fullname)
+   {
+      this.fullname = fullname;
    }
 
    public void setCalcFormula(String formula)
@@ -1461,7 +1468,7 @@ public class CustomerData extends ProfileData
          UserData userdata = new UserData();
          userdata.setFirstName(getFirstname());
          userdata.setLastName(getLastname());
-         userdata.setFullName(getRegfullname());
+         userdata.setFullName(getFullname());
          userdata.setEmail(getEmail());
          userdata.setUserID(getEmail());
          userdata.setIp(webutil.getClientIpAddr());
@@ -1553,6 +1560,8 @@ public class CustomerData extends ProfileData
       {
          listDAO.getNewClientProfileData((CustomerData) this.getInstance());
          riskProfile.fetchUserRiskData(getAdvisor(), getAcctnum());
+         if (! webutil.isUserLoggedIn())
+            setSaveVisitor(true); // If it is new client, then save Visitor's info.
          setDefaults();
       }
       catch (Exception ex)
@@ -1903,13 +1912,4 @@ public class CustomerData extends ProfileData
       this.customName = customName;
    }
 
-   public String getRegfullname()
-   {
-      return regfullname;
-   }
-
-   public void setRegfullname(String regfullname)
-   {
-      this.regfullname = regfullname;
-   }
 }

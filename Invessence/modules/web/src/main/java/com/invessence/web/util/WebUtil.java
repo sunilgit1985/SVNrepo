@@ -1142,6 +1142,7 @@ public class WebUtil implements Serializable
       object.put("RESET_ID", userdata.getResetID());
       object.put("FIRST_NAME", userdata.getFirstName());
       object.put("LAST_NWME", userdata.getLastName());
+      object.put("FULL_NWME", userdata.getRegfullname());
       object.put("SUPPORT_EMAIL", getWebprofile().getSupportemail());
       object.put("SUPPORT_PHONE", getWebprofile().getSupportphone());
       object.put("COMPANY_NAME", getWebprofile().getCompanyname());

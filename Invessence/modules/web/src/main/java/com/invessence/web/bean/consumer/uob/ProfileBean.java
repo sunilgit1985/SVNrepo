@@ -41,14 +41,33 @@ public class ProfileBean extends PortfolioCreationUI
       selectedGoal = null;
       pagemanager = new PagesImpl(10);  // Set number of pages as per UI.
       progressbar = new ProgressBarImpl(0.0, (100.0/pagemanager.getMaxNoofPages()));
-
    }
+
    @Override
    public void gotoStartOverPage()
    {
       pagemanager.setPage(0);
       uiLayout.doMenuAction("consumer", "cadd.xhtml?acct=" + getCustomer().getAcctnum() + "&app=" + UIMode.Edit.getCodeValue());
    }
+
+   @Override
+   public void gotoNextPage()
+   {
+      if (validatePage(pagemanager.getPage()))
+      {
+         super.gotoNextPage();
+      }
+   }
+
+   @Override
+   public void gotoReview() {
+      if (validatePage(pagemanager.getPage()))
+      {
+         super.gotoReview();
+      }
+   }
+
+
 
    public void setAdvisor(String advisor) {
       if (advisor != null)
@@ -64,6 +83,10 @@ public class ProfileBean extends PortfolioCreationUI
       setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
       loadDropDownList();  // This process will reload all dropdown list.
       pagemanager.initPage();
+
+      // Since Risk Score Question #2 and #3 are knockout question, we'll assume the default
+      setRiskAns2(true);
+      setRiskAns3(false);
       createAssetPortfolio();
    }
 
@@ -121,6 +144,7 @@ public class ProfileBean extends PortfolioCreationUI
    {
       return currencyList;
    }
+
 
    public Integer getAge() {
       if (getCustomer() != null)
@@ -242,13 +266,35 @@ public class ProfileBean extends PortfolioCreationUI
       this.selectedCurrency = selectedItem;
    }
 
+   public Boolean hasData(String data) {
+      if (data != null && ! data.isEmpty())
+         return true;
+      return false;
+   }
+
    private Boolean validatePage(Integer pagenum)
    {
       Boolean dataOK = true;
       pagemanager.clearErrorMessage(pagenum);
       switch (pagenum)
       {
-         case 0:
+         case 0: // This is Intro page
+            if (! hasData(getCustomer().getFullname())) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required", null));
+            }
+            if (! hasData(getCustomer().getEmail())) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.email.required", "Email is required", null));
+            }
+            if (! hasData(getCustomer().getAge().toString())) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required", null));
+            }
+            if (! webutil.isUserLoggedIn() && hasData(getCustomer().getEmail()))
+            {
+               String msg = registerUser();
+               if (! msg.isEmpty()) {
+                  pagemanager.setErrorMessage(msg);
+               }
+            }
             break;
          case 1:
             break;
@@ -269,6 +315,11 @@ public class ProfileBean extends PortfolioCreationUI
          case 9:
             break;
       }
+
+      if (pagemanager.getErrorMessage() != null && ! pagemanager.getErrorMessage().isEmpty())
+         dataOK = false;
+
+      this.dataOK = dataOK;
       return dataOK;
    }
 

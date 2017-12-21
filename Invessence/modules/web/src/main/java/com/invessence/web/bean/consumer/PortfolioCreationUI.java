@@ -2,6 +2,7 @@ package com.invessence.web.bean.consumer;
 
 import java.util.*;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
@@ -112,6 +113,7 @@ public class PortfolioCreationUI extends UserInterface
    public Boolean displayGoalGraph;
    public Boolean displayDataPanel;
    public Boolean displayConfirmPanel;
+   public Boolean dataOK = true;
 
    // Buttons
    public Boolean disableChangeStragegyButton;
@@ -434,7 +436,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoNextPage()
    {
-      if (! pagemanager.isLastPage())
+      if (!pagemanager.isLastPage())
       {
          pagemanager.nextPage();
          progressbar.nextProgress();
@@ -548,33 +550,18 @@ public class PortfolioCreationUI extends UserInterface
    }
 
    public void gotoCustody() {
-/*
-      if (!getDoesUserHavaLogonID())
+      if (canOpenAccount)
       {
-         // Call Register User.  If he is not registered.  If Registration fails, then stay on the same page.
-         if (registerUser()) {
-//            uiLayout.doMenuAction("consumer", "acc_opening.xhtml?acct=" + getAcctnum().toString());
-            uiLayout.doCustody(getLogonid(),getAcctnum(),"custody","index.xhtml");
-         }
+         alertAdvisor();
+         uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getCustomer().getAcctnum().toString());
       }
       else {
-         if (getCanSaveData())
-         {
-            // If in Edit mode, then don't save till final changes are accounted for.
-            // Need to keep the original data.
-            uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getAcctnum().toString());
-         }
-         else {
-            uiLayout.doMenuAction("consumer", "addon/editReview.xhtml");
-            // uiLayout.doMenuAction("consumer", "editReview.xhtml");
-
-         }
+         alertAdvisor();
+         uiLayout.getDefaultDashBoard();
       }
-
-*/
    }
 
-   public void processTransfer() {
+   public void alertAdvisor() {
 
       customer.tradeDAO.saveTradeProcessIdentifier(customer.getAcctnum(),
                                           WebConst.TRADE_PROCESS_ALLOC,
@@ -585,12 +572,83 @@ public class PortfolioCreationUI extends UserInterface
       customer.saveProfile();
    }
 
-   public Integer getDisplayRiskScore() {
+   public void setDisplayHC2DDonutData(String ignore) {
+      return;
+   };
+
+   public String getDisplayHC2DDonutData() {
+      if (getChart() != null) {
+         if (getChart().chartData != null)
+            return getChart().chartData.toString();
+      }
+      String defaultValue = "[" +
+         "{\"name\":\"Fixed Income\",\"y\":41,\"drilldown\":\"Fixed Income\",\"color\":\"#47566D\",\"amount\":45601}, " +
+         "{\"name\":\"Equity\",\"y\":69,\"drilldown\":\"Equity\",\"color\":\"#333F50\",\"amount\":58641} ]";
+
+      return defaultValue;
+   }
+
+   public void setDisplayRiskScore(Integer value) { return; }
+
+      public Integer getDisplayRiskScore() {
       Integer score = 0;
       if (riskCalc != null) {
          score = riskCalc.getScore(0).intValue();
       }
       return score;
+   }
+
+   public String registerUser()
+   {
+      String msgheader, msg = "";
+      try
+      {
+         UserData userdata = new UserData();
+         userdata.setFirstName(getCustomer().getFirstname());
+         userdata.setLastName(getCustomer().getLastname());
+         userdata.setFullName(getCustomer().getFullname());
+         userdata.setEmail(getCustomer().getEmail());
+         userdata.setUserID(getCustomer().getEmail());
+         userdata.setIp(webutil.getClientIpAddr());
+         userdata.setAcctnum(getCustomer().getAcctnum());
+
+         if (userInfoDAO.validateUserID(userdata))
+         {
+            logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
+            msgheader = "signup.U100";
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+            return msg;
+         }
+         else
+         {
+            Integer myResetID = webutil.randomGenerator(0, 347896);
+            userdata.setUserInfo(WebConst.ROLE_USER, getCustomer().getAdvisor(), getCustomer().getRep(), myResetID);
+            long loginID = userInfoDAO.addUserInfo(userdata);
+
+            if (loginID <= 0L)
+            {
+               logger.debug("ERROR: Had issue with this userid when attempting to save: " + loginID);
+               msgheader = "signup.U106";
+               msg = webutil.getMessageText().getDisplayMessage(msgheader, "There was some error when attempting to save this userid.  Please reach out to support desk.", null);
+               webutil.alertSupport("Userbean.saveUser", "Save -" + getCustomer().getEmail(), "Save Registration Error", null);
+               return msg;
+            }
+            userdata.setLogonID(loginID);
+            getCustomer().setLogonid(loginID);
+            webutil.sendConfirmation(userdata, "W");
+
+            // setDoesUserHavaLogonID(true);
+         }
+      }
+      catch (Exception ex)
+      {
+         msgheader = "signup.EX.100";
+         msg = webutil.getMessageText().getDisplayMessage(msgheader, "Exception: Create UserID/Pwd, problem attempting to create simpleuser", null);
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
+         // ex.printStackTrace();
+         return msg;
+      }
+      return msg;
    }
 
 }

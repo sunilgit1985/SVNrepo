@@ -91,6 +91,26 @@ public class UserInterface implements Logger
       return progressbar.getProgressBar().intValue();
    }
 
+   public WebUtil getWebutil()
+   {
+      return webutil;
+   }
+
+   public SQLData getConverter()
+   {
+      return converter;
+   }
+
+   public JavaUtil getJutil()
+   {
+      return jutil;
+   }
+
+   public PagesImpl getPagemanager()
+   {
+      return pagemanager;
+   }
+
    public Chart getChart()
    {
       return chart;
