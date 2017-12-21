@@ -5,13 +5,16 @@ package com.invessence.custody.uob.data;
  */
 public class OwnerMiscDetails
 {
-
    private String fatherName;
    private String motherMaidenName;
    private String nameOfPrimarySchool;
    private String qualifications;
    private String qualificationsSpecify;
    private String mailAddressSameAsPhysical;
+   private String consentCallContact;
+   private String consentTextContact;
+   private String reasonForMailAddreDiffer;
+   private String reasonForUnemployment;
 
    @Override
    public String toString()
@@ -23,6 +26,10 @@ public class OwnerMiscDetails
          ", qualifications='" + qualifications + '\'' +
          ", qualificationsSpecify='" + qualificationsSpecify + '\'' +
          ", mailAddressSameAsPhysical='" + mailAddressSameAsPhysical + '\'' +
+         ", consentCallContact='" + consentCallContact + '\'' +
+         ", consentTextContact='" + consentTextContact + '\'' +
+         ", reasonForMailAddreDiffer='" + reasonForMailAddreDiffer + '\'' +
+         ", reasonForUnemployment='" + reasonForUnemployment + '\'' +
          '}';
    }
 
@@ -84,5 +91,45 @@ public class OwnerMiscDetails
    public void setQualificationsSpecify(String qualificationsSpecify)
    {
       this.qualificationsSpecify = qualificationsSpecify;
+   }
+
+   public String getConsentCallContact()
+   {
+      return consentCallContact;
+   }
+
+   public void setConsentCallContact(String consentCallContact)
+   {
+      this.consentCallContact = consentCallContact;
+   }
+
+   public String getConsentTextContact()
+   {
+      return consentTextContact;
+   }
+
+   public void setConsentTextContact(String consentTextContact)
+   {
+      this.consentTextContact = consentTextContact;
+   }
+
+   public String getReasonForMailAddreDiffer()
+   {
+      return reasonForMailAddreDiffer;
+   }
+
+   public void setReasonForMailAddreDiffer(String reasonForMailAddreDiffer)
+   {
+      this.reasonForMailAddreDiffer = reasonForMailAddreDiffer;
+   }
+
+   public String getReasonForUnemployment()
+   {
+      return reasonForUnemployment;
+   }
+
+   public void setReasonForUnemployment(String reasonForUnemployment)
+   {
+      this.reasonForUnemployment = reasonForUnemployment;
    }
 }

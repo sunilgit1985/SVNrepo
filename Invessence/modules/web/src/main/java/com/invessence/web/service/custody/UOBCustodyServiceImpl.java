@@ -114,6 +114,19 @@ public class UOBCustodyServiceImpl  implements CustodyService
       }
    }
 
+   @Override
+   public void saveAccountHolderBankDtls(Long acctNum, int acctOwnerId , String p_logonId, OwnerDetails ownerDetails)
+   {
+      try {
+         jdbcTemplate = new JdbcTemplate(dataSource);
+         CustodySP sp = new CustodySP(jdbcTemplate, "save_custody_ao_owner_acct_hldr_bnk_dtls", 14);
+         Map outMap = sp.saveAccountHolderBankDtls(acctNum,acctOwnerId,p_logonId,ownerDetails);
+      }
+      catch (Exception ex) {
+         System.out.println("UOBCustodyServiceImpl.saveAccountHolderDtls Exception "+ex);
+         ex.printStackTrace();
+      }
+   }
 
    @Override
    public void saveAddressDtls(Long acctNum, int acctOwnerId , String p_logonId, OwnerDetails ownerDetails)

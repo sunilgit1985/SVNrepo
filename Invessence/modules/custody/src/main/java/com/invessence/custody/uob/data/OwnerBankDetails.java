@@ -22,10 +22,6 @@ public class OwnerBankDetails
    private String swiftBic;
    private String correspondentBank;
    private String correspondentBankSwiftBic;
-   private Date created;
-   private String createdBy;
-   private Date updated;
-   private String updatedBy;
 
    public Long getAcctnum()
    {
@@ -177,46 +173,6 @@ public class OwnerBankDetails
       this.correspondentBankSwiftBic = correspondentBankSwiftBic;
    }
 
-   public Date getCreated()
-   {
-      return created;
-   }
-
-   public void setCreated(Date created)
-   {
-      this.created = created;
-   }
-
-   public String getCreatedBy()
-   {
-      return createdBy;
-   }
-
-   public void setCreatedBy(String createdBy)
-   {
-      this.createdBy = createdBy;
-   }
-
-   public Date getUpdated()
-   {
-      return updated;
-   }
-
-   public void setUpdated(Date updated)
-   {
-      this.updated = updated;
-   }
-
-   public String getUpdatedBy()
-   {
-      return updatedBy;
-   }
-
-   public void setUpdatedBy(String updatedBy)
-   {
-      this.updatedBy = updatedBy;
-   }
-
    @Override
    public String toString()
    {
@@ -236,10 +192,6 @@ public class OwnerBankDetails
          ", swiftBic='" + swiftBic + '\'' +
          ", correspondentBank='" + correspondentBank + '\'' +
          ", correspondentBankSwiftBic='" + correspondentBankSwiftBic + '\'' +
-         ", created=" + created +
-         ", createdBy='" + createdBy + '\'' +
-         ", updated=" + updated +
-         ", updatedBy='" + updatedBy + '\'' +
          '}';
    }
 }

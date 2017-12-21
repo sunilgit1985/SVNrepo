@@ -64,8 +64,15 @@
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
                                                 <p:inputText id="nwPriHldrEmailId" placeholder="Email Address"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}" styleClass="vrfyEmail"/>
                                                 <label for="nwPriHldrEmailId">Email Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container100 width99">
+                                                <p:inputText id="extPriHldrVrfEmailId" placeholder="Verify Email Address"
+                                                             value="#{uobCustodyBean.priHldrCnfEmail}" styleClass="vrfyEmail"/>
+                                                <label for="extPriHldrVrfEmailId">Verify Email Address</label>
                                             </div>
                                         </div>
 
@@ -129,6 +136,84 @@
                             </div>-->
                             <div class="Container50 Responsive100 next_btn">
                                 <!--<span class="ui-button-icon-center ui-icon ui-c fa fa-chevron-right"></span>-->
+                                <p:commandLink id="extNxt"
+                                               actionListener="#{uobCustodyBean.nextPage}"
+                                               update=":cstdyFrm:extAccordian">
+                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-chevron-right"></span>
+                                </p:commandLink>
+                            </div>
+                        </div>
+                    </p:tab>
+
+                    <p:tab id="tab1" title="Remittance Standing Instruction"
+                           disabled="#{uobCustodyBean.isAccordianDisabled(1)}">
+                        <div class="Container100 Responsive100 holder_address acc_holder_form ">
+                            <p:tabView>
+                                <p:tab title="Main Account Holder">
+                                    <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(1) != null}"
+                                             style="border: 0px; background: transparent"
+                                             styleClass="Container100">
+                                        <h:outputText id="nwPriHldrMsg1" styleClass="errorText"
+                                                      value="#{uobCustodyBean.getErrorMessage(1)}" escape="false"/>
+                                    </p:panel>
+                                    <div class="go-bottom">
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container50 Responsive50 select_item margin-top">
+                                                <div class="Container100"><span class="title_line">Bank Name</span></div>
+                                                <div class="Container100">
+                                                    <p:inputText id="nwPriHldrRemBnkNm" placeholder="Bank Name"
+                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankName}"/>
+                                                </div>
+                                            </div>
+                                            <div class="Container50 Responsive50 select_item margin-top">
+                                                <div class="Container100"><span class="title_line">Bank Account No</span></div>
+                                                <div class="Container100">
+                                                    <p:inputText id="nwPriHldrRemBnkAcctNum" placeholder="Bank Account No"
+                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountNo}"/>
+                                                </div>
+                                            </div>
+                                            <div class="Container50 Responsive100">
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container100">
+                                                <p:inputTextarea id="nwPriHldrRemBnkAddr"
+                                                                 placeholder="Bank Address"
+                                                                 value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="240"/>
+                                                <label for="nwPriHldrRemBnkAddr">Bank Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Swift Bic</span></div>
+                                                <p:inputText id="nwPriHldrRemSwBic" placeholder="Swift Bic"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.swiftBic}"/>
+                                            </div>
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Correspondent Bank</span></div>
+                                                <p:inputText id="nwPriHldrRemCorrBnk" placeholder="Correspondent Bank"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBank}"/>
+                                            </div>
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Correspondent Bank Swift Bic</span></div>
+                                                <p:inputText id="nwPriHldrRemCorrBnkSwBic" placeholder="Correspondent Bank Swift Bic"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBankSwiftBic}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                            </p:tabView>
+                        </div>
+                        <div class="Container100 pre_next_btn">
+                            <div class="Container50 pre_btn">
+                                <p:commandLink id="extPrev"
+                                               actionListener="#{uobCustodyBean.prevPage}"
+                                               update="@form">
+                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-edit fa-chevron-left"></span>
+                                </p:commandLink>
+                            </div>
+                            <div class="Container50 next_btn">
+
                                 <p:commandLink id="extNxt1"
                                                actionListener="#{uobCustodyBean.nextPage}"
                                                update=":cstdyFrm:extAccordian">
@@ -137,15 +222,16 @@
                             </div>
                         </div>
                     </p:tab>
-                    <p:tab title="Tax Residence Information" disabled="#{uobCustodyBean.isAccordianDisabled(1)}" id="idTaxTab">
+
+                    <p:tab id="tab2"  title="Tax Residence Information" disabled="#{uobCustodyBean.isAccordianDisabled(2)}">
                         <div class="Container100 Responsive100 holder_address acc_holder_form ">
                             <p:tabView id="idTaxTabVw">
                                 <p:tab title="Main Account Holder" id="idTaxTabMn">
-                                    <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(1) != null}"
+                                    <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(2) != null}"
                                              style="border: 0px; background: transparent"
                                              styleClass="Container100">
                                         <h:outputText id="nwPriHldrMsg1" styleClass="errorText"
-                                                      value="#{uobCustodyBean.getErrorMessage(1)}" escape="false"/>
+                                                      value="#{uobCustodyBean.getErrorMessage(2)}" escape="false"/>
                                     </p:panel>
                                     <div class="go-bottom tax_info">
                                         <p:panel id="nwPriHldTaxTab" style="border-color: transparent;" class="Container100">
@@ -167,10 +253,10 @@
                                                                 <span class="ui-button-icon-center ui-icon ui-c fa fa-trash del_tax"></span>
                                                             </p:commandLink>
                                                         </p:column>
-                                                        <p:column headerText="Jurisdiction Of Tax">
+                                                        <p:column headerText="Country/ Jurisdiction Of Tax Residence">
                                                             <h:outputText value="#{taxDtls.jurisdictionOfTaxResidence}"/>
                                                         </p:column>
-                                                        <p:column headerText="Tax Id">
+                                                        <p:column headerText="Tax Identification Number">
                                                             <h:outputText value="#{taxDtls.taxIdentificationNumber}" rendered='#{taxDtls.tinFlag}'/>
                                                             <h:outputText value="-" rendered='#{!taxDtls.tinFlag}'/>
                                                         </p:column>
@@ -270,7 +356,7 @@
                                                                          class="Container100 width99">
                                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxRsn}">
                                                                         <div class="Container100 Responsive100">
-                                                                            <p:inputText id="priHldrTaxPnlReasExpl" placeholder="Explain"
+                                                                            <p:inputText id="priHldrTaxPnlReasExpl" placeholder="Please Explain"
                                                                                          value="#{uobCustodyBean.owTaxDtls.tinUnavailableValue}"/>
                                                                             <label for="priHldrTaxPnlReasExpl">Explain</label>
                                                                         </div>
@@ -432,7 +518,7 @@
                         <div class="Container100 pre_next_btn">
                             <div class="Container50 pre_btn">
 
-                                <p:commandLink id="newPrev2"
+                                <p:commandLink id="extPrev1"
                                                actionListener="#{uobCustodyBean.prevPage}"
                                                update="@form">
                                     <span class="ui-button-icon-center ui-icon ui-c fa fa-edit fa-chevron-left"></span>

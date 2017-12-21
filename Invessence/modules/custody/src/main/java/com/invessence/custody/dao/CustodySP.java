@@ -140,6 +140,20 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_advisorid", Types.NUMERIC));
             declareParameter(new SqlParameter("p_reqType", Types.VARCHAR));
             break;
+         case 14:
+            declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_acctOwnerId", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_bankName", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAccountNo", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressStreet1", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressStreet2", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressStreet3", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressStreet4", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_swiftBic", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_correspondentBank", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_correspondentBankSwiftBic", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_logonId", Types.VARCHAR));
+            break;
         case 20:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
@@ -236,6 +250,26 @@ public class CustodySP extends StoredProcedure
       inputMap.put("p_employerZipCountry", ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry());
       inputMap.put("p_fromDate", ownerDetails.getOwnerEmploymentDetails().getFromDate());
       inputMap.put("p_toDate", ownerDetails.getOwnerEmploymentDetails().getToDate());
+      inputMap.put("p_logonId", p_logonId);
+      return execute(inputMap);
+   }
+
+
+
+   public Map saveAccountHolderBankDtls(Long acctNum, int acctOwnerId, String p_logonId, OwnerDetails ownerDetails)
+   {
+      Map inputMap = new LinkedHashMap();
+      inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_acctOwnerId", acctOwnerId);
+      inputMap.put("p_bankName", ownerDetails.getOwnerBankDetails().getBankName());
+      inputMap.put("p_bankAccountNo", ownerDetails.getOwnerBankDetails().getBankAccountNo());
+      inputMap.put("p_bankAddressStreet1", ownerDetails.getOwnerBankDetails().getBankAddressStreet1());
+      inputMap.put("p_bankAddressStreet2", ownerDetails.getOwnerBankDetails().getBankAddressStreet2());
+      inputMap.put("p_bankAddressStreet3", ownerDetails.getOwnerBankDetails().getBankAddressStreet3());
+      inputMap.put("p_bankAddressStreet4", ownerDetails.getOwnerBankDetails().getBankAddressStreet4());
+      inputMap.put("p_swiftBic", ownerDetails.getOwnerBankDetails().getSwiftBic());
+      inputMap.put("p_correspondentBank", ownerDetails.getOwnerBankDetails().getCorrespondentBank());
+      inputMap.put("p_correspondentBankSwiftBic", ownerDetails.getOwnerBankDetails().getCorrespondentBankSwiftBic());
       inputMap.put("p_logonId", p_logonId);
       return execute(inputMap);
    }
