@@ -32,16 +32,32 @@
                     Assets
                 </div>
                 <div class="Conatiner100">
-                    Value of Primary Residence <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                    Value of Primary Residence <br/>
+                    <p:inputNumber id="primaryProperty" class="input_no_type"
+                                    value="#{uobProfile.customer.accountFinancials.homeEquity}" symbol="S$ "
+                                    thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
                 </div>
                 <div class="Conatiner100">
-                    Investible Assets (excluding primary residence) <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                    Investible Assets (excluding primary residence) <br/>
+                    <p:inputNumber id="investment" class="input_no_type"
+                                   value="#{uobProfile.customer.accountFinancials.investment}" symbol="S$ "
+                                   thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
                 </div>
                 <div class="Conatiner100">
-                    Employment Income / Income from Business <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                    Employment Income / Income from Business <br/>
+                    <p:inputNumber id="householdwages" class="input_no_type"
+                                   value="#{uobProfile.customer.accountFinancials.householdwages}" symbol="S$ "
+                                   thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
                 </div>
                 <div class="Conatiner100">
-                    Other Source of Income <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                    Other Source of Income <br/>
+                    <p:inputNumber id="otherincome" class="input_no_type"
+                                   value="#{uobProfile.customer.accountFinancials.otherincome}" symbol="S$ "
+                                   thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
                 </div>
             </div>
             <div class="Container50 liability">
@@ -49,17 +65,30 @@
                     Liabilities
                 </div>
                 <div class="Conatiner100">
-                    Mortgage Loan on Primary Residence <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                    Mortgage Loan on Primary Residence <br/>
+                    <p:inputNumber id="mortgageLoan" class="input_no_type"
+                                   value="#{uobProfile.customer.accountFinancials.mortgageLoan}" symbol="S$ "
+                                   thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
+
                 </div>
                 <div class="Conatiner100">
-                    Liabilities (Loan excluding mortgage loan on primary residence) <br/> S$ <p:inputNumber class="input_no_type"
-                                                                                                            placeholder="0"></p:inputNumber>
+                    Liabilities (Loan excluding mortgage loan on primary residence) <br/>
+                    <p:inputNumber id="otherDebt" class="input_no_type"
+                                   value="#{uobProfile.customer.accountFinancials.otherDebt}" symbol="S$ "
+                                   thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
                 </div>
                 <div class="Conatiner100 tab_title networth">
                     Net Worth
                 </div>
                 <div class="Conatiner100">
-                    Current net worth <br/> S$ <p:inputNumber class="input_no_type" placeholder="0"></p:inputNumber>
+                    Current net worth <br/>
+                    <p:inputNumber id="networth" class="input_no_type"
+                                   value="#{uobProfile.customer.accountFinancials.networth}" symbol="S$ "
+                                   thousandSeparator="," decimalPlaces="0">
+                    </p:inputNumber>
+
                 </div>
             </div>
         </div>

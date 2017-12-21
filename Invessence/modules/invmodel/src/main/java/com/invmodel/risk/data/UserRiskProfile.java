@@ -459,6 +459,33 @@ public class UserRiskProfile
       return null;
    }
 
+   public Integer getAnswerInt(String key)
+   {
+      if (riskData.containsKey(key))
+      {
+         return riskData.get(key).getAnswerInt();
+      }
+      return null;
+   }
+
+   public Double getAnswerDouble(String key)
+   {
+      if (riskData.containsKey(key))
+      {
+         return riskData.get(key).getAnswerDouble();
+      }
+      return null;
+   }
+
+   public Boolean getAnswerBoolean(String key)
+   {
+      if (riskData.containsKey(key))
+      {
+         return riskData.get(key).getAnswerBoolean();
+      }
+      return null;
+   }
+
    public void setAnswer(String key, String answer)
    {
       setAnswer( key,  answer,  "T");

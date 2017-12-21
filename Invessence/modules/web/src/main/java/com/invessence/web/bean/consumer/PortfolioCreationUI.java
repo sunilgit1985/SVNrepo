@@ -41,10 +41,12 @@ public class PortfolioCreationUI extends UserInterface
    public enum UIMode {
       New("N"),
       Edit("E"),
+      Review("R"),
+      Startover("S"),
       ChangeStrategy("C"),
-      Confirm("V"),
-      View("W"),
-      Advisor("A");
+      Confirm("A"),
+      View("V"),
+      Advisor("Advisor");
 
       String mode;
 
@@ -143,6 +145,13 @@ public class PortfolioCreationUI extends UserInterface
    public void setBeanAcctnum(Long beanAcctnum)
    {
       this.beanAcctnum = converter.getLongData(beanAcctnum);
+   }
+
+   public void setBeanmode(String beanmode)
+   {
+      this.beanmode = UIMode.valueOf(beanmode);
+      if (this.beanmode == null)
+         this.beanmode = UIMode.New;
    }
 
    public String getInterfaceMode()
@@ -520,17 +529,8 @@ public class PortfolioCreationUI extends UserInterface
    }
 
    public void gotoReview() {
-/*
-      if (registerUser())
-      {
-         savePanelProfile();
-         setDoesUserHavaLogonID(true);
-         Double riskIndex = riskCalculator.calculateRisk();
-         createAssetPortfolio(1, riskIndex);
-         if (! masterpagemanager.isFirstPage())
-            masterpagemanager.prevPage();
-      }
-*/
+      progressbar.nextProgress();
+      uiLayout.doMenuAction("consumer","review.xhtml");
    }
 
    public void gotoCustody() {

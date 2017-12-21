@@ -54,7 +54,7 @@
                             <p:commandLink id="uobretire1"
                                            actionListener="#{uobProfile.selectRetireType(1)}"
                                            process="@this"
-                                           update=":ceForm:goalInfo"  >
+                                           update=":ceForm:retireQPanel, :ceForm:goalInfo"  >
                                 <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter #{uobProfile.getSelectedClass(1)}">
                                     <div class="Container70">
                                         <h4>I want to save for retirement</h4>
@@ -75,7 +75,7 @@
                             <p:commandLink id="uobretire2"
                                            actionListener="#{uobProfile.selectRetireType(2)}"
                                            process="@this"
-                                           update=":ceForm:goalInfo">
+                                           update=":ceForm:retireQPanel, :ceForm:goalInfo">
                                 <p:panel id="retireP2" styleClass="Wid95 MarCenter #{uobProfile.getSelectedClass(2)}">
                                     <div class="Container70">
                                         <h4>I am retired</h4>
@@ -93,15 +93,25 @@
 
                     <p:panel id="retireQPanel" style="border: 0px; background: transparent"
                                 rendered="#{uobProfile.selectedRetirementGoal > 0}">
-                        <ui:fragment rendered="true">
+                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 1}">
                             <p>
                                 I intend to retire and start utilising my funds in
-                                <p:inputText style="width:55px;" placeholder="Years"></p:inputText> years
+                                <p:inputNumber style="width:55px;" class="input_no_type"
+                                               value="#{uobProfile.horizon}" placeholder="Years"
+                                               minValue="1" maxValue="60"
+                                               id="uobRetirePeriod"
+                                               maxlength="2" decimalPlaces="0" >
+                                </p:inputNumber> years
                             </p>
                         </ui:fragment>
                         <p>
-                            When I start withdrawing money for my retirement, I plan to withdraw the funds over a period of <p:inputText
-                                style="width:55px;" placeholder="Years"></p:inputText> years
+                            When I start withdrawing money for my retirement, I plan to withdraw the funds over a period of
+                            <p:inputNumber style="width:55px;" class="input_no_type"
+                                           value="#{uobProfile.withdrawlPeriod}" placeholder="Years"
+                                           minValue="1" maxValue="30"
+                                           id="uobWithdrawl"
+                                           maxlength="2" decimalPlaces="0" >
+                            </p:inputNumber> years
                         </p>
 
                     </p:panel>
@@ -133,8 +143,13 @@
                 </div>
                 <div class="Container100 tab_dtl">
                     <p>
-                        I aim to save and invest for purchasing a property in <p:inputText style="width:55px;" type="text"
-                                                                                           placeholder="Years"></p:inputText> years
+                        I aim to save and invest for purchasing a property in
+                        <p:inputNumber style="width:55px;"
+                                       value="#{uobProfile.horizon}" placeholder="Years"
+                                       minValue="1" maxValue="60"
+                                       id="uobPorpertyPeriod"
+                                       maxlength="2" decimalPlaces="0" >
+                        </p:inputNumber> years
                     </p>
 
                 </div>
@@ -165,12 +180,18 @@
                 <div class="Container100 tab_dtl">
                     <p>
                         I expect the child to enter university / college in
-                        <p:inputText style="width:55px;" placeholder="Years"></p:inputText> years
+                        <p:inputNumber style="width:55px;"
+                                       value="#{uobProfile.horizon}" placeholder="Years"
+                                       minValue="1" maxValue="60"
+                                       id="uobEducationPeriod"
+                                       maxlength="2" decimalPlaces="0" >
+                        </p:inputNumber> years
+
                     </p>
                     <div class="selectList">
 
                         I would like to plan for a
-                        <p:selectOneMenu id="educationyear" value="Years" name="years">
+                        <p:selectOneMenu id="uobEducationWP" value="#{uobProfile.withdrawlPeriod}" name="years">
                             <f:selectItem itemLabel="3" itemValue="3"/>
                             <f:selectItem itemLabel="4" itemValue="4"/>
                             <f:selectItem itemLabel="5" itemValue="5"/>
@@ -210,7 +231,7 @@
                 <div class="Container100 tab_dtl legacy_tab_dtl">
                     <p>My objective is legacy planning and I do not intend to withdraw investment funds from this account. I aim to </p>
                     <div class="selectRadio">
-                        <p:selectOneRadio id="legacyQ" value="#{uobProfile.legacy}" styleClass=""
+                        <p:selectOneRadio id="legacyQ" value="#{uobProfile.riskAns1}" styleClass=""
                                           layout="pageDirection">
                             <f:selectItem id="legacya1"
                                           itemLabel="Maximise potential returns while accepting high levels of volatility"
@@ -225,8 +246,6 @@
                                           itemLabel="Have a guarantee on my capital"
                                           itemValue="4"></f:selectItem>
                         </p:selectOneRadio>
-
-
                     </div>
 
 
@@ -261,13 +280,26 @@
                         What is your Goal? <p:inputText placeholder="Goal"></p:inputText>
                     </p>
                     <p>
-                        How long do you plan to invest? <p:inputText style="width:55px;" placeholder="Years"></p:inputText> years
+                        How long do you plan to
+                        <p:inputNumber style="width:55px;"
+                                       value="#{uobProfile.horizon}" placeholder="Years"
+                                       minValue="1" maxValue="60"
+                                       id="uoOtherPeriod"
+                                       maxlength="2" decimalPlaces="0" >
+                        </p:inputNumber> years
+
                     </p>
                     <p>
                         As and when I withdraw money from this investment account,
                     </p>
                     <p>
-                        I plan to withdraw the funds over a period of <p:inputText style="width:55px;" placeholder="Years"></p:inputText> years
+                        I plan to withdraw the funds over a period of
+                        <p:inputNumber style="width:55px;"
+                                       value="#{uobProfile.withdrawlPeriod}" placeholder="Years"
+                                       minValue="1" maxValue="60"
+                                       id="uobOtherWP"
+                                       maxlength="2" decimalPlaces="0" >
+                        </p:inputNumber> years
                     </p>
 
                 </div>

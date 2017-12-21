@@ -7,7 +7,7 @@
     <div class="caraousle Container100">
 
         <div class="header_tab">
-            <div class="header_title Container30">Lets talk about your contribution towards your goal to <span class="change_goal">education</span>
+            <div class="header_title Container30">Lets talk about your contribution towards your goal for <span class="change_goal">#{uobProfile.selectedGoal.displayName}</span>
             </div>
             <div class="header_link prenext_btn Container70">
                 <div class="Container100">
@@ -30,21 +30,34 @@
         <div class="Container100 tab_dtl">
             <div class="selectList">
                 I like to invest in
-                <p:selectOneMenu id="title" value="Years" name="title">
-                    <f:selectItem itemLabel="SGD" itemValue="SGD"/>
-                    <f:selectItem itemLabel="USD" itemValue="USD"/>
-
+                <p:selectOneMenu id="tradeCurrency" value="#{uobProfile.customer.tradeCurrency}"
+                update=":ceForm:initialinvestment">
+                    <f:selectItems value="#{uobProfile.currencyList}" var="currency"
+                                   itemValue="#{currency}" itemLabel="#{currency.displayName}" />
                 </p:selectOneMenu>
-            </div>
+           </div>
             <p>
-                My initial investment in this account will be <p:inputNumber class="input_no_type" placeholder="S$ 0"></p:inputNumber>
+                My initial investment in this account will be
+                <p:inputNumber id="initialinvestment" class="input_no_type"
+                               value="#{uobProfile.initialInvestment}" symbol="#{uobProfile.selectedCurrency.shortname} "
+                               thousandSeparator="," decimalPlaces="0">
+                </p:inputNumber>
             </p>
             <p>
                 I intend to contribute
             </p>
             <p>
-                <p:inputNumber class="input_no_type" placeholder="S$ 0"></p:inputNumber> per annum to this investment account over the next <input
-                    style="width:55px;" type="text" placeholder="Years"></input> years
+                <p:inputNumber id="recurringInvestment" class="input_no_type"
+                               value="#{uobProfile.recurringInvestment}" symbol="S$ "
+                               thousandSeparator="," decimalPlaces="0">
+                </p:inputNumber>
+
+                per annum to this investment account over the next
+                <p:inputNumber id="recurringPeriod" class="input_no_type"
+                               value="#{uobProfile.recurringPeriod}"
+                               minValue="1" maxValue="60"
+                               decimalPlaces="0">
+                        </p:inputNumber> years
             </p>
 
         </div>

@@ -10,7 +10,7 @@
         <div class="header_tab">
             <div class="header_title Container30">Risk Tolerance</div>
             <div class="header_link prenext_btn Container70">
-                <p:outputPanel id="p7buttonArea" style="border: 0px; background: transparent">
+                <p:outputPanel id="p6buttonArea" style="border: 0px; background: transparent">
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
@@ -28,22 +28,28 @@
 
 
         <div class="Container100 tab_dtl RTQ">
-            <p>What would your reaction be if you discovered that your account value had decreased in value by 25% after a period of 3 months? </p>
+            <p>In the financial crisis of 2007-2009, global stocks fell 52% from September 2007 to March 2009
+                and took four years to recover. The value of a balanced portfolio would probably have fallen less, but may
+                still decline by a significant amount. How much could your investment in this account fall in value over a 12
+                month period before you feel seriously concerned?</p>
             <div class="selectRadio">
                 <p:selectOneRadio id="riskQ6" value="#{uobProfile.riskAns6}" styleClass=""
                                   layout="pageDirection">
                     <p:ajax listener="#{uobProfile.onChangeValue}"
                             update=":ceForm:graphArea"/>
                     <f:selectItem id="r6a1"
-                                  itemLabel="I would invest more funds to lower my average investment price, expecting future growth."
+                                  itemLabel="More than 30%"
                                   itemValue="1"></f:selectItem>
                     <f:selectItem id="r6a2"
-                                  itemLabel="This was a calculated risk and I would leave the investment in place, and wait for a recovery. "
+                                  itemLabel=" Up to 30% "
                                   itemValue="2"></f:selectItem>
                     <f:selectItem id="r6a3"
-                                  itemLabel="I would cut my losses"
+                                  itemLabel="  Up to 20%  "
                                   itemValue="3"></f:selectItem>
-                 </p:selectOneRadio>
+                    <f:selectItem id="r6a4"
+                                  itemLabel="Up to 10%"
+                                  itemValue="4"></f:selectItem>
+                </p:selectOneRadio>
 
             </div>
 

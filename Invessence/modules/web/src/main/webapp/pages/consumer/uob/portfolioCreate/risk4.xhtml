@@ -10,7 +10,7 @@
         <div class="header_tab">
             <div class="header_title Container30">Risk Tolerance</div>
             <div class="header_link prenext_btn Container70">
-                <p:outputPanel id="p5buttonArea" style="border: 0px; background: transparent">
+                <p:outputPanel id="p4buttonArea" style="border: 0px; background: transparent">
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
@@ -25,26 +25,24 @@
             </div>
 
         </div>
-
-
         <div class="Container100 tab_dtl RTQ">
-            <p>In relation to my goal of <span class="change_goal">education</span>, the statement that best describes my needs is: </p>
+            <p>To achieve your goal, which of the following best describes your investment strategy and level of investment risk you are willing to take? </p>
             <div class="selectRadio">
                 <p:selectOneRadio id="riskQ4" value="#{uobProfile.riskAns4}" styleClass=""
                                   layout="pageDirection">
                     <p:ajax listener="#{uobProfile.onChangeValue}"
                             update=":ceForm:graphArea"/>
                     <f:selectItem id="r4a1"
-                                  itemLabel="My primary focus is the growth of my investment. I am prepared to accept a high level of short-term volatility and possible capital losses in order to generate potentially higher levels of capital growth over the long term."
+                                  itemLabel="Aggressive : An aggressive strategy accepts higher levels of risks in order to obtain greater potential returns. An aggressive investor is comfortable with investments that are more volatile and bear a higher risk of loss of capital."
                                   itemValue="1"></f:selectItem>
                     <f:selectItem id="r4a2"
-                                  itemLabel="There should be a balance between growth and stability of my investment."
+                                  itemLabel="Moderate : A moderate strategy seeks a balance of capital growth and regular income from his/her investments. A moderate investor is prepared to accept moderate amounts of risk to earn moderate potential returns.   "
                                   itemValue="2"></f:selectItem>
                     <f:selectItem id="r4a3"
-                                  itemLabel=" My primary focus is the stability of my investment. I seek to lower my risk of loss. "
+                                  itemLabel="Conservative : A conservative strategy accepts lower potential returns for a lower risk of loss of capital. "
                                   itemValue="3"></f:selectItem>
                     <f:selectItem id="r4a4"
-                                  itemLabel=" I require a guarantee on my capital "
+                                  itemLabel="This strategy requires 100% capital preservation and is unable to take any risk of loss. "
                                   itemValue="4"></f:selectItem>
                 </p:selectOneRadio>
 

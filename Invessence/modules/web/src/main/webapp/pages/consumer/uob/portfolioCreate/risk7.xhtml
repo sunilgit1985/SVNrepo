@@ -10,7 +10,7 @@
         <div class="header_tab">
             <div class="header_title Container30">Risk Tolerance</div>
             <div class="header_link prenext_btn Container70">
-                <p:outputPanel id="p8buttonArea" style="border: 0px; background: transparent">
+                <p:outputPanel id="p7buttonArea" style="border: 0px; background: transparent">
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
@@ -28,26 +28,24 @@
 
 
         <div class="Container100 tab_dtl RTQ">
-            <p>For your investment portfolio outside this investment account, an investor may choose to include
-                Singapore-based assets, including equities, stock and cash. The implication of the inclusion is that your
-                overall investment portfolio, including your assets outside this investment account, will be less diversified due
-                to its increased exposure of Singaporean assets.
-                <br/>Please choose if you wish to include Singapore-based assets in your portfolio</p>
+            <p>What would your reaction be if you discovered that your account value had decreased in value by 25% after a period of 3 months? </p>
             <div class="selectRadio">
                 <p:selectOneRadio id="riskQ7" value="#{uobProfile.riskAns7}" styleClass=""
                                   layout="pageDirection">
                     <p:ajax listener="#{uobProfile.onChangeValue}"
                             update=":ceForm:graphArea"/>
                     <f:selectItem id="r7a1"
-                                  itemLabel="I have sufficient exposure to Singapore-based asstes. I do not wants Singapore-based assets to be included as a significant part of the portfolio allocated to me."
+                                  itemLabel="I would invest more funds to lower my average investment price, expecting future growth."
                                   itemValue="1"></f:selectItem>
                     <f:selectItem id="r7a2"
-                                  itemLabel="I want Singapore-based assets to be included as a significant part (in the range 5% - 50%) of the global portfolio allocated to me. "
+                                  itemLabel="This was a calculated risk and I would leave the investment in place, and wait for a recovery. "
                                   itemValue="2"></f:selectItem>
+                    <f:selectItem id="r7a3"
+                                  itemLabel="I would cut my losses"
+                                  itemValue="3"></f:selectItem>
                  </p:selectOneRadio>
 
             </div>
-
 
         </div>
     </div>
