@@ -598,7 +598,7 @@ public class PortfolioModel
                            double pAssetreturns = assetdata.getPrimeAssetreturns()[offset];
                            portfolioReturns = portfolioReturns + assetdata.getPrimeAssetreturns()[offset] * totalPortfolioWeight;
 
-                           ticker_weight = ticker_weight - rbsaWeight;
+                           //ticker_weight = ticker_weight - rbsaWeight;
                         }
                      }
 
@@ -801,7 +801,7 @@ public class PortfolioModel
                            double pAssetreturns = assetdata.getPrimeAssetreturns()[offset];
                            portfolioReturns = portfolioReturns + assetdata.getPrimeAssetreturns()[offset] * totalPortfolioWeight;
 
-                           ticker_weight = ticker_weight - rbsaWeight;
+                           //ticker_weight = ticker_weight - rbsaWeight;
                         }
                      }
 
