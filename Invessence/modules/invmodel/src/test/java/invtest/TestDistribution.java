@@ -13,6 +13,7 @@ import com.invmodel.performance.*;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.*;
 import com.invmodel.portfolio.data.*;
+import com.invmodel.risk.data.UserRiskProfile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -94,16 +95,17 @@ public class TestDistribution
       Integer stayInvested;
       String name = "";
       ProfileData profileData = new ProfileData();
-
+      UserRiskProfile userRiskProfile = new UserRiskProfile();
+      profileData.setRiskProfile(userRiskProfile);
       tax = "No";
 
       profileData.setName("Retirement");
       //profileData.setAdvisor("PrimeAsset");
       //profileData.setTheme("0.Income");
       profileData.setAdvisor("UOB");
-      //profileData.setTheme("8.UOB");
+      profileData.setTheme("8.UOB.Sing");
       //profileData.setTheme("8.UOB.UnCons");
-      profileData.setTheme("0.SGWealthSGD");
+      //profileData.setTheme("0.SGWealthSGD");
       //profileData.setTheme("0.SGWealthSGD.Un");
       profileData.setAccountTaxable(false);
 
@@ -163,9 +165,9 @@ public class TestDistribution
       profileData.setNumOfPortfolio(1);
       Portfolio[] pfclass = modelUtil.buildPortfolio(aamc, profileData);
 
-      Map<Integer, Portfolio> tickerList = new LinkedHashMap<Integer, Portfolio>();
+      Map<Integer, Portfolio> portList = new LinkedHashMap<Integer, Portfolio>();
 
-      createPortfolioArray(modelUtil.getPoptimizer(), profileData, tickerList);
+
 
       int i = 0;
       double[] expReturnsArray = new double[100];
@@ -174,27 +176,24 @@ public class TestDistribution
       {
          // Use this for calculating slider
          profileData.setRiskIndex((double) i);
-         //AssetClass[]aamc = modelUtil.buildAllocation(profileData);
+         aamc = modelUtil.buildAllocation(profileData);
+         pfclass = modelUtil.buildPortfolio(aamc, profileData);
          profileData.setAssetData(aamc);
-         //Portfolio[]pfclass = modelUtil.buildPortfolio(aamc, profileData);
-
          expReturnsArray[i] = pfclass[0].getExpReturns();
          totalRiskArray[i] = pfclass[0].getTotalRisk();
 
-         PortfolioSecurityData[] pfList = new PortfolioSecurityData[pfclass[0].getPortfolio().size()];
-
-         if (!tickerList.containsKey(i))
+         if (!portList.containsKey(i))
          {
             Portfolio tickerInfo = pfclass[0];
-            //tickerInfo.riskNumber = i;
-            //tickerInfo.expReturns =  pfclass[0].getExpReturns();
-            //tickerInfo.totalRisk = pfclass[0].getTotalRisk();
-            //tickerInfo.ticker = pfclass[0].getPortfolio();
-            tickerList.put(i, tickerInfo);
+            portList.put(i, tickerInfo);
          }
       }
 
-      //createEfficientFrontier(modelUtil.getPoptimizer(), profileData, tickerList);
+      createPortfolioArray(modelUtil.getPoptimizer(), profileData, portList);
+
+      createPrimeAssetArry(modelUtil.getPoptimizer(), profileData, portList);
+
+      createEfficientFrontier(aamc, pfclass, modelUtil.getPoptimizer(), profileData, portList);
 
       //tax = "No";
       //createAssetPerformanceFile(tax, pfclass, aamc, age);
@@ -218,13 +217,102 @@ public class TestDistribution
 */
    }
 
-   public static void createPortfolioArray(PortfolioOptimizer portfolioOptimizer, ProfileData profileData, Map<Integer, Portfolio> tickerList) throws Exception
+   public static void createPortfolioArray(PortfolioOptimizer portfolioOptimizer, ProfileData profileData,
+                                           Map <Integer,Portfolio> portList) throws Exception
    {
 
       String fileName;
       PrintWriter writer = null;
 
-      fileName = "EfficientFrontier";
+      fileName = "PortfolioWeight";
+      fileName = fileName + profileData.getTheme() + ".csv";
+
+      writer = TestDistribution.getInstance().getFileHandle("No", fileName);
+
+
+      String theme = profileData.getTheme();
+      Map<Integer, String> tickerLabel = new LinkedHashMap<Integer, String>();
+
+      for (int i=0; i < portList.size(); ++i)
+      {
+         Portfolio portInfo = portList.get(i);
+
+
+         if (i == 0)
+         {
+
+            int t = 0;
+            for (String assetName : portfolioOptimizer.getOrderedAsset(profileData.getTheme()))
+            {
+               for (PrimeAssetClassData primeData : portfolioOptimizer.getAssetData(theme, assetName).getOrderedPrimeAssetData())
+               {
+                  if (primeData.getTicker().equals("VUSD.L"))
+                  {
+                     writer.print("," + "1306.T" + "," + "VAS.AX" + "," + "VEUR.L" + "," + "VUSD.L" + "," + "XIC.TO");
+                     tickerLabel.put(t,"1306.T");
+                     t = t+1;
+                     tickerLabel.put(t,"VAS.AX");
+                     t = t+1;
+                     tickerLabel.put(t,"VEUR.L");
+                     t = t+1;
+                     tickerLabel.put(t,"VUSD.L");
+                     t = t+1;
+                     tickerLabel.put(t,"XIC.TO");
+                     t = t+1;
+                  }
+                  else
+                  {
+                     writer.print("," + primeData.getTicker());
+                     tickerLabel.put(t,primeData.getTicker());
+                     t = t+1;
+                  }
+               }
+
+            }
+
+            //for (int L=0; L < portInfoLabel.getPortfolio().size(); ++L)
+            //{
+            //   writer.print("," + portInfoLabel.getPortfolio().get(L).getTicker());
+            //}
+            writer.println();
+         }
+
+         double weight[] = new double[tickerLabel.size()];
+         for (int L=0; L < tickerLabel.size(); ++L)
+         {
+            weight[L] = 0.0;
+            String tickerL =  tickerLabel.get(L);
+
+            for (int j = 0; j < portInfo.getPortfolio().size(); ++j)
+            {
+               String tickerJ = portInfo.getPortfolio().get(j).getTicker();
+               if(tickerL.equals(tickerJ))
+               {
+                  weight[L] = portInfo.getPortfolio().get(j).getMoney();
+               }
+            }
+         }
+         for (int L=0; L < tickerLabel.size(); ++L)
+         {
+            writer.print("," + weight[L]);
+         }
+
+
+
+         //}
+         writer.println();
+      }
+      writer.close();
+   }
+
+   public static void createPrimeAssetArry(PortfolioOptimizer portfolioOptimizer, ProfileData profileData,
+                                           Map <Integer,Portfolio> portList) throws Exception
+   {
+
+      String fileName;
+      PrintWriter writer = null;
+
+      fileName = "EfficientFrontierPrime";
       fileName = fileName + profileData.getTheme() + ".csv";
 
       writer = TestDistribution.getInstance().getFileHandle("No", fileName);
@@ -232,16 +320,19 @@ public class TestDistribution
 
       String theme = profileData.getTheme();
 
-      for (int riskNum = 0; riskNum < 100; riskNum++)
+      for (int i=0; i < portList.size(); ++i)
       {
-         if (riskNum == 0)
+         if (i == 0)
          {
             for (String assetName : portfolioOptimizer.getOrderedAsset(profileData.getTheme()))
             {
+
                for (PrimeAssetClassData primeData : portfolioOptimizer.getAssetData(theme, assetName).getOrderedPrimeAssetData())
                {
                   writer.print("," + primeData.getTicker());
                }
+
+
             }
             writer.println();
          }
@@ -249,109 +340,55 @@ public class TestDistribution
          for (String assetName : portfolioOptimizer.getOrderedAsset(profileData.getTheme()))
          {
 
-            double[] weight = portfolioOptimizer.getAssetData(theme, assetName).getPrimeAssetweights()[riskNum];
+            double[] weight = portfolioOptimizer.getAssetData(theme, assetName).getPrimeAssetweights()[i];
 
-            for (int i = 0; i < weight.length; i++)
+            for (int j = 0; j < weight.length; j++)
             {
 
-               writer.print("," + weight[i]);
+               writer.print("," + weight[j]);
             }
+
          }
          writer.println();
       }
       writer.close();
    }
 
-   public static void createEfficientFrontier(PortfolioOptimizer portfolioOptimizer, ProfileData profileData, Map <Integer,Portfolio> tickerList) throws Exception
+   public static void createEfficientFrontier(AssetClass[] aamc, Portfolio[] pfclass, PortfolioOptimizer portfolioOptimizer,
+                                              ProfileData profileData, Map <Integer,Portfolio> portList) throws Exception
    {
 
       String fileName;
       PrintWriter writer = null;
-
-      fileName = "EfficientFrontier";
+      fileName = "AssetsEfficientFrontier";
       fileName = fileName + profileData.getTheme() + ".csv";
 
       writer = TestDistribution.getInstance().getFileHandle("No", fileName);
+      String theme = profileData.getTheme();
 
-
-      //writer.print("Level" + "," + "Risk" + "," + "Return");
-
-      for (int i=0; i < tickerList.size(); i++)
+      for (int riskNum = 0; riskNum < 100; riskNum++)
       {
-         Portfolio tdata = tickerList.get(i);
-         System.out.println(i);
+         ArrayList assetName = portfolioOptimizer.getAdvisorOrdertedAssetList(theme);
+         double[] weight = portfolioOptimizer.getAssetOrderedWeight(theme, riskNum);
+         if(riskNum==0) {
 
-         /*if (i == 0)
-         {
-
-            for (PortfolioSecurityData pdata : tdata.getPortfolio())
-            {
-               String ticker = pdata.getTicker();
-               writer.print("," + pdata.getTicker());
-            }
+            writer.print("Risk Number" +
+                            "," + assetName.get(0) +
+                            "," + assetName.get(1) +
+                            "," + assetName.get(2) +
+                            "," + assetName.get(3));
             writer.println();
-         }*/
-
-
-        // writer.print(i +
-        //                 "," + tdata.getTotalRisk() +
-        //                 "," + tdata.getExpReturns());
-
-
-         double fWeight = 0.0;
-         double eWeight = 0.0;
-         double comWeight = 0.0;
-         double cWeight = 0.0;
-         for (PortfolioSecurityData pdata : tdata.getPortfolio())
-         {
-            String ticker = pdata.getTicker();
-            String assetType = pdata.getAssetclass();
-            //writer.print("," + assetType + "," + pdata.getWeight());
-
-            if (assetType.contains("Fix")){
-               fWeight = fWeight + pdata.getWeight();
-            }
-            else if (assetType.contains("Eq")){
-               eWeight = eWeight + pdata.getWeight();
-            }
-            else if (assetType.contains("Com")){
-               comWeight = comWeight + pdata.getWeight();
-            }
-            else if (assetType.contains("Cash")){
-               cWeight = cWeight + pdata.getWeight();
-            }
-            else{
-
-               int dummy = 0;
-               dummy = dummy + 1;
-            }
-
-            //writer.print("," + pdata.getWeight());
          }
 
-         writer.print(i +
-                         "," + tdata.getTotalRisk() +
-                         "," + tdata.getExpReturns() +
-                         "," + valueOf(cWeight) +
-                         "," + valueOf(comWeight) +
-                         "," + valueOf(fWeight) +
-                         "," + valueOf(eWeight));
-
-
+         writer.print(riskNum +
+                         "," + weight[0] +
+                         "," + weight[1] +
+                         "," + weight[2] +
+                         "," + weight[3]);
          writer.println();
       }
-
-
-
-      writer.println();
-      //portfolioRisk = pf.getPortfolioRiskReturn(tax, aamc);
-      //portfolioReturn = pf.avgYearReturns(aamc, );
-      //secPortfolioRisk[year] = pf.getSecPortRisk(tickerList, secWeight);
-
       writer.close();
    }
-
-
 
    public static void calculateRiskIndex(ProfileData profileData)
    {
