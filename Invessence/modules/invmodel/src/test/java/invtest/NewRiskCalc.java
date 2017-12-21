@@ -6,6 +6,7 @@ import com.invmodel.model.ModelUtil;
 import com.invmodel.portfolio.data.*;
 import com.invmodel.risk.dao.RiskFetchDAO;
 import com.invmodel.risk.data.*;
+import com.invmodel.risk.data.client.UOBRiskCalc;
 
 /**
  * Created by prashant on 11/13/2017.
