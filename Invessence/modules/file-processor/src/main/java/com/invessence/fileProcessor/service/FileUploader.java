@@ -272,13 +272,13 @@ public class FileUploader
       {
          br = new BufferedReader(new FileReader(csvFile));
          List<List<String>> inLst = new ArrayList<List<String>>();
-         int counter = 0;
+         int lineCounter = 0;
          boolean isErrorPrint=false;
          while ((line = br.readLine()) != null)
          {
             if (!line.equals(""))
             {
-               logger.debug("line = " + line);
+               logger.info("line = " + line);
                Iterator<Map.Entry<String, FileRules>> entries = fileRules.entrySet().iterator();
                entries = fileRules.entrySet().iterator();
                List<String> lineLst = new ArrayList<String>();
@@ -291,34 +291,43 @@ public class FileUploader
                while (entries.hasNext())
                {
                   try{
-                  Map.Entry<String, FileRules> entry6 = entries.next();
-                  FileRules fileRules1 = (FileRules) entry6.getValue();
-                  if (counter == 0 && fileDetails.getContainsHeader().equalsIgnoreCase("Y"))
-                  {
-                     logger.warn("Avoiding first row to add in db because it's header");
-                  }
-                  else
-                  {
-                     if(fileRules1.getDbColumn()==null || fileRules1.getDbColumn().equalsIgnoreCase("")){
-                        if(isErrorPrint==false)
-                        {
-                           logger.warn("DB Column not set for file " + fileDetails.getFileName() + " and filed " + fileRules1.getDataField());
-                           isErrorPrint=true;
-                        }
-                     }else
+                     Map.Entry<String, FileRules> entry6 = entries.next();
+                     FileRules fileRules1 = (FileRules) entry6.getValue();
+                     if (lineCounter == 0 && fileDetails.getContainsHeader().equalsIgnoreCase("Y"))
                      {
-                        String[] dbColumns = fileRules1.getDbColumn().split(",");
-                        for (int i = 0; i < dbColumns.length; i++)
-                        {
-                           String value=null;
-                           if(fileDetails.getLoadFormat().equalsIgnoreCase("DELIMITED")){
-                              value=lineArr[arrCounter].trim();
-                           }else if(fileDetails.getLoadFormat().equalsIgnoreCase("FIXED")){
-                              value = line.substring(fileRules1.getStartPos() - 1, fileRules1.getEndPos()).trim();
+                        logger.warn("Avoiding first row to add in db because it's header");
+                     }
+                     else
+                     {
+                        if(fileRules1.getDbColumn()==null || fileRules1.getDbColumn().equalsIgnoreCase("")){
+                           if(isErrorPrint==false)
+                           {
+                              logger.warn("DB Column not set for file " + fileDetails.getFileName() + " and filed " + fileRules1.getDataField());
+                              isErrorPrint=true;
                            }
-                           if(fileRules1.getIsRequired().equalsIgnoreCase("Y")){
-                              if(value==null || value.equalsIgnoreCase("")){
-                                 logger.info("Value not available for required DB Column " + fileRules1.getDbColumn());
+                        }else
+                        {
+                           String[] dbColumns = fileRules1.getDbColumn().split(",");
+                           for (int i = 0; i < dbColumns.length; i++)
+                           {
+                              String value=null;
+                              if(fileDetails.getLoadFormat().equalsIgnoreCase("DELIMITED")){
+                                 value=lineArr[arrCounter].trim();
+                              }else if(fileDetails.getLoadFormat().equalsIgnoreCase("FIXED")){
+                                 value = line.substring(fileRules1.getStartPos() - 1, fileRules1.getEndPos()).trim();
+                              }
+                              if(fileRules1.getIsRequired().equalsIgnoreCase("Y")){
+                                 if(value==null || value.equalsIgnoreCase("")){
+                                    logger.info("Value not available for required DB Column " + fileRules1.getDbColumn());
+                                 }else
+                                 {
+                                    if(fileRules1.getNeedToEncrypt().equalsIgnoreCase("Y"))
+                                    {
+                                       lineLst.add(EncryDecryAES.decrypt(value,ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "ENCRY_DECRY_KEY")));
+                                    }else{
+                                       lineLst.add(value);
+                                    }
+                                 }
                               }else
                               {
                                  if(fileRules1.getNeedToEncrypt().equalsIgnoreCase("Y"))
@@ -328,32 +337,25 @@ public class FileUploader
                                     lineLst.add(value);
                                  }
                               }
-                           }else
-                           {
-                              if(fileRules1.getNeedToEncrypt().equalsIgnoreCase("Y"))
-                              {
-                                 lineLst.add(EncryDecryAES.decrypt(value,ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "ENCRY_DECRY_KEY")));
-                              }else{
-                                 lineLst.add(value);
-                              }
                            }
                         }
                      }
+                     arrCounter ++;
+                  }catch (Exception e){
+                     mailAlertMsg.append("While reading file Data in FileUploader.processFile" +e.getMessage()+"\n");
+                     logger.error("While reading file Data in FileUploader.processFile" +e.getMessage());
+                     e.printStackTrace();
                   }
-                  arrCounter ++;
-               }catch (Exception e){
-               mailAlertMsg.append("While reading file Data in FileUploader.processFile" +e.getMessage()+"\n");
-               logger.error("While reading file Data in FileUploader.processFile" +e.getMessage());
-               e.printStackTrace();
-            }
+
                }
+               lineCounter ++;
 
                if(lineLst.size()>0){
                   inLst.add(lineLst);
                }
-            }else{
-               System.out.println("Line is empty");
-            }
+               }else{
+                  System.out.println("Line is empty");
+               }
          }
          if(inLst.size()>0)
          {

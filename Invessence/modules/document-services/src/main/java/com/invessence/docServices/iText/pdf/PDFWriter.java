@@ -3,6 +3,8 @@ package com.invessence.docServices.iText.pdf;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
+
+import com.invessence.custody.uob.data.OwnerTaxationDetails;
 import com.invessence.service.bean.documentServices.iText.PDFFileRules;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.*;
@@ -118,9 +120,82 @@ try
          if (field.getType().getName().contains("java.util.List"))
          {
             System.out.println("Its :List");
+//            if(returnType.toString().equalsIgnoreCase("java.util.List<com.invessence.custody.uob.data.OwnerTaxationDetails>")){
+               System.out.println("Its List");
+//            field.getG
+            //.substring(field.getGenericSignature().lastIndexOf("/")+1,field.getGenericSignature().indexOf(";"));
+            getListObjectValues(field.get(obj),fieldValues,field.getName() );
+//            }
          }
       }
             System.out.println("Avoided properties of due to empty or null value : (" + sb + ")");
+      return fieldValues;
+   }
+
+   private static void getListObjectValues(Object object, HashMap<String, Object> fieldValues, String name) throws NoSuchFieldException, IllegalAccessException
+   {
+
+      if(name.equals("ownerTaxationDetails")){
+
+         List<OwnerTaxationDetails> lst=(List<OwnerTaxationDetails>)object;
+         int i=1;
+         int ib=1;
+         for(OwnerTaxationDetails ownerTaxationDetails: lst){
+            System.out.println("ownerTaxationDetails = " + ownerTaxationDetails);
+            getMemberFieldsCollection(ownerTaxationDetails,fieldValues,""+i);
+            if(ownerTaxationDetails!=null && ownerTaxationDetails.getTinUnavailableReason()!=null && ownerTaxationDetails.getTinUnavailableReason().equals("B")){
+               fieldValues.put("tinUnavailableValueB"+ib,ownerTaxationDetails.getTinUnavailableValue());
+               fieldValues.put("jurisdictionOfTaxResidenceB"+ib,ownerTaxationDetails.getJurisdictionOfTaxResidence());
+               ib++;
+            }
+            i++;
+         }
+      }
+   }
+
+   private static HashMap<String, Object> getMemberFieldsCollection(Object obj, HashMap<String, Object> fieldValues, String appender) throws IllegalAccessException,
+      NoSuchFieldException
+   {
+      if(fieldValues==null){fieldValues = new HashMap<String, Object>();}
+      Class<?> objClass = obj.getClass();
+      StringBuilder sb = new StringBuilder();
+      Field[] fields = objClass.getDeclaredFields();
+      for (Field field : fields)
+      {
+         field.setAccessible(true);
+         if (field.getType().getName().contains("com.invessence.custody.uob.data"))
+         {
+            if (field.get(obj) != null)
+            {
+               getMemberFields(field.get(obj), fieldValues);
+            }
+         }
+         else if (field.getType().getName().contains("java.lang"))
+         {
+
+            Object value = field.get(obj);
+            if (field.get(obj) == null)
+            {
+               sb.append(field.getName() + ", ");
+            }
+            else
+            {
+               fieldValues.put(field.getName()+appender, field.get(obj));
+            }
+
+         }
+//         if (field.getType().getName().contains("java.util.List"))
+//         {
+//            System.out.println("Its :List");
+////            if(returnType.toString().equalsIgnoreCase("java.util.List<com.invessence.custody.uob.data.OwnerTaxationDetails>")){
+//            System.out.println("Its List");
+////            field.getG
+//            //.substring(field.getGenericSignature().lastIndexOf("/")+1,field.getGenericSignature().indexOf(";"));
+//            getListObjectValues(field.get(obj),fieldValues,field.getName() );
+////            }
+//         }
+      }
+      System.out.println("Avoided properties of due to empty or null value : (" + sb + ")");
       return fieldValues;
    }
 

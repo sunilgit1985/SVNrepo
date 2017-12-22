@@ -11,6 +11,7 @@ public class AccountDetails
    private String caseNumber;
    private Long advisorId;
    private String acctTypeId;
+   private String acctTypeVal;
 
    private AccountMiscDetails accountMiscDetails;
 
@@ -18,6 +19,15 @@ public class AccountDetails
       setAccountMiscDetails(new AccountMiscDetails());
    }
 
+   public String getAcctTypeVal()
+   {
+      return acctTypeVal;
+   }
+
+   public void setAcctTypeVal(String acctTypeVal)
+   {
+      this.acctTypeVal = acctTypeVal;
+   }
 
    public AccountMiscDetails getAccountMiscDetails()
    {
@@ -99,9 +109,11 @@ public class AccountDetails
          ", caseNumber='" + caseNumber + '\'' +
          ", advisorId=" + advisorId +
          ", acctTypeId='" + acctTypeId + '\'' +
+         ", acctTypeVal='" + acctTypeVal + '\'' +
          ", accountMiscDetails=" + accountMiscDetails +
          '}';
    }
+
    public Boolean isJointAccount()
    {
       if(getAcctTypeId()!=null)

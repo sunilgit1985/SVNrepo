@@ -16,6 +16,7 @@ public class OwnerDetails
    private String fullName;
    private String gender;
    private String dob;
+   private String dobDDMMYYYY;
    private String countryOfBirth;
    private String emailAddress;
    private String physicalAddressStreet1;
@@ -431,6 +432,16 @@ public class OwnerDetails
       this.mailingAddressCountry = mailingAddressCountry;
    }
 
+   public String getDobDDMMYYYY()
+   {
+      return dobDDMMYYYY;
+   }
+
+   public void setDobDDMMYYYY(String dobDDMMYYYY)
+   {
+      this.dobDDMMYYYY = dobDDMMYYYY;
+   }
+
    @Override
    public String toString()
    {
@@ -444,6 +455,7 @@ public class OwnerDetails
          ", fullName='" + fullName + '\'' +
          ", gender='" + gender + '\'' +
          ", dob='" + dob + '\'' +
+         ", dobDDMMYYYY='" + dobDDMMYYYY + '\'' +
          ", countryOfBirth='" + countryOfBirth + '\'' +
          ", emailAddress='" + emailAddress + '\'' +
          ", physicalAddressStreet1='" + physicalAddressStreet1 + '\'' +
