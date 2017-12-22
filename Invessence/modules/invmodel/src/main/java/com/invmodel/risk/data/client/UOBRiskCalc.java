@@ -58,10 +58,10 @@ public class UOBRiskCalc extends RiskCalc
       {
          Integer retirementage = userRiskProfile.getDefaultDoubleValue(RiskConst.RETIREMENTAGE, 65.0).intValue();
          withdrawlperiod = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWLAGE, defaultWithdrawl).intValue();
-         retirementage = (retirementage <= 0) ? 0 : retirementage;
+         age = (age <= 0) ? 30 : age;
          withdrawlperiod = (withdrawlperiod <= 0) ? 0 : withdrawlperiod;
          calcDuration = (retirementage - age <= 0) ? 0 : (retirementage - age);
-         calcDuration += withdrawlperiod;
+         calcDuration += (withdrawlperiod - age);
          return calcDuration;
       }
       if (goal == RiskConst.GOALS.RETIRED)
@@ -100,7 +100,8 @@ public class UOBRiskCalc extends RiskCalc
       Integer duration;
       try
       {
-         duration = getUOBDuration(age, horizon);
+         //duration = getUOBDuration(age, horizon);
+         duration = horizon;
          Double interestRate = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWLRATE, 0.04);
          Double investment = userRiskProfile.getTotalInvestment(duration);
          Double presentvalue = presentValue(investment,interestRate,duration);

@@ -598,10 +598,8 @@ public class UserRiskProfile
    public Double getTotalInvestment(Integer duration)
    {
 
-      Double investment = riskData.containsValue(RiskConst.INITIALINVESTMENT) ?
-         riskData.get(RiskConst.INITIALINVESTMENT).getAnswerDouble() : 0.0;
-      Double recurring = riskData.containsValue(RiskConst.RECURRINGINVESTMENT) ?
-         riskData.get(RiskConst.RECURRINGINVESTMENT).getAnswerDouble() : 0.0;
+      Double investment = getDefaultDoubleValue(RiskConst.INITIALINVESTMENT, 100000.0);
+      Double recurring = getDefaultDoubleValue(RiskConst.RECURRINGINVESTMENT, 0.0);
       if (investment == null || investment <= 0.0)
       {
          return investment;
@@ -609,19 +607,18 @@ public class UserRiskProfile
 
 
       Integer horizon;
-      if (duration == null) {
+      if (duration != null) {
          horizon = duration;
       }
       else {
-         horizon = riskData.containsValue(RiskConst.HORIZON) ?
-            riskData.get(RiskConst.HORIZON).getAnswerInt() : 0;
+         horizon = getDefaultHorizon();
       }
       if (horizon == null || horizon <= 0) {
          return investment;
       }
 
       String term = riskData.containsValue(RiskConst.RECURRINGTERM) ?
-         riskData.get(RiskConst.RECURRINGTERM).getAnswer() : null;
+         riskData.get(RiskConst.RECURRINGTERM).getAnswer() : RiskConst.INVESTMENTTERMS.YEARLY.toString();
       Double recurringperiod = 1.0;
       if (term != null)
       {
