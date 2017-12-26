@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 /**
  * Created by prashant on 11/10/2017.
  */
-public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
+public class RiskDAO extends JdbcDaoSupport implements Serializable
 {
 
    DBConnectionProvider dbconnection = DBConnectionProvider.getInstance();
@@ -27,7 +27,7 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       if (ds == null)
          return;
 
-      RiskFetchSP sp = new RiskFetchSP(ds, "sel_advisor_risk_master", 1);
+      RiskSP sp = new RiskSP(ds, "sel_advisor_risk_master", 1);
       Map outMap = sp.fetchRiskMaster(advisorMaster.getAdvisor());
       try
       {
@@ -80,7 +80,7 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       if (advisordata == null)
          return;
 
-      RiskFetchSP sp = new RiskFetchSP(ds, "sel_advisor_risk_mapping", 1);
+      RiskSP sp = new RiskSP(ds, "sel_advisor_risk_mapping", 1);
       Map outMap = sp.fetchRiskMapping(advisordata.getAdvisor());
       try
       {
@@ -129,7 +129,7 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       if (riskprofile == null)
          return;
 
-      RiskFetchSP sp = new RiskFetchSP(ds, "sel_user_risk_profile", 2);
+      RiskSP sp = new RiskSP(ds, "sel_user_risk_profile", 2);
       Map outMap = sp.fetchRiskData(riskprofile.getAcctnum());
       try
       {
@@ -169,7 +169,7 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       if (ds == null)
          return;
 
-      RiskFetchSP sp = new RiskFetchSP(ds, "sel_user_risk_score", 2);
+      RiskSP sp = new RiskSP(ds, "sel_user_risk_score", 2);
       Map outMap = sp.fetchRiskScores(riskdata.getAcctnum());
       try
       {
@@ -203,6 +203,31 @@ public class RiskFetchDAO extends JdbcDaoSupport implements Serializable
       catch (Exception ex) {
 
       }
+   }
+
+   public void deleteRiskProfile(UserRiskProfile data) {
+      if (ds == null)
+         return;
+
+      RiskSP sp = new RiskSP(ds, "del_user_risk_profile", 10);
+      sp.deleteRiskProfile(data.getAcctnum());
+
+   }
+
+   public void saveRiskData(UserRiskProfile data) {
+      if (ds == null)
+         return;
+
+      deleteRiskProfile(data);
+
+      RiskSP sp1 = new RiskSP(ds, "save_user_risk_profile", 11);
+      sp1.saveRiskProfile(data);
+
+      RiskSP sp2 = new RiskSP(ds, "save_user_risk_score", 12);
+      sp2.saveRiskScore(data);
+
+      RiskSP sp3 = new RiskSP(ds, "sav_user_risk_questions", 13);
+      sp3.saveOrigRiskData(data);
    }
 
 }

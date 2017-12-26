@@ -15,12 +15,6 @@ public class UOBRiskCalc extends RiskCalc
    public UOBRiskCalc(UserRiskProfile userRiskProfile)
    {
       super(userRiskProfile);
-      if (userRiskProfile != null)
-      {
-         ageTimeFormula(userRiskProfile.getAge(), userRiskProfile.getHorizon());
-         calculate(1);  // Calculate First year
-      }
-
    }
 
    public UOBRiskCalc(UserRiskProfile userRiskProfile, Long acctnum)
@@ -96,20 +90,57 @@ public class UOBRiskCalc extends RiskCalc
    @Override
    public Double ageTimeFormula(Integer age, Integer horizon)
    {
-      Double value = userRiskProfile.getMaxScore();
+      Double maxScore = userRiskProfile.getMaxScore();
+      Double value = maxScore;
       Integer duration;
       try
       {
-         //duration = getUOBDuration(age, horizon);
+         /* Formula
+         Input values
+         B5. Retirement Age: Age +_ Horizon (Default RETIREMENTAGE from property.
+         B6. Current Age: Age
+         B7. When do expect to start withdrawing funds for this goal? (years): Formula (B5 - B6)
+         B8. Initial/Current investment amount ($): Initial Investment
+         B9. Intended Contribution ($ p.a.): Initial Investment
+         B10. Number of Years of additional contribution (years): Addition Contribution Years
+         B11. When I start withdrawing funds for this goal,
+            I intend to withdraw the amount over the following number of years: Inferred based on goals
+         B12. Goal Duration: = =MAX(MIN(ROUND((B7-PV(0.04,B10,B9)/B8*B10/2)+B11/2,0),30),2)
+         I. Risk Percentile: = MIN((B12-2)/28*100,100)
+         */
+
+         RiskConst.GOALS goal = RiskConst.GOALS.valueOf(userRiskProfile.getAnswer(RiskConst.GOAL));
+
          duration = horizon;
+         Double b5 = userRiskProfile.getDefaultDoubleValue(RiskConst.RETIREMENTAGE, 67.0);
+         Double b6 = age.doubleValue();
+
+         Double b7;
+         if (goal.equals(RiskConst.GOALS.RETIRED)) {
+            b7 = 0.0;
+         }
+         else
+         {
+            b7 = (horizon != null) ? horizon : b5 - age;
+            b7 = (b7 < 0.0) ? 0.0 : b7; // Cannot be negative.
+         }
+         Double b8 = userRiskProfile.getAnswerDouble(RiskConst.INITIALINVESTMENT);
+         Double b9 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGINVESTMENT);
+         Double b10 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGPERIOD);
+
+         Double b11 = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWALPERIOD, 0.0);
          Double interestRate = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWLRATE, 0.04);
-         Double investment = userRiskProfile.getTotalInvestment(duration);
-         Double presentvalue = presentValue(investment,interestRate,duration);
-         return value;
+         Double presentvalue = presentValue(b8,interestRate,duration);
+         Double b12 = Math.max(Math.min(Math.round((b7-presentvalue/b8*b10/2)+b11/2),30.0),2.0);
+
+         Double b13 = Math.min((b12-2)/28*maxScore,maxScore);
+         setRisk0(b13);
+         return b13;
       }
       catch (Exception ex)
       {
-         value = 100.0;
+         value = maxScore;
+         setRisk0(value);
       }
       return value;
    }

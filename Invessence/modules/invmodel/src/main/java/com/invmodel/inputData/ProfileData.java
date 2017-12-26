@@ -7,7 +7,7 @@ import com.invmodel.asset.data.*;
 import com.invmodel.model.fixedmodel.data.FMData;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.Portfolio;
-import com.invmodel.risk.data.UserRiskProfile;
+import com.invmodel.risk.data.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -148,6 +148,10 @@ public class
    public void setAcctnum(Long acctnum)
    {
       this.acctnum = acctnum;
+      if (riskProfile != null)
+      {
+         riskProfile.setAcctnum(acctnum);
+      }
    }
 
    public String getClientAccountID()
@@ -225,6 +229,9 @@ public class
    public void setGoal(String goal)
    {
       this.goal = goal;
+      if (riskProfile != null) {
+         riskProfile.setAnswer(RiskConst.GOAL, goal);
+      }
       // In case the goal is reselected, we want to reset the tax type.
       // Introduced 4/4/2015 , now taxable is a flag on Interface.
       // determineTaxable(getGoal(), getAccountType());

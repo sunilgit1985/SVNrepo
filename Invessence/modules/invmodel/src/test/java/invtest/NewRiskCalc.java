@@ -9,7 +9,7 @@ import com.invmodel.inputData.ProfileData;
 import com.invmodel.model.ModelUtil;
 import com.invmodel.model.dynamic.PortfolioOptimizer;
 import com.invmodel.portfolio.data.*;
-import com.invmodel.risk.dao.RiskFetchDAO;
+import com.invmodel.risk.dao.RiskDAO;
 import com.invmodel.risk.data.*;
 import com.invmodel.risk.data.client.UOBRiskCalc;
 
@@ -19,7 +19,7 @@ import com.invmodel.risk.data.client.UOBRiskCalc;
 public class NewRiskCalc
 {
 
-   static RiskFetchDAO riskfetchDAO = new RiskFetchDAO();
+   static RiskDAO riskfetchDAO = new RiskDAO();
    static ModelUtil modelUtil = ModelUtil.getInstance();
    static UserRiskProfile userRiskProfile;
    static AdvisorRiskMaster advisorRiskMaster;
@@ -76,8 +76,9 @@ public class NewRiskCalc
 
       Integer key = 0;
       for (Integer age = 0; age < 100; age+=5) {
-         for (Integer horizon = 1; horizon < 100; horizon+=5) {
+         for (Integer horizon = 1; horizon < 35; horizon+=5) {
             riskCalc.ageTimeFormula(age,horizon);
+/*
             for (Integer loop = 0; loop < possibleChoices.length; loop++)
             {
                for (Integer q = startingQuestion; q <= lastQuestion; q++)
@@ -85,15 +86,17 @@ public class NewRiskCalc
                   riskCalc.setQuestionsRisk(q, possibleChoices[loop][q-1], null);
                }
                riskCalc.calculate(0);
-/*
+
+****
                AssetClass[] aamc = modelUtil.buildAllocation(userRiskProfile, profileData);
                Portfolio[] pfclass = modelUtil.buildPortfolio(aamc, userRiskProfile, profileData);
 
                PrintData printData = new PrintData(profileData, aamc, pfclass);
                printDataMap.put(key.toString(), printData);
-*/
+******
 
             }
+         */
          }
       }
       try

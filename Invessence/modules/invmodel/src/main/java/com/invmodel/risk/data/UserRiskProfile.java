@@ -2,8 +2,7 @@ package com.invmodel.risk.data;
 
 import java.util.*;
 
-import com.invmodel.risk.dao.RiskFetchDAO;
-import com.invmodel.risk.data.RiskConst;
+import com.invmodel.risk.dao.RiskDAO;
 
 
 /**
@@ -18,11 +17,11 @@ public class UserRiskProfile
    private Map<Integer, RiskScore> riskScores;
    private AdvisorRiskMaster advisorRiskMaster;
 
-   private RiskFetchDAO riskfetchDAO;
+   private RiskDAO riskDAO;
 
    public UserRiskProfile()
    {
-      riskfetchDAO = new RiskFetchDAO();
+      riskDAO = new RiskDAO();
       riskData = new HashMap<String, UserRiskData>();
       riskScores = new HashMap<Integer, RiskScore>();
       knockout = 0;
@@ -31,7 +30,7 @@ public class UserRiskProfile
 
    public UserRiskProfile(AdvisorRiskMaster advisorRiskMaster)
    {
-      riskfetchDAO = new RiskFetchDAO();
+      riskDAO = new RiskDAO();
       riskData = new HashMap<String, UserRiskData>();
       riskScores = new HashMap<Integer, RiskScore>();
       this.knockout = 0;
@@ -42,7 +41,7 @@ public class UserRiskProfile
 
    public UserRiskProfile(String advisor, Long acctnum)
    {
-      riskfetchDAO = new RiskFetchDAO();
+      riskDAO = new RiskDAO();
       riskData = new HashMap<String, UserRiskData>();
       riskScores = new HashMap<Integer, RiskScore>();
       if (advisorRiskMaster == null) {
@@ -104,11 +103,15 @@ public class UserRiskProfile
       collectUserData();
    }
 
+   public void saveAllData() {
+      riskDAO.saveRiskData(this);
+   }
+
    public void collectUserData() {
       if (acctnum != null)
       {
-         riskfetchDAO.fetchRiskData(this);
-         riskfetchDAO.fetchRiskScores(this);
+         riskDAO.fetchRiskData(this);
+         riskDAO.fetchRiskScores(this);
       }
    }
 

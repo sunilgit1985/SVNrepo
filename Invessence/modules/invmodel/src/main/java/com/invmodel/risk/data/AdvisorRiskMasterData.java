@@ -1,7 +1,6 @@
 package com.invmodel.risk.data;
 
 import com.invessence.converter.SQLData;
-import com.invmodel.risk.dao.RiskFetchDAO;
 
 /**
  * Created by prashant on 11/9/2017.

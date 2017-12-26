@@ -2,7 +2,7 @@ package com.invmodel.risk.data;
 
 import java.util.*;
 
-import com.invmodel.risk.dao.RiskFetchDAO;
+import com.invmodel.risk.dao.RiskDAO;
 
 /**
  * Created by prashant on 11/9/2017.
@@ -13,7 +13,7 @@ public class AdvisorRiskMaster
    private Map<String, AdvisorRiskMasterData> masterdata;
    private Map<Integer, AdvisorRiskMapping> mappingdata;
 
-   private RiskFetchDAO riskfetchDAO = new RiskFetchDAO();
+   private RiskDAO riskfetchDAO = new RiskDAO();
 
    public AdvisorRiskMaster()
    {

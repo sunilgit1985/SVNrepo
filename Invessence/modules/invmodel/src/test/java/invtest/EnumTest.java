@@ -1,12 +1,5 @@
 package invtest;
 
-import com.invmodel.asset.data.AssetClass;
-import com.invmodel.inputData.ProfileData;
-import com.invmodel.model.ModelUtil;
-import com.invmodel.portfolio.data.Portfolio;
-import com.invmodel.risk.dao.RiskFetchDAO;
-import com.invmodel.risk.data.*;
-
 /**
  * Created by prashant on 11/13/2017.
  */
