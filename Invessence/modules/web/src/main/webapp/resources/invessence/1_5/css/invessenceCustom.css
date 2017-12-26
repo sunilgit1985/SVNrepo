@@ -4939,6 +4939,7 @@ td.bullet_td span {
 .portfolio_selection .sapn_review {
     position: relative;
     left: -34px;
+    z-index:1;
 }
 .ui-carousel-page-links {
     display: none!important;
@@ -5613,7 +5614,30 @@ div#leftpanel {
     right: 10px;
     top: 10px;
 }
-
+.risk_meter .highcharts-data-labels {
+    top: 45px !important;
+}
+/** 26/12/2017 **/
+.textline-height {
+    line-height: 28px;
+}
+.checkBoxOpt .Container10 {
+    width: 3%;
+    margin-top: -4px;
+}
+.Container10.fistCheckOpt {
+    margin-top: 8px;
+}
+.checkBoxOpt .ui-chkbox-box .ui-icon-check {
+    background-color: #a4332f;
+}
+.checkBoxOpt .ui-chkbox .ui-state-hover,.checkBoxOpt .ui-chkbox .ui-state-active
+{border-color: #a4332f;}
+.ui-chkbox .ui-state-focus {
+    outline: none;}
+.checkBoxOpt .select_item .ui-autocomplete {
+    width: 70%;
+}
 
 
 

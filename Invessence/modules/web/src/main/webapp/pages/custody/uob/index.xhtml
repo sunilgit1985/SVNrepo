@@ -54,9 +54,9 @@
                                     </div>
                                 </ui:fragment>
                                 <p:panel id="extCstmQue" style="border-color: transparent;" class="Container100" >
-                                <div class="Container100">
+                                <div class="Container100 margin-top">
                                     <ui:fragment rendered="#{uobCustodyBean.dsplExtIndAcctQue}">
-                                    <div class="Container70">
+                                    <div class="Container70 textline-height">
                                         <div class="Container100">
                                             <span class="title_line">Do you have an existing Individual Securities Trading account on UOBKH ? </span></div>
                                     </div>
@@ -70,7 +70,7 @@
                                     </div>
                                     </ui:fragment>
                                     <ui:fragment rendered="#{uobCustodyBean.dsplExtJntAcctQue}">
-                                        <div class="Container70">
+                                        <div class="Container70 textline-height">
                                             <div class="Container100">
                                                 <span class="title_line">Do you have an existing Joint Securities Trading account on UOBKH ? </span></div>
                                         </div>
@@ -85,7 +85,7 @@
                                     </ui:fragment>
                                 </div>
                                 </p:panel>
-                                <p:panel id="extCstmParm" style="border-color: transparent;" class="Container100" >
+                                <p:panel id="extCstmParm" style="border-color: transparent;" class="Container100 margin-top" >
                                     <div class="Container100 margin-top">
                                         <ui:fragment rendered="#{uobCustodyBean.dsplExtIndAcctInp}">
                                             <div class="Container100"><span class="title_line">
@@ -115,24 +115,28 @@
                                         </ui:fragment>
                                     </div>
                                 </p:panel>
-                                <div class="acc_holder_dtl_block">
-                                    <div class="Container50 Responsive50 select_item margin-top">
+                                <div class="acc_holder_dtl_block checkBoxOpt">
+                                    <div class="Container100 Responsive50 select_item margin-top">
+                                        <div class="Container10 fistCheckOpt">
                                         <p:selectManyCheckbox id="introRepChY">
                                             <f:selectItem itemLabel="" itemValue="Yes"/>
                                         </p:selectManyCheckbox>
+                                            </div>
+                                        <div class="Container90">
                                         My preferred Trading Representative
                                         <p:autoComplete id="slsPrnNm" dropdown="true"
                                                         value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
                                                         completeMethod="#{uobCustodyBean.completeRepText}">
                                     </p:autoComplete>
+                                            </div>
                                     </div>
                                 </div>
-                                <div class="Container50 margin-top select_item ">
-                                    <div class="Container10"><span class="title_line">
+                                <div class="Container100 margin-top select_item checkBoxOpt ">
+                                    <div class="Container10">
                                         <p:selectManyCheckbox id="introRepChN">
                                             <f:selectItem itemLabel="" itemValue="No"/>
-                                        </p:selectManyCheckbox></span></div>
-                                    <div class="Container90"><span class="title_line">I/We do not have a Trading Representative</span></div>
+                                        </p:selectManyCheckbox></div>
+                                    <div class="Container90">I/We do not have a Trading Representative</div>
                                 </div>
                                 <div class="Container100 pre_next_btn">
                                     <div class="Container50 next_btn">
