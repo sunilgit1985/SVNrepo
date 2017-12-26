@@ -23,63 +23,7 @@
                                               value="#{uobCustodyBean.introError}" escape="false"/>
                             </p:panel>
                             <div class="go-bottom">
-                                <div class="Container100">
-                                    <div class="Container70">
-                                        <div class="Container100">
-                                            <span class="title_line">Do you have an existing Securities Trading account on UOBKH? </span></div>
-                                    </div>
-                                    <div class="Container20 label_opacity">
-                                        <p:selectOneRadio id="acctCat" value="#{uobCustodyBean.acctCat}">
-                                            <p:ajax listener="#{uobCustodyBean.onChangeValue0}"
-                                                    update="extCstmParm"/>
-                                            <f:selectItem itemLabel="Yes" itemValue="Yes"></f:selectItem>
-                                            <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
-                                        </p:selectOneRadio>
-                                    </div>
-                                </div>
-                                <p:panel id="extCstmParm" style="border-color: transparent;" class="Container100" >
-                                    <div class="Container100 margin-top">
-                                        <ui:fragment rendered="#{uobCustodyBean.dsplExtIndAcctCat}">
-                                            <div class="Container70 ">
-                                                <div class="Container100 ">
-                                                    <span class="title_line">Is it Individual Account? </span>
-                                                </div>
-                                            </div>
-                                            <div class="Container20 label_opacity">
-                                                <p:selectOneRadio id="extAcctIndRad" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.isExistingIndividualAcct}">
-                                                    <p:ajax listener="#{uobCustodyBean.onChangeValue}"
-                                                            update="extCstmParm"/>
-                                                    <f:selectItem itemLabel="Yes" itemValue="Yes"></f:selectItem>
-                                                    <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
-                                                </p:selectOneRadio>
-                                            </div>
-                                        </ui:fragment>
-                                        <ui:fragment rendered="#{uobCustodyBean.dsplExtIndAcctInp}">
-                                            <div class="Container50 margin-top">
-                                                <p:inputText id="extIndInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
-                                                             placeholder="Enter your existing  Securities Trading account number" maxlength="7"/>
-                                                <label for="extIndInp">Securities Trading account number</label>
-                                            </div>
-                                        </ui:fragment>
-                                    </div>
-                                    <div class="Container100 margin-top ">
-                                        <ui:fragment rendered="#{uobCustodyBean.dsplExtJntAcctCat}">
-                                            <div class="Container50 margin-top">
-                                                <p:inputText id="extJntInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
-                                                             placeholder="Enter your existing Joint UOBKH account number" maxlength="7"/>
-                                                <label for="extJntInp">Joint UOBKH account number</label>
-                                            </div>
-                                        </ui:fragment>
-                                    </div>
-                                </p:panel>
-
                                 <ui:fragment rendered="true">
-                                    <div class="Container50 margin-top select_item ">
-                                        <div class="Container100"><span class="title_line">Sales Person Name</span></div>
-                                        <p:autoComplete id="slsPrnNm" dropdown="true" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
-                                                        completeMethod="#{uobCustodyBean.completeRepText}" >
-                                        </p:autoComplete>
-                                    </div>
                                     <div class="Container100 margin-top">
                                         <span class="title_line">What type of account would you like to open?</span>
                                     </div>
@@ -91,24 +35,105 @@
                                             </div>
                                             <div class="Container10 textAlign">
                                                 <p:selectOneRadio id="indvRad" value="#{uobCustodyBean.selIndAcctTyp}">
-                                                    <p:ajax listener="#{uobCustodyBean.onSelAcctTypAsInd}" update=""/>
+                                                    <p:ajax listener='#{uobCustodyBean.onSelAcctTypAsInd("ACINDIV")}' update="@form"/>
                                                     <f:selectItem itemLabel="" itemValue="Individual"></f:selectItem>
                                                 </p:selectOneRadio>
                                             </div>
                                         </p:panel>
-                                        <p:panel id="uobjointacctype" styleClass="Container50" rendered="false">
+                                        <p:panel id="uobjointacctype" styleClass="Container50" rendered="true">
                                             <div class="Container80 label_opacity">
                                                 <label>Joint - Alternate Account</label>
                                             </div>
                                             <div class="Container10 textAlign">
                                                 <p:selectOneRadio id="jointRad" value="#{uobCustodyBean.selJntAcctTyp}">
-                                                    <p:ajax listener="#{uobCustodyBean.onSelAcctTypAsJnt}" update=""/>
+                                                    <p:ajax listener='#{uobCustodyBean.onSelAcctTypAsInd("ACJOINT")}' update="@form"/>
                                                     <f:selectItem itemLabel="" itemValue="Joint"></f:selectItem>
                                                 </p:selectOneRadio>
                                             </div>
                                         </p:panel>
                                     </div>
                                 </ui:fragment>
+                                <p:panel id="extCstmQue" style="border-color: transparent;" class="Container100" >
+                                <div class="Container100">
+                                    <ui:fragment rendered="#{uobCustodyBean.dsplExtIndAcctQue}">
+                                    <div class="Container70">
+                                        <div class="Container100">
+                                            <span class="title_line">Do you have an existing Individual Securities Trading account on UOBKH ? </span></div>
+                                    </div>
+                                    <div class="Container20 label_opacity">
+                                        <p:selectOneRadio id="acctCatInd" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.isExistingIndividualAcct}">
+                                            <p:ajax listener="#{uobCustodyBean.onChangeValue0}"
+                                                    update="extCstmParm"/>
+                                            <f:selectItem itemLabel="Yes" itemValue="Yes"></f:selectItem>
+                                            <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
+                                        </p:selectOneRadio>
+                                    </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{uobCustodyBean.dsplExtJntAcctQue}">
+                                        <div class="Container70">
+                                            <div class="Container100">
+                                                <span class="title_line">Do you have an existing Joint Securities Trading account on UOBKH ? </span></div>
+                                        </div>
+                                        <div class="Container20 label_opacity">
+                                            <p:selectOneRadio id="acctCatJnt" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.isExistingIndividualAcct}">
+                                                <p:ajax listener="#{uobCustodyBean.onChangeValue0}"
+                                                        update="extCstmParm"/>
+                                                <f:selectItem itemLabel="Yes" itemValue="Yes"></f:selectItem>
+                                                <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
+                                            </p:selectOneRadio>
+                                        </div>
+                                    </ui:fragment>
+                                </div>
+                                </p:panel>
+                                <p:panel id="extCstmParm" style="border-color: transparent;" class="Container100" >
+                                    <div class="Container100 margin-top">
+                                        <ui:fragment rendered="#{uobCustodyBean.dsplExtIndAcctInp}">
+                                            <div class="Container100"><span class="title_line">
+                                            Individual Account applicant must be the same with existing UOBKH Individual Securities Account.
+                                            </span><span class="title_line">
+                                            Eg. Individual Account name with our record is Amy. Robo Account name must be opened as Amy only.
+                                            </span></div>
+                                            <div class="Container100 margin-top">
+                                                <p:inputText id="extIndInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
+                                                             placeholder="Enter your existing Individual UOBKH Securities Trading account number" maxlength="7"/>
+                                                <label for="extIndInp">Existing Individual UOBKH account number</label>
+                                            </div>
+                                        </ui:fragment>
+                                    </div>
+                                    <div class="Container100 margin-top ">
+                                        <ui:fragment rendered="#{uobCustodyBean.dsplExtJntAcctInp}">
+                                            <div class="Container100"><span class="title_line">
+                                            Alternate Account both applicants must be the same with existing UOBKH Joint Securities Account.
+                                            </span><span class="title_line">
+                                            Eg. Joint Account name with our record is Amy or Elise.Robo Account name must be opened as Amy or Elise/ Elise or Amy, but it can not be Amy or Calvin.
+                                            </span></div>
+                                            <div class="Container100 margin-top">
+                                                <p:inputText id="extJntInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
+                                                             placeholder="Enter your existing Joint UOBKH Securities Trading account number" maxlength="7"/>
+                                                <label for="extJntInp">Existing Joint UOBKH account number</label>
+                                            </div>
+                                        </ui:fragment>
+                                    </div>
+                                </p:panel>
+                                <div class="acc_holder_dtl_block">
+                                    <div class="Container50 Responsive50 select_item margin-top">
+                                        <p:selectManyCheckbox id="introRepChY">
+                                            <f:selectItem itemLabel="" itemValue="Yes"/>
+                                        </p:selectManyCheckbox>
+                                        My preferred Trading Representative
+                                        <p:autoComplete id="slsPrnNm" dropdown="true"
+                                                        value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
+                                                        completeMethod="#{uobCustodyBean.completeRepText}">
+                                    </p:autoComplete>
+                                    </div>
+                                </div>
+                                <div class="Container50 margin-top select_item ">
+                                    <div class="Container10"><span class="title_line">
+                                        <p:selectManyCheckbox id="introRepChN">
+                                            <f:selectItem itemLabel="" itemValue="No"/>
+                                        </p:selectManyCheckbox></span></div>
+                                    <div class="Container90"><span class="title_line">I/We do not have a Trading Representative</span></div>
+                                </div>
                                 <div class="Container100 pre_next_btn">
                                     <div class="Container50 next_btn">
                                         <p:commandLink id="introNxt"

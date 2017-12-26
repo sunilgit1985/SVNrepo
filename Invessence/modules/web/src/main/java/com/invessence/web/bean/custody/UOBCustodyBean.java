@@ -57,9 +57,12 @@ public class UOBCustodyBean
    private UOBDataMaster uobDataMaster;
    private PagesImpl pagemanager = new PagesImpl(10);
    private long beanAcctNum, beanLogonId;
-   private boolean dsplExtIndAcctCat = false, dsplExtIndAcctInp = false, dsplExtJntAcctCat = false, dsplExtJntAcctInp = false, dsplAcctTyp = false;
+   private boolean  dsplExtIndAcctInp = false,  dsplExtJntAcctInp = false, dsplAcctTyp = false;
+//   private boolean dsplExtJntAcctCat = false,dsplExtIndAcctCat = false,;
+   private boolean dsplExtIndAcctQue=false,dsplExtJntAcctQue=false;
    private boolean dspExtAcctPnl = false, dspNewAcctPnl = false, dspIntroAcctPnl = false, dsblSubmtBtn = true, dspJntTab = false;
-   private String acctCat, extAcctJnt, clientAcctId, slsPrsnNm, selIndAcctTyp, selJntAcctTyp;
+   private String extAcctJnt, clientAcctId, slsPrsnNm, selIndAcctTyp, selJntAcctTyp;
+//   private String acctCat;
    private Integer activeTab = 0;
    private boolean dsplOtrCntry = false, dsplIcNoInp = false, dsplPspNoInp = false, dsplSrcIncOtrs = false;
    private Date dtPriHldrDob;
@@ -94,10 +97,12 @@ public class UOBCustodyBean
       dsplPriHldrMlPnl = false;
       priHldrPhyAddr = null;
       priHldrMlAddr = null;
-      dsplExtIndAcctCat = false;
+//      dsplExtIndAcctCat = false;
       dsplExtIndAcctInp = false;
-      dsplExtJntAcctCat = false;
+//      dsplExtJntAcctCat = false;
       dsplExtJntAcctInp = false;
+      dsplExtIndAcctQue=false;
+      dsplExtJntAcctQue=false;
       dsplAcctTyp = false;
       dspExtAcctPnl = false;
       dspNewAcctPnl = false;
@@ -109,7 +114,7 @@ public class UOBCustodyBean
       dsplOtrCntry = false;
       dsplIcNoInp = false;
       dsplPspNoInp = false;
-      acctCat = null;
+//      acctCat = null;
       extAcctJnt = null;
       clientAcctId = null;
       slsPrsnNm = null;
@@ -266,7 +271,7 @@ public class UOBCustodyBean
       status = true;
       while (getPagemanager().getPage() <= getPagemanager().getMaxNoofPages())
       {
-         if (validate(getPagemanager().getPage(), getAcctCat(), false))
+         if (validate(getPagemanager().getPage(), uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct(), false))
          {
             if (getPagemanager().isLastPage())
             {
@@ -395,19 +400,49 @@ public class UOBCustodyBean
    {
       try
       {
-         if (getAcctCat().equalsIgnoreCase("yes") && uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null)
+         if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null)
          {
-            dsplExtIndAcctCat = true;
             if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("yes"))
             {
-               dsplExtIndAcctInp = true;
-               dsplExtJntAcctCat = false;
+               if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV"))
+               {
+                  dsplExtIndAcctQue = true;
+                  dsplExtIndAcctInp = true;
+                  dsplExtJntAcctQue = false;
+                  dsplExtJntAcctInp = false;
+               }
+               else if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT"))
+               {
+                  dsplExtIndAcctQue = false;
+                  dsplExtIndAcctInp = false;
+                  dsplExtJntAcctQue = true;
+                  dsplExtJntAcctInp = true;
+               }
             }
-            else
+            else if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
             {
-               dsplExtIndAcctInp = false;
-               dsplExtJntAcctCat = true;
+               if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV"))
+               {
+                  dsplExtIndAcctQue = true;
+                  dsplExtIndAcctInp = false;
+                  dsplExtJntAcctQue = false;
+                  dsplExtJntAcctInp = false;
+               }
+               else if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT"))
+               {
+                  dsplExtIndAcctQue = false;
+                  dsplExtIndAcctInp = false;
+                  dsplExtJntAcctQue = true;
+                  dsplExtJntAcctInp = false;
+               }
             }
+         }
+         else
+         {
+//            dsplExtIndAcctCat = false;
+            dsplExtIndAcctInp = false;
+//            dsplExtJntAcctCat = false;
+            dsplExtJntAcctInp = false;
          }
       }
       catch (Exception e)
@@ -421,21 +456,46 @@ public class UOBCustodyBean
    {
       try
       {
-         if (getAcctCat().equalsIgnoreCase("yes"))
+         if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()!=null)
          {
-            dsplExtIndAcctCat = true;
-            setReqType("ACCT_OPEN_EXISTING_USER");
+            if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("yes"))
+            {
+               if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV"))
+               {
+//                  dsplExtIndAcctCat = true;
+//                  dsplExtJntAcctCat = false;
+                  dsplExtIndAcctInp=true;
+                  dsplExtJntAcctInp=false;
+               }
+               if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT"))
+               {
+//                  dsplExtIndAcctCat = false;
+//                  dsplExtJntAcctCat = true;
+                  dsplExtIndAcctInp=false;
+                  dsplExtJntAcctInp=true;
+               }
+               setReqType("ACCT_OPEN_EXISTING_USER");
+            }
+            else if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("no"))
+            {
+//               dsplExtIndAcctCat = false;
+//               dsplExtJntAcctCat = false;
+               dsplExtIndAcctInp=false;
+               dsplExtJntAcctInp=false;
+               setReqType("ACCT_OPEN_NEW_USER");
+            }
+         }else{
+//            dsplExtIndAcctCat = false;
+//            dsplExtJntAcctCat = false;
+            dsplExtIndAcctInp=false;
+            dsplExtJntAcctInp=false;
+            setReqType(null);
          }
-         else
-         {
-            dsplExtIndAcctCat = false;
-            setReqType("ACCT_OPEN_NEW_USER");
-         }
-         uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
+//         uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
          uobDataMaster.getAccountDetails().getAccountMiscDetails().setSalesPersonName(null);
          uobDataMaster.getAccountDetails().getAccountMiscDetails().setExistingTradeAcctNumber(null);
-         dsplExtIndAcctInp = false;
-         dsplExtJntAcctCat = false;
+//         dsplExtIndAcctInp = false;
+//         dsplExtJntAcctInp = false;
       }
       catch (Exception e)
       {
@@ -451,35 +511,44 @@ public class UOBCustodyBean
          if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber() == null ||
             uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber() == "")
          {
-            setAcctCat("No");
             setReqType("ACCT_OPEN_NEW_USER");
-            uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
+            uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct("No");
          }
          else
          {
-            setAcctCat("Yes");
             setReqType("ACCT_OPEN_EXISTING_USER");
+            uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct("Yes");
+
          }
          setSelIndAcctTyp("Individual");
-         if (getAcctCat().equalsIgnoreCase("yes"))
-         {
-            dsplExtIndAcctCat = true;
-         }
-         else
-         {
-            dsplExtIndAcctCat = false;
-         }
          onChangeValue();
       }
    }
 
-   public void onSelAcctTypAsInd()
+   public void onSelAcctTypAsInd(String strAcctType)
    {
-      setSelJntAcctTyp(null);
-      uobDataMaster.getAccountDetails().setAcctTypeId("ACINDIV");
-      uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
-      System.out.println("selIndAcctTyp " + selIndAcctTyp);
-      System.out.println("selJntAcctTyp " + selJntAcctTyp);
+      if(strAcctType.equalsIgnoreCase("ACINDIV"))
+      {
+         setSelIndAcctTyp("Individual");
+         setSelJntAcctTyp(null);
+         dsplExtIndAcctQue=true;
+         dsplExtJntAcctQue=false;
+         uobDataMaster.getAccountDetails().setAcctTypeId("ACINDIV");
+         uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
+         uobDataMaster.getJointOwnersDetails().setOwnership(null);
+      }else if(strAcctType.equalsIgnoreCase("ACJOINT")){
+         setSelIndAcctTyp(null);
+         setSelJntAcctTyp("Joint");
+         dsplExtIndAcctQue=false;
+         dsplExtJntAcctQue=true;
+         uobDataMaster.getAccountDetails().setAcctTypeId("ACJOINT");
+         uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
+         uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
+      }
+      uobDataMaster.getAccountDetails().getAccountMiscDetails().setIsExistingIndividualAcct(null);
+      onChangeValue0();
+//      System.out.println("selIndAcctTyp " + selIndAcctTyp);
+//      System.out.println("selJntAcctTyp " + selJntAcctTyp);
    }
 
    public void onChngObj()
@@ -646,14 +715,14 @@ public class UOBCustodyBean
          saveActAdditionalDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails(), uobDataMaster.getAccountDetails().getAcctnum(), "ao_acct_misc_details");
          dspIntroAcctPnl = false;
          getPagemanager().setPage(0);
-         if (getAcctCat().equalsIgnoreCase("yes") &&
-            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null &&
-            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
-         {
-            setAcctCat("No");
-         }
+//         if (getAcctCat().equalsIgnoreCase("yes") &&
+//            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null &&
+//            uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
+//         {
+//            setAcctCat("No");
+//         }
 
-         if (getAcctCat().equalsIgnoreCase("yes"))
+         if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("yes"))
          {
             dspExtAcctPnl = true;
             dspNewAcctPnl = false;
@@ -663,7 +732,7 @@ public class UOBCustodyBean
             getPagemanager().setLastPageVisited(currentPage);
             getPagemanager().clearAllErrorMessage();
          }
-         else if (getAcctCat().equalsIgnoreCase("no"))
+         else if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("no"))
          {
             setPagemanager(new PagesImpl(10));
             Integer currentPage = getPagemanager().getPage();
@@ -702,36 +771,33 @@ public class UOBCustodyBean
    {
       Boolean dataOK = true;
       StringBuilder sb = new StringBuilder();
-      if (acctCat == null || acctCat == "")
+      if (!hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()))
       {
-         sb.append("Please select Existing securities trading account on UOBKH Yes/No.<br/>");
+         sb.append("Type of account like to open is required.<br/>");
       }
-      if (acctCat != null && acctCat.equalsIgnoreCase("yes"))
+      if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()))
       {
-         if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()))
-         {
-            sb.append("Please select Is it Individual Account Yes/No.<br/>");
+         if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV")){
+            sb.append("Please select Existing Individual Securities trading account on UOBKH Yes/No.<br/>");
+         }else if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT")){
+            sb.append("Please select Existing Joint Securities trading account on UOBKH Yes/No.<br/>");
          }
-         if (hasData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()) &&
-            !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber()))
+      }
+      if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null &&
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") &&
+         !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber())){
+         if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV"))
          {
-            if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("yes"))
-            {
-               sb.append("Enter your existing Securities Trading account number is required.<br/>");
-            }
-            else if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
-            {
-               sb.append("Enter your existing Joint UOBKH account number is required.<br/>");
-            }
+            sb.append("Enter your existing Individual UOBKH Securities Trading account number.<br/>");
+         }
+         else if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT"))
+         {
+            sb.append("Enter your existing Joint UOBKH Securities Trading account number.<br/>");
          }
       }
       if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
       {
          sb.append("Sales Person Name is required.<br/>");
-      }
-      if (!hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()))
-      {
-         sb.append("Type of account like to open is required.<br/>");
       }
       if (sb.length() > 0)
       {
@@ -881,9 +947,9 @@ public class UOBCustodyBean
    public void nextPage()
    {
       System.out.println("page current" + getPagemanager().getPage());
-      if (validate(getPagemanager().getPage(), getAcctCat(), false))
+      if (validate(getPagemanager().getPage(), uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct(), false))
       {
-         saveDetails(getPagemanager().getPage(), getAcctCat(), false);
+         saveDetails(getPagemanager().getPage(), uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct(), false);
          getPagemanager().clearAllErrorMessage();
          if (getPagemanager().getPage() + 1 == getPagemanager().getMaxNoofPages())
          {
@@ -895,12 +961,12 @@ public class UOBCustodyBean
          }
 
          if (getPagemanager().isLastPage() ||
-         (getAcctCat().equalsIgnoreCase("No") &&getPagemanager().getPage() == 9 ) ||
-         (getAcctCat().equalsIgnoreCase("Yes") &&getPagemanager().getPage() == 3 ))
+         (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9 ) ||
+         (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 3 ))
          {
-            if(getAcctCat().equalsIgnoreCase("Yes")){
+            if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes")){
                resetActiveTab(3);
-            }else  if(getAcctCat().equalsIgnoreCase("No"))
+            }else  if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
             {
                resetActiveTab(10);
             }
@@ -1457,7 +1523,7 @@ public class UOBCustodyBean
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.fullName", "Full Name is required!", null));
       }
-      if (acctCat.equalsIgnoreCase("No"))
+      if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
       {
          if (ownerDetails.getGender() == null || ownerDetails.getGender().equalsIgnoreCase("select"))
          {
@@ -1609,7 +1675,7 @@ public class UOBCustodyBean
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnf.requiredMsg", "Confirm Email address is required!", null));
       }
-      if(hasRequiredData(priHldrCnfEmail) && ownerDetails.getEmailAddress()!=priHldrCnfEmail){
+      if(hasRequiredData(priHldrCnfEmail) && !ownerDetails.getEmailAddress().equals(priHldrCnfEmail)){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnfMtch.requiredMsg", "Email address and Confirm Email address not matched!", null));
       }
@@ -1630,7 +1696,7 @@ public class UOBCustodyBean
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.fullName", "Full Name is required!", null));
       }
-      if (acctCat.equalsIgnoreCase("No"))
+      if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
       {
          if (ownerDetails.getGender() == null || ownerDetails.getGender().equalsIgnoreCase("select"))
          {
@@ -2707,7 +2773,7 @@ public class UOBCustodyBean
    public void prevDataForm()
    {
       dspDocUpdPnl = false;
-      if (getAcctCat().equalsIgnoreCase("yes"))
+      if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("yes"))
       {
          dspExtAcctPnl = true;
          dspNewAcctPnl = false;
@@ -2890,35 +2956,35 @@ public class UOBCustodyBean
       this.custodyService = custodyService;
    }
 
-   public boolean isDsplExtIndAcctCat()
-   {
-      return dsplExtIndAcctCat;
-   }
+//   public boolean isDsplExtIndAcctCat()
+//   {
+//      return dsplExtIndAcctCat;
+//   }
+//
+//   public void setDsplExtIndAcctCat(boolean dsplExtIndAcctCat)
+//   {
+//      this.dsplExtIndAcctCat = dsplExtIndAcctCat;
+//   }
 
-   public void setDsplExtIndAcctCat(boolean dsplExtIndAcctCat)
-   {
-      this.dsplExtIndAcctCat = dsplExtIndAcctCat;
-   }
+//   public boolean isDsplExtJntAcctCat()
+//   {
+//      return dsplExtJntAcctCat;
+//   }
+//
+//   public void setDsplExtJntAcctCat(boolean dsplExtJntAcctCat)
+//   {
+//      this.dsplExtJntAcctCat = dsplExtJntAcctCat;
+//   }
 
-   public boolean isDsplExtJntAcctCat()
-   {
-      return dsplExtJntAcctCat;
-   }
-
-   public void setDsplExtJntAcctCat(boolean dsplExtJntAcctCat)
-   {
-      this.dsplExtJntAcctCat = dsplExtJntAcctCat;
-   }
-
-   public String getAcctCat()
-   {
-      return acctCat;
-   }
-
-   public void setAcctCat(String acctCat)
-   {
-      this.acctCat = acctCat;
-   }
+//   public String getAcctCat()
+//   {
+//      return acctCat;
+//   }
+//
+//   public void setAcctCat(String acctCat)
+//   {
+//      this.acctCat = acctCat;
+//   }
 
    public boolean isDsplAcctTyp()
    {
@@ -3578,5 +3644,25 @@ public class UOBCustodyBean
    public void setDsplNwPriUnEmpRsnPnl(boolean dsplNwPriUnEmpRsnPnl)
    {
       this.dsplNwPriUnEmpRsnPnl = dsplNwPriUnEmpRsnPnl;
+   }
+
+   public boolean isDsplExtIndAcctQue()
+   {
+      return dsplExtIndAcctQue;
+   }
+
+   public void setDsplExtIndAcctQue(boolean dsplExtIndAcctQue)
+   {
+      this.dsplExtIndAcctQue = dsplExtIndAcctQue;
+   }
+
+   public boolean isDsplExtJntAcctQue()
+   {
+      return dsplExtJntAcctQue;
+   }
+
+   public void setDsplExtJntAcctQue(boolean dsplExtJntAcctQue)
+   {
+      this.dsplExtJntAcctQue = dsplExtJntAcctQue;
    }
 }
