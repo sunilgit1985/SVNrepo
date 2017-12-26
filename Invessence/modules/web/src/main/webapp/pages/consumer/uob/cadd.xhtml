@@ -5,6 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/template/common/template.xhtml">
+
     <f:metadata>
         <f:viewParam name="app" value="#{uobProfile.interfaceMode}"/>
         <f:viewParam name="src" value="#{uobProfile.backURL}"/>
@@ -43,9 +44,26 @@
                 <p:inputText type="hidden" id="idHdnAcct" class="idHdnAcctCls"
                              value="#{uobProfile.customer.acctnum}"/>
 
-                    <div class="FullContainer">
-                        <ui:include src="/pages/consumer/uob/portfolioCreate/cEdit.xhtml"/>
+                <p:panel id="inputArea" style="border: 0px; background: transparent;" styleClass="FullContainer">
+                    <div class="layout-portlets-box open_client_layout portfolio_layout">
+                        <div class="Container100 Responsive100">
+                            <ui:include src="/pages/consumer/uob/portfolioCreate/progressBar.xhtml"/>
+                        </div>
                     </div>
+
+                    <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0 }">
+                        <ui:include src="/pages/consumer/uob/portfolioCreate/getStarted.xhtml"/>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{uobProfile.interfaceIntMode == 1}">
+                        <ui:include src="/pages/consumer/uob/portfolioCreate/changeStrategy.xhtml"/>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{uobProfile.interfaceIntMode > 1}">
+                        <ui:include src="/pages/consumer/uob/portfolioCreate/review.xhtml"/>
+                    </ui:fragment>
+                </p:panel>
+
             </p:outputPanel>
         </h:form>
     </ui:define>

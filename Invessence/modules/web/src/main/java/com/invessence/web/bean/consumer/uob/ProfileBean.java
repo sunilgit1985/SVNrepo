@@ -44,10 +44,18 @@ public class ProfileBean extends PortfolioCreationUI
    }
 
    @Override
-   public void gotoStartOverPage()
+   public void gotoPortfolioCreation()
    {
-      pagemanager.setPage(0);
-      uiLayout.doMenuAction("consumer", "cadd.xhtml?acct=" + getCustomer().getAcctnum() + "&app=" + UIMode.Edit.getCodeValue());
+      Boolean validated = true;
+      if (beanmode.equals(UIMode.New))
+      {
+         validated = validatePage(0);
+      }
+
+      if (validated) {
+         pagemanager.setPage(1);
+         uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
+   }
    }
 
    @Override
@@ -55,6 +63,8 @@ public class ProfileBean extends PortfolioCreationUI
    {
       if (validatePage(pagemanager.getPage()))
       {
+         // If in New mode, and once the first page conditions are satisfied, we revert the mode to Edit.
+         beanmode = UIMode.Edit;
          super.gotoNextPage();
       }
    }
@@ -145,6 +155,11 @@ public class ProfileBean extends PortfolioCreationUI
       return currencyList;
    }
 
+   public Boolean getDisableModeForIntroPage() {
+      if (beanmode == UIMode.New)
+         return false;
+      return true;
+   }
 
    public Integer getAge() {
       if (getCustomer() != null)
@@ -252,6 +267,9 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setSelectedGoal(WebMenuItem selectedItem) {
       this.selectedGoal = selectedItem;
+      if (selectedItem != null) {
+         getCustomer().setGoal(selectedItem.getKey());
+      }
    }
 
    public Integer getSelectedGoalValue() {
@@ -279,7 +297,7 @@ public class ProfileBean extends PortfolioCreationUI
       switch (pagenum)
       {
          case 0: // This is Intro page
-            if (! hasData(getCustomer().getFullname())) {
+            if (! hasData(getCustomer().getName())) {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required", null));
             }
             if (! hasData(getCustomer().getEmail())) {
@@ -447,11 +465,11 @@ public class ProfileBean extends PortfolioCreationUI
       if (value != null) {
          selectedRetirementGoal = value;
          if (value == 2) {
-            getCustomer().riskProfile.setGoals(RiskConst.GOALS.RETIRED.toString());
+            getCustomer().setGoal(RiskConst.GOALS.RETIRED.toString());
          }
          else
          {
-            getCustomer().riskProfile.setGoals(RiskConst.GOALS.RETIREMENT.toString());
+            getCustomer().setGoal(RiskConst.GOALS.RETIRED.toString());
          }
       }
    }

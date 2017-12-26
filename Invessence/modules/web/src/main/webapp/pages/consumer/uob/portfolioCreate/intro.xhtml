@@ -46,6 +46,7 @@
             <p>
                 Hi, what is your full name ?
                 <p:inputText style="width:190px;" value="#{uobProfile.customer.fullname}"
+                             disabled="#{uobProfile.disableModeForIntroPage}"
                              id="uobCustomerName" placeholder="Enter Your Full Name"
                              maxlength="60">
                     <p:ajax listener="#{uobProfile.onChangeName}"
@@ -55,8 +56,9 @@
             </p>
             <p:outputPanel id="introPanel" style="border: 0px; background: transparent">
                 <p>
-                    <!--<span class="input_value">Sam</span> ,--> What is your e-mail address?
+                    <span class="input_value">#{uobProfile.printName}</span> What is your e-mail address?
                     <p:inputText style="width:190px;" value="#{uobProfile.customer.email}"
+                                 disabled="#{uobProfile.disableModeForIntroPage}"
                                  id="uobCustomerEmail" placeholder="Enter Your Email"
                                  maxlength="60">
                     </p:inputText>

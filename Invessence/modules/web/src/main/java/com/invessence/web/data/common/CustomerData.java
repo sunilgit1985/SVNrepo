@@ -85,7 +85,7 @@ public class CustomerData extends ProfileData
 
    private String portfolioName;
 
-   private String email, firstname, lastname, fullname;
+   private String email, firstname, lastname;
    private String customName;
    public List<DataPortfolio> displayPortfolioList = new ArrayList<DataPortfolio>();
    public DataPortfolio selectedPortfolio;
@@ -640,10 +640,11 @@ public class CustomerData extends ProfileData
       this.lastname = lastname;
    }
 
-   public String getFullname()
+   @Override
+   public String getName()
    {
-      String name = fullname;
-      if (fullname != null) {
+      String name = super.getName();
+      if (name != null) {
          if (getFirstname() != null)
          {
             name = getFirstname();
@@ -665,9 +666,10 @@ public class CustomerData extends ProfileData
       return name;
    }
 
-   public void setFullname(String fullname)
+   @Override
+   public void setName(String name)
    {
-      this.fullname = fullname;
+      super.setName(name);
    }
 
    public void setCalcFormula(String formula)
@@ -1468,7 +1470,7 @@ public class CustomerData extends ProfileData
          UserData userdata = new UserData();
          userdata.setFirstName(getFirstname());
          userdata.setLastName(getLastname());
-         userdata.setFullName(getFullname());
+         userdata.setFullName(getName());
          userdata.setEmail(getEmail());
          userdata.setUserID(getEmail());
          userdata.setIp(webutil.getClientIpAddr());
@@ -1630,8 +1632,10 @@ public class CustomerData extends ProfileData
          if (acctnum > 0)
          {
             saveVisitor(null);
+            setSaveVisitor(false);
             setAcctnum(acctnum);
-            saveDAO.saveRiskProfile(riskProfile);
+            riskProfile.saveAllData();
+            // saveDAO.saveRiskProfile(riskProfile);
             saveDAO.saveFinancials(getInstance());
             if (getAssetData() != null)
             {
@@ -1666,7 +1670,13 @@ public class CustomerData extends ProfileData
          {
             saveVisitor(null);
             setAcctnum(acctnum);
-            saveDAO.saveRiskProfile(acctnum, riskcalculator);
+            if (riskProfile != null) {
+               riskProfile.saveAllData();
+            }
+            else
+            {
+               saveDAO.saveRiskProfile(acctnum, riskcalculator);
+            }
             saveDAO.saveFinancials(getInstance());
             saveDAO.saveAllocation(getInstance());
             saveDAO.savePortfolio(getInstance());

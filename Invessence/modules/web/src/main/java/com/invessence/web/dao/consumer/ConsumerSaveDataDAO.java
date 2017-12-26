@@ -137,21 +137,4 @@ public class ConsumerSaveDataDAO extends JdbcDaoSupport implements Serializable
          ex.printStackTrace();
       }
    }
-
-   public void saveRiskProfile(UserRiskProfile userrisk)
-   {
-      try
-      {
-         DataSource ds = getDataSource();
-         ConsumerSaveSP sp = new ConsumerSaveSP(ds, "sav_user_risk_profile", 20);
-         sp.saveRiskProfile(userrisk);
-         sp = new ConsumerSaveSP(ds, "sav_user_risk_profile", 21);
-         sp.saveRiskScores(userrisk);
-      }
-      catch (Exception ex) {
-         ex.printStackTrace();
-      }
-   }
-
-
 }

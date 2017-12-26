@@ -1,105 +1,82 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions">
+                template="/template/common/template.xhtml">
 
-    <p:panel id="inputArea" style="border: 0px; background: transparent;">
-        <div class="layout-portlets-box open_client_layout portfolio_layout">
-            <div class="Container100 Responsive100">
-                <p:outputPanel id="graphArea" style="border: 0px; background: transparent">
-                    <div class="portfolio_selection">
-                        <div class="Container30">
-                            <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
-                                                                 width="80px"/><span>Goal</span></div>
-                        <div class="Container30">
-                            <div id="container-speed" style="width: 100%; height: 85px; float: left"></div>
+    <ui:define name="content">
+        <h:outputScript name="js/uobHighCharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+
+        <!-- HighChart .js plugin Start -->
+        <h:outputScript name="js/highcharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/highcharts-3d.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/highcharts-more.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/solid-guage.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/exporting.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/drilldown.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/data.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+
+        <h:outputScript name="js/riskMeter.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+
+        <!-- HighChart jsplugin End -->
+
+        <h:form id="ceForm">
+            <p:outputPanel id="workArea">
+
+                <p:inputText type="hidden" id="idHdnAcct" class="idHdnAcctCls"
+                             value="#{uobProfile.customer.acctnum}"/>
+
+                <p:panel id="inputArea" style="border: 0px; background: transparent;" styleClass="FullContainer">
+                    <div class="layout-portlets-box open_client_layout portfolio_layout">
+                        <div class="Container100 Responsive100">
+                            <ui:include src="/pages/consumer/uob/portfolioCreate/progressBar.xhtml"/>
+
+                            <ui:fragment rendered="#{uobProfile.currentPage == 0}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/intro.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 1}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/goal.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 2}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/investment.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 3}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/financials.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 4}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/risk2.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 5}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/risk4.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 6}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/risk5.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 7}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/risk6.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 8}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/risk7.xhtml"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{uobProfile.currentPage == 9}">
+                                <ui:include src="/pages/consumer/uob/portfolioCreate/risk8.xhtml"/>
+                            </ui:fragment>
+
                         </div>
-                        <div class="Container30">
-                            <span class="sapn_review">Review</span>
-                            <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
-
-                                    <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
-                                        <script>
-                                            $(document).ready(function ()
-                                                              {
-                                                                  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-                                                                  {
-                                                                      if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                                      {
-                                                                          draw2dDonut1lyrChartDyna('CNFPrflo');
-                                                                      }
-                                                                  }
-//                                                                  myGaugeChart(vMeterVal,vMin,vMax)
-//                                                                  vMeterVal=value to be shown on meter
-//                                                                  vMin= value to be a lower(Min) range of meter
-//                                                                  vMax= value to be a higher(Max) range of meter
-                                                                  myGaugeChart(document.getElementById('ceForm:riskScore').value,0,100,'Risk','Score');
-
-                                                              });
-
-                                        </script>
-
-                                        <div class="Container100 donutChartGraph review_graph">
-                                            <div id="2dDonutChartCnf"></div>
-                                            <!-- Highchart 2D Donut data -->
-                                            <h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
-                                            <h:inputHidden
-                                                    value="#{uobProfile.displayHC2DDonutData}"
-                                                    id="twodDonutValueChartCnf"/>
-                                            <!-- Risk Meter Score -->
-                                            <h:inputHidden
-                                                    value='#{uobProfile.displayRiskScore}'
-                                                    id="riskScore"/>
-
-                                        </div>
-
-
-                                    </p:panel>
-
-                            </div>
-                        </div>
-
                     </div>
-                    <div class="portfolio_progress_bar">
-                        <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
-                    </div>
-                </p:outputPanel>
+                </p:panel>
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
 
-                <ui:fragment rendered="#{uobProfile.currentPage == 0}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/intro.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 1}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/goal.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 2}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/investment.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 3}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/financials.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 4}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk2.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 5}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk4.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 6}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk5.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 7}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk6.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 8}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk7.xhtml"/>
-                </ui:fragment>
-                <ui:fragment rendered="#{uobProfile.currentPage == 9}">
-                    <ui:include src="/pages/consumer/uob/portfolioCreate/risk8.xhtml"/>
-                </ui:fragment>
-
-            </div>
-        </div>
-    </p:panel>
 
 </ui:composition>

@@ -95,12 +95,22 @@
 							</div>
 							<div class="header_link prenext_btn Container70 review_btn" >
 								<div class="Container50 next_btn">
-									<p:commandLink rendered="true" class="next_pg_link"
-												   actionListener="#{uobProfile.gotoCustody}"> Open Account </p:commandLink>
+									<ui:fragment rendered="#{uobProfile.interfaceMode > 0}">
+										<p:commandLink rendered="true" class="next_pg_link"
+													   actionListener="#{uiLayout.doMenuAction('consumer', 'portfolioCreate/finalApproval.xhtml')}"> Next
+										</p:commandLink>
+
+									</ui:fragment>
+									<ui:fragment rendered="#{uobProfile.interfaceMode == 0}">
+										<p:commandLink rendered="true" class="next_pg_link"
+													   actionListener="#{uobProfile.gotoCustody}"> Open Account
+										</p:commandLink>
+
+									</ui:fragment>
 								</div>
 								<div class="Container50 pre_btn">
 									<p:commandLink rendered="true" class="next_pg_link"
-												   actionListener="#{uobProfile.gotoStartOverPage}"> Start Over </p:commandLink>
+												   actionListener="#{uobProfile.gotoPortfolioCreation}"> Start Over </p:commandLink>
 								</div>
 
 							</div>
