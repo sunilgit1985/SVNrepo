@@ -68,10 +68,12 @@ img.riskImage:hover {
 .errorText {
     background-color: transparent;
     color: #dd4b39;
-    font-size: 18px;
+    font-size: 12px;
     text-align: left;
 }
-
+span.title_sub_line {
+    font-size: 13px;
+}
 /*
 .ui-widget input {
     background-color: transparent !important;
@@ -5614,8 +5616,8 @@ div#leftpanel {
     right: 10px;
     top: 10px;
 }
-.risk_meter .highcharts-data-labels {
-    top: 45px !important;
+.risk_meter .highcharts-data-label {
+    top: -60px !important;
 }
 /** 26/12/2017 **/
 .textline-height {

@@ -9,8 +9,8 @@
             <div class="Container30">
                 <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="80px"/><span>Goal</span></div>
-            <div class="Container30">
-                <div id="container-speed" style="width: 100%; height: 85px; float: left"></div>
+            <div class="Container30 risk_meter">
+                <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
             </div>
             <div class="Container30">
                 <span class="sapn_review">Review</span>
@@ -20,34 +20,45 @@
                         <script>
                             $(document).ready(function ()
                                               {
-                                                  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                 /* if (document.getElementById('ceForm:cnftypeOfCharts') != null)
                                                   {
                                                       if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
                                                       {
                                                           draw2dDonut1lyrChartDyna('CNFPrflo');
                                                       }
-                                                  }
+                                                  }*/
 //                                                                  myGaugeChart(vMeterVal,vMin,vMax)
 //                                                                  vMeterVal=value to be shown on meter
 //                                                                  vMin= value to be a lower(Min) range of meter
 //                                                                  vMax= value to be a higher(Max) range of meter
-                                                  myGaugeChart(document.getElementById('ceForm:riskScore').value, 0, 100, 'Risk', 'Score');
+
+												draw2dDonut1lyrChartDyna('idPieChartArea','idPieChartValue');
+                                                myGaugeChart('idRiskChartValue','idRiskChartArea', 0, 100, 'Risk', 'Score');
 
                                               });
 
                         </script>
 
                         <div class="Container100 donutChartGraph review_graph">
-                            <div id="2dDonutChartCnf"></div>
+                            <!--<div id="2dDonutChartCnf"></div>-->
                             <!-- Highchart 2D Donut data -->
-                            <h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
-                            <h:inputHidden
+                           <!--<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>-->
+                           <!-- <h:inputHidden
                                     value="#{uobProfile.displayHC2DDonutData}"
-                                    id="twodDonutValueChartCnf"/>
+                                    id="twodDonutValueChartCnf"/>-->
+                                    
+                                    
+                                    <div id="2dDonutChartCnf1" class="idPieChartArea"></div>													
+								   <input type="hidden" value="#{uobProfile.displayHC2DDonutData}"
+								    class="idPieChartValue"/>
+								    <input type="hidden" value="HIGHCHART.2DDONUT"
+								    class="idChartType"/>
                             <!-- Risk Meter Score -->
                             <h:inputHidden
                                     value='#{uobProfile.displayRiskScore}'
                                     id="riskScore"/>
+                                    
+                                    <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
 
                         </div>
 

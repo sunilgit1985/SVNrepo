@@ -22,7 +22,7 @@
 						library="#{uiLayout.webProfile.cssdir}"/>
 		<h:outputScript name="js/highcharts-more.js"
 						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/solid-gauge.js"
+		<h:outputScript name="js/solid-guage.js"
 						library="#{uiLayout.webProfile.cssdir}"/>
 		<h:outputScript name="js/exporting.js"
 						library="#{uiLayout.webProfile.cssdir}"/>
@@ -66,13 +66,58 @@
 						<div class="Container30">
 							<p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
 						</div>
-						<div class="Container30">
-							<div id="container-speed" style="width: 100%; height: 85px; float: left"></div>
+						<div class="Container30 risk_meter">
+                <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
 						</div>
 						<div class="Container30">
-							<span class="sapn_review">Review</span>
-							<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>
-						</div>
+                        <span class="sapn_review">Review</span>
+                        <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
+                        <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
+
+                            <h:form id="ceForm">
+                                <ui:fragment rendered="#{!uobdash.dispNoRcrd}">
+
+                                    <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+                                    
+                                    <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
+                                        <script>
+                                            $(document).ready(function ()
+                                                              {
+                                                               //  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                                //  {
+                                                                    //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                                    //  {
+                                                                          //draw2dDonut1lyrChartDyna('CNFPrflo');
+
+																		  draw2dDonut1lyrChartDyna('idPieChartArea1','idPieChartValue1');
+                                                                    //  }
+                                                                 // }
+
+						                                                  myGaugeChart('idRiskChartValue','idRiskChartArea', 0, 100, 'Risk', 'Score');
+                                                              });
+
+                                        </script>
+
+                                        <div class="Container100 donutChartGraph review_graph">
+                                            
+                                            
+                                            <div id="2dDonutChartCnf2" class="idPieChartArea1"></div>
+													
+																   <input type="hidden" value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
+																    class="idPieChartValue1"/>
+																    <input type="hidden" value="HIGHCHART.2DDONUT"
+																    class="idChartType1"/>
+
+                                        </div>
+
+
+                                    </p:panel>
+
+                                </ui:fragment>
+                            </h:form>
+
+                        </div>
+                    </div>
 
 					</div>
                     <div class="portfolio_progress_bar">
@@ -154,13 +199,14 @@
 											<script>
 												$(document).ready(function ()
 																  {
-																	  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-																	  {
-																		  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-																		  {
-																			  draw2dDonut1lyrChartDyna('CNFPrflo');
-																		  }
-																	  }
+																	  //if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+																	 //{
+																		//  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+																		  //{
+																			  // draw2dDonut1lyrChartDyna('CNFPrflo');
+																			  draw2dDonut1lyrChartDyna('idPieChartArea','idPieChartValue');
+																		  //}
+																	  //}
 
 
 																	  /* line chart */
@@ -232,10 +278,13 @@
 											</script>
 											<div class="Container100">
 												<div class="Container30 donutChartGraph">
-													<div id="2dDonutChartCnf"></div>
-													<h:inputHidden value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
-																   id="twodDonutValueChartCnf"/>
-													<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
+													<div id="2dDonutChartCnf1" class="idPieChartArea"></div>
+													
+																   <input type="hidden" value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
+																    class="idPieChartValue"/>
+																    <input type="hidden" value="HIGHCHART.2DDONUT"
+																    class="idChartType"/>
+													
 
 												</div>
 												<div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->

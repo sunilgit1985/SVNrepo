@@ -1,13 +1,15 @@
 
-function myGaugeChart(vMeterVal,vMin,vMax,vLableTop,vLableBottom)	{
+function myGaugeChart(vMeterVal,vDivClass,vMin,vMax,vLableTop,vLableBottom)	{
 	try{
 		debugger
-		vMeterVal=parseInt(vMeterVal);
+		 var chartValue = $('.'+vMeterVal).val();
+		vMeterVal=parseInt(chartValue);
 		console.log('vMeterVal~~> '+vMeterVal);
 		console.log('vMin '+vMin);
 		console.log('vMax '+vMax);
 		console.log('vLableTop '+vLableTop);
 		console.log('vLableBottom '+vLableBottom);
+        var vChrtId=$('.'+vDivClass).attr('id');
 		var gaugeOptions = {
 
 			chart: {
@@ -63,7 +65,7 @@ function myGaugeChart(vMeterVal,vMin,vMax,vLableTop,vLableBottom)	{
 		};
 
 		// The speed gauge
-		var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+		var chartSpeed = Highcharts.chart(vChrtId, Highcharts.merge(gaugeOptions, {
 			yAxis: {
 				min: vMin,
 				max: vMax,
@@ -84,8 +86,8 @@ function myGaugeChart(vMeterVal,vMin,vMax,vLableTop,vLableBottom)	{
 				name: vLableTop,
 				data: [vMeterVal],
 				dataLabels: {
-					format: '<div style="text-align:center;float:bottom;margin-bottom:-100px"><span style="font-size:11px;color:black">{y}</span><br/>' +
-					'<span style="font-size:10px;color:black">'+vLableBottom+'</span></div>'
+					format: '<div style="text-align:center;float:bottom;"><span style="font-size:11px;color:black;position:absolute;top:60px;">{y}</span><br/>' +
+					'<span style="font-size:10px;color:black;">'+vLableBottom+'</span></div>'
 				},
 				tooltip: {
 					valueSuffix: vLableBottom
@@ -96,6 +98,6 @@ function myGaugeChart(vMeterVal,vMin,vMax,vLableTop,vLableBottom)	{
 
 
 	}catch(e){
-		console.error('Exception '+e);
+		console.error('Exception for Risk Meter[ '+e+']');
 	}
 }
