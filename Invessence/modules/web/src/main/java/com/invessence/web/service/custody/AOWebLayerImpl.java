@@ -3,7 +3,7 @@ package com.invessence.web.service.custody;
 import java.util.*;
 
 import com.invessence.custody.dao.*;
-import com.invessence.custody.data.AORequest;
+import com.invessence.custody.data.*;
 import com.invessence.custody.uob.UOBDataMaster;
 import com.invessence.custody.uob.dao.*;
 import com.invessence.custody.uob.data.CustodyFileRequest;
@@ -37,6 +37,7 @@ public class AOWebLayerImpl implements AOWebLayer
    {
       WSCallResult wsCallResult = null;
       StringBuilder requestIds= new StringBuilder();
+      Date reqTime = new Date();
 
       try
       {
@@ -54,7 +55,8 @@ public class AOWebLayerImpl implements AOWebLayer
 
          UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
          wsCallResult = documentServiceTraffic.createDoc(serviceRequest, uobDataMaster, aoRequests, updFileLst, requestIds);
-
+         AORequestAudit aoRequestAudit = new AORequestAudit(serviceRequest.getProduct(), serviceRequest.getMode(), requestIds.toString(), acctNum, eventNum, "", "", "S", reqTime, "" );
+         custodyDaoLayer.callDCAuditSP(aoRequestAudit);
 
 //      wsCallResult=processITextRequest(dcRequests);
 //      if(wsCallResult.getWSCallStatus().getErrorCode()==0){
@@ -62,6 +64,8 @@ public class AOWebLayerImpl implements AOWebLayer
 //      }
       }catch(Exception ex){
          wsCallResult = new WSCallResult(new WSCallStatus(0, "Failure"), ex.getMessage());
+         AORequestAudit dcRequestAudit = new AORequestAudit(serviceRequest.getProduct(), serviceRequest.getMode(),requestIds.toString(), acctNum, eventNum,"", ex.toString(), "E", reqTime, "");
+         custodyDaoLayer.callDCAuditSP(dcRequestAudit);
       }
       return wsCallResult;
    }
