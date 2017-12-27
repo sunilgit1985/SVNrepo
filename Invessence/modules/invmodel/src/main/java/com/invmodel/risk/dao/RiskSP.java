@@ -191,6 +191,50 @@ public class RiskSP extends StoredProcedure
       if (dataMap != null)
       {
          inputMap = new HashMap();
+
+         // Initial all values, Although New will create empty object, SP needs all values.
+         inputMap.put("p_acctnum", null);
+         inputMap.put("p_investmentgoal", null);
+         inputMap.put("p_age", 0);
+         inputMap.put("p_retireage", 0);
+         inputMap.put("p_retired", 0);
+         inputMap.put("p_horizon", 0);
+         inputMap.put("p_ans1", 0);
+         inputMap.put("p_ans2", 0);
+         inputMap.put("p_ans3", 0);
+         inputMap.put("p_ans4", 0);
+         inputMap.put("p_ans5", 0);
+         inputMap.put("p_ans6", 0);
+         inputMap.put("p_ans7", 0);
+         inputMap.put("p_ans8", 0);
+         inputMap.put("p_ans9", 0);
+         inputMap.put("p_ans10", 0);
+         inputMap.put("p_ans11", 0);
+         inputMap.put("p_ans12", 0);
+         inputMap.put("p_ans13", 0);
+         inputMap.put("p_ans14", 0);
+         inputMap.put("p_ans15", 0);
+         inputMap.put("p_formula", 0);
+         inputMap.put("p_r1", 0);
+         inputMap.put("p_r2", 0);
+         inputMap.put("p_r3", 0);
+         inputMap.put("p_r4", 0);
+         inputMap.put("p_r5", 0);
+         inputMap.put("p_r6", 0);
+         inputMap.put("p_r7", 0);
+         inputMap.put("p_r8", 0);
+         inputMap.put("p_r9", 0);
+         inputMap.put("p_r10", 0);
+         inputMap.put("p_r11", 0);
+         inputMap.put("p_r12", 0);
+         inputMap.put("p_r13", 0);
+         inputMap.put("p_r14", 0);
+         inputMap.put("p_r15", 0);
+         inputMap.put("p_totalRisk", 0);
+         inputMap.put("p_riskByQuestion", 0);
+         inputMap.put("p_riskOverride", 0);
+
+         // Now fill with the actual data.
          inputMap.put("p_acctnum", data.getAcctnum());
          inputMap.put("p_investmentgoal", dataMap.get(RiskConst.GOAL));
          inputMap.put("p_age", dataMap.get(RiskConst.AGE));
@@ -208,8 +252,8 @@ public class RiskSP extends StoredProcedure
                UserRiskData riskInfo = dataMap.get(RiskConst.RISKQUESTIONKEY + i.toString());
                if (riskInfo != null)
                {
-                  inputMap.put("p_ans" + origAns.toString(), riskInfo.getAnswer());
-                  inputMap.put("p_r" + origAns.toString(), riskInfo.getRiskScore());
+                  inputMap.put("p_ans" + origAns.toString(), riskInfo.getAnswerInt());
+                  inputMap.put("p_r" + origAns.toString(), riskInfo.getRiskScore().intValue());
                }
             }
          }
