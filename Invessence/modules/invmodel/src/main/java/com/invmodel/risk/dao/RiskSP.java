@@ -236,13 +236,13 @@ public class RiskSP extends StoredProcedure
 
          // Now fill with the actual data.
          inputMap.put("p_acctnum", data.getAcctnum());
-         inputMap.put("p_investmentgoal", dataMap.get(RiskConst.GOAL));
-         inputMap.put("p_age", dataMap.get(RiskConst.AGE));
-         inputMap.put("p_horizon", dataMap.get(RiskConst.HORIZON));
-         inputMap.put("p_retireage", dataMap.get(RiskConst.RETIREMENTAGE));
-         inputMap.put("p_formula", dataMap.get(RiskConst.CALCFORMULA));
-         inputMap.put("p_ans1", null);
-         inputMap.put("p_ans2", null);
+         inputMap.put("p_investmentgoal", data.getAnswer(RiskConst.GOAL));
+         inputMap.put("p_age", data.getAnswerInt(RiskConst.AGE));
+         inputMap.put("p_horizon", data.getAnswerInt(RiskConst.HORIZON));
+         inputMap.put("p_retireage", data.getAnswerInt(RiskConst.RETIREMENTAGE));
+         inputMap.put("p_formula", data.getAnswer(RiskConst.CALCFORMULA));
+         inputMap.put("p_ans1", 0);
+         inputMap.put("p_ans2", 0);
          UserRiskData qdata = dataMap.get(RiskConst.RISKQUESTIONS);
          if (qdata != null)
          {
@@ -254,6 +254,7 @@ public class RiskSP extends StoredProcedure
                {
                   inputMap.put("p_ans" + origAns.toString(), riskInfo.getAnswerInt());
                   inputMap.put("p_r" + origAns.toString(), riskInfo.getRiskScore().intValue());
+                  origAns++;
                }
             }
          }
@@ -264,9 +265,9 @@ public class RiskSP extends StoredProcedure
          RiskScore thisscore = data.getRiskScoreObj(0);
          if (thisscore != null)
          {
-            inputMap.put("p_totalRisk", thisscore.getScore());
-            inputMap.put("p_riskByQuestion", thisscore.getStandardScore());
-            inputMap.put("p_riskOverride", thisscore.getAssetScore());
+            inputMap.put("p_totalRisk", thisscore.getScore().intValue());
+            inputMap.put("p_riskByQuestion", thisscore.getStandardScore().intValue());
+            inputMap.put("p_riskOverride", thisscore.getAssetScore().intValue());
          }
          super.execute(inputMap);
       }

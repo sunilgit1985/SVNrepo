@@ -1214,7 +1214,10 @@ public class WebUtil implements Serializable
                String replaceValue = key;
                String strReplace = "~" + replaceValue + "~";
                String strReplaceWith = object.get(key);
-               message = message.replaceAll(strReplace, strReplaceWith);
+               if (strReplaceWith != null)
+               {
+                  message = message.replaceAll(strReplace, strReplaceWith);
+               }
             }
          }
 

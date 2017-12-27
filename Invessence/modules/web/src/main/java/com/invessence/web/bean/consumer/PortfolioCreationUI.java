@@ -110,8 +110,8 @@ public class PortfolioCreationUI extends UserInterface
    public RiskCalc riskCalc = null;
 
    // UI management variables
-   public Boolean formEdit = false;
-   public Boolean canOpenAccount = false;
+   public Boolean formEdit = true;
+   public Boolean canOpenAccount = true;
 
    // Panel Controls
    public Boolean welcomeDialog;
@@ -475,6 +475,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoRiskQuestions() {
       progressbar.nextProgress();
+      pagemanager.setPage(1);
       uiLayout.doMenuAction("consumer","portfolioCreate/cEdit.xhtml");
    }
 
@@ -492,7 +493,7 @@ public class PortfolioCreationUI extends UserInterface
       if (canOpenAccount)
       {
          alertAdvisor();
-         uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getCustomer().getAcctnum().toString());
+         uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getCustomer().getAcctnum().toString() + "&l=" + getCustomer().getLogonid());
       }
       else {
          alertAdvisor();

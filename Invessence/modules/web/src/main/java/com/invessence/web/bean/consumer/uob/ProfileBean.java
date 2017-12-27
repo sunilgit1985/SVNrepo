@@ -54,6 +54,7 @@ public class ProfileBean extends PortfolioCreationUI
 
       if (validated) {
          pagemanager.setPage(1);
+         progressbar.nextProgress();
          uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
    }
    }
