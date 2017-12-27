@@ -4,11 +4,13 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import com.invessence.custody.dao.*;
-import com.invessence.custody.data.AORequest;
+import com.invessence.custody.data.*;
 import com.invessence.custody.uob.UOBDataMaster;
 import com.invessence.custody.uob.dao.*;
+import com.invessence.custody.uob.data.CustodyFileRequest;
 import com.invessence.docServices.service.*;
 import com.invessence.service.bean.ServiceRequest;
+import com.invessence.web.service.custody.UOBCustodyServiceImpl;
 import com.invessence.ws.bean.WSCallResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,25 +23,37 @@ public class DocProcessMain
 {
    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException
    {
+      StringBuilder requestIds= new StringBuilder();
+      Date reqTime = new Date();
+      Long acctNum = new Long(3203); // 3367  3552  3204
+      int eventNum = 1;
+      ServiceRequest serviceRequest = new ServiceRequest("UOB", "DEV");
+      CustodyDaoLayerImpl custodyDaoLayer=null;
       try
       {
 
-//      (new String[] {"Spring-Common.xml","Spring-Connection.xml","Spring-ModuleA.xml"})
-         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"custodyConfig.xml", "documentServicesConfig.xml"});
-         Long acctNum = new Long(3367); // 3367  3552  3204
-         int eventNum = 1;
-         ServiceRequest serviceRequest = new ServiceRequest("UOB", "DEV");
+//      (new String[] {"Spring-Common.xml","Spring-Connection.xml","Spring-ModuleA.xml"}) //D:\Project\Abhang\work\trunc\latest\Invessence\modules\web\src\main\webapp\WEB-INF\applicationContext.xml
+         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"custodyConfig.xml", "documentServicesConfig.xml",});
 
 
-         CustodyDaoLayerImpl custodyDaoLayer = (CustodyDaoLayerImpl) context.getBean("custodyDaoLayerImpl");
+
+
+         custodyDaoLayer = (CustodyDaoLayerImpl) context.getBean("custodyDaoLayerImpl");
          List<AORequest> aoRequests = custodyDaoLayer.getAORequests(acctNum, eventNum);
          UOBDaoImpl uobDao = (UOBDaoImpl) context.getBean("uobDaoImpl");
          UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
 //         System.out.println("uobDataMaster = " + uobDataMaster);
 
-         DocumentServiceTraffic dst = (DocumentServiceTrafficImpl) context.getBean("documentServices");
-         System.out.println(dst.createDoc(serviceRequest, uobDataMaster, aoRequests));
 
+// ACCT_OPEN_NEW_USER          ACCT_OPEN_EXISTING_USER
+         List<CustodyFileRequest> updFileLst=custodyDaoLayer.fetchUploadedFiles(serviceRequest.getProduct(), acctNum,"ACCT_OPEN_EXISTING_USER");
+
+         DocumentServiceTraffic dst = (DocumentServiceTrafficImpl) context.getBean("documentServices");
+
+         System.out.println(dst.createDoc(serviceRequest, uobDataMaster, aoRequests, updFileLst, requestIds));
+
+         AORequestAudit aoRequestAudit = new AORequestAudit(serviceRequest.getProduct(), serviceRequest.getMode(), requestIds.toString(), acctNum, eventNum, "", "", "S", reqTime, "" );
+         custodyDaoLayer.callDCAuditSP(aoRequestAudit);
 //         for(AORequest aoRequest:aoRequests){
 //            System.out.println("aoRequest = " + aoRequest);
 //            UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
@@ -58,6 +72,8 @@ public class DocProcessMain
 
       }catch (Exception e){
          e.printStackTrace();
+         AORequestAudit dcRequestAudit = new AORequestAudit(serviceRequest.getProduct(), serviceRequest.getMode(),requestIds.toString(), acctNum, eventNum,"", e.toString(), "E", reqTime, "");
+         custodyDaoLayer.callDCAuditSP(dcRequestAudit);
       }
 //      System.out.println(UOBDataMaster.class.getField("previousInvestingExperience "));
 //

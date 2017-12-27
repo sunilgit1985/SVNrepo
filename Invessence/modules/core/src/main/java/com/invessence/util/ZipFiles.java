@@ -47,9 +47,8 @@ public class ZipFiles {
 
    public static void createZipFile(
       String zipFileName,
-      String zipFileLocation, List<ZipFile> files) {
-
-      try {
+      String zipFileLocation, List<ZipFile> files) throws IOException
+   {
          File file = new File(zipFileLocation);
          if(!file.getParentFile().exists()){
             Files.createDirectory(file.toPath());
@@ -62,12 +61,6 @@ public class ZipFiles {
          }
          zos.close();
          fos.close();
-
-      } catch (FileNotFoundException e) {
-         e.printStackTrace();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
    }
 
    private static void addToZipFile(String fileName, ZipOutputStream zos) throws FileNotFoundException, IOException {
@@ -76,7 +69,7 @@ public class ZipFiles {
 
       File file = new File(fileName);
       FileInputStream fis = new FileInputStream(file);
-      ZipEntry zipEntry = new ZipEntry(fileName);
+      ZipEntry zipEntry = new ZipEntry(file.getName());
       zos.putNextEntry(zipEntry);
 
       byte[] bytes = new byte[1024];

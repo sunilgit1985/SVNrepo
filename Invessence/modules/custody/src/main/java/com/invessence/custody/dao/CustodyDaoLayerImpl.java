@@ -3,19 +3,15 @@ package com.invessence.custody.dao;
 import java.sql.SQLException;
 import java.util.*;
 
-import com.docusign.esign.model.EnvelopeSummary;
 import com.invessence.converter.SQLData;
-import com.invessence.custody.data.AORequest;
-import com.invessence.custody.uob.UOBDataMaster;
-import com.invessence.custody.uob.data.OwnerDetails;
+import com.invessence.custody.data.*;
+import com.invessence.custody.uob.data.*;
 import com.invessence.ws.bean.DBResponse;
-import com.invessence.ws.provider.td.bean.*;
 import com.invessence.ws.provider.td.dao.SPDCRequestAuditrial;
 import com.invessence.ws.util.WSConstants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -56,6 +52,45 @@ public class CustodyDaoLayerImpl implements CustodyDaoLayer
    private final String getAcctChngAddrDetails ="select * from vwdc_td_chng_addrs_details where accountNumber=?";
 
 
+   @Override
+   public List<CustodyFileRequest> fetchUploadedFiles(String Product, Long acctNum, String action)
+   {
+      List<CustodyFileRequest> objCstdFileLst=null;
+      try
+      {
+         objCstdFileLst=new ArrayList<CustodyFileRequest>();
+         SQLData convert = new SQLData();
+         CustodySP sp = new CustodySP(webServiceJdbcTemplate, "sel_custody_file_rqst_dtls", 12);
+         Map outMap = sp.fetchUploadedFiles(  Product,  acctNum, action);
+         if (outMap != null)
+         {
+            ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
+            int i = 0;
+            for (Map<String, Object> map : rows)
+            {
+               CustodyFileRequest custodyFileRequest=new CustodyFileRequest();
+               Map rs = (Map) rows.get(i);
+               custodyFileRequest.setReqId(convert.getLongData(rs.get("reqId")));
+               custodyFileRequest.setProduct(convert.getStrData(rs.get("product")));
+               custodyFileRequest.setAcctnum(convert.getLongData(rs.get("acctnum")));
+               custodyFileRequest.setAction(convert.getStrData(rs.get("action")));
+               custodyFileRequest.setRequestFor(convert.getStrData(rs.get("requestFor")));
+               custodyFileRequest.setSeqno(convert.getIntData(rs.get("seqno")));
+               custodyFileRequest.setFileName(convert.getStrData(rs.get("fileName")));
+               custodyFileRequest.setFilePath(convert.getStrData(rs.get("filePath")));
+               custodyFileRequest.setReqType(convert.getStrData(rs.get("reqType")));
+               objCstdFileLst.add(custodyFileRequest);
+               i++;
+            }
+         }
+      }
+      catch (Exception ex)
+      {
+         System.out.println("UOBCustodyServiceImpl.fetchUploadedFiles Exception " + ex);
+         ex.printStackTrace();
+      }
+      return objCstdFileLst;
+   }
 
 
    @Override
@@ -98,5 +133,26 @@ public class CustodyDaoLayerImpl implements CustodyDaoLayer
          logger.error("Issue while storing web request in DB :" + e.getMessage());
       }
       return aoRequests;
+   }
+
+   @Override
+   public boolean callDCAuditSP(AORequestAudit aoRequest)
+   {
+      try
+      {
+         logger.info("CustodyDaoLayerImpl.callDCAuditSP");
+         logger.debug("aoRequest = " + aoRequest);
+
+         CustodySP requestAuditrialSP = new CustodySP(webServiceJdbcTemplate, "ao_request_auditrial", 21);
+         aoRequest.setResTime(new Date());
+         aoRequest.setOpt(WSConstants.dbInsertOpt);
+         logger.debug("dcRequest.setOpt = " + aoRequest.getOpt());
+         DBResponse dbResponse = requestAuditrialSP.audit(aoRequest);
+         logger.debug("dbResponse = [" + dbResponse.toString() + "]");
+      }catch (Exception e){
+         logger.error("Issue while storing web request in DB :"+e.getMessage());
+
+      }
+      return true;
    }
 }

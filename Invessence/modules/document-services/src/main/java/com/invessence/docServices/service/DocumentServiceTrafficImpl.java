@@ -2,8 +2,9 @@ package com.invessence.docServices.service;
 
 import java.util.*;
 
-import com.invessence.custody.data.AORequest;
+import com.invessence.custody.data.*;
 import com.invessence.custody.uob.UOBDataMaster;
+import com.invessence.custody.uob.data.CustodyFileRequest;
 import com.invessence.data.ZipFile;
 import com.invessence.emailer.util.EmailCreator;
 import com.invessence.service.bean.*;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 {
    private static final Logger logger = Logger.getLogger(DocumentServiceTrafficImpl.class);
+//   @Autowired
+//   private CustodyService custodyService;
 
    @Autowired
    EmailCreator emailCreator;
@@ -33,6 +36,7 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 
    @Autowired @Qualifier("dopboxDocService")
    CallingLayer dropBoxCallingLayer;
+
 
    CallingLayer callingLayer;
 
@@ -75,7 +79,7 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 //   }
 
    @Override
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests)
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests, List<CustodyFileRequest> updFileLst, StringBuilder requestIds)throws  Exception
    {
       WSCallResult wsCallResult=null;
       List<ZipFile> filesForZip= new LinkedList<>();
@@ -85,6 +89,8 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
       for(AORequest aoRequest:aoRequests){
          System.out.println("aoRequest = " + aoRequest);
          wsCallResult=callingLayer.createDoc(serviceRequest, object, aoRequest);
+//         List<CustodyFileRequest> updFileLst=custodyService.fetchUploadedFiles(serviceRequest.getProduct(), aoRequest.getAcctnum(), aoRequest.getReqType());
+         requestIds.append(aoRequest.getReqId()+",");
          if(wsCallResult.getWSCallStatus().getErrorCode()==1)
          {
             filesForZip.add(new ZipFile(wsCallResult.getGenericObject().toString(),wsCallResult.getGenericObject().toString()));
@@ -94,13 +100,16 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
       }
       if(wsCallResult!=null && wsCallResult.getWSCallStatus().getErrorCode()==1)
       {
-
+         for(CustodyFileRequest custodyFileRequest: updFileLst){
+            filesForZip.add(new ZipFile(custodyFileRequest.getFilePath()+"/"+custodyFileRequest.getFileName(),custodyFileRequest.getFilePath()+"/"+custodyFileRequest.getFileName()));
+         }
          if (filesForZip.size() > 0)
          {
             String zipDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "ZIP_FILES_DIRECTORY");
             String zipFileName=uobDataMaster.getAccountDetails().getAcctnum().toString();
             ZipFiles.createZipFile(zipFileName, zipDirectory, filesForZip);
             emailCreator.createEmail(serviceRequest, uobDataMaster.getIndividualOwnersDetails().getEmailAddress(), "Account Opening Files", "Files related Account Opening Process.", zipDirectory+"/"+zipFileName+".zip");
+
          }
 
       }

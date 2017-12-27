@@ -1,9 +1,11 @@
 package com.invessence.custody.dao;
 
-import java.sql.Types;
+import java.sql.*;
 import java.util.*;
 
+import com.invessence.custody.data.AORequestAudit;
 import com.invessence.custody.uob.data.*;
+import com.invessence.ws.bean.DBResponse;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.object.StoredProcedure;
 
@@ -158,9 +160,49 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
             break;
+         case 21:
+            declareParameter(new SqlParameter("p_id", Types.BIGINT));
+            declareParameter(new SqlParameter("p_product", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_mode", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_requestIds", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_acctNum", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_eventNum", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_reqAckwNum",Types.VARCHAR));
+            declareParameter(new SqlParameter("p_status",Types.VARCHAR));
+            declareParameter(new SqlParameter("p_aoRequest", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_aoResponce", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_reqTime", Types.TIMESTAMP));
+            declareParameter(new SqlParameter("p_resTime", Types.TIMESTAMP));
+            declareParameter(new SqlParameter("p_remarks", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_opt", Types.VARCHAR) );  //declaring sql in parameter to pass input
+            declareParameter( new SqlOutParameter("op_msgCode", Types.INTEGER ) );
+            declareParameter( new SqlOutParameter("op_msg", Types.VARCHAR ) );
+            break;
          default:  // All other (no arg)
             break;
       }
+   }
+
+   public DBResponse audit(AORequestAudit aoRequest){
+      Map inputs = new HashMap();
+      inputs.put("p_id", aoRequest.getId());
+      inputs.put("p_product", aoRequest.getProduct());
+      inputs.put("p_mode", aoRequest.getMode());
+      inputs.put("p_requestIds", aoRequest.getRequestIds());
+      inputs.put("p_acctNum", aoRequest.getAcctnum());
+      inputs.put("p_eventNum", aoRequest.getEventNum());
+      inputs.put("p_reqAckwNum", aoRequest.getEnvelopId());
+      inputs.put("p_status", aoRequest.getStatus());
+      inputs.put("p_aoRequest", aoRequest.getDcRequest());
+      inputs.put("p_aoResponce", aoRequest.getDcResponce());
+      inputs.put("p_reqTime", aoRequest.getReqTime()==null?null: new Timestamp(aoRequest.getReqTime().getTime()));
+      inputs.put("p_resTime", aoRequest.getResTime()==null?null: new Timestamp(aoRequest.getResTime().getTime()));
+      inputs.put("p_remarks", aoRequest.getRemarks());
+      inputs.put("p_opt", aoRequest.getOpt());
+
+      Map<String,Object> results = super.execute(inputs);
+      DBResponse dbRes= new DBResponse((int)results.get("op_msgCode"),results.get("op_msg").toString());
+      return dbRes; //reading output of stored procedure using out parameters
    }
 
    public Map fetchData(Long acctNum)

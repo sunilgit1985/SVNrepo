@@ -6,6 +6,7 @@ import com.invessence.custody.dao.*;
 import com.invessence.custody.data.AORequest;
 import com.invessence.custody.uob.UOBDataMaster;
 import com.invessence.custody.uob.dao.*;
+import com.invessence.custody.uob.data.CustodyFileRequest;
 import com.invessence.docServices.service.*;
 import com.invessence.service.bean.*;;
 import org.apache.log4j.Logger;
@@ -32,9 +33,10 @@ public class AOWebLayerImpl implements AOWebLayer
 
 
    @Override
-   public WSCallResult processAORequest(ServiceRequest serviceRequest, Long acctNum, Integer eventNum)
+   public WSCallResult processAORequest(ServiceRequest serviceRequest, Long acctNum, Integer eventNum,List<CustodyFileRequest> updFileLst)
    {
       WSCallResult wsCallResult = null;
+      StringBuilder requestIds= new StringBuilder();
 
       try
       {
@@ -48,10 +50,10 @@ public class AOWebLayerImpl implements AOWebLayer
             UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
          }else{
             System.out.println("Account Opening requests for acctnum :"+acctNum+" are not available for processing!");
-      }
+         }
 
          UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
-         wsCallResult = documentServiceTraffic.createDoc(serviceRequest, uobDataMaster, aoRequests);
+         wsCallResult = documentServiceTraffic.createDoc(serviceRequest, uobDataMaster, aoRequests, updFileLst, requestIds);
 
 
 //      wsCallResult=processITextRequest(dcRequests);

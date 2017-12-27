@@ -3,6 +3,7 @@ package com.invessence.docServices.service;
 import java.util.List;
 
 import com.invessence.custody.data.AORequest;
+import com.invessence.custody.uob.data.CustodyFileRequest;
 import com.invessence.service.bean.*;
 
 /**
@@ -10,6 +11,6 @@ import com.invessence.service.bean.*;
  */
 public interface DocumentServiceTraffic
 {
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests);
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests, List<CustodyFileRequest> updFileLst, StringBuilder requestIds) throws Exception;
    public WSCallResult sendDoc(ServiceRequest serviceRequest, Object object);
 }

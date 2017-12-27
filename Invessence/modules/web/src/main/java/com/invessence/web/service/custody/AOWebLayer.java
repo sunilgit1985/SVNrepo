@@ -1,5 +1,8 @@
 package com.invessence.web.service.custody;
 
+import java.util.List;
+
+import com.invessence.custody.uob.data.CustodyFileRequest;
 import com.invessence.service.bean.*;
 
 /**
@@ -7,6 +10,6 @@ import com.invessence.service.bean.*;
  */
 public interface AOWebLayer
 {
-   public WSCallResult processAORequest(ServiceRequest serviceRequest, Long acctNum, Integer eventNum);
+   public WSCallResult processAORequest(ServiceRequest serviceRequest, Long acctNum, Integer eventNum, List<CustodyFileRequest> updFileLst);
 //   public WSCallResult processAORequest(ServiceRequest serviceRequest, List<AORequest> aoRequests, Object dataObject)throws Exception;
 }
