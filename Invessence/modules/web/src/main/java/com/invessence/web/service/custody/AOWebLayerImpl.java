@@ -50,7 +50,7 @@ public class AOWebLayerImpl implements AOWebLayer
          {
             UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
          }else{
-            System.out.println("Account Opening requests for acctnum :"+acctNum+" are not available for processing!");
+            System.out.println("Account Opening requests for acctnum :"+acctNum+" are not available for processing!!");
          }
 
          UOBDataMaster uobDataMaster = (UOBDataMaster) uobDao.fetch(acctNum);
