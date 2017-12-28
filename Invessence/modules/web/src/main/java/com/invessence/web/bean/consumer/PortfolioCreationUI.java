@@ -197,9 +197,12 @@ public class PortfolioCreationUI extends UserInterface
    public void setInterfaceMode(String interfaceMode)
    {
       this.interfaceMode = interfaceMode;
-      if (interfaceMode != null && beanmode == null)
+      if (interfaceMode != null)
       {
          beanmode = UIMode.get(interfaceMode);
+      }
+      else {
+         beanmode = UIMode.New;
       }
    }
 
