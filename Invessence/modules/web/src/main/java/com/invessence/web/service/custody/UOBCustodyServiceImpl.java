@@ -206,7 +206,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
             for (Map<String, Object> map : rows)
             {
                Map rs = (Map) rows.get(i);
-               objMap.put(convert.getStrData(rs.get("displayName")), convert.getStrData(rs.get("rep")));
+               objMap.put(convert.getStrData(rs.get("displayName")), convert.getStrData(rs.get("rep"))+"~"+convert.getLongData(rs.get("logonid")));
                i++;
             }
          }

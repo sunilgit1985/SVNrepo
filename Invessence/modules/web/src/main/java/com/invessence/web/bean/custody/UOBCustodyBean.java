@@ -22,6 +22,7 @@ import com.invessence.service.bean.Generic.Country;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.logging.*;
 import org.primefaces.event.*;
+import org.primefaces.model.*;
 
 /**
  * Created by sagarp on 11/11/2017.
@@ -58,11 +59,9 @@ public class UOBCustodyBean
    private PagesImpl pagemanager = new PagesImpl(10);
    private long beanAcctNum, beanLogonId;
    private boolean  dsplExtIndAcctInp = false,  dsplExtJntAcctInp = false, dsplAcctTyp = false;
-//   private boolean dsplExtJntAcctCat = false,dsplExtIndAcctCat = false,;
    private boolean dsplExtIndAcctQue=false,dsplExtJntAcctQue=false;
    private boolean dspExtAcctPnl = false, dspNewAcctPnl = false, dspIntroAcctPnl = false, dsblSubmtBtn = true, dspJntTab = false;
    private String extAcctJnt, clientAcctId, slsPrsnNm, selIndAcctTyp, selJntAcctTyp;
-//   private String acctCat;
    private Integer activeTab = 0;
    private boolean dsplOtrCntry = false, dsplIcNoInp = false, dsplPspNoInp = false, dsplSrcIncOtrs = false;
    private Date dtPriHldrDob;
@@ -89,7 +88,8 @@ public class UOBCustodyBean
    private String beanAccount=null;
    private String saveandOpenError;
    private String reqType;
-
+   private boolean dsblRepList=false;
+private String hasRepDtlY=null,hasRepDtlN=null;
    private Map<String, String> fileupdSucc = new HashMap<String, String>();
 
    public void cleanUpAll()
@@ -97,9 +97,7 @@ public class UOBCustodyBean
       dsplPriHldrMlPnl = false;
       priHldrPhyAddr = null;
       priHldrMlAddr = null;
-//      dsplExtIndAcctCat = false;
       dsplExtIndAcctInp = false;
-//      dsplExtJntAcctCat = false;
       dsplExtJntAcctInp = false;
       dsplExtIndAcctQue=false;
       dsplExtJntAcctQue=false;
@@ -114,7 +112,6 @@ public class UOBCustodyBean
       dsplOtrCntry = false;
       dsplIcNoInp = false;
       dsplPspNoInp = false;
-//      acctCat = null;
       extAcctJnt = null;
       clientAcctId = null;
       slsPrsnNm = null;
@@ -155,6 +152,9 @@ public class UOBCustodyBean
       dsplNwPriUnEmpRsnPnl=false;
       priHldrCnfEmail=null;
       priHldrBnkAddr=null;
+      dsblRepList=false;
+      hasRepDtlY=null;
+      hasRepDtlN=null;
    }
 
    public void initCustody()
@@ -396,6 +396,26 @@ public class UOBCustodyBean
       return null;
    }
 
+public void onChngRpDtls(String flag){
+      if(flag.equalsIgnoreCase("Yes") ){
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHavingRepDtls("Yes");
+         hasRepDtlN=null;
+         hasRepDtlY="Yes";
+         dsblRepList=false;
+      }else  if(flag.equalsIgnoreCase("No")){
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHavingRepDtls("No");
+         dsblRepList=true;
+         hasRepDtlN="No";
+         hasRepDtlY=null;
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setSalesPersonName(null);
+      }else{
+         dsblRepList=true;
+         hasRepDtlN=null;
+         hasRepDtlY=null;
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setSalesPersonName(null);
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHavingRepDtls(null);
+      }
+}
    public void onChangeValue()
    {
       try
@@ -522,7 +542,53 @@ public class UOBCustodyBean
          }
          setSelIndAcctTyp("Individual");
          onChangeValue();
+         if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls() != null)
+         {
+            onChngRpDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls());
+         }else{
+            onChngRpDtls("");
+         }
       }
+//      getFileData();
+   }
+   public void getFileData(){
+      try
+      {
+         File file = new File("C:/Users/sagar/Desktop/spsample/book.pdf");
+//init array with file length
+         byte[] bytesArray = new byte[(int) file.length()];
+
+         FileInputStream fis = new FileInputStream(file);
+         fis.read(bytesArray); //read file into bytes[]
+         fis.close();
+
+//         bytesArray;
+//
+         ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+
+//         Document document = new Document();
+//         PdfWriter.getInstance(document, out);
+//         document.open();
+//
+//         for (int i = 0; i < 50; i++) {
+//            document.add(new Paragraph("All work and no play makes Jack a dull boy"));
+//         }
+//
+//         document.close();
+         content = new DefaultStreamedContent(fis, "application/pdf");
+      }catch (Exception e){
+
+      }
+   }
+   private StreamedContent content;
+
+   public StreamedContent getContent() {
+      return content;
+   }
+
+   public void setContent(StreamedContent content) {
+      this.content = content;
    }
 
    public void onSelAcctTypAsInd(String strAcctType)
@@ -704,13 +770,28 @@ public class UOBCustodyBean
    {
       if (validateIntroPage())
       {
-         String inpSalesPrnNm = uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName();
-         String repid = repMap.get(inpSalesPrnNm);
-         if (repid == null || repid.trim().equalsIgnoreCase(""))
+         String repid = null;
+         String repDtls[] = null;
+         String inpSalesPrnNm=null;
+         if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls() == "Yes")
          {
-            repid = "CATCHALL";
+            inpSalesPrnNm = uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName();
+
+            if (repMap.get(inpSalesPrnNm) != null )
+            {
+               repDtls = repMap.get(inpSalesPrnNm).split("~");
+               uobDataMaster.getAccountDetails().setRepId(repDtls[0]);
+               uobDataMaster.getAccountDetails().setAdvisorId(Long.parseLong(repDtls[1]));
+            }else{
+               uobDataMaster.getAccountDetails().setRepId("CATCHALL");
+               uobDataMaster.getAccountDetails().setAdvisorId(null);
+            }
          }
-         uobDataMaster.getAccountDetails().setRepId(repid);
+         else
+         {
+            uobDataMaster.getAccountDetails().setRepId("CATCHALL");
+            uobDataMaster.getAccountDetails().setAdvisorId(null);
+         }
          custodyService.saveAcctDetails(uobDataMaster.getAccountDetails(), "" + getBeanLogonId());
          saveActAdditionalDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails(), uobDataMaster.getAccountDetails().getAcctnum(), "ao_acct_misc_details");
          dspIntroAcctPnl = false;
@@ -795,9 +876,21 @@ public class UOBCustodyBean
             sb.append("Enter your existing Joint UOBKH Securities Trading account number.<br/>");
          }
       }
-      if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
+      if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls()))
       {
-         sb.append("Sales Person Name is required.<br/>");
+         sb.append("Trading Representative details are required.<br/>");
+      }
+      if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls() != null &&
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls().trim().equalsIgnoreCase("Yes"))
+      {
+         if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
+         {
+            sb.append("Trading Representative Name is required.<br/>");
+         }
+         else if (!repList.contains(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
+         {
+            sb.append("Trading Representative Name is not valid.<br/>");
+         }
       }
       if (sb.length() > 0)
       {
@@ -1440,6 +1533,12 @@ public class UOBCustodyBean
 
    public boolean savePrsnlConseDtls(Long acctNum, int acctOwnerId, OwnerDetails ownerDetails)
    {
+      if((ownerDetails.getPhysicalAddressCountry()!=null && ownerDetails.getPhysicalAddressCountry().equalsIgnoreCase("Singapore") )||
+         (ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry()!=null && ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry().equalsIgnoreCase("Singapore"))){
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHvaingGST("Yes");
+      }else{
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHvaingGST("No");
+      }
       saveAdditionalDtls(ownerDetails.getOwnerMiscDetails(), acctNum, acctOwnerId, "ao_owners_misc_details");
       return true;
    }
@@ -3664,5 +3763,35 @@ public class UOBCustodyBean
    public void setDsplExtJntAcctQue(boolean dsplExtJntAcctQue)
    {
       this.dsplExtJntAcctQue = dsplExtJntAcctQue;
+   }
+
+   public boolean isDsblRepList()
+   {
+      return dsblRepList;
+   }
+
+   public void setDsblRepList(boolean dsblRepList)
+   {
+      this.dsblRepList = dsblRepList;
+   }
+
+   public String getHasRepDtlY()
+   {
+      return hasRepDtlY;
+   }
+
+   public void setHasRepDtlY(String hasRepDtlY)
+   {
+      this.hasRepDtlY = hasRepDtlY;
+   }
+
+   public String getHasRepDtlN()
+   {
+      return hasRepDtlN;
+   }
+
+   public void setHasRepDtlN(String hasRepDtlN)
+   {
+      this.hasRepDtlN = hasRepDtlN;
    }
 }

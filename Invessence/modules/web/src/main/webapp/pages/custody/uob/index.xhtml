@@ -117,29 +117,36 @@
                                         </ui:fragment>
                                     </div>
                                 </p:panel>
-                                <div class="acc_holder_dtl_block checkBoxOpt">
-                                    <div class="Container100 Responsive50 select_item margin-top">
-                                        <div class="Container10 fistCheckOpt">
-                                        <p:selectManyCheckbox id="introRepChY">
-                                            <f:selectItem itemLabel="" itemValue="Yes"/>
-                                        </p:selectManyCheckbox>
+                                <p:panel id="repParam" style="border-color: transparent;" class="Container100 ">
+                                    <div class="acc_holder_dtl_block checkBoxOpt">
+                                        <div class="Container100 Responsive50 select_item margin-top">
+                                            <div class="Container10 fistCheckOpt">
+                                                <p:selectOneRadio  id="introRepChY"
+                                                                      value="#{uobCustodyBean.hasRepDtlY}">
+                                                    <p:ajax listener='#{uobCustodyBean.onChngRpDtls("Yes")}' update="repParam"/>
+                                                    <f:selectItem itemLabel="" itemValue="Yes"/>
+                                                </p:selectOneRadio>
                                             </div>
-                                        <div class="Container90">
-                                        My preferred Trading Representative
-                                        <p:autoComplete id="slsPrnNm" dropdown="true"
-                                                        value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
-                                                        completeMethod="#{uobCustodyBean.completeRepText}">
-                                    </p:autoComplete>
+                                            <div class="Container90">
+                                                My preferred Trading Representative
+                                                <p:autoComplete id="slsPrnNm" dropdown="true"
+                                                                value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
+                                                                completeMethod="#{uobCustodyBean.completeRepText}"
+                                                                disabled="#{uobCustodyBean.dsblRepList}" placeholder="Trading Representative Name">
+                                                </p:autoComplete>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="Container100 margin-top select_item checkBoxOpt ">
-                                    <div class="Container10">
-                                        <p:selectManyCheckbox id="introRepChN">
-                                            <f:selectItem itemLabel="" itemValue="No"/>
-                                        </p:selectManyCheckbox></div>
-                                    <div class="Container90">I/We do not have a Trading Representative</div>
-                                </div>
+                                    <div class="Container100 margin-top select_item checkBoxOpt ">
+                                        <div class="Container10">
+                                            <p:selectOneRadio id="introRepChN"
+                                                                  value="#{uobCustodyBean.hasRepDtlN}">
+                                                <p:ajax listener='#{uobCustodyBean.onChngRpDtls("No")}' update="repParam"/>
+                                                <f:selectItem itemLabel="" itemValue="No"/>
+                                            </p:selectOneRadio></div>
+                                        <div class="Container90">I/We do not have a Trading Representative</div>
+                                    </div>
+                                </p:panel>
                                 <div class="Container100 pre_next_btn">
                                     <div class="Container50 next_btn">
                                         <p:commandLink id="introNxt"
