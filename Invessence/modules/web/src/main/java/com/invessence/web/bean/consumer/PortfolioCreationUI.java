@@ -238,6 +238,10 @@ public class PortfolioCreationUI extends UserInterface
       return riskCalc;
    }
 
+   public Boolean getCanOpenAccount() {
+      return canOpenAccount;
+   }
+
    public void initUI() {
       formEdit = false;
       disablegraphtabs = true;
@@ -390,18 +394,11 @@ public class PortfolioCreationUI extends UserInterface
 
    public void createAssetPortfolio()
    {
-
-      try
-      {
          formEdit = true;
          riskCalc.calculate(1);
          customer.createAssetPortfolio();
          chart.createAssetChart(customer.getAssetData(), webutil);
-      }
-      catch (Exception ex)
-      {
-         ex.printStackTrace();
-      }
+         canOpenAccount = riskCalc.getKnockOutFlag();
    }
 
    public void saveProfile()
@@ -526,6 +523,22 @@ public class PortfolioCreationUI extends UserInterface
    }
 
    // Data Management save/Updates
+
+   public Double getExchangeRate(Double money) {
+      Double exchRate = 1.0;
+      if (listDAO != null)
+      {
+         String from = getCustomer().getTradeCurrency();
+         String to = getCustomer().getSettleCurrency();
+         if (from != null && to != null)
+            exchRate = listDAO.getExchangeRate(from, to);
+      }
+      if (money != null && exchRate > 0.0) {
+         return (money * exchRate);
+      }
+      return money;
+   }
+
    public void saveAccount()
    {
       long acctnum;
@@ -558,6 +571,14 @@ public class PortfolioCreationUI extends UserInterface
       String msgheader, msg = "";
       try
       {
+         if (! userInfoDAO.validateFormat(getCustomer().getEmail()))
+         {
+            msgheader = "signup.U000";
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email format is invalid!", null);
+            return msg;
+         }
+
+
          UserData userdata = new UserData();
          userdata.setFirstName(getCustomer().getFirstname());
          userdata.setLastName(getCustomer().getLastname());
@@ -567,35 +588,32 @@ public class PortfolioCreationUI extends UserInterface
          userdata.setUserID(getCustomer().getEmail());
          userdata.setIp(webutil.getClientIpAddr());
 
-         if (userInfoDAO.validateUserID(userdata))
+      if (userInfoDAO.validateUserID(userdata))
+      {
+         logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
+         msgheader = "signup.U100";
+         msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+         return msg;
+      }
+
+         customer.saveProfile();  // We need to save Profile, in order to create a new account number.
+         userdata.setAcctnum(getCustomer().getAcctnum());
+         Integer myResetID = webutil.randomGenerator(0, 347896);
+         userdata.setUserInfo(WebConst.ROLE_USER, getCustomer().getAdvisor(), getCustomer().getRep(), myResetID);
+         long loginID = userInfoDAO.addUserInfo(userdata);
+
+         if (loginID <= 0L)
          {
-            logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
-            msgheader = "signup.U100";
-            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+            logger.debug("ERROR: Had issue with this userid (" + userdata.getEmail() +") when attempting to save: " + loginID);
+            msgheader = "signup.U106";
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "There was some error when attempting to save this userid.  Please reach out to support desk.", null);
+            // webutil.alertSupport("Userbean.saveUser", "Save -" + getCustomer().getEmail(), "Save Registration Error", null);
             return msg;
          }
-         else
-         {
-            customer.saveProfile();  // We need to save Profile, in order to create a new account number.
-            userdata.setAcctnum(getCustomer().getAcctnum());
-            Integer myResetID = webutil.randomGenerator(0, 347896);
-            userdata.setUserInfo(WebConst.ROLE_USER, getCustomer().getAdvisor(), getCustomer().getRep(), myResetID);
-            long loginID = userInfoDAO.addUserInfo(userdata);
 
-            if (loginID <= 0L)
-            {
-               logger.debug("ERROR: Had issue with this userid when attempting to save: " + loginID);
-               msgheader = "signup.U106";
-               msg = webutil.getMessageText().getDisplayMessage(msgheader, "There was some error when attempting to save this userid.  Please reach out to support desk.", null);
-               webutil.alertSupport("Userbean.saveUser", "Save -" + getCustomer().getEmail(), "Save Registration Error", null);
-               return msg;
-            }
-            userdata.setLogonID(loginID);
-            getCustomer().setLogonid(loginID);
-            webutil.sendConfirmation(userdata, "W");
-
-            // setDoesUserHavaLogonID(true);
-         }
+         userdata.setLogonID(loginID);
+         getCustomer().setLogonid(loginID);
+         webutil.sendConfirmation(userdata, "W");
       }
       catch (Exception ex)
       {

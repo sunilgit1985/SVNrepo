@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.invessence.converter.SQLData;
 import com.invessence.web.data.common.UserData;
+import com.invessence.web.validator.EmailFormatValidator;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -31,6 +32,11 @@ public class UserInfoDAO extends JdbcDaoSupport
       Map outMap = sp.addUser(action, userData);
 
       return ((Long) outMap.get("p_logonid"));
+   }
+
+   public Boolean validateFormat(String email) {
+      EmailFormatValidator formatValidator = new EmailFormatValidator();
+      return formatValidator.validate(email);
    }
 
    public Boolean selectUserInfo(UserData data)

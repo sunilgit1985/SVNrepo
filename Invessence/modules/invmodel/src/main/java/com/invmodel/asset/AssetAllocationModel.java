@@ -120,7 +120,7 @@ public class AssetAllocationModel
       String theme;
       // Integer age = userrisk.getDefaultAge();
       // Integer duration = userrisk.getDefaultHorizon();
-      Double investment = pdata.getActualInvestment();
+      Double investment = pdata.getDefaultInvestment();
       Double score;
       try
       {

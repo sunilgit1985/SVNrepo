@@ -5,50 +5,59 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
 
-			<div class="caraousle Container100">
-				
-					<div class="header_tab">
-						<div class="header_title Container30">Risk Tolerance</div>
-						<div class="header_link prenext_btn Container70" >
-							<p:outputPanel id="p3buttonArea" style="border: 0px; background: transparent">
-								<div class="Container50 next_btn">
-									<p:commandLink rendered="true" class="next_pg_link"
-												   update=":ceForm:workArea"
-												   actionListener="#{uobProfile.gotoNextPage}"> Next </p:commandLink>
-								</div>
-								<div class="Container50 pre_btn">
-									<p:commandLink rendered="true" class="next_pg_link"
-												   update=":ceForm:workArea"
-												   actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
-								</div>
-							</p:outputPanel>
-							
-						</div>
-						
-					</div>
-					<div class="Container100 tab_dtl risk_switch ">
-						<div class="Container100">
-							<div class="Container80 margin-top">
-								I have an emergency funds to cover three months of living expenses.
-							</div>
-							<div class="Container20">
-								<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-							      <p:inputSwitch id="r2a1" value="#{uobProfile.riskAns2}" />
-							</h:panelGrid>	
-							</div>						
-						</div>
-						<div class="Container100">
-							<div class="Container80">
-								I cannot afford any losses on the investment that I am making.
-							</div>
-							<div class="Container20">
-								<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-							      <p:inputSwitch id="r3a1" value="#{uobProfile.riskAns3}" />
-							</h:panelGrid>	
-							</div>						
-						</div>
-						
-					</div>
-			</div>
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Risk Tolerance</div>
+            <div class="header_link prenext_btn Container70">
+                <p:outputPanel id="p3buttonArea" style="border: 0px; background: transparent">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoNextPage}"> Next </p:commandLink>
+                    </div>
+                    <div class="Container50 pre_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
+                    </div>
+                </p:outputPanel>
+
+            </div>
+
+        </div>
+        <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                 style="margin-top: 7px;border: 0px; background: transparent"
+                 styleClass="Container100">
+            <h:outputText styleClass="errorText"
+                          value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+            <div class="EmptyBox5"></div>
+        </p:panel>
+
+        <div class="Container100 tab_dtl risk_switch ">
+            <div class="Container100">
+                <div class="Container80 margin-top">
+                    I have an emergency funds to cover three months of living expenses.
+                </div>
+                <div class="Container20">
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:inputSwitch id="r2a1" value="#{uobProfile.riskAns2}"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+            <div class="Container100">
+                <div class="Container80">
+                    I cannot afford any losses on the investment that I am making.
+                </div>
+                <div class="Container20">
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:inputSwitch id="r3a1" value="#{uobProfile.riskAns3}"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </ui:composition>

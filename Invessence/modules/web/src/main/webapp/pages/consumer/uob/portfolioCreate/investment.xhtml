@@ -27,19 +27,31 @@
             </div>
 
         </div>
+
+        <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                 style="margin-top: 7px;border: 0px; background: transparent"
+                 styleClass="Container100">
+            <h:outputText styleClass="errorText"
+                          value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+            <div class="EmptyBox5"></div>
+        </p:panel>
+
         <div class="Container100 tab_dtl">
             <div class="selectList">
                 I like to invest in
-                <p:selectOneMenu id="tradeCurrency" value="#{uobProfile.customer.tradeCurrency}"
-                update=":ceForm:initialinvestment">
-                    <f:selectItems value="#{uobProfile.currencyList}" var="currency"
-                                   itemValue="#{currency}" itemLabel="#{currency.displayName}" />
+                <p:selectOneMenu id="tradeCurrency" value="#{uobProfile.tradeCurrency}"
+                                    update=":ceForm:initialinvestment">
+                    <f:selectItems
+                            value="#{uobProfile.currencyMap.entrySet()}"
+                            var="currency" itemLabel="#{currency.key}"
+                            itemValue="#{currency.key}"/>
                 </p:selectOneMenu>
            </div>
             <p>
-                My initial investment in this account will be
+                My initial investment in this account will be #{uobProfile.selectedCurrency.shortname}
                 <p:inputNumber id="initialinvestment" class="input_no_type"
-                               value="#{uobProfile.initialInvestment}" symbol="#{uobProfile.selectedCurrency.shortname} "
+                               value="#{uobProfile.initialInvestment}"
                                thousandSeparator="," decimalPlaces="0">
                 </p:inputNumber>
             </p>

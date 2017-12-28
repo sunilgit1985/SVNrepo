@@ -691,7 +691,10 @@ public class CustomerData extends ProfileData
 
       setDoesUserHavaLogonID(webutil.isUserLoggedIn());
       setSaveVisitor(true);
+      // BY default, both Trade/Settle Currency are same.  User can override the Trade on UI
       setTradeCurrency(webutil.getWebprofile().getInfo("DEFAULT.CURRENCY"));
+      setSettleCurrency(webutil.getWebprofile().getInfo("DEFAULT.CURRENCY"));
+
    }
 
    @Override
@@ -941,6 +944,9 @@ public class CustomerData extends ProfileData
 
    public Double getTotalMoneyAllocated()
    {
+      if (getDefaultInvestment() > totalMoneyAllocated) {
+         return getDefaultInvestment();
+      }
       return totalMoneyAllocated;
    }
 
@@ -1298,18 +1304,29 @@ public class CustomerData extends ProfileData
    {
       Map<String, Asset> tallyAssetclass = new LinkedHashMap<String, Asset>();
       Double totalMoney = 0.0;
-      Double remainMoney = getActualInvestment();
+      Double remainMoney = getDefaultInvestment();
       if (pfclass != null)
       {
+         String displayName;
+         Double allocwght;
+         String color;
          for (PortfolioSecurityData seclist : pfclass.getPortfolio())
          {
             String assetname = seclist.getAssetclass();
             Asset origData = getAssetData()[0].getAsset(assetname);
-            String displayName = origData.getDisplayName();
-            Double allocwght = origData.getAllocweight();
+            if (origData != null)
+            {
+               displayName = origData.getDisplayName();
+               allocwght = origData.getAllocweight();
+               color = origData.getColor();
+            }
+            else {
+               displayName = seclist.getAssetclass();
+               allocwght = seclist.getWeight();
+               color = seclist.getColor();
+            }
             Double wght = seclist.getWeight();
             Double money = seclist.getMoney();
-            String color = origData.getColor();
             Double summoney = 0.0;
 
             totalMoney += money;
@@ -1386,12 +1403,11 @@ public class CustomerData extends ProfileData
                // for (Asset assetdata : tallyAssetclass.values()) {
                String name = newData.getAsset();
                setEditableAsset(newData);
-               aamc[i].addAssetClass(newData.getAsset(), newData.getDisplayName(), newData.getColor(),
+               aamc[i].addAssetClass(name, newData.getDisplayName(), newData.getColor(),
                                      newData.getAllocweight(), newData.getAvgReturn());
-               aamc[i].getAssetclass().get(newData.getAsset()).setValue(newData.getValue());
-               aamc[i].getAssetclass().get(newData.getAsset()).setUserweight(newData.getUserweight());
-               aamc[i].getAssetclass().get(newData.getAsset()).setActualweight(newData.getActualweight());
-               i++;
+               aamc[i].getAssetclass().get(name).setValue(newData.getValue());
+               aamc[i].getAssetclass().get(name).setUserweight(newData.getUserweight());
+               aamc[i].getAssetclass().get(name).setActualweight(newData.getActualweight());
             }
             setAssetData(aamc);
          }
@@ -1529,14 +1545,6 @@ public class CustomerData extends ProfileData
       }
 
    }
-
-   @Override
-   public void setAge(Integer age)
-   {
-      age = age;
-      riskProfile.setAge(age);
-   }
-
 
    public void setDefaults()
    {

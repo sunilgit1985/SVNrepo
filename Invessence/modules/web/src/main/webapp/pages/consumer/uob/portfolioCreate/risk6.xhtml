@@ -26,6 +26,15 @@
 
         </div>
 
+        <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                 style="margin-top: 7px;border: 0px; background: transparent"
+                 styleClass="Container100">
+            <h:outputText styleClass="errorText"
+                          value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+            <div class="EmptyBox5"></div>
+        </p:panel>
+
 
         <div class="Container100 tab_dtl RTQ">
             <p>In the financial crisis of 2007-2009, global stocks fell 52% from September 2007 to March 2009

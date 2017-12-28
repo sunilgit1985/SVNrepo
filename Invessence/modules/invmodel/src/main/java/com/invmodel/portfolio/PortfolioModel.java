@@ -405,7 +405,7 @@ public class PortfolioModel
 
          theme = pdata.getTheme();
          advisor = pdata.getAdvisor();
-         actualInvestment = pdata.getActualInvestment();
+         actualInvestment = pdata.getDefaultInvestment();
          reinvestment = pdata.getRecurringInvestment().doubleValue();
 
          if (actualInvestment == 0.0) {
@@ -492,7 +492,7 @@ public class PortfolioModel
       Double investment, keepLiquidCash, invCapital;
       Double remaining2Invest;
 
-      investment = pdata.getActualInvestment();
+      investment = pdata.getDefaultInvestment();
       try
       {
 

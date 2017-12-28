@@ -53,6 +53,7 @@ public class NewRiskCalc
 
       // Data needed for Profiledata
       profileData = new ProfileData();
+      profileData.setRiskProfile(userRiskProfile);
       if (userRiskProfile.getRiskData().containsKey(RiskConst.INITIALINVESTMENT))
       {
          profileData.setActualInvestment(userRiskProfile.getRiskData().get(RiskConst.INITIALINVESTMENT).getAnswerDouble());
@@ -61,12 +62,24 @@ public class NewRiskCalc
       {
          profileData.setActualInvestment(100000.0);
       }
+
+      profileData.setInitialInvestment(600000);
+      profileData.setActualInvestment(600000.0);
+      profileData.setRecurringInvestment(30000);
+      userRiskProfile.setAnswer(RiskConst.RECURRINGPERIOD,1);
       profileData.setAdvisor(advisor);
       profileData.setTheme(userRiskProfile.getAnswer(RiskConst.THEME));
 
-      calculateRisk();
+      calculateOneRisk();
       System.out.print("Done");
    }
+
+   public static void calculateOneRisk() {
+      riskCalc.ageTimeFormula(64,3);
+      riskCalc.calculate();
+      System.out.println("Score:" + userRiskProfile.getScore(0));
+   }
+
 
    public static void calculateRisk() {
       Integer startingQuestion = 4;

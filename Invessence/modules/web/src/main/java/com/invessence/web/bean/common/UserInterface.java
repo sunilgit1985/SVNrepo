@@ -1,6 +1,6 @@
 package com.invessence.web.bean.common;
 
-import java.util.Map;
+import java.util.*;
 import javax.faces.bean.ManagedProperty;
 
 import com.invessence.converter.*;
@@ -39,6 +39,8 @@ public class UserInterface implements Logger
    public JavaUtil jutil;
    public PagesImpl pagemanager;
    public ProgressBarImpl progressbar;
+   Calendar cal;
+
 
    public String defaultCheckedImage = "/javax.faces.resource/images/checkedN.png.xhtml?ln=invessence";
    public String selectedCheckedImage = "/javax.faces.resource/images/checkedY.png.xhtml?ln=invessence";
@@ -49,6 +51,8 @@ public class UserInterface implements Logger
       jutil = new JavaUtil();
       converter = new SQLData();
       chart = new Chart();
+      cal = Calendar.getInstance();
+
    }
 
    @Override
@@ -116,5 +120,15 @@ public class UserInterface implements Logger
       return chart;
    }
 
+   public Integer getCurrentYear() {
+      return cal.get(cal.YEAR);
+   }
 
+   public Integer getYear(Integer numofyears) {
+      Integer thisYear = getCurrentYear();
+      if (numofyears != null && numofyears > 0) {
+         return thisYear + numofyears;
+      }
+      return thisYear;
+   }
 }

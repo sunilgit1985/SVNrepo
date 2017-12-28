@@ -253,7 +253,8 @@ public class RiskSP extends StoredProcedure
                if (riskInfo != null)
                {
                   inputMap.put("p_ans" + origAns.toString(), riskInfo.getAnswerInt());
-                  inputMap.put("p_r" + origAns.toString(), riskInfo.getRiskScore().intValue());
+                  Double score = riskInfo.getRiskScore();
+                  inputMap.put("p_r" + origAns.toString(), (score == null) ? 0 : score.intValue());
                   origAns++;
                }
             }

@@ -31,6 +31,22 @@ public class EmailFormatValidator implements Validator {
 	public EmailFormatValidator(){
 		pattern = Pattern.compile(EMAIL_PATTERN);
 	}
+
+	public Boolean validate(String emailID)
+	{
+		if ((emailID == null) || (emailID.isEmpty())) {
+			return false;
+		}
+
+		if ((emailID.indexOf('.') == -1) ||
+			(emailID.indexOf('@') == -1))
+		{
+			return false;
+		}
+
+		matcher = pattern.matcher(emailID);
+		return matcher.matches();
+	}
  
 	@Override
 	public void validate(FacesContext context, UIComponent component,
@@ -41,25 +57,11 @@ public class EmailFormatValidator implements Validator {
 		matcher = pattern.matcher(emailID);
 		
 		FacesMessage msg = null;
-		
-		if ( (emailID == null) || (emailID.trim().equals("")) ||
-	         (emailID.indexOf('.') == -1) ||
-	         (emailID.indexOf('@') == -1) )  {
-			msg =  new FacesMessage("Invalid E-mail.", "Invalid E-mail.");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			throw new ValidatorException(msg);
-			
-		} 
-		
-		if(!matcher.matches()){
 
+		if (! validate(emailID)) {
 			msg =  new FacesMessage("E-mail validation failed.", "Invalid E-mail format.");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(msg);
-				
-
 		}
 	
 

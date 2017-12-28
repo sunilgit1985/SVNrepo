@@ -30,7 +30,7 @@ public class
    private String accountType;
    private String tradePreference;
    private String name;
-   public Integer age = 30;
+   public Integer age;
    public Integer horizon;
    private Integer calendarYear;
    private Integer numOfAllocation = 1;

@@ -4,6 +4,7 @@ import java.util.*;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
+import com.invessence.converter.SQLData;
 import com.invessence.web.bean.consumer.PortfolioCreationUI;
 import com.invessence.web.constant.WebConst;
 import com.invessence.web.util.*;
@@ -21,7 +22,7 @@ public class ProfileBean extends PortfolioCreationUI
 {
 
    private List<WebMenuItem> goalsdata = null;
-   private List<WebMenuItem> currencyList = null;
+   private Map<String, WebMenuItem> currencyMap = null;
    public WebMenuItem selectedGoal;
    public WebMenuItem selectedCurrency;
    public Integer selectedRetirementGoal;
@@ -31,7 +32,14 @@ public class ProfileBean extends PortfolioCreationUI
    public void loadDropDownList()
    {
       goalsdata = webMenuList.getMenulist().get(WebMenuList.ListComponent.GOAL.toString());
-      currencyList = webMenuList.getMenulist().get(WebMenuList.ListComponent.CURRENCY.toString());
+      currencyMap = new HashMap<String, WebMenuItem>();
+      List<WebMenuItem> currencyList = webMenuList.getMenulist().get(WebMenuList.ListComponent.CURRENCY.toString());
+      if (currencyList != null){
+         for (WebMenuItem item : currencyList) {
+            currencyMap.put(item.getSelectedValue(), item);
+         }
+      }
+
    }
 
    @Override
@@ -65,7 +73,11 @@ public class ProfileBean extends PortfolioCreationUI
       if (validatePage(pagemanager.getPage()))
       {
          // If in New mode, and once the first page conditions are satisfied, we revert the mode to Edit.
-         beanmode = UIMode.Edit;
+         if (beanmode.equals(UIMode.New))
+         {
+            beanmode = UIMode.Edit;
+         }
+         createAssetPortfolio();
          super.gotoNextPage();
       }
    }
@@ -74,6 +86,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void gotoReview() {
       if (validatePage(pagemanager.getPage()))
       {
+         createAssetPortfolio();
          super.gotoReview();
       }
    }
@@ -123,14 +136,18 @@ public class ProfileBean extends PortfolioCreationUI
       {
          if (!FacesContext.getCurrentInstance().isPostback())
          {
-            if (beanmode == null)
+            if (interfaceMode == null)
             {
                beanmode = UIMode.New;
             }
-            if (!(beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit)))
+
+            if ( ! (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit)))
             {
-               webutil.redirect("/login.xhtml", null);
-               return;
+               if (! webutil.isUserLoggedIn())
+               {
+                  webutil.redirect("/login.xhtml", null);
+                  return;
+               }
             }
 
             if (beanmode.equals(UIMode.New))
@@ -151,9 +168,9 @@ public class ProfileBean extends PortfolioCreationUI
       return goalsdata;
    }
 
-   public List<WebMenuItem> getCurrencyList()
+   public Map<String, WebMenuItem> getCurrencyMap()
    {
-      return currencyList;
+      return currencyMap;
    }
 
    public Boolean getDisableModeForIntroPage() {
@@ -163,21 +180,13 @@ public class ProfileBean extends PortfolioCreationUI
    }
 
    public Integer getAge() {
-      if (getCustomer() != null)
-      {
-         return getCustomer().getAge();
-      }
-      else return null;
-
+      return getCustomer().getAge();
    }
 
    public void setAge(Integer age)
    {
-      if (getCustomer() != null)
-      {
          getCustomer().setAge(age);
          adjustInitialRisk();
-      }
    }
 
    public Integer getHorizon() {
@@ -199,34 +208,35 @@ public class ProfileBean extends PortfolioCreationUI
    }
 
    public Integer getWithdrawlPeriod() {
-      if (getCustomer() != null)
-      {
-         return getCustomer().riskProfile.getAnswerInt(RiskConst.WITHDRAWALPERIOD);
-      }
-      else return null;
-
+      return getCustomer().riskProfile.getAnswerInt(RiskConst.WITHDRAWALPERIOD);
    }
 
    public void setWithdrawlPeriod(Integer period)
    {
-      if (getCustomer() != null)
+      getCustomer().riskProfile.setAnswer(RiskConst.WITHDRAWALPERIOD, period);
+      adjustInitialRisk();
+   }
+
+   public String getTradeCurrency() {
+      return getCustomer().getTradeCurrency();
+   }
+
+   public void setTradeCurrency(String currency) {
+      getCustomer().setTradeCurrency(currency);
+      if (currencyMap.containsKey(currency))
       {
-         getCustomer().riskProfile.setAnswer(RiskConst.WITHDRAWALPERIOD, period);
-         adjustInitialRisk();
+         selectedCurrency = currencyMap.get(currency);
       }
    }
 
    public Integer getInitialInvestment() {
-      if (getCustomer() != null)
-      {
-         getCustomer().getInitialInvestment();
-      }
-      return null;
+      return getCustomer().getInitialInvestment();
    }
 
    public void setInitialInvestment(Integer investment)
    {
-      getCustomer().setInitialInvestment(investment);
+      Double money = getExchangeRate(investment.doubleValue());
+      getCustomer().setInitialInvestment(money.intValue());
       adjustInitialRisk();
    }
 
@@ -269,7 +279,23 @@ public class ProfileBean extends PortfolioCreationUI
    public void setSelectedGoal(WebMenuItem selectedItem) {
       this.selectedGoal = selectedItem;
       if (selectedItem != null) {
-         getCustomer().setGoal(selectedItem.getKey());
+         Integer value = converter.getIntData(selectedItem.getSelectedValue());
+         if (value != null && value != 4) {
+            getCustomer().getRiskProfile().setRiskAnswer(1,0,null); // Reset the Answer for Legecy
+         }
+/*
+         switch (value) {
+            case 1: // Retirement
+            case 2: // Property
+            case 3: // Education
+            case 4: // Legecy
+            case 5: // Build Wealth
+            default:
+         }
+*/
+         getCustomer().setGoal(selectedItem.getSelectedValue());
+         getCustomer().setCustomName(selectedItem.getDisplayName());
+         getCustomer().setPortfolioName(selectedItem.getSelectedValue());
       }
    }
 
@@ -294,6 +320,7 @@ public class ProfileBean extends PortfolioCreationUI
    private Boolean validatePage(Integer pagenum)
    {
       Boolean dataOK = true;
+      Integer ans;
       pagemanager.clearErrorMessage(pagenum);
       switch (pagenum)
       {
@@ -315,23 +342,50 @@ public class ProfileBean extends PortfolioCreationUI
                }
             }
             break;
-         case 1:
+         case 1: // Goal Page
             break;
-         case 2:
+         case 2: // Investment Page
+            if (getInitialInvestment() == null || getInitialInvestment() == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.initialInvestment.required", "Initial Investment is required", null));
+            }
             break;
-         case 3:
+         case 3: // Asset/Liabilty/Networth
+            if (getCustomer().getAccountFinancials().getNetworth() == null || getCustomer().getAccountFinancials().getNetworth() == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.networth.required", "Networth value is required", null));
+            }
             break;
-         case 4:
+         case 4: // Risk Questions start (First two are imbedded in this page.
+            // Don't need to check, as the default are set when starting.
             break;
          case 5:
+            ans = getCustomer().riskProfile.getAnswerInt("4");
+            if ( ans == null || ans == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
+            }
             break;
          case 6:
+            ans = getCustomer().riskProfile.getAnswerInt("5");
+            if ( ans == null || ans == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
+            }
             break;
          case 7:
+            ans = getCustomer().riskProfile.getAnswerInt("6");
+            if ( ans == null || ans == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
+            }
             break;
          case 8:
+           ans = getCustomer().riskProfile.getAnswerInt("7");
+            if ( ans == null || ans == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
+            }
             break;
          case 9:
+            ans = getCustomer().riskProfile.getAnswerInt("8");
+            if ( ans == null || ans == 0) {
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
+            }
             break;
       }
 

@@ -129,9 +129,10 @@ public class UOBRiskCalc extends RiskCalc
          Double b10 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGPERIOD);
 
          Double b11 = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWALPERIOD, 0.0);
+         // Double b11 = 95 - b5;
          Double interestRate = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWLRATE, 0.04);
-         Double presentvalue = presentValue(b8,interestRate,duration);
-         Double b12 = Math.max(Math.min(Math.round((b7-presentvalue/b8*b10/2)+b11/2),30.0),2.0);
+         Double presentvalue = presentValue(b9,interestRate,b7.intValue());
+         Double b12 = Math.max(Math.min(Math.round((b7+presentvalue/b8*b10/2)+b11/2),30.0),2.0);
 
          Double b13 = Math.min((b12-2)/28*maxScore,maxScore);
          setRisk0(b13);

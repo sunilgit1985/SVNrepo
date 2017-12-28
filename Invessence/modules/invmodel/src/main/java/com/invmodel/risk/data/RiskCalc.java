@@ -19,10 +19,12 @@ public class RiskCalc
    public RiskCalc(UserRiskProfile userRiskProfile)
    {
       this.userRiskProfile = userRiskProfile;
+/*
       if (userRiskProfile != null)
       {
          ageTimeFormula(userRiskProfile.getAge(), userRiskProfile.getHorizon());
       }
+*/
 
    }
 
@@ -163,7 +165,11 @@ public class RiskCalc
 
    public Double presentValue(Double futureValue, Double interestRate, Integer years) {
       try {
-         Double presentvalue = futureValue / (Math.pow((1.0 + (interestRate/100.0)), years.doubleValue()));
+         Double presentvalue = 0.0;
+         for (Integer loop = 1; loop <= years; loop++)
+         {
+            presentvalue += futureValue / (Math.pow((1.0 + interestRate), loop.doubleValue()));
+         }
          return presentvalue;
       }
       catch (Exception ex) {
@@ -303,7 +309,7 @@ public class RiskCalc
          value = (value < 0.0) ? 0.0 : value;
          value = (value > maxScore) ? maxScore : value;
          value = (maxScore - value);
-         userRiskProfile.setStandardScore(year, value);
+         userRiskProfile.initRiskScore(year, false, value);
 
       }
       catch (Exception ex)
@@ -323,6 +329,7 @@ public class RiskCalc
          age = userRiskProfile.getAge();
          horizon = userRiskProfile.getHorizon();
 
+         userRiskProfile.getALLRiskScores().clear();
          for (Integer thisyear = 0 ; thisyear <= years - 1 ; thisyear++)  {
             calcAgeTime(thisyear, age, horizon);
             age++;

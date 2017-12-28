@@ -1,372 +1,370 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:f="http://java.sun.com/jsf/core"
-				xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:p="http://primefaces.org/ui"
-				xmlns:pe="http://primefaces.org/ui/extensions"
-				template="/template/common/template.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/template/common/template.xhtml">
 
-	<f:metadata>
-		<f:event type="preRenderView" listener="#{uobProfile.preRenderReview}"/>
-	</f:metadata>
-	<ui:define name="content">
-		<h:outputScript name="js/invCharts.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/uobHighCharts.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{uobProfile.preRenderReview}"/>
+    </f:metadata>
+    <ui:define name="content">
+        <h:outputScript name="js/invCharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/uobHighCharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
 
-		<!-- HighChart .js plugin Start -->
-		<h:outputScript name="js/highcharts.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/highcharts-3d.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/highcharts-more.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/solid-guage.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/exporting.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/drilldown.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/data.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/exporting.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-		<h:outputScript name="js/riskMeter.js"
-						library="#{uiLayout.webProfile.cssdir}"/>
-
-
-		<script>
-						 $(document).ready(function() {
-							 $("#slidePanelleft").click(function () {
+        <!-- HighChart .js plugin Start -->
+        <h:outputScript name="js/highcharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/highcharts-3d.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/highcharts-more.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/solid-guage.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/exporting.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/drilldown.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/data.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/exporting.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/riskMeter.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
 
 
-								    // Set the effect type
-								    var effect = 'slide';
-
-								    // Set the options for the effect type chosen
-								    var options = { direction: 'left' };
-
-								    // Set the duration (default: 400 milliseconds)
-								    var duration = 700;
-
-								    $('#leftpanel').toggle(effect, options, duration);
-								     
-								});
-						 });
-						 
-						</script>
+        <script>
+            $(document).ready(function ()
+                              {
+                                  $("#slidePanelleft").click(function ()
+                                                             {
 
 
-		<h:form id="ceForm">
+                                                                 // Set the effect type
+                                                                 var effect = 'slide';
 
-			<div class="layout-portlets-box open_client_layout portfolio_layout " >
-				<div class="Container100 Responsive100">
-					<div class="portfolio_selection">
-						<div class="Container30">
-							<p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
-						</div>
-						<div class="Container30 risk_meter">
-                <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
-						</div>
-						<div class="Container30">
-                        <span class="sapn_review">Review</span>
-                        <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
-                        <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
+                                                                 // Set the options for the effect type chosen
+                                                                 var options = {direction: 'left'};
 
-                            <h:form id="ceForm">
-                                <ui:fragment rendered="#{!uobdash.dispNoRcrd}">
+                                                                 // Set the duration (default: 400 milliseconds)
+                                                                 var duration = 700;
 
-                                    <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
-                                    
-                                    <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
-                                        <script>
-                                            $(document).ready(function ()
-                                                              {
-                                                               //  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-                                                                //  {
-                                                                    //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                                    //  {
-                                                                          //draw2dDonut1lyrChartDyna('CNFPrflo');
+                                                                 $('#leftpanel').toggle(effect, options, duration);
 
-																		  draw2dDonut1lyrChartDyna('idPieChartArea1','idPieChartValue1');
-                                                                    //  }
-                                                                 // }
+                                                             });
+                              });
 
-						                                                  myGaugeChart('idRiskChartValue','idRiskChartArea', 0, 100, 'Risk', 'Score');
-                                                              });
-
-                                        </script>
-
-                                        <div class="Container100 donutChartGraph review_graph">
-                                            
-                                            
-                                            <div id="2dDonutChartCnf2" class="idPieChartArea1"></div>
-													
-																   <input type="hidden" value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
-																    class="idPieChartValue1"/>
-																    <input type="hidden" value="HIGHCHART.2DDONUT"
-																    class="idChartType1"/>
-
-                                        </div>
+        </script>
 
 
-                                    </p:panel>
+        <h:form id="ceForm">
 
-                                </ui:fragment>
-                            </h:form>
-
+            <div class="layout-portlets-box open_client_layout portfolio_layout ">
+                <div class="Container100 Responsive100">
+                    <div class="portfolio_selection">
+                        <div class="Container30">
+                            <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
                         </div>
-                    </div>
+                        <div class="Container30 risk_meter">
+                            <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
+                        </div>
+                        <div class="Container30">
+                            <span class="sapn_review">Review</span>
+                            <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
+                            <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
 
-					</div>
+                                <h:form id="ceForm">
+                                    <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+
+                                            <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
+                                            <script>
+                                                $(document).ready(function ()
+                                                                  {
+                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                                      //  {
+                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                                      //  {
+                                                                      //draw2dDonut1lyrChartDyna('CNFPrflo');
+
+                                                                      draw2dDonut1lyrChartDyna('idPieChartArea1', 'idPieChartValue1');
+                                                                      //  }
+                                                                      // }
+
+                                                                      myGaugeChart('idRiskChartValue', 'idRiskChartArea', 0, 100, 'Risk', 'Score');
+                                                                  });
+
+                                            </script>
+
+                                            <div class="Container100 donutChartGraph review_graph">
+
+                                                <div id="2dDonutChartCnf2" class="idPieChartArea1"></div>
+
+                                                <input type="hidden"
+                                                       value="#{uobProfile.chart.chartData}"
+                                                       class="idPieChartValue1"/>
+                                                <input type="hidden" value="HIGHCHART.2DDONUT"
+                                                       class="idChartType1"/>
+
+                                            </div>
+
+
+                                        </p:panel>
+                                </h:form>
+
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="portfolio_progress_bar">
                         <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
                     </div>
 
-					<div class="caraousle Container100">
+                    <div class="caraousle Container100">
 
-						<div class="header_tab reviewHeader_title">
-							<div class="header_title Container30">
-								<span>Review</span>
-								<div class="Container30 fine_tune_btn">
-									<ui:fragment rendered="true">
-										<p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
-														 icon="ui-icon-image"	>
-										</p:commandButton>
-										<span class="ftBtnLabel">Fine Tune</span>
-									</ui:fragment>
-								</div>
-							</div>
-							<div class="header_link prenext_btn Container70 review_btn" >
-								<div class="Container50 next_btn">
-									<ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
-										<p:commandLink rendered="true" class="next_pg_link"
-													   actionListener="#{uiLayout.doMenuAction('consumer', 'portfolioCreate/finalApproval.xhtml')}"> Next
-										</p:commandLink>
+                        <div class="header_tab reviewHeader_title">
+                            <div class="header_title Container30">
+                                <span>Review</span>
+                                <div class="Container30 fine_tune_btn">
+                                    <ui:fragment rendered="true">
+                                        <p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
+                                                         icon="ui-icon-image">
+                                        </p:commandButton>
+                                        <span class="ftBtnLabel">Fine Tune</span>
+                                    </ui:fragment>
+                                </div>
+                            </div>
+                            <div class="header_link prenext_btn Container70 review_btn">
+                                <div class="Container50 next_btn">
+                                    <ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
+                                        <p:commandLink rendered="true" class="next_pg_link"
+                                                       actionListener="#{uiLayout.doMenuAction('consumer', 'portfolioCreate/finalApproval.xhtml')}"> Next
+                                        </p:commandLink>
 
-									</ui:fragment>
-									<ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
-										<p:commandLink rendered="true" class="next_pg_link"
-													   actionListener="#{uobProfile.gotoCustody}"> Open Account
-										</p:commandLink>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
+                                        <p:commandLink rendered="true" class="next_pg_link" disabled="#{uobProfile.canOpenAccount}"
+                                                       actionListener="#{uobProfile.gotoCustody}"> Open Account
+                                        </p:commandLink>
 
-									</ui:fragment>
-								</div>
-								<div class="Container50 pre_btn">
-									<p:commandLink rendered="true" class="next_pg_link"
-												   actionListener="#{uobProfile.gotoRiskQuestions}"> Start Over </p:commandLink>
-								</div>
+                                    </ui:fragment>
+                                </div>
+                                <div class="Container50 pre_btn">
+                                    <p:commandLink rendered="true" class="next_pg_link"
+                                                   actionListener="#{uobProfile.gotoRiskQuestions}"> Start Over </p:commandLink>
+                                </div>
 
-							</div>
+                            </div>
 
-						</div>
-						<div class="Container100 tab_dtl review_dtl">
-							<div class="slidePanelleft" id="slidePanelleft"><span class="ui-button-icon-center ui-icon ui-c fa fa-angle-left" ></span>Goal Details</div>
-							
-							<div class="Container20" id="leftpanel"> 
-								<div class="Container100">
-									<div class="Container20 reviewGoal_heding">
-										Goal :
-									</div>
-									<div class="Container50 selected_reviewGoal">
-										<p:graphicImage name="images/portfolio/education.png" library="#{uiLayout.webProfile.cssdir}" width="60px"/>
-										<span>Education</span>
-									</div>
-								</div>
-								<div class="Container100">
-									Expected year funds needed: <span class="output_review">2037</span>
-								</div>
-								<div class="Container100">
-									Initial Investment: <span class="output_review">S$25,000</span>
-								</div>
-								<div class="Container100">
-									Recurring Investment: <span class="output_review">S$25,000</span>
-								</div>
-								<div class="Container100">
-									Current Net Worth: <span class="output_review">S$450,000</span>
-								</div>
-								<div class="Container100">
-									Expected Annual Withdraw at Retirement: <span class="output_review">S$40,000</span>
-								</div>
-							</div>
-							<div class="Container100">
-								<div class="Container100 Responsive50 tp20 confirmation_donut_dtl">
-									<!-- ROHIT's CHANGE -->
-									<div class="ContainerIndent">
+                        </div>
+                        <div class="Container100 tab_dtl review_dtl">
+                            <div class="slidePanelleft" id="slidePanelleft"><span
+                                    class="ui-button-icon-center ui-icon ui-c fa fa-angle-left"></span>Goal Details
+                            </div>
 
-										<p:panel id="cnfgraphArea" style="border: 0px; background: white;">
-											<script>
-												$(document).ready(function ()
-																  {
-																	  //if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-																	 //{
-																		//  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-																		  //{
-																			  // draw2dDonut1lyrChartDyna('CNFPrflo');
-																			  draw2dDonut1lyrChartDyna('idPieChartArea','idPieChartValue');
-																		  //}
-																	  //}
+                            <div class="Container20" id="leftpanel">
+                                <div class="Container100">
+                                    <div class="Container20 reviewGoal_heding">
+                                        Goal :
+                                    </div>
+                                    <div class="Container50 selected_reviewGoal">
+                                        <p:graphicImage name="#{uobProfile.selectedGoal.image}" library="#{uiLayout.webProfile.cssdir}" width="60px"/>
+                                        <span>#{uobProfile.selectedGoal.displayName}</span>
+                                    </div>
+                                </div>
+                                <div class="Container100">
+                                    Expected year funds needed: <span class="output_review">#{uobProfile.getYear(uobProfile.getHorizon)}</span>
+                                </div>
+                                <div class="Container100">
+                                    Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{uobProfile.getExchangeRate(uobProfile.customer.defaultInvestment)}</span>
+                                </div>
+                                <div class="Container100">
+                                    Recurring Investment: <span class="output_review">S$ #{uobProfile.customer.recurringInvestment}</span>
+                                </div>
+                                <div class="Container100">
+                                    Current Net Worth: <span class="output_review">S$ #{uobProfile.customer.accountFinancials.networth}</span>
+                                </div>
+                            </div>
+                            <div class="Container100">
+                                <div class="Container100 Responsive50 tp20 confirmation_donut_dtl">
+                                    <!-- ROHIT's CHANGE -->
+                                    <div class="ContainerIndent">
 
-
-																	  /* line chart */
-																	  var chart = Highcharts.chart('container', {
-
-																		  title: {
-																			  text: 'Chart.update'
-																		  },
-
-																		  subtitle: {
-																			  text: 'Plain'
-																		  },
-
-																		  xAxis: {
-																			  categories: ['35', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90']
-																		  },
-
-																		  series: [{
-																			  type: 'column',
-																			  colorByPoint: true,
-																			  data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-																			  showInLegend: false
-																		  }]
-
-																	  });
+                                        <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+                                            <script>
+                                                $(document).ready(function ()
+                                                                  {
+                                                                      //if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                                      //{
+                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                                      //{
+                                                                      // draw2dDonut1lyrChartDyna('CNFPrflo');
+                                                                      draw2dDonut1lyrChartDyna('idPieChartArea', 'idPieChartValue');
+                                                                      //}
+                                                                      //}
 
 
-																	  $('#plain').click(function () {
-																		  chart.update({
-																						   chart: {
-																							   inverted: false,
-																							   polar: false
-																						   },
-																						   subtitle: {
-																							   text: 'Plain'
-																						   }
-																					   });
-																	  });
+                                                                      /* line chart */
+                                                                      var chart = Highcharts.chart('container', {
 
-																	  $('#inverted').click(function () {
-																		  chart.update({
-																						   chart: {
-																							   inverted: true,
-																							   polar: false
-																						   },
-																						   subtitle: {
-																							   text: 'Inverted'
-																						   }
-																					   });
-																	  });
+                                                                          title: {
+                                                                              text: 'Chart.update'
+                                                                          },
 
-																	  $('#polar').click(function () {
-																		  chart.update({
-																						   chart: {
-																							   inverted: false,
-																							   polar: true
-																						   },
-																						   subtitle: {
-																							   text: 'Polar'
-																						   }
-																					   });
-																	  });
+                                                                          subtitle: {
+                                                                              text: 'Plain'
+                                                                          },
 
-																  });
+                                                                          xAxis: {
+                                                                              categories: ['35', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90']
+                                                                          },
+
+                                                                          series: [{
+                                                                              type: 'column',
+                                                                              colorByPoint: true,
+                                                                              data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                                                                              showInLegend: false
+                                                                          }]
+
+                                                                      });
 
 
+                                                                      $('#plain').click(function ()
+                                                                                        {
+                                                                                            chart.update({
+                                                                                                             chart: {
+                                                                                                                 inverted: false,
+                                                                                                                 polar: false
+                                                                                                             },
+                                                                                                             subtitle: {
+                                                                                                                 text: 'Plain'
+                                                                                                             }
+                                                                                                         });
+                                                                                        });
+
+                                                                      $('#inverted').click(function ()
+                                                                                           {
+                                                                                               chart.update({
+                                                                                                                chart: {
+                                                                                                                    inverted: true,
+                                                                                                                    polar: false
+                                                                                                                },
+                                                                                                                subtitle: {
+                                                                                                                    text: 'Inverted'
+                                                                                                                }
+                                                                                                            });
+                                                                                           });
+
+                                                                      $('#polar').click(function ()
+                                                                                        {
+                                                                                            chart.update({
+                                                                                                             chart: {
+                                                                                                                 inverted: false,
+                                                                                                                 polar: true
+                                                                                                             },
+                                                                                                             subtitle: {
+                                                                                                                 text: 'Polar'
+                                                                                                             }
+                                                                                                         });
+                                                                                        });
+
+                                                                  });
 
 
-											</script>
-											<div class="Container100">
-												<div class="Container30 donutChartGraph">
-													<div id="2dDonutChartCnf1" class="idPieChartArea"></div>
-													
-																   <input type="hidden" value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
-																    class="idPieChartValue"/>
-																    <input type="hidden" value="HIGHCHART.2DDONUT"
-																    class="idChartType"/>
-													
+                                            </script>
+                                            <div class="Container100">
+                                                <div class="Container30 donutChartGraph">
+                                                    <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
 
-												</div>
-												<div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
-
-												<div class="ContainerIndent ">
-													<p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
-																 value="#{uobpb.displayPortfolioList}">
-														<p:column style="width:5%; background-color: #{ticker.color}">
-															<h:outputText value=" "/>
-														</p:column>
-														<p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
-															<f:facet name="header">
-																<h:outputText value="Name"/>
-															</f:facet>
-															<h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
-														</p:column>
-														<p:column style="width:10%;"
-																  styleClass="Fs12 num-text-align TexAlRight">
-															<!-- ROHIT's CHANGE -->
-															<f:facet name="header">
-																<h:outputText value="Allocated"/>
-															</f:facet>
-															<h:outputText id="uobtalloc2" value="#{ticker.weight}">
-																<f:convertNumber pattern="##0%"/>
-															</h:outputText>
-														</p:column>
-
-														<p:column style="width:10%;"
-																  styleClass="Fs12 num-text-align TexAlRight">
-															<!-- Prashant intro 2017-Sept -->
-															<f:facet name="header">
-																<h:outputText value="Currency"/>
-															</f:facet>
-															<h:outputText id="uobbasecurrency" value="#{ticker.tradeCurrency}">
-															</h:outputText>
-														</p:column>
-
-														<p:column style="width:19%;"
-																  styleClass="Fs12 num-text-align TexAlRight">
-															<!-- ROHIT's CHANGE -->
-															<f:facet name="header">
-																<h:outputText value="Value"/>
-															</f:facet>
-															<h:outputText id="uobtval" value="#{ticker.value}">
-																<f:convertNumber pattern="##,###,###"/>
-															</h:outputText>
-														</p:column>
-
-														<p:columnGroup type="footer">
-															<p:row>
-																<p:column />
-																<p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
-																		  footerText="Total">
-																</p:column>
-																<p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
-																		  footerText="#{dataDisplayConverter.displayWithComma(uobpb.totalMoneyAllocated)}">
-																</p:column>
-															</p:row>
-														</p:columnGroup>
-													</p:dataTable>
-												</div>
-											</div>
-											</div>
-											<div class="Container100 donutChartGraph chart_graph">
-												<div id="container"></div>
-											</div>
-										</p:panel>
-
-										<!--<p:panel id="fineTunePanel" styleClass="fineTuneBlock" rendered="#{uobpb.displayFTPanel}">-->
+                                                    <input type="hidden"
+                                                           value="#{uobProfile.chart.chartData}"
+                                                           class="idPieChartValue"/>
+                                                    <input type="hidden" value="HIGHCHART.2DDONUT"
+                                                           class="idChartType"/>
 
 
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+                                                </div>
+                                                <div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
+
+                                                    <div class="ContainerIndent ">
+                                                        <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
+                                                                     value="#{uobProfile.customer.displayPortfolioList}">
+                                                            <p:column style="width:5%; background-color: #{ticker.color}">
+                                                                <h:outputText value=" "/>
+                                                            </p:column>
+                                                            <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Name"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
+                                                            </p:column>
+                                                            <p:column style="width:10%;"
+                                                                      styleClass="Fs12 num-text-align TexAlRight">
+                                                                <!-- ROHIT's CHANGE -->
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Allocated"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobtalloc2" value="#{ticker.weight}">
+                                                                    <f:convertNumber pattern="##0%"/>
+                                                                </h:outputText>
+                                                            </p:column>
+
+                                                            <p:column style="width:10%;"
+                                                                      styleClass="Fs12 num-text-align TexAlRight">
+                                                                <!-- Prashant intro 2017-Sept -->
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Currency"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobbasecurrency" value="#{ticker.tradeCurrency}">
+                                                                </h:outputText>
+                                                            </p:column>
+
+                                                            <p:column style="width:19%;"
+                                                                      styleClass="Fs12 num-text-align TexAlRight">
+                                                                <!-- ROHIT's CHANGE -->
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Value"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobtval" value="#{ticker.value}">
+                                                                    <f:convertNumber pattern="##,###,###"/>
+                                                                </h:outputText>
+                                                            </p:column>
+
+                                                            <p:columnGroup type="footer">
+                                                                <p:row>
+                                                                    <p:column/>
+                                                                    <p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
+                                                                              footerText="Total">
+                                                                    </p:column>
+                                                                    <p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
+                                                                              footerText="#{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}">
+                                                                    </p:column>
+                                                                </p:row>
+                                                            </p:columnGroup>
+                                                        </p:dataTable>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="Container100 donutChartGraph chart_graph">
+                                                <div id="container"></div>
+                                            </div>
+                                        </p:panel>
+
+                                        <!--<p:panel id="fineTunePanel" styleClass="fineTuneBlock" rendered="#{uobpb.displayFTPanel}">-->
 
 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-				</div>
-			</div>
-		</h:form>
-	</ui:define>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
 
 </ui:composition>
