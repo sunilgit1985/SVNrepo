@@ -293,10 +293,10 @@ public class RiskCalc
 
          Integer numberofQuestions = userRiskProfile.getRiskQuestion();
          Double tempWeight = 0.0;
+         // This will redetermine the score since age and horizon are changing over period of years.
          value = ageTimeFormula(age, horizon);
-         setRisk0(value);
-         // Save this as default value for Risk 0 as starting point.
-         // The reason, we are starting with Zero, is because the Zero represents Age/Horizon Risk default.
+         // The reason, we are NOT starting with Zero, is because the Zero represents Age/Horizon Risk default.
+         // Above Age and Horizon are already calculated in value.  *** Can we optimize!
          for (int loop = 1; loop <= numberofQuestions + 1; loop++)
          {
             tempWeight = userRiskProfile.getRiskAnswerWeight(loop);

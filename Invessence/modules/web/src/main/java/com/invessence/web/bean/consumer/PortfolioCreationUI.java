@@ -256,7 +256,6 @@ public class PortfolioCreationUI extends UserInterface
       displayConfirmPanel=false;
       backURL=null;
 
-      setInterfaceMode(UIMode.New.getCodeValue());
       resetData();
    };
 
@@ -319,9 +318,6 @@ public class PortfolioCreationUI extends UserInterface
                savedCustomer = new CustomerData();
                savedCustomer.copyData(customer);  // Need a way to do clean copy.
             }
-            else {
-               setInterfaceMode(UIMode.Edit.getCodeValue());
-            }
          }
          else
          {
@@ -330,7 +326,6 @@ public class PortfolioCreationUI extends UserInterface
                customer.setSaveVisitor(false);
             }
 
-            setInterfaceMode(UIMode.New.getCodeValue());
             customer.loadNewClientData();
 
          }
@@ -574,7 +569,7 @@ public class PortfolioCreationUI extends UserInterface
       String msgheader, msg = "";
       try
       {
-         if (! userInfoDAO.validateFormat(getCustomer().getEmail()))
+         if (! userInfoDAO.validateEmail(getCustomer().getEmail()))
          {
             msgheader = "signup.U000";
             msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email format is invalid!", null);

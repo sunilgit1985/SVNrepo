@@ -34,7 +34,7 @@ public class UserInfoDAO extends JdbcDaoSupport
       return ((Long) outMap.get("p_logonid"));
    }
 
-   public Boolean validateFormat(String email) {
+   public Boolean validateEmail(String email) {
       EmailFormatValidator formatValidator = new EmailFormatValidator();
       return formatValidator.validate(email);
    }

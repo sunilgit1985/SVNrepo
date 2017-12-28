@@ -91,7 +91,17 @@ public class ProfileBean extends PortfolioCreationUI
       }
    }
 
-
+   @Override
+   public void createAssetPortfolio() {
+      adjustInitialRisk();
+      super.createAssetPortfolio();
+      // Supporting old version
+      Double score = getCustomer().getRiskProfile().getScore(0);
+      getCustomer().setRiskIndex(score);
+      score = getCustomer().getRiskProfile().getAssetScore(0);
+      getCustomer().setAllocationIndex(score.intValue());
+      getCustomer().setPortfolioIndex(score.intValue());
+   }
 
    public void setAdvisor(String advisor) {
       if (advisor != null)
@@ -186,7 +196,6 @@ public class ProfileBean extends PortfolioCreationUI
    public void setAge(Integer age)
    {
          getCustomer().setAge(age);
-         adjustInitialRisk();
    }
 
    public Integer getHorizon() {
@@ -203,7 +212,6 @@ public class ProfileBean extends PortfolioCreationUI
       if (getCustomer() != null)
       {
          getCustomer().setHorizon(horizon);
-         adjustInitialRisk();
       }
    }
 
@@ -214,7 +222,6 @@ public class ProfileBean extends PortfolioCreationUI
    public void setWithdrawlPeriod(Integer period)
    {
       getCustomer().riskProfile.setAnswer(RiskConst.WITHDRAWALPERIOD, period);
-      adjustInitialRisk();
    }
 
    public String getTradeCurrency() {
@@ -237,7 +244,6 @@ public class ProfileBean extends PortfolioCreationUI
    {
       Double money = getExchangeRate(investment.doubleValue());
       getCustomer().setInitialInvestment(money.intValue());
-      adjustInitialRisk();
    }
 
    public Integer getRecurringInvestment() {
@@ -251,7 +257,6 @@ public class ProfileBean extends PortfolioCreationUI
    public void setRecurringInvestment(Integer investment)
    {
       getCustomer().setRecurringInvestment(investment);
-      adjustInitialRisk();
    }
 
    public Integer getRecurringPeriod() {
@@ -265,11 +270,70 @@ public class ProfileBean extends PortfolioCreationUI
    public void setRecurringPeriod(Integer period)
    {
       getCustomer().riskProfile.setAnswer(RiskConst.RECURRINGPERIOD,period);
-      adjustInitialRisk();
    }
 
    private void adjustInitialRisk() {
-      getRiskCalc().ageTimeFormula(getCustomer().getAge(), getCustomer().getHorizon());
+      Double score0, score1;
+      Integer defaultHorizon, age;
+      Integer retirementage;
+      Integer selectedGoalValue = 0;
+      age = getCustomer().getAge();
+
+      if (age == null || age == 0) {
+         age = getCustomer().getRiskProfile().getAnswerInt(RiskConst.AGE);
+      }
+
+      defaultHorizon = getCustomer().getHorizon();
+      if (selectedGoal != null)
+      {
+         selectedGoalValue = converter.getIntData(selectedGoal.getSelectedValue());
+         switch (selectedGoalValue)
+         {
+            case 1: // Retirement
+               if (defaultHorizon == null)
+               {
+                  retirementage = getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREMENTAGE);
+                  defaultHorizon = retirementage - age;
+               }
+               defaultHorizon = (defaultHorizon < 0) ? 0 : defaultHorizon;
+               score0 = getRiskCalc().ageTimeFormula(age, defaultHorizon);
+               score1 = 0.0; // For Lengacy, we are storing the result in Ans 1.
+               getCustomer().getRiskProfile().setRiskAnswer(0, 1, score0);
+               getCustomer().getRiskProfile().setRiskAnswer(1, 0, score1);
+               break;
+            case 2: // Property
+            case 3: // Education
+            case 5: // Build Wealth
+               if (defaultHorizon == null)
+               {
+                  defaultHorizon = 1;
+               }
+               score0 = getRiskCalc().ageTimeFormula(age, defaultHorizon);
+               score1 = 0.0; // For Lengacy, we are storing the result in Ans 1.
+               getCustomer().getRiskProfile().setRiskAnswer(0, 1, score0);
+               getCustomer().getRiskProfile().setRiskAnswer(1, 0, score1);
+               break;
+            case 4: // Legecy
+               score0 = 0.0; // For Lengacy, we are storing the result in Ans 1.
+               getCustomer().getRiskProfile().setRiskAnswer(0, 1, score0);
+               break;
+            default:
+               score0 = getRiskCalc().ageTimeFormula(age, 0);
+               score1 = 0.0; // For Lengacy, we are storing the result in Ans 1.
+               getCustomer().getRiskProfile().setRiskAnswer(0, 1, score0);
+               getCustomer().getRiskProfile().setRiskAnswer(1, 0, score1);
+               break;
+         }
+      }
+      else {
+         defaultHorizon = 30;
+         score0 = getRiskCalc().ageTimeFormula(age, defaultHorizon);
+         score1 = 0.0; // For Lengacy, we are storing the result in Ans 1.
+         getCustomer().getRiskProfile().setRiskAnswer(0,1,score0);
+         getCustomer().getRiskProfile().setRiskAnswer(1,0,score1);
+
+      }
+
    }
 
    public WebMenuItem getSelectedGoal() {
@@ -279,23 +343,9 @@ public class ProfileBean extends PortfolioCreationUI
    public void setSelectedGoal(WebMenuItem selectedItem) {
       this.selectedGoal = selectedItem;
       if (selectedItem != null) {
-         Integer value = converter.getIntData(selectedItem.getSelectedValue());
-         if (value != null && value != 4) {
-            getCustomer().getRiskProfile().setRiskAnswer(1,0,null); // Reset the Answer for Legecy
-         }
-/*
-         switch (value) {
-            case 1: // Retirement
-            case 2: // Property
-            case 3: // Education
-            case 4: // Legecy
-            case 5: // Build Wealth
-            default:
-         }
-*/
-         getCustomer().setGoal(selectedItem.getSelectedValue());
+         getCustomer().setGoal(selectedItem.getDisplayName());
          getCustomer().setCustomName(selectedItem.getDisplayName());
-         getCustomer().setPortfolioName(selectedItem.getSelectedValue());
+         getCustomer().setPortfolioName(selectedItem.getDisplayName());
       }
    }
 
@@ -358,31 +408,31 @@ public class ProfileBean extends PortfolioCreationUI
             // Don't need to check, as the default are set when starting.
             break;
          case 5:
-            ans = getCustomer().riskProfile.getAnswerInt("4");
+            ans = getCustomer().riskProfile.getRiskAnswer(4);
             if ( ans == null || ans == 0) {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
             }
             break;
          case 6:
-            ans = getCustomer().riskProfile.getAnswerInt("5");
+            ans = getCustomer().riskProfile.getRiskAnswer(5);
             if ( ans == null || ans == 0) {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
             }
             break;
          case 7:
-            ans = getCustomer().riskProfile.getAnswerInt("6");
+            ans = getCustomer().riskProfile.getRiskAnswer(6);;
             if ( ans == null || ans == 0) {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
             }
             break;
          case 8:
-           ans = getCustomer().riskProfile.getAnswerInt("7");
+           ans = getCustomer().riskProfile.getRiskAnswer(7);;
             if ( ans == null || ans == 0) {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
             }
             break;
          case 9:
-            ans = getCustomer().riskProfile.getAnswerInt("8");
+            ans = getCustomer().riskProfile.getRiskAnswer(8);;
             if ( ans == null || ans == 0) {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Must select one of the choices below", null));
             }
@@ -400,7 +450,7 @@ public class ProfileBean extends PortfolioCreationUI
       Integer ans;
       if (value != null) {
          ans = converter.getIntData(value);
-         riskCalc.setQuestionsRisk(3, ans, 0.0);
+         riskCalc.setQuestionsRisk(question, ans, 0.0);
       }
    }
 
@@ -502,7 +552,6 @@ public class ProfileBean extends PortfolioCreationUI
    public void onChangeValue()
    {
       formEdit = true;
-      riskCalc.calculate();
       createAssetPortfolio();
    }
 
