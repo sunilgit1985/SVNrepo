@@ -174,7 +174,7 @@ public class ProfileBean extends PortfolioCreationUI
    }
 
    public Boolean getDisableModeForIntroPage() {
-      if (beanmode == UIMode.New)
+      if (beanmode == null || beanmode == UIMode.New)
          return false;
       return true;
    }

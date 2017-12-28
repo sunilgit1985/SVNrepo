@@ -256,7 +256,7 @@ public class PortfolioCreationUI extends UserInterface
       displayConfirmPanel=false;
       backURL=null;
 
-      setInterfaceMode(UIMode.New.toString());
+      setInterfaceMode(UIMode.New.getCodeValue());
       resetData();
    };
 
@@ -320,7 +320,7 @@ public class PortfolioCreationUI extends UserInterface
                savedCustomer.copyData(customer);  // Need a way to do clean copy.
             }
             else {
-               setInterfaceMode(UIMode.Edit.toString());
+               setInterfaceMode(UIMode.Edit.getCodeValue());
             }
          }
          else
@@ -330,7 +330,7 @@ public class PortfolioCreationUI extends UserInterface
                customer.setSaveVisitor(false);
             }
 
-            setInterfaceMode(UIMode.New.toString());
+            setInterfaceMode(UIMode.New.getCodeValue());
             customer.loadNewClientData();
 
          }
