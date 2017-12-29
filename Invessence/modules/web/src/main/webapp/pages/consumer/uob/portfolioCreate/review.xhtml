@@ -55,6 +55,23 @@
                                                                  $('#leftpanel').toggle(effect, options, duration);
 
                                                              });
+
+
+                                  $("#fine_tune_btn").click(function () {
+
+
+                                      // Set the effect type
+                                      var effect = 'slide';
+
+                                      // Set the options for the effect type chosen
+                                      var options = { direction: 'up' };
+
+                                      // Set the duration (default: 400 milliseconds)
+                                      var duration = 700;
+
+                                      $('#fineTunePanel').toggle(effect, options, duration);
+
+                                  });
                               });
 
         </script>
@@ -122,21 +139,87 @@
                         <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
                     </div>
 
-                    <div class="caraousle Container100">
+                    <div class="caraousle Container100 ">
 
                         <div class="header_tab reviewHeader_title">
                             <div class="header_title Container30">
-                                <span>Review</span>
-                                <div class="Container30 fine_tune_btn">
+                                <div class="Container50"><span>Review</span></div>
+                                <div class="Container30 fine_tune_btn" id="fine_tune_btn">
                                     <ui:fragment rendered="true">
                                         <p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
-                                                         icon="ui-icon-image">
+                                                         icon="ui-icon-image"	>
                                         </p:commandButton>
                                         <span class="ftBtnLabel">Fine Tune</span>
                                     </ui:fragment>
                                 </div>
+
+                                <div id="fineTunePanel" Class="fineTuneBlock" >
+                                    <div class="Container100 FTLabel">
+                                        <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
+                                        <!-- <div class="Wid10 closeFTBtn Fright">
+                                            <p:commandButton id="uobftclose" styleClass="fineTuneBtn" icon="fa fa-times">
+                                            </p:commandButton>
+
+                                        </div> -->
+                                    </div>
+                                    <div class="Fs13 fineTuneDetail">
+                                        Rather than having a strategy recommended to me based on my time
+                                        horizon and risk tolerance, I would rather directly choose my investment
+                                        strategy and am familiar with the associated risks.
+                                        The strategy I choose is:
+                                    </div>
+                                    <div class="EmptyBox20"></div>
+                                    <div class="Container100 DispBlock gray">
+
+                                        <div class="Container25 TexAlRight Fs14 uobSliderLabel firstLabel">
+                                            <span class="conservative_minus"><span class="ui-button-icon-center ui-icon ui-c fa fa-minus"></span></span>
+                                            Conservative
+                                        </div>
+                                        <div class="Container50 TexAlCenter Fs20">
+                                            <h:inputHidden id="allocValue" value="#{uobpb.sliderAllocationIndex}"/>
+                                            <h:inputHidden id="minAllocValue" value="#{uobpb.cstmSliderMinAlloc}"/>
+                                            <h:inputHidden id="maxAllocValue" value="#{uobpb.cstmSliderMaxAlloc}"/>
+                                            <p:slider id="allocSlider" for="allocValue" minValue="#{uobpb.cstmSliderMinAlloc}"
+                                                      maxValue="#{uobpb.cstmSliderMaxAlloc}" step="1">
+                                                <p:ajax event="slideEnd"
+                                                />
+                                            </p:slider>
+                                        </div>
+                                        <div class="Container25 TexAlLeft Fs14 uobSliderLabel lastLabel">
+                                            <span class="conservative_plus"><span class="ui-button-icon-center ui-icon ui-c fa fa-plus"></span></span>
+                                            Aggressive
+                                        </div>
+                                        <div class="EmptyBox5"></div>
+                                        <div class="Container100 TexAlCenter recommend_btn">
+                                            <div class="ContainerIndent">
+                                                <p:commandButton id="allocSliderResetButton" value="Recommended"
+                                                                 styleClass="uob_button"
+                                                >
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                        <div class="Container100 TexAlCenter actionBtn">
+                                            <div class="ContainerIndent" style="margin-top: 50px;">
+                                                <p:commandButton id="uobFTCancel"
+                                                                 value="Cancel"
+                                                                 styleClass="uob_button"
+                                                                 style="width: 100px; margin-right: 60px;"
+                                                >
+                                                </p:commandButton>
+                                                <p:commandButton id="uobFTSave"
+                                                                 value="Save"
+                                                                 styleClass="uob_button"
+                                                                 style="width: 100px;"
+                                                >
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
-                            <div class="header_link prenext_btn Container70 review_btn">
+                            <div class="header_link prenext_btn Container70 review_btn" >
                                 <div class="Container50 next_btn">
                                     <ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
                                         <p:commandLink rendered="true" class="next_pg_link"
@@ -145,7 +228,7 @@
 
                                     </ui:fragment>
                                     <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
-                                        <p:commandLink rendered="true" class="next_pg_link" disabled="#{uobProfile.canOpenAccount}"
+                                        <p:commandLink rendered="true" class="next_pg_link"
                                                        actionListener="#{uobProfile.gotoCustody}"> Open Account
                                         </p:commandLink>
 
@@ -291,9 +374,13 @@
                                                     <div class="ContainerIndent ">
                                                         <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
                                                                      value="#{uobProfile.customer.displayPortfolioList}">
-                                                            <p:column style="width:5%; background-color: #{ticker.color}">
+                                                            <!-- <p:column style="width:5%; background-color: #{ticker.color}">
                                                                 <h:outputText value=" "/>
-                                                            </p:column>
+                                                            </p:column> -->
+                                                            <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
+																<span style="background-color:  #{ticker.color}">HI</span>
+			                                                </p:column>
+			                                                            
                                                             <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
                                                                 <f:facet name="header">
                                                                     <h:outputText value="Name"/>

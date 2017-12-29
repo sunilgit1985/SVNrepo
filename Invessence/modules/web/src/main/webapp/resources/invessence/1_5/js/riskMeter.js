@@ -86,7 +86,7 @@ function myGaugeChart(vMeterVal,vDivClass,vMin,vMax,vLableTop,vLableBottom)	{
 				name: vLableTop,
 				data: [vMeterVal],
 				dataLabels: {
-					format: '<div style="text-align:center;float:bottom;"><span style="font-size:11px;color:black;position:absolute;top:60px;">{y}</span><br/>' +
+					format: '<div style="text-align:center;float:bottom;"><span style="font-size:11px;color:black;position:relative;top:60px;">{y}</span><br/>' +
 					'<span style="font-size:10px;color:black;">'+vLableBottom+'</span></div>'
 				},
 				tooltip: {

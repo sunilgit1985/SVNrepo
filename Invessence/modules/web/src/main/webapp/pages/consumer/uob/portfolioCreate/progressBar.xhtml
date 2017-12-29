@@ -3,7 +3,144 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
+                
+                
+                <script>
+            $(document).ready(function ()
+                              {
+                             
+                                  $("#reviewDonutClick").click(function () {
 
+
+                                      // Set the effect type
+                                      var effect = 'slide';
+
+                                      // Set the options for the effect type chosen
+                                      var options = { direction: 'up' };
+
+                                      // Set the duration (default: 400 milliseconds)
+                                      var duration = 700;
+
+                                      $('#reviewDonutDts').toggle(effect, options, duration);
+
+                                  });
+                                  $("#cosedPanel").click(function () {
+                                	  $('#reviewDonutDts').hide('this');
+                                	  
+                                  });
+                              });
+
+        </script>
+<!--    slider from top with review details -->           
+		<div id="reviewDonutDts" class="reviewDonutDts">
+			<div class="Container100">
+				<div class="Container30" >
+                   <p:panel id="cnfgraphArea1" style="border: 0px; background: white;">
+
+                                            <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
+                                            <script>
+                                                $(document).ready(function ()
+                                                                  {
+                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                                      //  {
+                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                                      //  {
+                                                                      //draw2dDonut1lyrChartDyna('CNFPrflo');
+
+                                                                      draw2dDonut1lyrChartDyna('idPieChartArea1', 'idPieChartValue1');
+                                                                      //  }
+                                                                      // }
+
+                                                                      myGaugeChart('idRiskChartValue', 'idRiskChartArea', 0, 100, 'Risk', 'Score');
+                                                                  });
+
+                                            </script>
+
+                                            <div class="Container100 donutChartGraph review_graph">
+
+                                                <div id="2dDonutChartCnf2" class="idPieChartArea1"></div>
+
+                                                <input type="hidden"
+                                                       value="#{uobProfile.chart.chartData}"
+                                                       class="idPieChartValue1"/>
+                                                <input type="hidden" value="HIGHCHART.2DDONUT"
+                                                       class="idChartType1"/>
+
+                                            </div>
+
+
+                                        </p:panel>
+                 </div>
+				<div class="Container70 Responsive50 UserconfTable confirmation_donut_dtl"><!-- ROHIT's CHANGE -->
+
+                                                    <div class="ContainerIndent ">
+                                                        <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
+                                                                     value="#{uobProfile.customer.displayPortfolioList}">
+                                                            <!-- <p:column style="width:5%; background-color: #{ticker.color}">
+                                                                <h:outputText value=" "/>
+                                                            </p:column> -->
+                                                            <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
+																<span style="background-color:  #{ticker.color}">HI</span>
+			                                                </p:column>
+			                                                            
+                                                            <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Name"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
+                                                            </p:column>
+                                                            <p:column style="width:10%;"
+                                                                      styleClass="Fs12 num-text-align TexAlRight">
+                                                                <!-- ROHIT's CHANGE -->
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Allocated"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobtalloc2" value="#{ticker.weight}">
+                                                                    <f:convertNumber pattern="##0%"/>
+                                                                </h:outputText>
+                                                            </p:column>
+
+                                                            <p:column style="width:10%;"
+                                                                      styleClass="Fs12 num-text-align TexAlRight">
+                                                                <!-- Prashant intro 2017-Sept -->
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Currency"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobbasecurrency" value="#{ticker.tradeCurrency}">
+                                                                </h:outputText>
+                                                            </p:column>
+
+                                                            <p:column style="width:19%;"
+                                                                      styleClass="Fs12 num-text-align TexAlRight">
+                                                                <!-- ROHIT's CHANGE -->
+                                                                <f:facet name="header">
+                                                                    <h:outputText value="Value"/>
+                                                                </f:facet>
+                                                                <h:outputText id="uobtval" value="#{ticker.value}">
+                                                                    <f:convertNumber pattern="##,###,###"/>
+                                                                </h:outputText>
+                                                            </p:column>
+
+                                                            <p:columnGroup type="footer">
+                                                                <p:row>
+                                                                    <p:column/>
+                                                                    <p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
+                                                                              footerText="Total">
+                                                                    </p:column>
+                                                                    <p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
+                                                                              footerText="#{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}">
+                                                                    </p:column>
+                                                                </p:row>
+                                                            </p:columnGroup>
+                                                        </p:dataTable>
+                                                    </div>
+                                                </div>
+			</div>
+			<div class="close_btn" >
+				<button id="cosedPanel">Click here</button>
+			</div>
+		</div>
+	<!--    slider from top with review details -->  
     <p:outputPanel id="graphArea" style="border: 0px; background: transparent">
         <div class="portfolio_selection">
             <div class="Container30">
@@ -14,7 +151,7 @@
             </div>
             <div class="Container30">
                 <span class="sapn_review">Review</span>
-                <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
+                <div class="review-donut" id="reviewDonutClick" style="float: right;  width: 100px;  height: 80px;">
 
                     <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
                         <script>
@@ -73,5 +210,5 @@
             <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
         </div>
     </p:outputPanel>
-
+	
 </ui:composition>
