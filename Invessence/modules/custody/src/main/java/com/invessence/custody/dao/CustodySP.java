@@ -151,6 +151,10 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_bankAddressStreet2", Types.VARCHAR));
             declareParameter(new SqlParameter("p_bankAddressStreet3", Types.VARCHAR));
             declareParameter(new SqlParameter("p_bankAddressStreet4", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressCity", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressState", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressZipCode", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_bankAddressCountry", Types.VARCHAR));
             declareParameter(new SqlParameter("p_swiftBic", Types.VARCHAR));
             declareParameter(new SqlParameter("p_correspondentBank", Types.VARCHAR));
             declareParameter(new SqlParameter("p_correspondentBankSwiftBic", Types.VARCHAR));
@@ -309,6 +313,10 @@ public class CustodySP extends StoredProcedure
       inputMap.put("p_bankAddressStreet2", ownerDetails.getOwnerBankDetails().getBankAddressStreet2());
       inputMap.put("p_bankAddressStreet3", ownerDetails.getOwnerBankDetails().getBankAddressStreet3());
       inputMap.put("p_bankAddressStreet4", ownerDetails.getOwnerBankDetails().getBankAddressStreet4());
+      inputMap.put("p_bankAddressCity", ownerDetails.getOwnerBankDetails().getBankAddressCity());
+      inputMap.put("p_bankAddressState", ownerDetails.getOwnerBankDetails().getBankAddressState());
+      inputMap.put("p_bankAddressZipCode", ownerDetails.getOwnerBankDetails().getBankAddressZipCode());
+      inputMap.put("p_bankAddressCountry",ownerDetails.getOwnerBankDetails().getBankAddressCountry());
       inputMap.put("p_swiftBic", ownerDetails.getOwnerBankDetails().getSwiftBic());
       inputMap.put("p_correspondentBank", ownerDetails.getOwnerBankDetails().getCorrespondentBank());
       inputMap.put("p_correspondentBankSwiftBic", ownerDetails.getOwnerBankDetails().getCorrespondentBankSwiftBic());

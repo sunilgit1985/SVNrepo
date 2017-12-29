@@ -88,7 +88,7 @@
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplNricInp}">
                                                     <div class="Container100 Responsive100 margin-top width99">
                                                         <p:inputText id="nwPriHldrNric" placeholder="Singapore NRIC Number"
-                                                                     value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}"/>
+                                                                     value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}" maxlength="9"/>
                                                         <label for="nwPriHldrNric">NRIC Number</label>
                                                     </div>
                                                 </ui:fragment>
@@ -102,7 +102,7 @@
                                                     </div>
                                                     <div class="Container100 Responsive100 margin-top">
                                                         <p:inputText id="nwPriHldrSinPrNric" placeholder="Singapore NRIC Number"
-                                                                     value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}"/>
+                                                                     value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}" maxlength="9"/>
                                                         <label for="nwPriHldrNric">NRIC Number</label>
                                                     </div>
                                                 </ui:fragment>
@@ -122,8 +122,11 @@
 
                                                         <div class="Container30 Responsive100 margin-left ">
                                                             <span class="title_line">Malaysian NRIC Number</span>
-                                                            <p:inputText id="nwPriHldrIcNo" placeholder="Malaysian NRIC Number"
-                                                                         value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.icno}"/>
+
+                                                            <p:inputMask id="nwPriHldrIcNo" placeholder="Malaysian NRIC Number"
+                                                                         value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.icno}"
+                                                                         mask="999999-99-9999"/>
+
                                                             <!--<label for="nwPriHldrIcNo">Malaysian NRIC</label>-->
                                                         </div>
                                                     </ui:fragment>
@@ -213,7 +216,7 @@
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
                                                 <p:inputText id="nwPriHldrVrfEmailId" placeholder="Verify Email Address"
-                                                             value="#{uobCustodyBean.priHldrCnfEmail}" styleClass="vrfyEmail"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.confirmEmail}" styleClass="vrfyEmail"/>
                                                 <label for="nwPriHldrVrfEmailId">Verify Email Address</label>
                                             </div>
                                         </div>
@@ -649,6 +652,27 @@
                                                                  placeholder="Bank Address"
                                                                  value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="240"/>
                                                 <label for="nwPriHldrRemBnkAddr">Bank Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Postal Code</span></div>
+                                                <p:inputText id="nwPriHldrRemBnkAddrPoCd" placeholder="Postal Code"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressZipCode}"/>
+                                                <!-- <label for="nwPriHldrPhyAddrPoCd">Postal Code</label> -->
+                                            </div>
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">City / State</span></div>
+                                                <p:inputText id="nwPriHldrRemBnkAddrCtySt" placeholder="City / State"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCity}"/>
+                                                <!-- <label for="nwPriHldrPhyAddrCtySt">City / State</label> -->
+                                            </div>
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Country</span></div>
+                                                <p:autoComplete id="nwPriHldrRemBnkAddrCtry" dropdown="true"
+                                                                value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCountry}"
+                                                                completeMethod="#{uobCustodyBean.completeText}">
+                                                </p:autoComplete>
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
@@ -1805,24 +1829,20 @@
                                         </div>
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container50 Responsive50 select_item margin-top">
-                                                <div class="Container100"><span class="title_line">Phone</span></div>
-                                                <div class="Container100"><span class="title_line">(voice calls)</span></div>
                                                 <div class="Container100">
-                                                    <p:inputText id="nwPriHldrPrsnlPn" placeholder="Phone"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.consentCallContact}"/>
+                                                    <p:selectBooleanCheckbox id="nwPriHldrPrsnlPn" value="#{uobCustodyBean.consentCallFlag}"
+                                                                             itemLabel="Phone">
+                                                    </p:selectBooleanCheckbox>
                                                 </div>
+                                                <div class="Container100">(voice calls)</div>
                                             </div>
                                             <div class="Container50 Responsive50 select_item margin-top">
                                                 <div class="Container100">
-                                                    <span class="title_line">Text Messages</span>
+                                                    <p:selectBooleanCheckbox id="nwPriHldrPrsnlTxt" value="#{uobCustodyBean.consentMsgFlag}"
+                                                                             itemLabel="Text Messages">
+                                                    </p:selectBooleanCheckbox>
                                                 </div>
-                                                <div class="Container100">
-                                                    <span class="title_line">(SMS / MMS / VOIP based phone application eg Viber, Whatsapp)</span>
-                                                </div>
-                                                <div class="Container100">
-                                                    <p:inputText id="nwPriHldrPrsnlTxtMsg" placeholder="Text Messages"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.consentTextContact}"/>
-                                                </div>
+                                                <div class="Container100">(SMS / MMS / VOIP based phone application eg Viber, Whatsapp)</div>
                                             </div>
                                         </div>
                                     </div>

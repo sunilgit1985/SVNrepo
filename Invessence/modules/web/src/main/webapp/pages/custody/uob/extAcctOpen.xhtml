@@ -38,7 +38,7 @@
                                         <div class="acc_holder_dtl_block ">
                                             <div class="Container50 Responsive100 margin-top width99">
                                                 <p:inputText id="nwPriHldrNric" placeholder="NRIC /Passport Number"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}" maxlength="9"/>
                                                 <label for="nwPriHldrNric">NRIC /Passport Number</label>
                                             </div>
                                         </div>
@@ -188,6 +188,27 @@
                                                                  placeholder="Bank Address"
                                                                  value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="240"/>
                                                 <label for="nwPriHldrRemBnkAddr">Bank Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Postal Code</span></div>
+                                                <p:inputText id="nwPriHldrRemBnkAddrPoCd" placeholder="Postal Code"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressZipCode}"/>
+                                                <!-- <label for="nwPriHldrPhyAddrPoCd">Postal Code</label> -->
+                                            </div>
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">City / State</span></div>
+                                                <p:inputText id="nwPriHldrRemBnkAddrCtySt" placeholder="City / State"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCity}"/>
+                                                <!-- <label for="nwPriHldrPhyAddrCtySt">City / State</label> -->
+                                            </div>
+                                            <div class="Container30 Responsive100 select_item">
+                                                <div class="Container100"><span class="title_line">Country</span></div>
+                                                <p:autoComplete id="nwPriHldrRemBnkAddrCtry" dropdown="true"
+                                                                value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCountry}"
+                                                                completeMethod="#{uobCustodyBean.completeText}">
+                                                </p:autoComplete>
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
@@ -539,6 +560,108 @@
                                 </p:commandButton>
                             </div>
 
+                        </div>
+                    </p:tab>
+
+                    <p:tab id="tab3" title="Security Question" disabled="#{uobCustodyBean.isAccordianDisabled(3)}">
+                        <div class="Container100 Responsive100 holder_employment acc_holder_form ">
+                            <p:tabView>
+                                <p:tab title="Main Account Holder">
+                                    <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(3) != null}"
+                                             style="border: 0px; background: transparent"
+                                             styleClass="Container100">
+                                        <h:outputText id="nwPriHldrMsg1" styleClass="errorText"
+                                                      value="#{uobCustodyBean.getErrorMessage(3)}" escape="false"/>
+                                    </p:panel>
+                                    <div class="go-bottom">
+                                        <div class="acc_holder_dtl_block">
+                                            <!-- <div class="Container40">
+                                                 <h3>What is Mother's Maiden Name ?</h3>
+                                             </div> -->
+                                            <div class="Container60 Responsive100">
+                                                <p:inputText id="nwPriHldMomNm"
+                                                             placeholder="What is your Mother's Maiden Name ?"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.motherMaidenName}"/>
+                                                <label for="nwPriHldMomNm">Mother's Maiden Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <!-- <div class="Container40">
+                                                <h3>What is Father's Name ?</h3>
+                                            </div>	 -->
+                                            <div class="Container60 Responsive100">
+                                                <p:inputText id="nwPriHldDadNm" placeholder="What is your Father's Name ?"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.fatherName}"/>
+                                                <label for="nwPriHldDadNm">Father's Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <!-- <div class="Container40">
+                                                <h3>Name of Primary School Attend ?</h3>
+                                            </div>	 -->
+                                            <div class="Container60 Responsive100">
+                                                <p:inputText id="nwPriHldSclNm" placeholder="What is the name of Primary School Attended ?"
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.nameOfPrimarySchool}"/>
+                                                <label for="nwPriHldSclNm">Name of Primary School Attended</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                                <!-- joint account holder tab -->
+                                <p:tab title="Joint Account Holder" rendered="#{uobCustodyBean.dspJntTab}">
+
+                                    <div class="go-bottom">
+                                        <div class="acc_holder_dtl_block">
+                                            <!-- <div class="Container40">
+                                                 <h3>What is Mother's Maiden Name ?</h3>
+                                             </div> -->
+                                            <div class="Container60 Responsive100">
+                                                <input id="jointmotherName" name="motherName" type="text"
+                                                       placeholder="What is your Mother's Maiden Name ?"/>
+                                                <label for="motherName">Mother's Maiden Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <!-- <div class="Container40">
+                                                <h3>What is Father's Name ?</h3>
+                                            </div>	 -->
+                                            <div class="Container60 Responsive100">
+                                                <input id="jointfatherName" name="fatherName" type="text" placeholder="What is your Father's Name ?"/>
+                                                <label for="fatherName">Father's Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="acc_holder_dtl_block">
+                                            <!-- <div class="Container40">
+                                                <h3>Name of Primary School Attend ?</h3>
+                                            </div>	 -->
+                                            <div class="Container60 Responsive100">
+                                                <input id="jointschoolName" name="schoolName" type="text"
+                                                       placeholder="What is the name of Primary School Attended ?"/>
+                                                <label for="schoolName">Name of Primary School Attended</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </p:tab>
+                            </p:tabView>
+                        </div>
+                        <div class="Container100 pre_next_btn">
+                            <div class="Container50 pre_btn">
+
+                                <p:commandLink id="newPrev5"
+                                               actionListener="#{uobCustodyBean.prevPage}"
+                                               update="@form">
+                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-edit fa-chevron-left"></span>
+                                </p:commandLink>
+                            </div>
+                            <div class="Container50 next_btn">
+
+                                <p:commandLink id="newNxt5"
+                                               actionListener="#{uobCustodyBean.nextPage}"
+                                               update=":cstdyFrm:newAccordian">
+                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-chevron-right"></span>
+                                </p:commandLink>
+                            </div>
                         </div>
                     </p:tab>
                 </p:accordionPanel>

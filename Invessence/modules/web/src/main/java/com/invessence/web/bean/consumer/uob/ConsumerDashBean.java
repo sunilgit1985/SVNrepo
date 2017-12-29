@@ -215,22 +215,22 @@ public class ConsumerDashBean extends CustomerData implements Serializable
          if (selAccountList.get(0).isUnopened())
          {
 //            dsplStrategyPnl=false;
-            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf")!=null){
-
-               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf");
-            }
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileCnf",false);
-            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=E&acct=" + selAcctNum);
+//            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf")!=null){
+//
+//               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf");
+//            }
+//            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileCnf",false);
+            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=C&acct=" + selAcctNum);
          }
          else
          {
 //            dsplStrategyPnl=true;
-            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf")!=null){
-
-               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf");
-            }
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileCnf",true);
-            uiLayout.doMenuAction("consumer", "portfolioedit.xhtml?app=E&acct=" + selAcctNum);
+//            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf")!=null){
+//
+//               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf");
+//            }
+//            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileCnf",true);
+            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=E&acct=" + selAcctNum);
          }
       }
       catch (Exception ex)
@@ -277,12 +277,12 @@ public class ConsumerDashBean extends CustomerData implements Serializable
       String whichXML;
       try
       {
-         uiLayout.doMenuAction("consumer", "portfolioedit.xhtml?app=E&acct=" +selAcctNum);
-         if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf1")!=null){
-
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf1");
-         }
-         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileCnf1",true);
+         uiLayout.doMenuAction("consumer", "cadd.xhtml?app=A&acct=" +selAcctNum);
+//         if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf1")!=null){
+//
+//            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf1");
+//         }
+//         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ProfileCnf1",true);
       }
       catch (Exception ex)
       {

@@ -13,6 +13,7 @@ import com.invessence.custody.uob.data.*;
 import com.invessence.service.bean.*;
 import com.invessence.service.util.*;
 import com.invessence.util.AddressSplitter;
+import com.invessence.web.constant.WebConst;
 import com.invessence.web.dao.consumer.ConsumerListDataDAO;
 import com.invessence.web.data.common.CustomerData;
 import com.invessence.web.service.custody.*;
@@ -70,7 +71,7 @@ public class UOBCustodyBean
    private String priHldrEmpAddr;
    private boolean dsplNwPriEmpOtrDtlPnl = false, dsplNwPriEmpMnPnl = false,dsplNwPriUnEmpRsnPnl=false;
    private String priHldrPhyAddr, priHldrMlAddr,priHldrBnkAddr;
-   private String priHldrCnfEmail;
+
    private boolean dsplPriHldrMlPnl = false, dsplSingNricInp = false, dsplNricInp = false;
    private boolean dsplPriHldrObjPnl1 = false, dsplPriHldrObjPnl2 = false, dsplPriHldrObjPnl3 = false, dsplPriHldrObjPnl4 = false;
    private OwnerTaxationDetails owTaxDtls = null;
@@ -89,8 +90,9 @@ public class UOBCustodyBean
    private String saveandOpenError;
    private String reqType;
    private boolean dsblRepList=false;
-private String hasRepDtlY=null,hasRepDtlN=null;
+   private String hasRepDtlY=null,hasRepDtlN=null;
    private Map<String, String> fileupdSucc = new HashMap<String, String>();
+   private boolean consentCallFlag=false,consentMsgFlag=false;
 
    public void cleanUpAll()
    {
@@ -150,7 +152,6 @@ private String hasRepDtlY=null,hasRepDtlN=null;
       currentAcctHolder = null;
       beanAccount=null;
       dsplNwPriUnEmpRsnPnl=false;
-      priHldrCnfEmail=null;
       priHldrBnkAddr=null;
       dsblRepList=false;
       hasRepDtlY=null;
@@ -212,6 +213,7 @@ private String hasRepDtlY=null,hasRepDtlN=null;
             onChngAddr();
             onChngObj();
             onChngSrcOfInc();
+
             updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
             updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
             if(updFileLst!=null && updFileMstrLst!=null && updFileMstrLst.size()==updFileLst.size()){
@@ -240,6 +242,7 @@ private String hasRepDtlY=null,hasRepDtlN=null;
             priHldrEmpAddr = getCstmaddrEmp(uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails());
             priHldrPhyAddr = getCstmaPhyAddr(uobDataMaster.getIndividualOwnersDetails());
             priHldrMlAddr = getCstmaMalAddr(uobDataMaster.getIndividualOwnersDetails());
+            priHldrBnkAddr=getCstmaBnkAddr(uobDataMaster.getIndividualOwnersDetails().getOwnerBankDetails());
 
             if (uobDataMaster.getIndividualOwnersDetails().getDob() == null ||
                uobDataMaster.getIndividualOwnersDetails().getDob().equalsIgnoreCase(""))
@@ -396,6 +399,27 @@ private String hasRepDtlY=null,hasRepDtlN=null;
       return null;
    }
 
+   public String getCstmaBnkAddr(OwnerBankDetails ownerBankDetails)
+   {
+      StringBuilder sb = new StringBuilder();
+      if (ownerBankDetails.getBankAddressStreet1() != null)
+      {
+         sb.append(ownerBankDetails.getBankAddressStreet1() + "");
+      }
+      if (ownerBankDetails.getBankAddressStreet2() != null)
+      {
+         sb.append(ownerBankDetails.getBankAddressStreet2() + "");
+      }
+      if (ownerBankDetails.getBankAddressStreet3() != null)
+      {
+         sb.append(ownerBankDetails.getBankAddressStreet3() + "");
+      }
+      if (sb.length() > 0)
+      {
+         return sb.toString();
+      }
+      return null;
+   }
 public void onChngRpDtls(String flag){
       if(flag.equalsIgnoreCase("Yes") ){
          uobDataMaster.getAccountDetails().getAccountMiscDetails().setHavingRepDtls("Yes");
@@ -807,7 +831,7 @@ public void onChngRpDtls(String flag){
          {
             dspExtAcctPnl = true;
             dspNewAcctPnl = false;
-            setPagemanager(new PagesImpl(3));
+            setPagemanager(new PagesImpl(4));
             Integer currentPage = getPagemanager().getPage();
             getPagemanager().initPage();
             getPagemanager().setLastPageVisited(currentPage);
@@ -1055,10 +1079,10 @@ public void onChngRpDtls(String flag){
 
          if (getPagemanager().isLastPage() ||
          (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9 ) ||
-         (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 3 ))
+         (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 4 ))
          {
             if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes")){
-               resetActiveTab(3);
+               resetActiveTab(4);
             }else  if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
             {
                resetActiveTab(10);
@@ -1342,6 +1366,8 @@ public void onChngRpDtls(String flag){
             case 2:// Existing Account TAX RESIDENCE INFORMATION
                dataOK = validateTaxMnPnl(OwnDtls);
                break;
+            case 3:// New Account SECURITY QUESTION
+               dataOK = validateSecDtls(OwnDtls);
             default:
                break;
          }
@@ -1373,6 +1399,11 @@ public void onChngRpDtls(String flag){
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
+                  if(ownDtls.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singapore PR")){
+                     ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("Yes");
+                  }else if(ownDtls.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")){
+                     ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("No");
+                  }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                }
                else
@@ -1380,6 +1411,11 @@ public void onChngRpDtls(String flag){
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
+                  if(ownDtls.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singapore PR")){
+                     ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("Yes");
+                  }else if(ownDtls.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")){
+                     ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("No");
+                  }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, "" + getBeanLogonId(), ownDtls);
                }
                break;
@@ -1409,6 +1445,16 @@ public void onChngRpDtls(String flag){
                dataOK=saveObjDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ownDtls);
                break;
             case 9:// Personal Data Protection Consent
+               if(isConsentCallFlag()){
+                  ownDtls.getOwnerMiscDetails().setConsentCallContact("Yes");
+               }else{
+                  ownDtls.getOwnerMiscDetails().setConsentCallContact("No");
+               }
+               if(isConsentMsgFlag()){
+                  ownDtls.getOwnerMiscDetails().setConsentTextContact("Yes");
+               }else{
+                  ownDtls.getOwnerMiscDetails().setConsentTextContact("No");
+               }
                dataOK=savePrsnlConseDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ownDtls);
                break;
             default:
@@ -1440,6 +1486,10 @@ public void onChngRpDtls(String flag){
                break;
             case 2:// Existing Account TAX RESIDENCE INFORMATION
                break;
+            case 3:// New Account SECURITY QUESTION
+//               saveSecDtls(ownDtls); Need changes for joint
+               dataOK=saveSecDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, ownDtls);
+               break;
             default:
                break;
          }
@@ -1464,12 +1514,12 @@ public void onChngRpDtls(String flag){
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrBnkAddr, 4, 60);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrBnkAddr, 3, 30);
 
          ownerDetails.getOwnerBankDetails().setBankAddressStreet1(addrdtls[0]);
          ownerDetails.getOwnerBankDetails().setBankAddressStreet2(addrdtls[1]);
          ownerDetails.getOwnerBankDetails().setBankAddressStreet3(addrdtls[2]);
-         ownerDetails.getOwnerBankDetails().setBankAddressStreet4(addrdtls[3]);
+//         ownerDetails.getOwnerBankDetails().setBankAddressStreet4(addrdtls[3]);
          addressSplitter=null;
       }
       custodyService.saveAccountHolderBankDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
@@ -1482,12 +1532,12 @@ public void onChngRpDtls(String flag){
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrEmpAddr, 4, 60);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrEmpAddr, 3, 30);
 
          ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress1(addrdtls[0]);
          ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress2(addrdtls[1]);
          ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress3(addrdtls[2]);
-         ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress4(addrdtls[3]);
+//         ownerDetails.getOwnerEmploymentDetails().setEmployerStreetAddress4(addrdtls[3]);
       }
 
       custodyService.saveEmploymentDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
@@ -1502,23 +1552,23 @@ public void onChngRpDtls(String flag){
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrPhyAddr, 4, 60);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrPhyAddr, 3, 30);
 
          ownerDetails.setPhysicalAddressStreet1(addrdtls[0]);
          ownerDetails.setPhysicalAddressStreet2(addrdtls[1]);
          ownerDetails.setPhysicalAddressStreet3(addrdtls[2]);
-         ownerDetails.setPhysicalAddressStreet4(addrdtls[3]);
+//         ownerDetails.setPhysicalAddressStreet4(addrdtls[3]);
       }
       if (hasRequiredData(priHldrMlAddr))
       {
          AddressSplitter addressSplitter = new AddressSplitter();
 
-         String[] addrdtls = addressSplitter.addressSplitter(priHldrMlAddr, 4, 60);
+         String[] addrdtls = addressSplitter.addressSplitter(priHldrMlAddr, 3, 30);
 
          ownerDetails.setMailingAddressStreet1(addrdtls[0]);
          ownerDetails.setMailingAddressStreet2(addrdtls[1]);
          ownerDetails.setMailingAddressStreet3(addrdtls[2]);
-         ownerDetails.setMailingAddressStreet4(addrdtls[3]);
+//         ownerDetails.setMailingAddressStreet4(addrdtls[3]);
       }
       custodyService.saveAddressDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
       saveAdditionalDtls(ownerDetails.getOwnerMiscDetails(), acctNum, acctOwnerId, "ao_owners_misc_details");
@@ -1650,11 +1700,17 @@ public void onChngRpDtls(String flag){
             !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
             if (!ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && (ownerDetails.getOwnerIdentificationDetails().getNric() == null ||
-               ownerDetails.getOwnerIdentificationDetails().getNric().trim().equalsIgnoreCase("")))
+               && !hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()))
             {
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nric", "NRIC number is required!", null));
+            }
+            if (!ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
+               && hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()) &&
+               validateDataByPattern(WebConst.UOB_PATTERN_SINGAPORE_NRIC, ownerDetails.getOwnerIdentificationDetails().getNric().trim()))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nricPtrn", "NRIC number format is not valid!", null));
             }
          }
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
@@ -1667,17 +1723,25 @@ public void onChngRpDtls(String flag){
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.otrNatCtry", "Other nationality country is required!", null));
             }
          }
-         if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
-            !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
+         if (hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationality()))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
                && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
                ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
-               && (ownerDetails.getOwnerIdentificationDetails().getIcno() == null ||
-               ownerDetails.getOwnerIdentificationDetails().getIcno().trim().equalsIgnoreCase("")))
+               && !hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getIcno()))
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malayIcNum", "Malaysia IC number is required is required!", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malayIcNum", "Malaysian NRIC number is required!", null));
+            }
+
+            if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
+               && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
+               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
+               && hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getIcno()) &&
+               validateDataByPattern(WebConst.UOB_PATTERN_MALAYSIAN_NRIC,ownerDetails.getOwnerIdentificationDetails().getIcno()))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malayIcNumPtrn", "Malaysian NRIC number format is not valid!", null));
             }
          }
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
@@ -1696,11 +1760,16 @@ public void onChngRpDtls(String flag){
       }
       else
       {
-         if (ownerDetails.getOwnerIdentificationDetails().getNric() == null ||
-            ownerDetails.getOwnerIdentificationDetails().getNric().trim().equalsIgnoreCase(""))
+         if (!hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()))
          {
             dataOK = false;
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nric", "NRIC number is required!", null));
+         }
+         if (hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()) &&
+               validateDataByPattern(WebConst.UOB_PATTERN_SINGAPORE_NRIC, ownerDetails.getOwnerIdentificationDetails().getNric().trim()))
+         {
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nricPtrn", "NRIC number format is not valid!", null));
          }
       }
 
@@ -1770,11 +1839,11 @@ public void onChngRpDtls(String flag){
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.emlAddrs", "Valid email address is required!", null));
       }
 
-      if(!hasRequiredData(priHldrCnfEmail)){
+      if(!hasRequiredData(ownerDetails.getOwnerMiscDetails().getConfirmEmail())){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnf.requiredMsg", "Confirm Email address is required!", null));
       }
-      if(hasRequiredData(priHldrCnfEmail) && !ownerDetails.getEmailAddress().equals(priHldrCnfEmail)){
+      if(hasRequiredData(ownerDetails.getOwnerMiscDetails().getConfirmEmail()) && !ownerDetails.getEmailAddress().equals(ownerDetails.getOwnerMiscDetails().getConfirmEmail())){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnfMtch.requiredMsg", "Email address and Confirm Email address not matched!", null));
       }
@@ -1852,15 +1921,20 @@ public void onChngRpDtls(String flag){
             }
          }
 
-         if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
-            !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
+         if (hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationality()))
          {
             if (!ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && (ownerDetails.getOwnerIdentificationDetails().getNric() == null ||
-               ownerDetails.getOwnerIdentificationDetails().getNric().trim().equalsIgnoreCase("")))
+               && !hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()))
             {
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nric", "NRIC number is required!", null));
+            }
+            if (!ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
+               && hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()) &&
+                  validateDataByPattern(WebConst.UOB_PATTERN_SINGAPORE_NRIC, ownerDetails.getOwnerIdentificationDetails().getNric().trim()))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nricPtrn", "NRIC number format is not valid!", null));
             }
          }
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
@@ -1879,17 +1953,24 @@ public void onChngRpDtls(String flag){
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Invalid Country of nationality is selected!", null));
             }
          }
-         if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
-            !ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
+         if (hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationality()))
          {
             if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
                && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
                ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
-               && (ownerDetails.getOwnerIdentificationDetails().getIcno() == null ||
-               ownerDetails.getOwnerIdentificationDetails().getIcno().trim().equalsIgnoreCase("")))
+               && !hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getIcno()))
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malayIcNum", "Malaysia IC number is required is required!", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malayIcNum", "Malaysian NRIC number is required!", null));
+            }
+            if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
+               && hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify()) &&
+               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().equalsIgnoreCase("Malaysia")
+               && hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getIcno()) &&
+               validateDataByPattern(WebConst.UOB_PATTERN_MALAYSIAN_NRIC,ownerDetails.getOwnerIdentificationDetails().getIcno()))
+            {
+               dataOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malayIcNumPtrn", "Malaysian NRIC number format is not valid!", null));
             }
          }
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() != null &&
@@ -1908,11 +1989,17 @@ public void onChngRpDtls(String flag){
       }
       else
       {
-         if (ownerDetails.getOwnerIdentificationDetails().getNric() == null ||
-            ownerDetails.getOwnerIdentificationDetails().getNric().trim().equalsIgnoreCase(""))
+         if (!hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric()))
          {
             dataOK = false;
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nric", "NRIC number is required!", null));
+         }
+
+         if (hasRequiredData(ownerDetails.getOwnerIdentificationDetails().getNric())&&
+            validateDataByPattern(WebConst.UOB_PATTERN_SINGAPORE_NRIC, ownerDetails.getOwnerIdentificationDetails().getNric().trim()))
+         {
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.nricPtrn", "NRIC number format is not valid!", null));
          }
       }
 
@@ -1992,11 +2079,11 @@ public void onChngRpDtls(String flag){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.emlAddrs", "Valid email address is required!", null));
       }
-      if(!hasRequiredData(priHldrCnfEmail)){
+      if(!hasRequiredData(ownerDetails.getOwnerMiscDetails().getConfirmEmail())){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnf.requiredMsg", "Confirm Email address is required!", null));
       }
-      if(hasRequiredData(priHldrCnfEmail) && !ownerDetails.getEmailAddress().equals(priHldrCnfEmail)){
+      if(hasRequiredData(ownerDetails.getOwnerMiscDetails().getConfirmEmail()) && !ownerDetails.getEmailAddress().equals(ownerDetails.getOwnerMiscDetails().getConfirmEmail())){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.emailCnfMtch.requiredMsg", "Email address and Confirm Email address not matched!", null));
       }
@@ -2184,6 +2271,22 @@ public void onChngRpDtls(String flag){
       {
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.bnkAddr", "Bank Address is required!", null));
+      }
+      if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getBankAddressZipCode()))
+      {
+         dataOK = false;
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.bnkAddrPoCd", "Bank address Postal Code is required!", null));
+      }
+
+      if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getBankAddressCity()))
+      {
+         dataOK = false;
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.bnkAddrCty","Bank address City/State is required!", null));
+      }
+      if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getBankAddressCountry()))
+      {
+         dataOK = false;
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.bnkAddrCtry","Bank address Country is required!", null));
       }
       if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getSwiftBic()) )
       {
@@ -2662,6 +2765,20 @@ public void onChngRpDtls(String flag){
       if (!matcher.matches())
       {
 
+         msg = true;
+      }
+      return msg;
+   }
+
+   public static Boolean validateDataByPattern(String regex,String strToValid)
+   {
+      Pattern pattern;
+      Matcher matcher;
+      pattern = Pattern.compile(regex);
+      Boolean msg = false;
+      matcher = pattern.matcher(strToValid);
+      if (!matcher.matches())
+      {
          msg = true;
       }
       return msg;
@@ -3725,16 +3842,6 @@ public void onChngRpDtls(String flag){
       this.priHldrBnkAddr = priHldrBnkAddr;
    }
 
-   public String getPriHldrCnfEmail()
-   {
-      return priHldrCnfEmail;
-   }
-
-   public void setPriHldrCnfEmail(String priHldrCnfEmail)
-   {
-      this.priHldrCnfEmail = priHldrCnfEmail;
-   }
-
    public boolean isDsplNwPriUnEmpRsnPnl()
    {
       return dsplNwPriUnEmpRsnPnl;
@@ -3793,5 +3900,25 @@ public void onChngRpDtls(String flag){
    public void setHasRepDtlN(String hasRepDtlN)
    {
       this.hasRepDtlN = hasRepDtlN;
+   }
+
+   public boolean isConsentCallFlag()
+   {
+      return consentCallFlag;
+   }
+
+   public void setConsentCallFlag(boolean consentCallFlag)
+   {
+      this.consentCallFlag = consentCallFlag;
+   }
+
+   public boolean isConsentMsgFlag()
+   {
+      return consentMsgFlag;
+   }
+
+   public void setConsentMsgFlag(boolean consentMsgFlag)
+   {
+      this.consentMsgFlag = consentMsgFlag;
    }
 }

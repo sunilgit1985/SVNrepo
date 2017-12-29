@@ -15,6 +15,8 @@ public class OwnerMiscDetails
    private String consentTextContact;
    private String reasonForMailAddreDiffer;
    private String reasonForUnemployment;
+   private String permanentRsdntOfSingapore;
+   private String confirmEmail;
 
    @Override
    public String toString()
@@ -30,6 +32,8 @@ public class OwnerMiscDetails
          ", consentTextContact='" + consentTextContact + '\'' +
          ", reasonForMailAddreDiffer='" + reasonForMailAddreDiffer + '\'' +
          ", reasonForUnemployment='" + reasonForUnemployment + '\'' +
+         ", permanentRsdntOfSingapore='" + permanentRsdntOfSingapore + '\'' +
+         ", confirmEmail='" + confirmEmail + '\'' +
          '}';
    }
 
@@ -131,5 +135,25 @@ public class OwnerMiscDetails
    public void setReasonForUnemployment(String reasonForUnemployment)
    {
       this.reasonForUnemployment = reasonForUnemployment;
+   }
+
+   public String getPermanentRsdntOfSingapore()
+   {
+      return permanentRsdntOfSingapore;
+   }
+
+   public void setPermanentRsdntOfSingapore(String permanentRsdntOfSingapore)
+   {
+      this.permanentRsdntOfSingapore = permanentRsdntOfSingapore;
+   }
+
+   public String getConfirmEmail()
+   {
+      return confirmEmail;
+   }
+
+   public void setConfirmEmail(String confirmEmail)
+   {
+      this.confirmEmail = confirmEmail;
    }
 }
