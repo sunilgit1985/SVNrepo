@@ -26,6 +26,7 @@ public class DocProcessMain
       StringBuilder requestIds= new StringBuilder();
       Date reqTime = new Date();
       Long acctNum = new Long(3203); // 3367  3552  3204
+//      Long acctNum = new Long(3367); // 3367  3552  3204
       int eventNum = 1;
       ServiceRequest serviceRequest = new ServiceRequest("UOB", "DEV");
       CustodyDaoLayerImpl custodyDaoLayer=null;

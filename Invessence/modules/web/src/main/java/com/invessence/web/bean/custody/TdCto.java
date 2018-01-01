@@ -527,7 +527,7 @@ public class TdCto extends BaseTD
          WSCallStatus wsstatus;
          WSCallResult wsCallResult;
          String product = getWebutil().getWebprofile().getInfo("SERVICE.CUSTODY");
-         String mode = getWebutil().getWebprofile().getInfo("SERVICE.DOCUSIGN.MODE");
+         String mode = getWebutil().getWebprofile().getMode("SERVICE.DOCUSIGN.MODE");
 
 
          saveTDNewRequest();

@@ -104,7 +104,7 @@ public class TDChangeAddr extends BaseTD
 
             WSCallResult wsCallResult;
             String product = getWebutil().getWebprofile().getInfo("SERVICE.CUSTODY");
-            String mode = getWebutil().getWebprofile().getInfo("SERVICE.DOCUSIGN.MODE");
+            String mode = getWebutil().getWebprofile().getMode("SERVICE.DOCUSIGN.MODE");
             System.out.println("#################################################### Change Address DC Request Start ##########################################");
             System.out.println("Product " + product);
             System.out.println("Mode " + mode);

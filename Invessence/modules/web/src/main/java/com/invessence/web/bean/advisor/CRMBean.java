@@ -106,7 +106,7 @@ public class CRMBean
    public void startup(){
       logger.info("CRMBean.startup");
       String product = getWebutil().getWebprofile().getInfo("SERVICE.PRODUCT");
-      String serviceMode = getWebutil().getWebprofile().getInfo("SERVICE.CRM.MODE");
+      String serviceMode = getWebutil().getWebprofile().getMode("SERVICE.CRM.MODE");
       logger.info("Product " + product);
       logger.info("ServiceMode " + serviceMode);
       try {
@@ -146,7 +146,7 @@ public class CRMBean
             logonid = webutil.getLogonid();
          }
          String product = getWebutil().getWebprofile().getInfo("SERVICE.PRODUCT");
-         String serviceMode = getWebutil().getWebprofile().getInfo("SERVICE.CRM.MODE");
+         String serviceMode = getWebutil().getWebprofile().getMode("SERVICE.CRM.MODE");
          logger.info("Product " + product);
          logger.info("ServiceMode " + serviceMode);
 
@@ -193,7 +193,7 @@ public class CRMBean
                logonid = webutil.getLogonid();
             }
             String product = getWebutil().getWebprofile().getInfo("SERVICE.PRODUCT");
-            String serviceMode = getWebutil().getWebprofile().getInfo("SERVICE.CRM.MODE");
+            String serviceMode = getWebutil().getWebprofile().getMode("SERVICE.CRM.MODE");
             logger.info("Product " + product);
             logger.info("ServiceMode " + serviceMode);
 

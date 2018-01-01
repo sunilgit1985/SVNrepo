@@ -2955,8 +2955,8 @@ public void onChngRpDtls(String flag){
          try
          {
             String msg;
-            wsCallResult = aoWebLayer.processAORequest(new ServiceRequest(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),
-                                                                          getWebutil().getWebprofile().getWebInfo().get("SERVICE.DOCUMENT.MODE").toString()),
+            wsCallResult = aoWebLayer.processAORequest(new ServiceRequest(getWebutil().getWebprofile().getInfo("SERVICE.PRODUCT").toString(),
+                                                                          getWebutil().getWebprofile().getMode("SERVICE.DOCUMENT.MODE").toString()),
                                                        beanAcctNum, eventNum, updFileLst);
             System.out.println("Custody wsCallResult " + wsCallResult);
             if (wsCallResult.getWSCallStatus().getErrorCode() != 1)

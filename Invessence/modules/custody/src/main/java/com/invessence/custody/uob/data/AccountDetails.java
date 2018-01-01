@@ -12,6 +12,7 @@ public class AccountDetails
    private Long advisorId;
    private String acctTypeId;
    private String acctTypeVal;
+   private String dateOfApplication;
 
    private AccountMiscDetails accountMiscDetails;
 
@@ -99,6 +100,16 @@ public class AccountDetails
       this.acctTypeId = acctTypeId;
    }
 
+   public String getDateOfApplication()
+   {
+      return dateOfApplication;
+   }
+
+   public void setDateOfApplication(String dateOfApplication)
+   {
+      this.dateOfApplication = dateOfApplication;
+   }
+
    @Override
    public String toString()
    {
@@ -110,6 +121,7 @@ public class AccountDetails
          ", advisorId=" + advisorId +
          ", acctTypeId='" + acctTypeId + '\'' +
          ", acctTypeVal='" + acctTypeVal + '\'' +
+         ", dateOfApplication='" + dateOfApplication + '\'' +
          ", accountMiscDetails=" + accountMiscDetails +
          '}';
    }

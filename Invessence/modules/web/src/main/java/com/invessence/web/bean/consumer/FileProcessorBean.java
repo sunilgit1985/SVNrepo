@@ -73,7 +73,7 @@ public class FileProcessorBean
    public void processDownloadFile(String processId){
       System.out.println("AggregationBean.startup");
       String product = getWebutil().getWebprofile().getInfo("SERVICE.PRODUCT");
-      String serviceMode = getWebutil().getWebprofile().getInfo("SERVICE.FILEPROCESS.MODE");
+      String serviceMode = getWebutil().getWebprofile().getMode("SERVICE.FILEPROCESS.MODE");
 //      String processId= getWebutil().getWebprofile().getWebInfo().get("SERVICE.FILEPROCESS.UPLOADPROCESSID").toString();
       System.out.println("Product " + product);
       System.out.println("ServiceMode " + serviceMode);
