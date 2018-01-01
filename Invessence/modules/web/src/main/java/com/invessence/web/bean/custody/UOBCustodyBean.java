@@ -213,6 +213,7 @@ public class UOBCustodyBean
             onChngAddr();
             onChngObj();
             onChngSrcOfInc();
+            loadPrsnlPage();
 
             updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
             updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
@@ -1234,6 +1235,22 @@ public void onChngRpDtls(String flag){
       }
    }
 
+   private void loadPrsnlPage(){
+
+      if(uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().getConsentCallContact()!=null &&
+         uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().getConsentCallContact().equalsIgnoreCase("Yes")){
+         setConsentCallFlag(true);
+      }else{
+         setConsentCallFlag(false);
+      }
+      if(uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().getConsentTextContact()!=null &&
+         uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().getConsentTextContact().equalsIgnoreCase("Yes")){
+         setConsentMsgFlag(true);
+      }else{
+         setConsentMsgFlag(false);
+      }
+   }
+
    public void onChngRelDtls()
    {
       try
@@ -1585,11 +1602,12 @@ public void onChngRpDtls(String flag){
    {
       if((ownerDetails.getPhysicalAddressCountry()!=null && ownerDetails.getPhysicalAddressCountry().equalsIgnoreCase("Singapore") )||
          (ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry()!=null && ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry().equalsIgnoreCase("Singapore"))){
-         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHvaingGST("Yes");
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHavingGST("Yes");
       }else{
-         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHvaingGST("No");
+         uobDataMaster.getAccountDetails().getAccountMiscDetails().setHavingGST("No");
       }
       saveAdditionalDtls(ownerDetails.getOwnerMiscDetails(), acctNum, acctOwnerId, "ao_owners_misc_details");
+      saveActAdditionalDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails(), acctNum, "ao_acct_misc_details");
       return true;
    }
 
@@ -2257,6 +2275,11 @@ public void onChngRpDtls(String flag){
    public boolean validateRemittanceDetails(OwnerDetails ownerDetails)
    {
       Boolean dataOK = true;
+      if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getBankAccountHolderName()) )
+      {
+         dataOK = false;
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.bnkAcctHldrNm", "Account Holder Name is required!", null));
+      }
       if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getBankName()) )
       {
          dataOK = false;
