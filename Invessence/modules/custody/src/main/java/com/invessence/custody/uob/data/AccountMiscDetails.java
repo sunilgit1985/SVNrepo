@@ -9,7 +9,7 @@ public class AccountMiscDetails
    private String isExistingIndividualAcct;
    private String salesPersonName;
    private String havingRepDtls;
-   private String hvaingGST;
+   private String havingGST;
 
    @Override
    public String toString()
@@ -18,6 +18,8 @@ public class AccountMiscDetails
          "existingTradeAcctNumber='" + existingTradeAcctNumber + '\'' +
          ", isExistingIndividualAcct='" + isExistingIndividualAcct + '\'' +
          ", salesPersonName='" + salesPersonName + '\'' +
+         ", havingRepDtls='" + havingRepDtls + '\'' +
+         ", havingGST='" + havingGST + '\'' +
          '}';
    }
 
@@ -62,13 +64,13 @@ public class AccountMiscDetails
       this.havingRepDtls = havingRepDtls;
    }
 
-   public String getHvaingGST()
+   public String getHavingGST()
    {
-      return hvaingGST;
+      return havingGST;
    }
 
-   public void setHvaingGST(String hvaingGST)
+   public void setHavingGST(String havingGST)
    {
-      this.hvaingGST = hvaingGST;
+      this.havingGST = havingGST;
    }
 }

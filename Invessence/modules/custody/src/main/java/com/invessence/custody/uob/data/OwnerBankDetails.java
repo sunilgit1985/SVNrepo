@@ -11,6 +11,7 @@ public class OwnerBankDetails
    private Integer acctOwnerId;
    private String bankName;
    private String bankAccountNo;
+   private String bankAccountHolderName;
    private String bankAddressStreet1;
    private String bankAddressStreet2;
    private String bankAddressStreet3;
@@ -173,6 +174,16 @@ public class OwnerBankDetails
       this.correspondentBankSwiftBic = correspondentBankSwiftBic;
    }
 
+   public String getBankAccountHolderName()
+   {
+      return bankAccountHolderName;
+   }
+
+   public void setBankAccountHolderName(String bankAccountHolderName)
+   {
+      this.bankAccountHolderName = bankAccountHolderName;
+   }
+
    @Override
    public String toString()
    {
@@ -181,6 +192,7 @@ public class OwnerBankDetails
          ", acctOwnerId=" + acctOwnerId +
          ", bankName='" + bankName + '\'' +
          ", bankAccountNo='" + bankAccountNo + '\'' +
+         ", bankAccountHolderName='" + bankAccountHolderName + '\'' +
          ", bankAddressStreet1='" + bankAddressStreet1 + '\'' +
          ", bankAddressStreet2='" + bankAddressStreet2 + '\'' +
          ", bankAddressStreet3='" + bankAddressStreet3 + '\'' +

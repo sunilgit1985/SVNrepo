@@ -145,6 +145,7 @@ public class CustodySP extends StoredProcedure
          case 14:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_acctOwnerId", Types.NUMERIC));
+            declareParameter(new SqlParameter("p_bankAccountHolderName", Types.VARCHAR));
             declareParameter(new SqlParameter("p_bankName", Types.VARCHAR));
             declareParameter(new SqlParameter("p_bankAccountNo", Types.VARCHAR));
             declareParameter(new SqlParameter("p_bankAddressStreet1", Types.VARCHAR));
@@ -307,6 +308,7 @@ public class CustodySP extends StoredProcedure
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_acctnum", acctNum);
       inputMap.put("p_acctOwnerId", acctOwnerId);
+      inputMap.put("p_bankAccountHolderName",ownerDetails.getOwnerBankDetails().getBankAccountHolderName());
       inputMap.put("p_bankName", ownerDetails.getOwnerBankDetails().getBankName());
       inputMap.put("p_bankAccountNo", ownerDetails.getOwnerBankDetails().getBankAccountNo());
       inputMap.put("p_bankAddressStreet1", ownerDetails.getOwnerBankDetails().getBankAddressStreet1());
