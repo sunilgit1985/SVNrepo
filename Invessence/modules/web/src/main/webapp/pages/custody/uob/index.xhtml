@@ -123,17 +123,12 @@
                                             <div class="Container10 fistCheckOpt">
                                                 <p:selectOneRadio  id="introRepChY"
                                                                       value="#{uobCustodyBean.hasRepDtlY}">
-                                                    <p:ajax listener='#{uobCustodyBean.onChngRpDtls("Yes")}' update="repParam"/>
+                                                    <p:ajax listener='#{uobCustodyBean.onChngRpDtls("Yes")}' update="repLstPnl,repParam"/>
                                                     <f:selectItem itemLabel="" itemValue="Yes"/>
                                                 </p:selectOneRadio>
                                             </div>
                                             <div class="Container90">
-                                                My preferred Trading Representative
-                                                <p:autoComplete id="slsPrnNm" dropdown="true"
-                                                                value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
-                                                                completeMethod="#{uobCustodyBean.completeRepText}"
-                                                                disabled="#{uobCustodyBean.dsblRepList}" placeholder="Trading Representative Name">
-                                                </p:autoComplete>
+                                                I/We do have a Trading Representative
                                             </div>
                                         </div>
                                     </div>
@@ -141,11 +136,24 @@
                                         <div class="Container10">
                                             <p:selectOneRadio id="introRepChN"
                                                                   value="#{uobCustodyBean.hasRepDtlN}">
-                                                <p:ajax listener='#{uobCustodyBean.onChngRpDtls("No")}' update="repParam"/>
+                                                <p:ajax listener='#{uobCustodyBean.onChngRpDtls("No")}' update="repLstPnl,repParam"/>
                                                 <f:selectItem itemLabel="" itemValue="No"/>
                                             </p:selectOneRadio></div>
                                         <div class="Container90">I/We do not have a Trading Representative</div>
                                     </div>
+                                </p:panel>
+
+                                <p:panel id="repLstPnl" style="border-color: transparent;" class="Container100 ">
+                                    <ui:fragment rendered="#{!uobCustodyBean.dsblRepList}">
+                                    <div class="acc_holder_dtl_block checkBoxOpt">
+                                        <div class="Container100 Responsive50 select_item margin-top">
+                                            <p:autoComplete id="slsPrnNm" dropdown="true"
+                                                            value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.salesPersonName}"
+                                                            completeMethod="#{uobCustodyBean.completeRepText}" placeholder="Trading Representative Name">
+                                            </p:autoComplete>
+                                        </div>
+                                    </div>
+                                    </ui:fragment>
                                 </p:panel>
                                 <div class="Container100 pre_next_btn">
                                     <div class="Container50 next_btn">
