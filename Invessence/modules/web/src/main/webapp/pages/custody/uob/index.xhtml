@@ -60,7 +60,7 @@
                                         <div class="Container100">
                                             <span class="title_line">Do you have an existing Individual Securities Trading account on UOBKH ? </span></div>
                                     </div>
-                                    <div class="Container20 label_opacity">
+                                    <div class="Container20 label_opacity RadioLineHeight">
                                         <p:selectOneRadio id="acctCatInd" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.isExistingIndividualAcct}">
                                             <p:ajax listener="#{uobCustodyBean.onChangeValue0}"
                                                     update="extCstmParm"/>
@@ -74,7 +74,7 @@
                                             <div class="Container100">
                                                 <span class="title_line">Do you have an existing Joint Securities Trading account on UOBKH ? </span></div>
                                         </div>
-                                        <div class="Container20 label_opacity">
+                                        <div class="Container20 label_opacity RadioLineHeight">
                                             <p:selectOneRadio id="acctCatJnt" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.isExistingIndividualAcct}">
                                                 <p:ajax listener="#{uobCustodyBean.onChangeValue0}"
                                                         update="extCstmParm"/>
@@ -118,8 +118,8 @@
                                     </div>
                                 </p:panel>
                                 <p:panel id="repParam" style="border-color: transparent;" class="Container100 ">
-                                    <div class="acc_holder_dtl_block checkBoxOpt">
-                                        <div class="Container100 Responsive50 select_item margin-top">
+                                    <div class="Container50 checkBoxOpt">
+
                                             <div class="Container10 fistCheckOpt">
                                                 <p:selectOneRadio  id="introRepChY"
                                                                       value="#{uobCustodyBean.hasRepDtlY}">
@@ -130,15 +130,16 @@
                                             <div class="Container90">
                                                 I/We do have a Trading Representative
                                             </div>
-                                        </div>
+
                                     </div>
-                                    <div class="Container100 margin-top select_item checkBoxOpt ">
+                                    <div class="Container50 checkBoxOpt ">
                                         <div class="Container10">
                                             <p:selectOneRadio id="introRepChN"
                                                                   value="#{uobCustodyBean.hasRepDtlN}">
                                                 <p:ajax listener='#{uobCustodyBean.onChngRpDtls("No")}' update="repLstPnl,repParam"/>
                                                 <f:selectItem itemLabel="" itemValue="No"/>
-                                            </p:selectOneRadio></div>
+                                            </p:selectOneRadio>
+                                        </div>
                                         <div class="Container90">I/We do not have a Trading Representative</div>
                                     </div>
                                 </p:panel>

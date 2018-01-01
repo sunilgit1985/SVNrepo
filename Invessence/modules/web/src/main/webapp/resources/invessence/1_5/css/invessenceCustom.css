@@ -4795,7 +4795,11 @@ th.del_edit_col span {
 .label_opacity .ui-selectoneradio td {
     vertical-align: top;
 }
-.submit_acc_dtl{padding:1% 40%;}
+/*.submit_acc_dtl{padding:1% 40%;}*/
+.submit_acc_dtl {
+    padding: 1% 46%;
+    width: 7%;
+}
 .per_res {
     margin: 8px 0;
 }
@@ -5626,8 +5630,9 @@ div#leftpanel {
     width: 3%;
     margin-top: -4px;
 }
-.Container10.fistCheckOpt {
-    margin-top: 8px;
+.checkBoxOpt .Container10 {
+    margin-top: -8px;
+    margin-right: 10px;
 }
 .checkBoxOpt .ui-chkbox-box .ui-icon-check {
     background-color: #a4332f;
@@ -5683,8 +5688,18 @@ svg.highcharts-root {
 .confirmation_donut_dtl.UserconfTable .ContainerIndent {
     margin: 0px auto;
 }
-
-
+.checkBoxOpt span.ui-chkbox-label {
+    font-size: 17px !important;
+    color: #000;
+}
+.margin-CheckBoxleft {
+    margin-left: 24px;
+    color: #000;
+    font-size: 14px;
+}
+.RadioLineHeight.label_opacity .ui-selectoneradio td {
+    line-height: 1.6;
+}
 
 /*** responsive**/
 
