@@ -49,7 +49,8 @@
                         </p:panel>
                     </div>
                 </p:repeat>
-                <p:panel rendered="#{uobCustodyBean.dsplDwnlFile}">
+                <p:panel rendered="#{uobCustodyBean.dsplDwnlFile}" class="OverlayPanelDisClo">
+                    <span class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose" id=""></span>
                     <p:tabView>
                         <p:tab title="Disclosure">
                             <pe:documentViewer height="500" width="500" value="#{uobCustodyBean.contentDsclre}" download="disclosure.pdf"/>
@@ -58,22 +59,22 @@
                             <pe:documentViewer height="500" width="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf"/>
                         </p:tab>
                     </p:tabView>
-                    <div class="acc_holder_dtl_block">
-                        <div class="Container20 Responsive50 select_item margin-top">
+                    <div class="acc_holder_dtl_block  margin-top acceptTerm">
+                        <div class="Container30 Responsive50  margin-top checkBoxOpt">
                             <div class="Container100">
                                 <p:selectBooleanCheckbox id="cstdyDwnDscl" value="#{uobCustodyBean.dwnlGudFlag}"
                                                          itemLabel="Disclosure">
                                 </p:selectBooleanCheckbox>
                                 </div>
                         </div>
-                        <div class="Container20 Responsive50 select_item margin-top">
+                        <div class="Container30 Responsive50  margin-top checkBoxOpt">
                             <div class="Container100">
                                 <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}"
                                                          itemLabel="Guide">
                                 </p:selectBooleanCheckbox>
                             </div>
                         </div>
-                        <div class="Container60 Responsive50 select_item margin-top">
+                        <div class="Container40 Responsive50">
                             <div class="Container100">
                                 <p:commandButton id="uobAccpt"
                                                  value="Accept"

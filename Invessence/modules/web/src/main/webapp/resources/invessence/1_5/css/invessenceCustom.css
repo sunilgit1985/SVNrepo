@@ -5634,7 +5634,8 @@ div#leftpanel {
     margin-top: -8px;
     margin-right: 10px;
 }
-.checkBoxOpt .ui-chkbox-box .ui-icon-check {
+.checkBoxOpt .ui-chkbox-box .ui-icon-check
+{
     background-color: #a4332f;
 }
 .checkBoxOpt .ui-chkbox .ui-state-hover,.checkBoxOpt .ui-chkbox .ui-state-active
@@ -5700,6 +5701,48 @@ svg.highcharts-root {
 .RadioLineHeight.label_opacity .ui-selectoneradio td {
     line-height: 1.6;
 }
+.OverlayPanelDisClo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 92%;
+    z-index: 123;
+    background: #fff;
+    text-align: center;
+    padding-top: 4% !important;
+}
+.OverlayPanelDisClo ul.ui-tabs-nav.ui-helper-reset.ui-widget-header.ui-corner-all {
+    text-align: left;
+}
+.layout-portlets-box{box-shadow:none;}
+.acc_holder_dtl_block.acceptTerm {
+    position: relative;
+    bottom: -35px;
+}
+.OverlayPanelDisClo .ui-panel-content {
+    padding-bottom: 100px !important;
+}
+.submit_acc_dtl.file_submit {
+    padding: 1% 41%;
+    width: 19%;
+}
+.panelClose {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /*** responsive**/
 
