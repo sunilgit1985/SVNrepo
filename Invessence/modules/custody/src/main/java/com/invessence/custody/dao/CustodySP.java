@@ -118,6 +118,7 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_product", Types.VARCHAR));
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_reqType", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_requestFor",Types.VARCHAR));
             break;
          case 11:
             declareParameter(new SqlParameter("p_reqId", Types.NUMERIC));
@@ -380,12 +381,13 @@ public class CustodySP extends StoredProcedure
       return execute(inputMap);
    }
 
-   public Map fetchFileUpdMasterList(String Product, Long acctNum,String reqType)
+   public Map fetchFileUpdMasterList(String Product, Long acctNum,String reqType,String reqFor)
    {
       Map inputMap = new LinkedHashMap();
       inputMap.put("p_product", Product);
       inputMap.put("p_acctnum", acctNum);
       inputMap.put("p_reqType", reqType);
+      inputMap.put("p_requestFor", reqFor);
       return execute(inputMap);
    }
 

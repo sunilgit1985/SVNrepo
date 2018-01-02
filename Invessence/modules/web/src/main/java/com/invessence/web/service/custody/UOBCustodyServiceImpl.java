@@ -220,7 +220,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
    }
 
    @Override
-   public List<CustodyFileDetails> fetchFileUpdMasterList(String product, Long acctNum,String reqType)
+   public List<CustodyFileDetails> fetchFileMasterList(String product, Long acctNum,String reqType,String reqFor)
    {
       List<CustodyFileDetails> objCstdFileLst=null;
       try
@@ -229,7 +229,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
          SQLData convert = new SQLData();
          jdbcTemplate = new JdbcTemplate(dataSource);
          CustodySP sp = new CustodySP(jdbcTemplate, "sel_custody_file_master_list", 10);
-         Map outMap = sp.fetchFileUpdMasterList( product,  acctNum,reqType);
+         Map outMap = sp.fetchFileUpdMasterList( product,  acctNum,reqType,reqFor);
          if (outMap != null)
          {
             ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
@@ -250,7 +250,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
       }
       catch (Exception ex)
       {
-         System.out.println("UOBCustodyServiceImpl.fetchFileUpdMasterList Exception " + ex);
+         System.out.println("UOBCustodyServiceImpl.fetchFileMasterList Exception " + ex);
          ex.printStackTrace();
       }
       return objCstdFileLst;

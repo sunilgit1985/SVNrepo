@@ -20,7 +20,7 @@ public interface CustodyService
    public void deleteSetMiscDtls(Long acctNum, int acctOwnerId ,String category);
    public void saveAcctAdditionalDtls(Long acctNum,String name,String value,String table);
    public Map<String,String> fetchSalesRepList(String advisor);
-   public List<CustodyFileDetails> fetchFileUpdMasterList(String Product, Long acctNum,String reqType);
+   public List<CustodyFileDetails> fetchFileMasterList(String Product, Long acctNum,String reqType,String reqFor);
    public void saveCustodyFiles(String Product,Long acctNum,String logonId,CustodyFileRequest custodyFileRequest);
    public List<CustodyFileRequest> fetchUploadedFiles(String Product, Long acctNum,String action);
    public String saveCustodyDocReq(String product,Long acctNum,Long advisorId,String reqType);

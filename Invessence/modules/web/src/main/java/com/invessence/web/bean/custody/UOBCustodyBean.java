@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.text.*;
 import java.util.*;
+import java.util.List;
 import java.util.regex.*;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
@@ -20,6 +21,9 @@ import com.invessence.web.service.custody.*;
 import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.PagesImpl;
 import com.invessence.service.bean.Generic.Country;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.logging.*;
 import org.primefaces.event.*;
@@ -82,9 +86,12 @@ public class UOBCustodyBean
    private Map<String, String> repMap = new HashMap<String, String>();
    private boolean dspDocUpdPnl = false;
    private List<CustodyFileDetails> updFileMstrLst = new ArrayList<CustodyFileDetails>();
+   private List<CustodyFileDetails> dwnFileMstrLst = new ArrayList<CustodyFileDetails>();
    private List<CustodyFileRequest> updFileLst = new ArrayList<CustodyFileRequest>();
    private String cstdyUpdPath = null;
+   private String cstdyDwnPath = null;
    private boolean dsblUpdSubmtBtn = true;
+   private boolean dsplDwnlFile=false;
    private String currentAcctHolder = null;
    private String beanAccount=null;
    private String saveandOpenError;
@@ -93,6 +100,7 @@ public class UOBCustodyBean
    private String hasRepDtlY=null,hasRepDtlN=null;
    private Map<String, String> fileupdSucc = new HashMap<String, String>();
    private boolean consentCallFlag=false,consentMsgFlag=false;
+   private boolean dwnlDsclFlag=false,dwnlGudFlag=false;
 
    public void cleanUpAll()
    {
@@ -147,6 +155,7 @@ public class UOBCustodyBean
       dispTaxUpdBtn = false;
       dspDocUpdPnl = false;
       cstdyUpdPath = null;
+      cstdyDwnPath = null;
       fileupdSucc = new HashMap<String, String>();
       dsblUpdSubmtBtn = true;
       currentAcctHolder = null;
@@ -156,6 +165,9 @@ public class UOBCustodyBean
       dsblRepList=false;
       hasRepDtlY=null;
       hasRepDtlN=null;
+      dsplDwnlFile=false;
+      dwnlDsclFlag=false;
+      dwnlGudFlag=false;
    }
 
    public void initCustody()
@@ -201,6 +213,7 @@ public class UOBCustodyBean
             uobDataMaster.getAccountDetails().setAcctnum(getBeanAcctNum());
             repMap = custodyService.fetchSalesRepList(getWebutil().getWebprofile().getWebInfo().get("DEFAULT.ADVISOR").toString());
             cstdyUpdPath = getWebutil().getWebprofile().getWebInfo().get("CUSTODY.UPLOAD.PATH").toString();
+            cstdyDwnPath = getWebutil().getWebprofile().getWebInfo().get("CUSTODY.DOWNLOAD.PATH").toString();
             if (repMap != null && repMap.size() > 0)
             {
                repList = new ArrayList<String>(repMap.keySet());
@@ -215,12 +228,19 @@ public class UOBCustodyBean
             onChngSrcOfInc();
             loadPrsnlPage();
 
-            updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+            updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Upload");
             updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+            dwnFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Download");
+
             if(updFileLst!=null && updFileMstrLst!=null && updFileMstrLst.size()==updFileLst.size()){
                dsblUpdSubmtBtn=false;
             }else{
                dsblUpdSubmtBtn=true;
+            }
+
+            if(dwnFileMstrLst!=null && dwnFileMstrLst.size()>0){
+               dsplDwnlFile=true;
+               getFileData();
             }
             owTaxDtls = new OwnerTaxationDetails();
             countries = new ArrayList<String>();
@@ -574,46 +594,61 @@ public void onChngRpDtls(String flag){
             onChngRpDtls("");
          }
       }
-//      getFileData();
    }
-   public void getFileData(){
+   public void getFileData()
+   {
       try
       {
-         File file = new File("C:/Users/sagar/Desktop/spsample/book.pdf");
-//init array with file length
-         byte[] bytesArray = new byte[(int) file.length()];
-
-         FileInputStream fis = new FileInputStream(file);
-         fis.read(bytesArray); //read file into bytes[]
-         fis.close();
-
-//         bytesArray;
-//
-         ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-
-//         Document document = new Document();
-//         PdfWriter.getInstance(document, out);
-//         document.open();
-//
-//         for (int i = 0; i < 50; i++) {
-//            document.add(new Paragraph("All work and no play makes Jack a dull boy"));
-//         }
-//
-//         document.close();
-         content = new DefaultStreamedContent(fis, "application/pdf");
-      }catch (Exception e){
+         for(int j = 0; j < dwnFileMstrLst.size(); j++)
+         {
+            PdfReader reader;
+            reader = new PdfReader(cstdyDwnPath+dwnFileMstrLst.get(j).getFileName());
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int n = reader.getNumberOfPages();
+            Document document = new Document();
+            PdfCopy copy = new PdfCopy(document, out);
+            document.open();
+            for (int i = 0; i < n; )
+            {
+               copy.addPage(copy.getImportedPage(reader, ++i));
+            }
+            document.close();
+            if(dwnFileMstrLst.get(j).getReqType().equalsIgnoreCase("ACCT_DSCL"))
+            {
+               contentDsclre = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf");
+            }else{
+               contentGuide = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf");
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         System.out.println("getFileData Error " + e);
+         e.printStackTrace();
 
       }
    }
-   private StreamedContent content;
 
-   public StreamedContent getContent() {
-      return content;
+   private StreamedContent contentDsclre,contentGuide;
+
+   public StreamedContent getContentDsclre()
+   {
+      return contentDsclre;
    }
 
-   public void setContent(StreamedContent content) {
-      this.content = content;
+   public void setContentDsclre(StreamedContent contentDsclre)
+   {
+      this.contentDsclre = contentDsclre;
+   }
+
+   public StreamedContent getContentGuide()
+   {
+      return contentGuide;
+   }
+
+   public void setContentGuide(StreamedContent contentGuide)
+   {
+      this.contentGuide = contentGuide;
    }
 
    public void onSelAcctTypAsInd(String strAcctType)
@@ -2943,7 +2978,7 @@ public void onChngRpDtls(String flag){
       dspNewAcctPnl = false;
       dspExtAcctPnl = false;
       dspIntroAcctPnl = false;
-      updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+      updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Upload");
 
       fileupdSucc=new HashMap<String,String>();
       if(updFileLst!=null && updFileLst.size()>0){
@@ -3023,7 +3058,7 @@ public void onChngRpDtls(String flag){
          dspNewAcctPnl = true;
       }
       dspIntroAcctPnl = false;
-      updFileMstrLst = custodyService.fetchFileUpdMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
+      updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Upload");
       Boolean status = validateAllPage();
       if(status){
          dsblSubmtBtn=false;
@@ -3943,5 +3978,55 @@ public void onChngRpDtls(String flag){
    public void setConsentMsgFlag(boolean consentMsgFlag)
    {
       this.consentMsgFlag = consentMsgFlag;
+   }
+
+   public List<CustodyFileDetails> getDwnFileMstrLst()
+   {
+      return dwnFileMstrLst;
+   }
+
+   public void setDwnFileMstrLst(List<CustodyFileDetails> dwnFileMstrLst)
+   {
+      this.dwnFileMstrLst = dwnFileMstrLst;
+   }
+
+   public String getCstdyDwnPath()
+   {
+      return cstdyDwnPath;
+   }
+
+   public void setCstdyDwnPath(String cstdyDwnPath)
+   {
+      this.cstdyDwnPath = cstdyDwnPath;
+   }
+
+   public boolean isDsplDwnlFile()
+   {
+      return dsplDwnlFile;
+   }
+
+   public void setDsplDwnlFile(boolean dsplDwnlFile)
+   {
+      this.dsplDwnlFile = dsplDwnlFile;
+   }
+
+   public boolean isDwnlDsclFlag()
+   {
+      return dwnlDsclFlag;
+   }
+
+   public void setDwnlDsclFlag(boolean dwnlDsclFlag)
+   {
+      this.dwnlDsclFlag = dwnlDsclFlag;
+   }
+
+   public boolean isDwnlGudFlag()
+   {
+      return dwnlGudFlag;
+   }
+
+   public void setDwnlGudFlag(boolean dwnlGudFlag)
+   {
+      this.dwnlGudFlag = dwnlGudFlag;
    }
 }
