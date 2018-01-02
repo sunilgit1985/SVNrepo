@@ -3,152 +3,47 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-                
-                
-                <script>
-            $(document).ready(function ()
-                              {
-                             
-                                  $("#reviewDonutClick").click(function () {
 
 
-                                      // Set the effect type
-                                      var effect = 'slide';
+    <script>
+        $(document).ready(function ()
+                          {
 
-                                      // Set the options for the effect type chosen
-                                      var options = { direction: 'up' };
-
-                                      // Set the duration (default: 400 milliseconds)
-                                      var duration = 700;
-
-                                      $('#reviewDonutDts').toggle(effect, options, duration);
-
-                                  });
-                                  $("#cosedPanel").click(function () {
-                                	  $('#reviewDonutDts').hide('this');
-                                	  
-                                  });
-                              });
-
-        </script>
-<!--    slider from top with review details -->           
-		<div id="reviewDonutDts" class="reviewDonutDts">
-			<div class="Container100">
-				<div class="Container30" >
-                   <p:panel id="cnfgraphArea1" style="border: 0px; background: white;">
-
-                                            <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
-                                            <script>
-                                                $(document).ready(function ()
-                                                                  {
-                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-                                                                      //  {
-                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                                      //  {
-                                                                      //draw2dDonut1lyrChartDyna('CNFPrflo');
-
-                                                                      draw2dDonut1lyrChartDyna('idPieChartArea1', 'idPieChartValue1');
-                                                                      //  }
-                                                                      // }
-
-                                                                      myGaugeChart('idRiskChartValue', 'idRiskChartArea', 0, 100, 'Risk', 'Score');
-                                                                  });
-
-                                            </script>
-
-                                            <div class="Container100 donutChartGraph review_graph">
-
-                                                <div id="2dDonutChartCnf2" class="idPieChartArea1"></div>
-
-                                                <input type="hidden"
-                                                       value="#{uobProfile.chart.chartData}"
-                                                       class="idPieChartValue1"/>
-                                                <input type="hidden" value="HIGHCHART.2DDONUT"
-                                                       class="idChartType1"/>
-
-                                            </div>
+                              $("#reviewDonutClick").click(function ()
+                                                           {
 
 
-                                        </p:panel>
-                 </div>
-				<div class="Container70 Responsive50 UserconfTable confirmation_donut_dtl"><!-- ROHIT's CHANGE -->
+                                                               // Set the effect type
+                                                               var effect = 'slide';
 
-                                                    <div class="ContainerIndent ">
-                                                        <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
-                                                                     value="#{uobProfile.customer.displayPortfolioList}">
-                                                            <!-- <p:column style="width:5%; background-color: #{ticker.color}">
-                                                                <h:outputText value=" "/>
-                                                            </p:column> -->
-                                                            <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
-																<span style="background-color:  #{ticker.color}">HI</span>
-			                                                </p:column>
-			                                                            
-                                                            <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Name"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
-                                                            </p:column>
-                                                            <p:column style="width:10%;"
-                                                                      styleClass="Fs12 num-text-align TexAlRight">
-                                                                <!-- ROHIT's CHANGE -->
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Allocated"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobtalloc2" value="#{ticker.weight}">
-                                                                    <f:convertNumber pattern="##0%"/>
-                                                                </h:outputText>
-                                                            </p:column>
+                                                               // Set the options for the effect type chosen
+                                                               var options = {direction: 'up'};
 
-                                                            <p:column style="width:10%;"
-                                                                      styleClass="Fs12 num-text-align TexAlRight">
-                                                                <!-- Prashant intro 2017-Sept -->
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Currency"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobbasecurrency" value="#{ticker.tradeCurrency}">
-                                                                </h:outputText>
-                                                            </p:column>
+                                                               // Set the duration (default: 400 milliseconds)
+                                                               var duration = 700;
 
-                                                            <p:column style="width:19%;"
-                                                                      styleClass="Fs12 num-text-align TexAlRight">
-                                                                <!-- ROHIT's CHANGE -->
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Value"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobtval" value="#{ticker.value}">
-                                                                    <f:convertNumber pattern="##,###,###"/>
-                                                                </h:outputText>
-                                                            </p:column>
+                                                               $('#reviewDonutDts').toggle(effect, options, duration);
 
-                                                            <p:columnGroup type="footer">
-                                                                <p:row>
-                                                                    <p:column/>
-                                                                    <p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
-                                                                              footerText="Total">
-                                                                    </p:column>
-                                                                    <p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
-                                                                              footerText="#{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}">
-                                                                    </p:column>
-                                                                </p:row>
-                                                            </p:columnGroup>
-                                                        </p:dataTable>
-                                                    </div>
-                                                </div>
-			</div>
-			<div class="close_btn" >
-				<button id="cosedPanel">Click here</button>
-			</div>
-		</div>
-	<!--    slider from top with review details -->  
+                                                           });
+                              $("#cosedPanel").click(function ()
+                                                     {
+                                                         $('#reviewDonutDts').hide('this');
+
+                                                     });
+                          });
+
+    </script>
     <p:outputPanel id="graphArea" style="border: 0px; background: transparent">
         <div class="portfolio_selection">
             <div class="Container30">
                 <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="80px"/><span>Goal</span></div>
-            <div class="Container30 risk_meter">
-                <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
+                                width="80px"/><span>Goal</span>
             </div>
+                <div class="Container30 risk_meter">
+                    <ui:fragment rendered="#{uobProfile.currentPage > 0}">
+                    <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
+                    </ui:fragment>
+                </div>
             <div class="Container30">
                 <span class="sapn_review">Review</span>
                 <div class="review-donut" id="reviewDonutClick" style="float: right;  width: 100px;  height: 80px;">
@@ -157,20 +52,20 @@
                         <script>
                             $(document).ready(function ()
                                               {
-                                                 /* if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-                                                  {
-                                                      if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                      {
-                                                          draw2dDonut1lyrChartDyna('CNFPrflo');
-                                                      }
-                                                  }*/
+                                                  /* if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                   {
+                                                   if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                   {
+                                                   draw2dDonut1lyrChartDyna('CNFPrflo');
+                                                   }
+                                                   }*/
 //                                                                  myGaugeChart(vMeterVal,vMin,vMax)
 //                                                                  vMeterVal=value to be shown on meter
 //                                                                  vMin= value to be a lower(Min) range of meter
 //                                                                  vMax= value to be a higher(Max) range of meter
 
-												draw2dDonut1lyrChartDyna('idPieChartArea','idPieChartValue');
-                                                myGaugeChart('idRiskChartValue','idRiskChartArea', 0, 100, 'Risk', 'Score');
+                                                  draw2dDonut1lyrChartDyna('idPieChartArea', 'idPieChartValue');
+                                                  myGaugeChart('idRiskChartValue', 'idRiskChartArea', 0, 100, 'Risk', 'Score');
 
                                               });
 
@@ -179,23 +74,23 @@
                         <div class="Container100 donutChartGraph review_graph">
                             <!--<div id="2dDonutChartCnf"></div>-->
                             <!-- Highchart 2D Donut data -->
-                           <!--<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>-->
-                           <!-- <h:inputHidden
-                                    value="#{uobProfile.displayHC2DDonutData}"
-                                    id="twodDonutValueChartCnf"/>-->
-                                    
-                                    
-                                    <div id="2dDonutChartCnf1" class="idPieChartArea"></div>													
-								   <input type="hidden" value="#{uobProfile.chart.chartData}"
-								    class="idPieChartValue"/>
-								    <input type="hidden" value="HIGHCHART.2DDONUT"
-								    class="idChartType"/>
+                            <!--<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>-->
+                            <!-- <h:inputHidden
+                                     value="#{uobProfile.displayHC2DDonutData}"
+                                     id="twodDonutValueChartCnf"/>-->
+
+
+                            <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
+                            <input type="hidden" value="#{uobProfile.chart.chartData}"
+                                   class="idPieChartValue"/>
+                            <input type="hidden" value="HIGHCHART.2DDONUT"
+                                   class="idChartType"/>
                             <!-- Risk Meter Score -->
                             <h:inputHidden
                                     value='#{uobProfile.displayRiskScore}'
                                     id="riskScore"/>
-                                    
-                                    <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
+
+                            <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
 
                         </div>
 
@@ -210,5 +105,5 @@
             <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
         </div>
     </p:outputPanel>
-	
+
 </ui:composition>

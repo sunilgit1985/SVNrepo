@@ -13,42 +13,60 @@ public class WebMenuList
       CURRENCY;
    }
 
-   Map<String, ArrayList<WebMenuItem>> menulist;
+   HashMap<String, LinkedHashMap<String, WebMenuItem>> menulist;
 
    public WebMenuList()
    {
-      menulist = new HashMap<String, ArrayList<WebMenuItem>>();
+      menulist = new HashMap<String, LinkedHashMap<String, WebMenuItem>>();
    }
 
-   public WebMenuList(Map<String, ArrayList<WebMenuItem>> menulist)
+   public WebMenuList(HashMap<String, LinkedHashMap<String, WebMenuItem>> menulist)
    {
       this.menulist = menulist;
    }
 
-   public Map<String, ArrayList<WebMenuItem>> getMenulist()
+   public HashMap<String, LinkedHashMap<String, WebMenuItem>> getMenulist()
    {
       return menulist;
    }
 
-   public void setMenulist(Map<String, ArrayList<WebMenuItem>> menulist)
+   public void setMenulist(HashMap<String, LinkedHashMap<String, WebMenuItem>> menulist)
    {
       this.menulist = menulist;
    }
 
-   public void addToMenuList(WebMenuItem menuitem) {
+   public HashMap<String, WebMenuItem> getMenuItemMap(String group)
+   {
+      if (menulist.containsKey(group)) {
+         return menulist.get(group);
+      }
+      return new HashMap<String, WebMenuItem>();
+   }
+
+   public ArrayList<WebMenuItem> getMenuArrayList(String group)
+   {
+      ArrayList<WebMenuItem> list = new ArrayList<WebMenuItem>();
+      if (menulist.containsKey(group)) {
+         for (WebMenuItem thismap : menulist.get(group).values()) {
+            list.add(thismap);
+         }
+      }
+      return list;
+   }
+
+   public void addToMenuList(String group, WebMenuItem menuitem) {
       String key;
       if (menuitem != null)
       {
-         key = menuitem.getKey();
-         if (menulist.containsKey(key))
+          if (menulist.containsKey(group))
          {
-            menulist.get(key).add(menuitem);
+            menulist.get(group).put(menuitem.getKey(), menuitem);
          }
          else
          {
-            ArrayList<WebMenuItem> list = new ArrayList<WebMenuItem>();
-            list.add(menuitem);
-            menulist.put(key, list);
+            LinkedHashMap<String, WebMenuItem> newitem = new LinkedHashMap<>();
+            newitem.put(menuitem.getKey(), menuitem);
+            menulist.put(group, newitem);
          }
       }
    }

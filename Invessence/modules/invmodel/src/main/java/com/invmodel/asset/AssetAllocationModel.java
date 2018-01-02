@@ -120,7 +120,7 @@ public class AssetAllocationModel
       String theme;
       // Integer age = userrisk.getDefaultAge();
       // Integer duration = userrisk.getDefaultHorizon();
-      Double investment = pdata.getDefaultInvestment();
+      Double investment = userrisk.getDefaultInitialInvestment();
       Double score;
       try
       {
@@ -173,13 +173,13 @@ public class AssetAllocationModel
                {
                   pdata.setAllocationIndex(offset.intValue());
                }
-               Integer age  = userrisk.getAge();
-               Integer duration = userrisk.getHorizon();
+               Integer age  = userrisk.getDefaultAge();
+               Integer duration = userrisk.getDefaultHorizon();
                assetclass[counter] = createAssetsByIndex(theme, offset.intValue(), duration, age);
             }
             numofAllocation--;
             counter++;
-            investment = investment + pdata.getRecurringInvestment();
+            investment = investment + userrisk.getDefaultRecurringInvestment();
          }
          return assetclass;
       }

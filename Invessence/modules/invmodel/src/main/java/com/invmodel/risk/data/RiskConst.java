@@ -1,20 +1,66 @@
 package com.invmodel.risk.data;
 
+import java.util.*;
+
 /**
  * Created by prashant on 11/13/2017.
  */
 public class RiskConst
 {
    public enum GOALS {
-      RETIREMENT,
-      RETIRED,
-      SAVING,
-      EDUCATION,
-      COLLEGE,
-      PROPERTY,
-      BUILDWEALTH,
-      LEGACY,
-      INCOME;
+      RETIREMENT("Retirement",1),
+      PROPERTY("Property",2),
+      EDUCATION("Education",3),
+      LEGACY("Legacy",4),
+      BUILDWEALTH("Build Wealth",5),
+      SAVING("Saving",6),
+      INCOME("Income",7),
+      RETIRED("Retired",11),
+      COLLEGE("College",12),
+      UNDEFINED("Undefined",99);
+
+      String displayValue;
+      Integer codeNum;
+
+      GOALS(String displayValue, Integer codeNum)
+      {
+         this.displayValue = displayValue;
+         this.codeNum = codeNum;
+      }
+
+      public String getDisplayValue()
+      {
+         return displayValue;
+      }
+
+      public Integer getCodeNum()
+      {
+         return codeNum;
+      }
+
+      private static final Map lookup =
+         new HashMap();
+
+      static
+      {
+         //Create reverse lookup hash map
+         for (GOALS m : GOALS.values())
+         {
+            lookup.put(m.getDisplayValue(), m);
+         }
+      }
+
+      public static GOALS displayToGoal(String value)
+      {
+         //the reverse lookup by simply getting
+         //the value from the lookup HsahMap.
+         if (lookup.containsKey(value))
+            return (GOALS) lookup.get(value);
+         else
+            return GOALS.UNDEFINED;
+      }
+
+
    }
 
    public enum INVESTMENTTERMS {

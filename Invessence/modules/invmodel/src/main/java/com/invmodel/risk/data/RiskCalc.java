@@ -221,41 +221,7 @@ public class RiskCalc
 
    public void setQuestionsRisk(Integer question, Integer answer, Double weight)
    {
-      Integer prevanswer;
-      Integer knockoutanswer;
-      if (userRiskProfile != null && userRiskProfile.getAdvisorRiskMaster() != null && userRiskProfile.getAdvisorRiskMaster().getAdvisorMasterdata() != null)
-      {
-         if (question == 0) {
-            userRiskProfile.setRiskAnswer(question, answer, weight);
-         }
-         else
-         {
-            Integer lastQuestion = userRiskProfile.getRiskQuestion();
-            if (question > 0 && question <= lastQuestion)
-            {
-               knockoutanswer = userRiskProfile.getAdvisorRiskMaster().getAdvisorMappings().get(question).getKnockoutQuestion();
-               prevanswer = userRiskProfile.getRiskAnswer(question);
-               weight = (weight == null) ? userRiskProfile.getAdvisorRiskMaster().getAdvisorMappings().get(question).getWeight(answer) : weight;
-               if (prevanswer != answer)
-               {
-                  if (prevanswer == knockoutanswer && knockoutanswer > 0)
-                  {
-                     userRiskProfile.removeKnockout();
-
-                  }
-                  else
-                  {
-                     if (answer == knockoutanswer && knockoutanswer > 0)
-                     {
-                        userRiskProfile.addKnockout();
-                        weight = 0.0;
-                     }
-                  }
-                  userRiskProfile.setRiskAnswer(question, answer, weight);
-               }
-            }
-         }
-      }
+      userRiskProfile.setRiskQuestionWeight(question,  answer,  weight);
    }
 
    public void setRisk0(Double score)

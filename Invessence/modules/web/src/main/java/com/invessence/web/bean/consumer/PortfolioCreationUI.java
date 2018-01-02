@@ -39,7 +39,8 @@ public class PortfolioCreationUI extends UserInterface
    public TradeDAO tradeDAO;
 
 
-   public enum UIMode {
+   public enum UIMode
+   {
       New("N"),
       Edit("E"),
       Review("R"),
@@ -47,7 +48,7 @@ public class PortfolioCreationUI extends UserInterface
       ChangeStrategy("C"),
       Confirm("A"),
       View("V"),
-      Advisor("Advisor");
+      Advisor("D");
 
       String codeValue;
 
@@ -63,25 +64,32 @@ public class PortfolioCreationUI extends UserInterface
 
       private static final Map lookup =
          new HashMap();
-      static {
+
+      static
+      {
          //Create reverse lookup hash map
-         for(UIMode m : UIMode.values())
+         for (UIMode m : UIMode.values())
+         {
             lookup.put(m.getCodeValue(), m);
+         }
       }
 
-      public static UIMode get(String value) {
+      public static UIMode get(String value)
+      {
          //the reverse lookup by simply getting
          //the value from the lookup HsahMap.
          return (UIMode) lookup.get(value);
       }
    }
 
-   public enum ChangeStrategyOptions {
+   public enum ChangeStrategyOptions
+   {
       Question,
       Direct
    }
 
-   enum UIAssetChart {
+   enum UIAssetChart
+   {
       Pie("P"),
       Donut("D"),
       Bar("B");
@@ -134,131 +142,20 @@ public class PortfolioCreationUI extends UserInterface
    {
    }
 
-   public void setModelUtil(ModelUtil modelUtil)
+   public void initUI()
    {
-      this.modelUtil = modelUtil;
-   }
-
-   public void setListDAO(ConsumerListDataDAO listDAO)
-   {
-      this.listDAO = listDAO;
-   }
-
-   public void setUserInfoDAO(UserInfoDAO userInfoDAO)
-   {
-      this.userInfoDAO = userInfoDAO;
-   }
-
-   public void setSaveDAO(ConsumerSaveDataDAO saveDAO)
-   {
-      this.saveDAO = saveDAO;
-   }
-
-   public void setTradeDAO(TradeDAO tradeDAO)
-   {
-      this.tradeDAO = tradeDAO;
-   }
-
-   public Long getBeanAcctnum()
-   {
-      return beanAcctnum;
-   }
-
-   public void setBeanAcctnum(Long beanAcctnum)
-   {
-      this.beanAcctnum = converter.getLongData(beanAcctnum);
-   }
-
-   public void setBeanmode(String beanmode)
-   {
-      this.beanmode = UIMode.valueOf(beanmode);
-      if (this.beanmode == null)
-         this.beanmode = UIMode.New;
-   }
-
-   public Integer getInterfaceIntMode()
-   {
-      if (interfaceMode.equalsIgnoreCase(UIMode.ChangeStrategy.getCodeValue())) {
-         return 1;
-      }
-      if (interfaceMode.equalsIgnoreCase(UIMode.Confirm.getCodeValue())) {
-         return 2;
-      }
-      if (interfaceMode.equalsIgnoreCase(UIMode.Review.getCodeValue())) {
-         return 3;
-      }
-      return 0;
-   }
-   public String getInterfaceMode()
-   {
-      return interfaceMode;
-   }
-
-   public void setInterfaceMode(String interfaceMode)
-   {
-      this.interfaceMode = interfaceMode;
-      if (interfaceMode != null)
-      {
-         beanmode = UIMode.get(interfaceMode);
-      }
-      else {
-         beanmode = UIMode.New;
-      }
-   }
-
-   public String getBackURL()
-   {
-      return backURL;
-   }
-
-   public void setBackURL(String backURL)
-   {
-      this.backURL = backURL;
-   }
-
-   public String getSelectedCSOption()
-   {
-      return selectedCSOption;
-   }
-
-   public void setSelectedCSOption(String selectedCSOption)
-   {
-      this.selectedCSOption = selectedCSOption;
-   }
-
-   public CustomerData getSavedCustomer()
-   {
-      return savedCustomer;
-   }
-
-   public CustomerData getCustomer()
-   {
-      return customer;
-   }
-
-   public RiskCalc getRiskCalc()
-   {
-      return riskCalc;
-   }
-
-   public Boolean getCanOpenAccount() {
-      return canOpenAccount;
-   }
-
-   public void initUI() {
       formEdit = false;
       disablegraphtabs = true;
       disabledetailtabs = true;
       disableChangeStragegyButton = true;
       welcomeDialog = true;
       displayGoalGraph = false;
-      displayDataPanel=false;
-      displayConfirmPanel=false;
-      backURL=null;
+      displayDataPanel = false;
+      displayConfirmPanel = false;
+      backURL = null;
 
       resetData();
-   };
-
+   }
 
    public void preRenderView()
    {
@@ -304,6 +201,126 @@ public class PortfolioCreationUI extends UserInterface
       customer.setDefault();
    }
 
+   public void setModelUtil(ModelUtil modelUtil)
+   {
+      this.modelUtil = modelUtil;
+   }
+
+   public void setListDAO(ConsumerListDataDAO listDAO)
+   {
+      this.listDAO = listDAO;
+   }
+
+   public void setUserInfoDAO(UserInfoDAO userInfoDAO)
+   {
+      this.userInfoDAO = userInfoDAO;
+   }
+
+   public void setSaveDAO(ConsumerSaveDataDAO saveDAO)
+   {
+      this.saveDAO = saveDAO;
+   }
+
+   public void setTradeDAO(TradeDAO tradeDAO)
+   {
+      this.tradeDAO = tradeDAO;
+   }
+
+   public Long getBeanAcctnum()
+   {
+      return beanAcctnum;
+   }
+
+   public void setBeanAcctnum(Long beanAcctnum)
+   {
+      this.beanAcctnum = converter.getLongData(beanAcctnum);
+   }
+
+   public void setBeanmode(String beanmode)
+   {
+      this.beanmode = UIMode.valueOf(beanmode);
+      if (this.beanmode == null)
+      {
+         this.beanmode = UIMode.New;
+      }
+   }
+
+   public Integer getInterfaceIntMode()
+   {
+      if (interfaceMode.equalsIgnoreCase(UIMode.ChangeStrategy.getCodeValue()))
+      {
+         return 1;
+      }
+      if (interfaceMode.equalsIgnoreCase(UIMode.Confirm.getCodeValue()))
+      {
+         return 2;
+      }
+      if (interfaceMode.equalsIgnoreCase(UIMode.Review.getCodeValue()))
+      {
+         return 3;
+      }
+      return 0;
+   }
+
+   public String getInterfaceMode()
+   {
+      return interfaceMode;
+   }
+
+   public void setInterfaceMode(String interfaceMode)
+   {
+      this.interfaceMode = interfaceMode;
+      if (interfaceMode != null)
+      {
+         beanmode = UIMode.get(interfaceMode);
+      }
+      else
+      {
+         beanmode = UIMode.New;
+      }
+   }
+
+   public String getBackURL()
+   {
+      return backURL;
+   }
+
+   public void setBackURL(String backURL)
+   {
+      this.backURL = backURL;
+   }
+
+   public String getSelectedCSOption()
+   {
+      return selectedCSOption;
+   }
+
+   public void setSelectedCSOption(String selectedCSOption)
+   {
+      this.selectedCSOption = selectedCSOption;
+   }
+
+   public CustomerData getSavedCustomer()
+   {
+      return savedCustomer;
+   }
+
+   public CustomerData getCustomer()
+   {
+      return customer;
+   }
+
+   public RiskCalc getRiskCalc()
+   {
+      return riskCalc;
+   }
+
+   public Boolean getCanOpenAccount()
+   {
+      return canOpenAccount;
+   }
+
+
    public void fetchClientData()
    {
       try
@@ -322,7 +339,8 @@ public class PortfolioCreationUI extends UserInterface
          else
          {
             // 1) Remember we called New account from Dashboard.  So the first case is based on Dashboard.
-            if(webutil.isUserLoggedIn())  {
+            if (webutil.isUserLoggedIn())
+            {
                customer.setSaveVisitor(false);
             }
 
@@ -365,7 +383,7 @@ public class PortfolioCreationUI extends UserInterface
       customer.riskProfile.setScore(event.getValue());
       customer.riskProfile.setAssetScore(event.getValue());
       formEdit = true;
-      createAssetPortfolio();
+      createAssetPortfolio(1);
    }
 
    public void onPortfolioSlider(SlideEndEvent event)
@@ -374,29 +392,30 @@ public class PortfolioCreationUI extends UserInterface
       customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       customer.riskProfile.setPortfolioScore(event.getValue());
       formEdit = true;
-      createAssetPortfolio();
+      createAssetPortfolio(1);
    }
 
    public void doAllocReset()
    {
       customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
-      createAssetPortfolio();
+      createAssetPortfolio(1);
 //      System.out.println(" doAllocReset ind "+getAllocationIndex());
       customer.setSliderAllocationIndex(customer.riskProfile.getStandardScore(0).intValue());
    }
 
    public void refresh()
    {
-      createAssetPortfolio();
+      createAssetPortfolio(1);
    }
 
-   public void createAssetPortfolio()
+   public void createAssetPortfolio(Integer numofYears)
    {
-         formEdit = true;
-         riskCalc.calculate(1);
-         customer.createAssetPortfolio();
-         chart.createAssetChart(customer.getAssetData(), webutil);
-         canOpenAccount = riskCalc.getKnockOutFlag();
+      formEdit = true;
+      numofYears = (numofYears == null || numofYears == 0) ? 1 : numofYears;
+      riskCalc.calculate(numofYears);
+      customer.createAssetPortfolio();
+      chart.createAssetChart(customer.getAssetData(), webutil);
+      canOpenAccount = riskCalc.getKnockOutFlag();
    }
 
    public void saveProfile()
@@ -421,7 +440,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void savePrefProfile(ActionEvent event)
    {
-      createAssetPortfolio();
+      createAssetPortfolio(1);
       customer.saveProfile();
       formEdit = false;
    }
@@ -437,10 +456,11 @@ public class PortfolioCreationUI extends UserInterface
    // Page Manaagement
    public Boolean getEnableNextButton()
    {
-      return (! pagemanager.isLastPage());
+      return (!pagemanager.isLastPage());
    }
 
-   public Integer getCurrentPage() {
+   public Integer getCurrentPage()
+   {
       return ((pagemanager != null) ? pagemanager.getPage() : 0);
    }
 
@@ -451,7 +471,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoPrevPage()
    {
-      if (! pagemanager.isFirstPage())
+      if (!pagemanager.isFirstPage())
       {
          pagemanager.prevPage();
          progressbar.previousProgress();
@@ -468,15 +488,18 @@ public class PortfolioCreationUI extends UserInterface
       }
    }
 
-   public void gotoRiskQuestions() {
+   public void gotoRiskQuestions()
+   {
       progressbar.nextProgress();
       pagemanager.setPage(1);
-      uiLayout.doMenuAction("consumer","portfolioCreate/cEdit.xhtml");
+      beanmode = UIMode.Edit;  //  Force it to edit mode.
+      uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
    }
 
-   public void gotoReview() {
+   public void gotoReview()
+   {
       progressbar.nextProgress();
-      uiLayout.doMenuAction("consumer","portfolioCreate/review.xhtml");
+      uiLayout.doMenuAction("consumer", "portfolioCreate/review.xhtml");
    }
 
    public void gotoPortfolioCreation()
@@ -484,20 +507,24 @@ public class PortfolioCreationUI extends UserInterface
       pagemanager.setPage(1);
    }
 
-   public void gotoCustody() {
+   public void gotoCustody()
+   {
       if (canOpenAccount)
       {
          alertAdvisor();
          uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getCustomer().getAcctnum().toString() + "&l=" + getCustomer().getLogonid());
       }
-      else {
+      else
+      {
          alertAdvisor();
          uiLayout.getDefaultDashBoard();
       }
    }
 
-   public void gotoCSStrategy() {
-      if (selectedCSOption == null) {
+   public void gotoCSStrategy()
+   {
+      if (selectedCSOption == null)
+      {
          pagemanager.setErrorMessage("Must choose one of the choices below");
          return;
       }
@@ -506,12 +533,14 @@ public class PortfolioCreationUI extends UserInterface
       {
          uiLayout.doMenuAction("custody", "portfolioCreate/cEdit.xhtml");
       }
-      else {
+      else
+      {
          gotoReview();
       }
    }
 
-   public void cancelCS() {
+   public void cancelCS()
+   {
       if (backURL != null)
       {
          uiLayout.forwardURL(backURL);
@@ -522,16 +551,20 @@ public class PortfolioCreationUI extends UserInterface
 
    // Data Management save/Updates
 
-   public Double getExchangeRate(Double money) {
+   public Double getExchangeRate(Double money)
+   {
       Double exchRate = 1.0;
       if (listDAO != null)
       {
          String from = getCustomer().getTradeCurrency();
          String to = getCustomer().getSettleCurrency();
          if (from != null && to != null)
+         {
             exchRate = listDAO.getExchangeRate(from, to);
+         }
       }
-      if (money != null && exchRate > 0.0) {
+      if (money != null && exchRate > 0.0)
+      {
          return (money * exchRate);
       }
       return money;
@@ -569,7 +602,7 @@ public class PortfolioCreationUI extends UserInterface
       String msgheader, msg = "";
       try
       {
-         if (! userInfoDAO.validateEmail(getCustomer().getEmail()))
+         if (!userInfoDAO.validateEmail(getCustomer().getEmail()))
          {
             msgheader = "signup.U000";
             msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email format is invalid!", null);
@@ -586,23 +619,25 @@ public class PortfolioCreationUI extends UserInterface
          userdata.setUserID(getCustomer().getEmail());
          userdata.setIp(webutil.getClientIpAddr());
 
-      if (userInfoDAO.validateUserID(userdata))
-      {
-         logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
-         msgheader = "signup.U100";
-         msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
-         return msg;
-      }
+         if (userInfoDAO.validateUserID(userdata))
+         {
+            logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
+            msgheader = "signup.U100";
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+            return msg;
+         }
 
          customer.saveProfile();  // We need to save Profile, in order to create a new account number.
          userdata.setAcctnum(getCustomer().getAcctnum());
          Integer myResetID = webutil.randomGenerator(0, 347896);
          userdata.setUserInfo(WebConst.ROLE_USER, getCustomer().getAdvisor(), getCustomer().getRep(), myResetID);
+         // TODO: Enable logon feature
+/*
          long loginID = userInfoDAO.addUserInfo(userdata);
 
          if (loginID <= 0L)
          {
-            logger.debug("ERROR: Had issue with this userid (" + userdata.getEmail() +") when attempting to save: " + loginID);
+            logger.debug("ERROR: Had issue with this userid (" + userdata.getEmail() + ") when attempting to save: " + loginID);
             msgheader = "signup.U106";
             msg = webutil.getMessageText().getDisplayMessage(msgheader, "There was some error when attempting to save this userid.  Please reach out to support desk.", null);
             // webutil.alertSupport("Userbean.saveUser", "Save -" + getCustomer().getEmail(), "Save Registration Error", null);
@@ -612,6 +647,7 @@ public class PortfolioCreationUI extends UserInterface
          userdata.setLogonID(loginID);
          getCustomer().setLogonid(loginID);
          webutil.sendConfirmation(userdata, "W");
+*/
       }
       catch (Exception ex)
       {
@@ -652,7 +688,8 @@ public class PortfolioCreationUI extends UserInterface
 
    }
 
-   public void saveFTPanel() {
+   public void saveFTPanel()
+   {
 /*
       setSavedRiskFormula(getRiskCalcMethod());
 //      System.out.println(" saveFTPanel ifouter  ind "+getAllocationIndex());
@@ -668,7 +705,8 @@ public class PortfolioCreationUI extends UserInterface
 */
    }
 
-   public void closeFTPanel() {
+   public void closeFTPanel()
+   {
 /*
       setDisplayFTPanel(false);
       setEnableChangeStrategy(true);
@@ -679,7 +717,8 @@ public class PortfolioCreationUI extends UserInterface
 */
    }
 
-   public void cancelFTPanel() {
+   public void cancelFTPanel()
+   {
 /*
 //      System.out.println("cancelFTPanel In");
       setRiskCalcMethod(getSavedRiskFormula());
@@ -694,26 +733,34 @@ public class PortfolioCreationUI extends UserInterface
    }
 
 
-   public void alertAdvisor() {
+   public void alertAdvisor()
+   {
 
       customer.tradeDAO.saveTradeProcessIdentifier(customer.getAcctnum(),
-                                          WebConst.TRADE_PROCESS_ALLOC,
-                                          WebConst.TRADE_PROCESS_STAT_NEW,
-                                          "Changed Strategy");
+                                                   WebConst.TRADE_PROCESS_ALLOC,
+                                                   WebConst.TRADE_PROCESS_STAT_NEW,
+                                                   "Changed Strategy");
       customer.setCanSaveData(true);
       formEdit = true;
       customer.saveProfile();
    }
 
    // Charting management
-   public void setDisplayHC2DDonutData(String ignore) {
+   public void setDisplayHC2DDonutData(String ignore)
+   {
       return;
-   };
+   }
 
-   public String getDisplayHC2DDonutData() {
-      if (getChart() != null) {
+   ;
+
+   public String getDisplayHC2DDonutData()
+   {
+      if (getChart() != null)
+      {
          if (getChart().chartData != null)
+         {
             return getChart().chartData.toString();
+         }
       }
       String defaultValue = "[" +
          "{\"name\":\"Fixed Income\",\"y\":41,\"drilldown\":\"Fixed Income\",\"color\":\"#47566D\",\"amount\":45601}, " +
@@ -722,11 +769,16 @@ public class PortfolioCreationUI extends UserInterface
       return defaultValue;
    }
 
-   public void setDisplayRiskScore(Integer value) { return; }
+   public void setDisplayRiskScore(Integer value)
+   {
+      return;
+   }
 
-      public Integer getDisplayRiskScore() {
+   public Integer getDisplayRiskScore()
+   {
       Integer score = 0;
-      if (riskCalc != null) {
+      if (riskCalc != null)
+      {
          score = riskCalc.getScore(0).intValue();
       }
       return score;

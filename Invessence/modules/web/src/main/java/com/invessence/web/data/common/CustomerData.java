@@ -1557,10 +1557,10 @@ public class CustomerData extends ProfileData
          loadBasketInfo();
       }
 
-      age = riskProfile.getDefaultAge();
+      // age = riskProfile.getDefaultAge();
       // horizon = riskProfile.getDefaultHorizon();
-      initialInvestment = riskProfile.getDefaultInitialInvestment().intValue();
-      recurringInvestment = riskProfile.getDefaultRecurringInvestment().intValue();
+      // initialInvestment = riskProfile.getDefaultInitialInvestment().intValue();
+      // recurringInvestment = riskProfile.getDefaultRecurringInvestment().intValue();
    }
 
 

@@ -458,17 +458,18 @@ public class CommonDAO extends JdbcDaoSupport implements Serializable
             for (Map<String, Object> map : rows)
             {
                Map rs = (Map) rows.get(i);
+               String group = convert.getStrData(rs.get("group"));
+
                WebMenuItem item = new WebMenuItem(
                   convert.getStrData(rs.get("key")),
                   convert.getIntData(rs.get("sortorder")),
                   convert.getStrData(rs.get("displayname")),
-                  convert.getStrData(rs.get("selectedValue")),
-                  convert.getStrData(rs.get("dataType")),
                   convert.getStrData(rs.get("image")),
                   convert.getStrData(rs.get("shortname")),
-                  convert.getStrData(rs.get("description"))
+                  convert.getStrData(rs.get("description")),
+                  convert.getStrData(rs.get("otherinfo"))
                );
-               dbWebMenuList.addToMenuList(item);
+               dbWebMenuList.addToMenuList(group, item);
                i++;
             }
 

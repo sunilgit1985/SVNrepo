@@ -131,4 +131,14 @@ public class UserInterface implements Logger
       }
       return thisYear;
    }
+
+   public Boolean hasData(String data)
+   {
+      if (data != null && !data.isEmpty() && data.length() > 0)
+      {
+         return true;
+      }
+      return false;
+   }
+
 }

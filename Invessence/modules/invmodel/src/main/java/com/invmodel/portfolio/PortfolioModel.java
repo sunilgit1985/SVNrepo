@@ -405,8 +405,8 @@ public class PortfolioModel
 
          theme = pdata.getTheme();
          advisor = pdata.getAdvisor();
-         actualInvestment = pdata.getDefaultInvestment();
-         reinvestment = pdata.getRecurringInvestment().doubleValue();
+         actualInvestment = userRiskProfile.getDefaultInitialInvestment();
+         reinvestment = userRiskProfile.getDefaultRecurringInvestment();
 
          if (actualInvestment == 0.0) {
             return createCashOnlyPortfolio(assetData, userRiskProfile, pdata);

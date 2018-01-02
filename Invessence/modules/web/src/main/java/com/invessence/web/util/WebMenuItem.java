@@ -8,26 +8,25 @@ public class WebMenuItem
    private String key;
    private Integer sortorder;
    private String displayName;
-   private String selectedValue;
-   private String dataType;
    private String image;
    private String shortname;
    private String description;
+   private String otherinfo;
 
    public WebMenuItem()
    {
    }
 
-   public WebMenuItem(String key, Integer sortorder, String displayName, String selectedValue, String dataType, String image, String shortname, String description)
+   public WebMenuItem(String key, Integer sortorder, String displayName,
+                      String image, String shortname, String description, String otherinfo)
    {
       this.key = key;
       this.sortorder = sortorder;
       this.displayName = displayName;
-      this.selectedValue = selectedValue;
-      this.dataType = dataType;
       this.image = image;
       this.shortname = shortname;
       this.description = description;
+      this.otherinfo = otherinfo;
    }
 
    public String getKey()
@@ -58,26 +57,6 @@ public class WebMenuItem
    public void setDisplayName(String displayName)
    {
       this.displayName = displayName;
-   }
-
-   public String getSelectedValue()
-   {
-      return selectedValue;
-   }
-
-   public void setSelectedValue(String selectedValue)
-   {
-      this.selectedValue = selectedValue;
-   }
-
-   public String getDataType()
-   {
-      return dataType;
-   }
-
-   public void setDataType(String dataType)
-   {
-      this.dataType = dataType;
    }
 
    public String getImage()

@@ -41,6 +41,7 @@
                             <div class="Container50 pre_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
+                                               process="@this"
                                                actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
                             </div>
                         </p:outputPanel>
@@ -105,22 +106,20 @@
                         <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 1}">
                             <p>
                                 I intend to retire and start utilising my funds in
-                                <p:inputNumber style="width:55px;" class="input_no_type"
+                                <p:inputNumber id="uobRetirePeriod" class="input_no_type"
                                                value="#{uobProfile.horizon}" placeholder="Years"
-                                               minValue="1" maxValue="60"
-                                               id="uobRetirePeriod"
-                                               maxlength="2" decimalPlaces="0" >
-                                </p:inputNumber> years
+                                               decimalPlaces="0">
+                                </p:inputNumber>
+                                years
                             </p>
                         </ui:fragment>
                         <p>
                             When I start withdrawing money for my retirement, I plan to withdraw the funds over a period of
-                            <p:inputNumber style="width:55px;" class="input_no_type"
+                            <p:inputNumber id="uobRW" class="input_no_type"
                                            value="#{uobProfile.withdrawlPeriod}" placeholder="Years"
-                                           minValue="1" maxValue="30"
-                                           id="uobWithdrawl"
-                                           maxlength="2" decimalPlaces="0" >
-                            </p:inputNumber> years
+                                           decimalPlaces="0">
+                            </p:inputNumber>
+                            years
                         </p>
 
                     </p:panel>
@@ -162,12 +161,11 @@
                 <div class="Container100 tab_dtl">
                     <p>
                         I aim to save and invest for purchasing a property in
-                        <p:inputNumber style="width:55px;" class="input_no_type"
+                        <p:inputNumber id="uobPropertyPeriod" class="input_no_type"
                                        value="#{uobProfile.horizon}" placeholder="Years"
-                                       minValue="1" maxValue="60"
-                                       id="uobPorpertyPeriod"
-                                       maxlength="2" decimalPlaces="0" >
-                        </p:inputNumber> years
+                                       decimalPlaces="0">
+                        </p:inputNumber>
+                        years
                     </p>
 
                 </div>
@@ -207,12 +205,11 @@
                 <div class="Container100 tab_dtl">
                     <p>
                         I expect the child to enter university / college in
-                        <p:inputNumber style="width:55px;" class="input_no_type"
+                        <p:inputNumber id="uobEducationPeriod" class="input_no_type"
                                        value="#{uobProfile.horizon}" placeholder="Years"
-                                       minValue="1" maxValue="60"
-                                       id="uobEducationPeriod"
-                                       maxlength="2" decimalPlaces="0" >
-                        </p:inputNumber> years
+                                       decimalPlaces="0">
+                        </p:inputNumber>
+                        years
 
                     </p>
                     <div class="selectList">
@@ -322,16 +319,20 @@
 
                 <div class="Container100 tab_dtl">
                     <p>
-                        What is your Goal? <p:inputText placeholder="Goal"></p:inputText>
+                        What is your Goal?
+                        <p:inputText id="uobGoal" style="width:190px;"
+                                     value="#{uobProfile.customer.customName}"
+                                     placeholder="Goal" maxlength="60">
+                        </p:inputText>
                     </p>
                     <p>
-                        How long do you plan to
-                        <p:inputNumber style="width:55px;" class="input_no_type"
+                        How long do you plan to invest?
+                        <p:inputNumber id="uoOtherPeriod" class="input_no_type"
+                                       style="width:55px;"
                                        value="#{uobProfile.horizon}" placeholder="Years"
-                                       minValue="1" maxValue="60"
-                                       id="uoOtherPeriod"
-                                       maxlength="2" decimalPlaces="0" >
-                        </p:inputNumber> years
+                                       decimalPlaces="0">
+                        </p:inputNumber>
+                        years
 
                     </p>
                     <p>
@@ -339,12 +340,12 @@
                     </p>
                     <p>
                         I plan to withdraw the funds over a period of
-                        <p:inputNumber style="width:55px;" class="input_no_type"
+                        <p:inputNumber id="uobOtherWP" class="input_no_type"
+                                       style="width:55px;"
                                        value="#{uobProfile.withdrawlPeriod}" placeholder="Years"
-                                       minValue="1" maxValue="60"
-                                       id="uobOtherWP"
-                                       maxlength="2" decimalPlaces="0" >
-                        </p:inputNumber> years
+                                       decimalPlaces="0">
+                        </p:inputNumber>
+                        years
                     </p>
 
                 </div>

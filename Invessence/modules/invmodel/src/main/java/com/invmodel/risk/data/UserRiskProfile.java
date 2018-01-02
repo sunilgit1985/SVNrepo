@@ -44,7 +44,8 @@ public class UserRiskProfile
       riskDAO = new RiskDAO();
       riskData = new HashMap<String, UserRiskData>();
       riskScores = new HashMap<Integer, RiskScore>();
-      if (advisorRiskMaster == null) {
+      if (advisorRiskMaster == null)
+      {
          advisorRiskMaster = new AdvisorRiskMaster(advisor);
       }
       this.knockout = 0;
@@ -66,7 +67,8 @@ public class UserRiskProfile
                   {
                      setAnswer(data.getKey(), data.getDefaultStrValue(), data.getDataType());
                   }
-                  else {
+                  else
+                  {
                      UserRiskData userdata = new UserRiskData(data.getSortorder(), data.getKey(), data.getDefaultStrValue(), data.getDataType(), null);
                      riskData.put(data.getKey(), userdata);
                   }
@@ -85,7 +87,8 @@ public class UserRiskProfile
                {
                   setAnswer(key, "0", "I", data.getDefaultWeight());
                }
-               else {
+               else
+               {
                   UserRiskData userdata = new UserRiskData(sortorder, key, "0", "I", null);
                   riskData.put(key, userdata);
 
@@ -103,11 +106,13 @@ public class UserRiskProfile
       collectUserData();
    }
 
-   public void saveAllData() {
+   public void saveAllData()
+   {
       riskDAO.saveRiskData(this);
    }
 
-   public void collectUserData() {
+   public void collectUserData()
+   {
       if (acctnum != null)
       {
          riskDAO.fetchRiskData(this);
@@ -138,7 +143,8 @@ public class UserRiskProfile
    public String getDefaultStrValue(String key, String defaultValue)
    {
       String value = defaultValue;
-      if (getRiskData().containsKey(key)) {
+      if (getRiskData().containsKey(key))
+      {
          value = getRiskData().get(key).getAnswer();
       }
       else
@@ -154,7 +160,8 @@ public class UserRiskProfile
    public Double getDefaultDoubleValue(String key, Double defaultValue)
    {
       Double value = defaultValue;
-      if (getRiskData().containsKey(key)) {
+      if (getRiskData().containsKey(key))
+      {
          value = getRiskData().get(key).getAnswerDouble();
       }
       else
@@ -192,8 +199,59 @@ public class UserRiskProfile
       this.knockout = ((this.knockout - 1) < 0) ? 0 : this.knockout - 1;
    }
 
-   public Double getMaxScore() {
+   public Double getMaxScore()
+   {
       return (getDefaultDoubleValue(RiskConst.MAXSCORE, 100.0));
+   }
+
+   public void setRiskQuestionWeight(Integer question, Integer answer, Double overrideWeight)
+   {
+      Integer prevanswer;
+      Integer knockoutanswer;
+      Double weight = 0.0;
+
+      if (answer == null)
+         return;
+
+      if (getAdvisorRiskMaster() != null && getAdvisorRiskMaster().getAdvisorMappings() != null)
+      {
+         if (question == 0)
+         {
+            setRiskAnswer(question, answer, overrideWeight);
+         }
+         else
+         {
+            Integer lastQuestion = getRiskQuestion();
+            if (question > 0 && question <= lastQuestion)
+            {
+               knockoutanswer = getAdvisorRiskMaster().getAdvisorMappings().get(question).getKnockoutQuestion();
+               prevanswer = getRiskAnswer(question);
+               if (prevanswer.equals(answer))
+               {
+                  return;
+               }
+
+               Integer numofChoices = advisorRiskMaster.getAdvisorMappings().get(question).getNumOfWeights();
+               if (answer > 0 && answer <= numofChoices)
+               {
+                  weight = advisorRiskMaster.getAdvisorMappings().get(question).getWeight(answer);
+               }
+               if (knockoutanswer > 0) {
+                  if (prevanswer.equals(knockoutanswer))
+                  {
+                     removeKnockout();
+                  }
+                  else {
+                     if (answer.equals(knockoutanswer)) {
+                        addKnockout();
+                        weight = 0.0;
+                     }
+                  }
+               }
+               setRiskAnswer(question, answer, weight);
+            }
+         }
+      }
    }
 
    public Double getRiskScore(Integer year)
@@ -269,7 +327,7 @@ public class UserRiskProfile
 
    public void setScore(Integer score)
    {
-      setScore(0,score.doubleValue());
+      setScore(0, score.doubleValue());
 
    }
 
@@ -298,11 +356,12 @@ public class UserRiskProfile
 
    public void setAssetScore(Integer score)
    {
-      setAssetScore(0,score.doubleValue());
+      setAssetScore(0, score.doubleValue());
 
    }
 
-   public void initRiskScore(Integer year, Boolean allCashFlag, Double score) {
+   public void initRiskScore(Integer year, Boolean allCashFlag, Double score)
+   {
       String formula = getAnswer(RiskConst.CALCFORMULA);
 
       setRiskScores(year, ((formula == null) ? RiskConst.CALCFORMULAS.C.toString() : formula),
@@ -333,7 +392,7 @@ public class UserRiskProfile
 
    public void setPortfolioScore(Integer score)
    {
-      setPortfolioScore(0,score.doubleValue());
+      setPortfolioScore(0, score.doubleValue());
 
    }
 
@@ -360,7 +419,7 @@ public class UserRiskProfile
 
    public void setStandardScore(Integer score)
    {
-      setStandardScore(0,score.doubleValue());
+      setStandardScore(0, score.doubleValue());
 
    }
 
@@ -446,8 +505,10 @@ public class UserRiskProfile
       }
    }
 
-   public Integer getRiskQuestion() {
-      if (riskData.containsKey(RiskConst.RISKQUESTIONS)) {
+   public Integer getRiskQuestion()
+   {
+      if (riskData.containsKey(RiskConst.RISKQUESTIONS))
+      {
          return riskData.get(RiskConst.RISKQUESTIONS).getAnswerInt();
       }
       return 0;
@@ -491,22 +552,29 @@ public class UserRiskProfile
 
    public void setAnswer(String key, String answer)
    {
-      setAnswer( key,  answer,  "T");
+      setAnswer(key, answer, "T");
    }
 
    public void setAnswer(String key, Integer answer)
    {
-      setAnswer( key,  answer.toString(),  "I");
+      if (answer != null)
+      {
+         setAnswer(key, answer.toString(), "I");
+      }
+      else
+      {
+         setAnswer(key, null, "I");
+      }
    }
 
    public void setAnswer(String key, Double answer)
    {
-      setAnswer( key,  answer.toString(),  "D");
+      setAnswer(key, answer.toString(), "D");
    }
 
    public void setAnswer(String key, Boolean answer)
    {
-      setAnswer( key,  answer.toString(),  "B");
+      setAnswer(key, answer.toString(), "B");
    }
 
    private void setAnswer(String key, String answer, String answerType)
@@ -545,19 +613,22 @@ public class UserRiskProfile
       String prevanswer;
 
       if (riskData == null)
+      {
          return;
+      }
 
       if (riskData.containsKey(key))
       {
          prevanswer = riskData.get(key).getAnswer();
-         if (! prevanswer.equalsIgnoreCase(answer))
+         if (!prevanswer.equalsIgnoreCase(answer))
          {
             riskData.get(key).setAnswer(answer, answerType);
             riskData.get(key).setRiskScore(riskScore);
             setAnswer(key, answer.toString(), "I", riskScore);
          }
       }
-      else {
+      else
+      {
          setRiskData(key, answer, answerType, riskScore);
       }
    }
@@ -581,7 +652,7 @@ public class UserRiskProfile
    public Double getDefaultInitialInvestment()
    {
       return (riskData.containsValue(RiskConst.INITIALINVESTMENT) ?
-                     riskData.get(RiskConst.INITIALINVESTMENT).getAnswerDouble() : 100000.0);
+         riskData.get(RiskConst.INITIALINVESTMENT).getAnswerDouble() : 100000.0);
 
    }
 
@@ -610,13 +681,16 @@ public class UserRiskProfile
 
 
       Integer horizon;
-      if (duration != null) {
+      if (duration != null)
+      {
          horizon = duration;
       }
-      else {
+      else
+      {
          horizon = getDefaultHorizon();
       }
-      if (horizon == null || horizon <= 0) {
+      if (horizon == null || horizon <= 0)
+      {
          return investment;
       }
 
@@ -631,15 +705,15 @@ public class UserRiskProfile
          }
          if (getRecurringTerms() == RiskConst.INVESTMENTTERMS.YEARLY)
          {
-            recurringperiod =  (horizon.doubleValue());
+            recurringperiod = (horizon.doubleValue());
          }
          if (getRecurringTerms() == RiskConst.INVESTMENTTERMS.QUATERLY)
          {
-            recurringperiod =  (horizon.doubleValue() * 4.0);
+            recurringperiod = (horizon.doubleValue() * 4.0);
          }
          if (getRecurringTerms() == RiskConst.INVESTMENTTERMS.WEEKLY)
          {
-            recurringperiod =  (horizon.doubleValue() * 52.0);
+            recurringperiod = (horizon.doubleValue() * 52.0);
          }
       }
       return investment + (recurring * recurringperiod);
@@ -721,13 +795,15 @@ public class UserRiskProfile
    public RiskConst.CALCMETHODS getCalcMethod()
    {
       String method = riskData.get(RiskConst.CALCMETHOD).getAnswer();
-      for (RiskConst.CALCMETHODS s: RiskConst.CALCMETHODS.values()) {
-         if (s.toString().startsWith(method)) {
+      for (RiskConst.CALCMETHODS s : RiskConst.CALCMETHODS.values())
+      {
+         if (s.toString().startsWith(method))
+         {
             return s;
          }
       }
 
-      throw new IllegalArgumentException( method );
+      throw new IllegalArgumentException(method);
    }
 
    public void setCalcFormula(String method)
@@ -753,34 +829,40 @@ public class UserRiskProfile
       return formula;
    }
 
-   public void setGoals(String goal) {
+   public void setGoals(String goal)
+   {
       setNewAnswer(RiskConst.GOAL, goal, "T", 0.0);
    }
 
    public RiskConst.GOALS getGoal()
    {
       String goal = riskData.get(RiskConst.GOAL).getAnswer();
-      for (RiskConst.GOALS s: RiskConst.GOALS.values()) {
-         if (s.toString().startsWith(goal)) {
+      for (RiskConst.GOALS s : RiskConst.GOALS.values())
+      {
+         if (s.toString().startsWith(goal))
+         {
             return s;
          }
       }
-      throw new IllegalArgumentException( goal );
+      throw new IllegalArgumentException(goal);
    }
 
-   public void setRecurringTerms(String term) {
+   public void setRecurringTerms(String term)
+   {
       setNewAnswer(RiskConst.RECURRINGTERM, term, "T", 0.0);
    }
 
    public RiskConst.INVESTMENTTERMS getRecurringTerms()
    {
       String term = riskData.get(RiskConst.RECURRINGTERM).getAnswer();
-      for (RiskConst.INVESTMENTTERMS s: RiskConst.INVESTMENTTERMS.values()) {
-         if (s.toString().startsWith(term)) {
+      for (RiskConst.INVESTMENTTERMS s : RiskConst.INVESTMENTTERMS.values())
+      {
+         if (s.toString().startsWith(term))
+         {
             return s;
          }
       }
-      throw new IllegalArgumentException( term );
+      throw new IllegalArgumentException(term);
    }
 
 }

@@ -19,6 +19,7 @@
                     <div class="Container50 pre_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
+                                       process="@this"
                                        actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
                     </div>
                 </p:outputPanel>
