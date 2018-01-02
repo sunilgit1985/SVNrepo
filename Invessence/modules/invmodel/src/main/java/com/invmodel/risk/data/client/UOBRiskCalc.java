@@ -207,11 +207,11 @@ public class UOBRiskCalc extends RiskCalc
             }
 
             Double tempWeight = 0.0;
+            Double value;
             // This will redetermine the score since age and horizon are changing over period of years.
-            Double value =             ageTimeFormula(maxScore, age, horizon,
-                                               investment, recurrring,
-                                               recurringPeriod, withDrwalPeriod,
-                                               interestRate);
+            value = ageTimeFormula(maxScore, age, horizon, investment, recurrring,
+                                          recurringPeriod, withDrwalPeriod,
+                                          interestRate);
 
             // The reason, we are NOT starting with Zero, is because the Zero represents Age/Horizon Risk default.
             // Above Age and Horizon are already calculated in value.  *** Can we optimize!

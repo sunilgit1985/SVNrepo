@@ -8,16 +8,16 @@ import java.util.*;
 public class RiskConst
 {
    public enum GOALS {
-      RETIREMENT("Retirement",1),
-      PROPERTY("Property",2),
-      EDUCATION("Education",3),
-      LEGACY("Legacy",4),
-      BUILDWEALTH("Build Wealth",5),
-      SAVING("Saving",6),
-      INCOME("Income",7),
-      RETIRED("Retired",11),
-      COLLEGE("College",12),
-      UNDEFINED("Undefined",99);
+      RETIREMENT("RETIREMENT",1),
+      PROPERTY("PROPERTY",2),
+      EDUCATION("EDUCATION",3),
+      LEGACY("LEGACY",4),
+      BUILDWEALTH("BUILDWEALTH",5),
+      SAVING("SAVING",6),
+      INCOME("INCOME",7),
+      RETIRED("RETIRED",11),
+      COLLEGE("COLLEGE",12),
+      UNDEFINED("UNDEFINED",99);
 
       String displayValue;
       Integer codeNum;
@@ -54,6 +54,7 @@ public class RiskConst
       {
          //the reverse lookup by simply getting
          //the value from the lookup HsahMap.
+         value = value.toUpperCase();
          if (lookup.containsKey(value))
             return (GOALS) lookup.get(value);
          else

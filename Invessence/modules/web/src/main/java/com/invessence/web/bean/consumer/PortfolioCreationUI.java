@@ -131,6 +131,8 @@ public class PortfolioCreationUI extends UserInterface
 
    // Buttons
    public Boolean disableChangeStragegyButton;
+   public Boolean csCheck1 = false, csCheck2 = false;
+
 
    @Override
    public Log getLogger()
@@ -320,7 +322,34 @@ public class PortfolioCreationUI extends UserInterface
       return canOpenAccount;
    }
 
+   public void setCanOpenAccount(Boolean flag)
+   {
+      canOpenAccount = flag;
+   }
 
+   public Boolean getCsCheck1()
+   {
+      return csCheck1;
+   }
+
+   public void setCsCheck1(Boolean csCheck1)
+   {
+      this.csCheck1 = csCheck1;
+   }
+
+   public Boolean getCsCheck2()
+   {
+      return csCheck2;
+   }
+
+   public void setCsCheck2(Boolean csCheck2)
+   {
+      this.csCheck2 = csCheck2;
+   }
+
+   public Boolean getConfirmationCSCheck() {
+      return (csCheck1 && csCheck2);
+   }
    public void fetchClientData()
    {
       try
@@ -415,7 +444,8 @@ public class PortfolioCreationUI extends UserInterface
       riskCalc.calculate(numofYears);
       customer.createAssetPortfolio();
       chart.createAssetChart(customer.getAssetData(), webutil);
-      canOpenAccount = riskCalc.getKnockOutFlag();
+
+      setCanOpenAccount(!riskCalc.getKnockOutFlag()); // Knockout returns true, so canOpen needs to be set false!
    }
 
    public void saveProfile()
@@ -491,16 +521,55 @@ public class PortfolioCreationUI extends UserInterface
    public void gotoRiskQuestions()
    {
       progressbar.nextProgress();
-      pagemanager.setPage(1);
+      pagemanager.setPage(0);
       beanmode = UIMode.Edit;  //  Force it to edit mode.
       uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
+   }
+
+   public void gotoFinalConfim()
+   {
+      if (beanmode.equals(UIMode.Confirm))
+      {
+         uiLayout.doMenuAction("consumer", "portfolioCreate/finalConfirm.xhtml");
+         return;
+      }
+      if (beanmode.equals(UIMode.ChangeStrategy))
+      {
+         uiLayout.doMenuAction("consumer", "portfolioCreate/finalCS.xhtml");
+         return;
+      }
+      goBack();
    }
 
    public void gotoReview()
    {
       progressbar.nextProgress();
-      uiLayout.doMenuAction("consumer", "portfolioCreate/review.xhtml");
+      if (canOpenAccount)
+      {
+         uiLayout.doMenuAction("consumer", "portfolioCreate/review.xhtml");
+      }
+      else
+      {
+         uiLayout.doMenuAction("consumer", "portfolioCreate/knockout.xhtml");
+      }
    }
+
+   public void goBack()
+   {
+      if (backURL != null)
+      {
+         uiLayout.forwardURL(backURL);
+         return;
+      }
+      uiLayout.getDefaultDashBoard();
+   }
+
+   public void gotoPortfolioConfirm()
+   {
+      alertAdvisor();
+      goBack();
+   }
+
 
    public void gotoPortfolioCreation()
    {
@@ -509,15 +578,30 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoCustody()
    {
-      if (canOpenAccount)
+      if (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit))
       {
-         alertAdvisor();
-         uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getCustomer().getAcctnum().toString() + "&l=" + getCustomer().getLogonid());
+         if (canOpenAccount)
+         {
+            alertAdvisor();
+            uiLayout.doMenuAction("custody", "index.xhtml?acct=" + getCustomer().getAcctnum().toString() + "&l=" + getCustomer().getLogonid());
+         }
       }
       else
       {
-         alertAdvisor();
-         uiLayout.getDefaultDashBoard();
+         if (beanmode.equals(UIMode.ChangeStrategy)) {
+            alertAdvisor();
+            uiLayout.doMenuAction("consumer", "portfolioCreate/finalCS.xhtml");
+
+         }
+         else if (beanmode.equals(UIMode.Confirm)) {
+            alertAdvisor();
+            uiLayout.doMenuAction("consumer", "portfolioCreate/finalConfirm.xhtml");
+
+         }
+         else
+         {
+            uiLayout.getDefaultDashBoard();
+         }
       }
    }
 
@@ -541,17 +625,12 @@ public class PortfolioCreationUI extends UserInterface
 
    public void cancelCS()
    {
-      if (backURL != null)
-      {
-         uiLayout.forwardURL(backURL);
-         return;
-      }
-      uiLayout.getDefaultDashBoard();
+      goBack();
    }
 
    // Data Management save/Updates
 
-   public Double getExchangeRate(Double money)
+   public Double getExchangeRate()
    {
       Double exchRate = 1.0;
       if (listDAO != null)
@@ -563,9 +642,16 @@ public class PortfolioCreationUI extends UserInterface
             exchRate = listDAO.getExchangeRate(from, to);
          }
       }
-      if (money != null && exchRate > 0.0)
+      return exchRate;
+   }
+
+
+   public Double getConvertMoneyToSettlementCurrency(Double money)
+   {
+      if (money != null)
       {
-         return (money * exchRate);
+         Double exchRate = getExchangeRate();
+         return (money * ((exchRate == null) ? 1.0 : exchRate));
       }
       return money;
    }
@@ -632,7 +718,6 @@ public class PortfolioCreationUI extends UserInterface
          Integer myResetID = webutil.randomGenerator(0, 347896);
          userdata.setUserInfo(WebConst.ROLE_USER, getCustomer().getAdvisor(), getCustomer().getRep(), myResetID);
          // TODO: Enable logon feature
-/*
          long loginID = userInfoDAO.addUserInfo(userdata);
 
          if (loginID <= 0L)
@@ -647,7 +732,6 @@ public class PortfolioCreationUI extends UserInterface
          userdata.setLogonID(loginID);
          getCustomer().setLogonid(loginID);
          webutil.sendConfirmation(userdata, "W");
-*/
       }
       catch (Exception ex)
       {

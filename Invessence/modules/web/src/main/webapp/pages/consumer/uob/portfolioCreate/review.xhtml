@@ -223,7 +223,7 @@
                                 <div class="Container50 next_btn">
                                     <ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
                                         <p:commandLink rendered="true" class="next_pg_link"
-                                                       actionListener="#{uiLayout.doMenuAction('consumer', 'portfolioCreate/finalApproval.xhtml')}"> Next
+                                                       actionListener="#{uobProfile.gotoFinalConfim}"> Next
                                         </p:commandLink>
 
                                     </ui:fragment>
@@ -259,10 +259,10 @@
                                     </div>
                                 </div>
                                 <div class="Container100">
-                                    Expected year funds needed: <span class="output_review">2017</span>
+                                    Expected year funds needed: <span class="output_review">#{uobProfile.horizon} years</span>
                                 </div>
                                 <div class="Container100">
-                                    Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{uobProfile.getExchangeRate(uobProfile.customer.defaultInvestment)}</span>
+                                    Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{uobProfile.initialInvestment}</span>
                                 </div>
                                 <div class="Container100">
                                     Recurring Investment: <span class="output_review">S$ #{uobProfile.customer.recurringInvestment}</span>

@@ -178,6 +178,7 @@ public class ProfileBean extends PortfolioCreationUI
       {
          pagemanager.setPage(1);
          progressbar.nextProgress();
+         createAssetPortfolio(1);
          uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
       }
    }
@@ -226,7 +227,6 @@ public class ProfileBean extends PortfolioCreationUI
    @Override
    public void createAssetPortfolio(Integer numofyears)
    {
-      adjustInitialRisk();
       super.createAssetPortfolio(numofyears);
       // Supporting old version
       Double score = getCustomer().getRiskProfile().getScore(0);
@@ -275,6 +275,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void setAge(Integer age)
    {
       getCustomer().setAge(age);
+      adjustInitialRisk();
    }
 
    public Integer getHorizon()
@@ -296,6 +297,8 @@ public class ProfileBean extends PortfolioCreationUI
       {
          getCustomer().setHorizon(horizon);
       }
+      adjustInitialRisk();
+
    }
 
    public Integer getWithdrawlPeriod()
@@ -329,8 +332,8 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setInitialInvestment(Integer investment)
    {
-      Double money = getExchangeRate(investment.doubleValue());
-      getCustomer().setInitialInvestment(money.intValue());
+      getCustomer().setInitialInvestment(investment);
+      getCustomer().setExchangeRate(getExchangeRate());
    }
 
    public Integer getRecurringInvestment()
@@ -405,13 +408,15 @@ public class ProfileBean extends PortfolioCreationUI
                {
                   defaultHorizon = 1;
                }
-               score0 = getRiskCalc().ageTimeFormula(age, defaultHorizon);
                score1 = 0.0; // For Lengacy, we are storing the result in Ans 1.
-               getCustomer().getRiskProfile().setRiskAnswer(0, 1, score0);
                getCustomer().getRiskProfile().setRiskAnswer(1, 0, score1);
             }
 
          }
+      }
+      else {
+         score0 = getRiskCalc().ageTimeFormula(age, defaultHorizon);
+         getCustomer().getRiskProfile().setRiskAnswer(0, 1, score0);
       }
    }
 
@@ -449,7 +454,7 @@ public class ProfileBean extends PortfolioCreationUI
    {
       if (selectedGoal != null)
       {
-         RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getDisplayName());
+         RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
          return thisgoal.getCodeNum();
       }
       return 0;
@@ -728,7 +733,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void onChangeValue()
    {
       formEdit = true;
-      createAssetPortfolio(1);
+      // createAssetPortfolio(1);
    }
 
    public void onChangeCurrency()
