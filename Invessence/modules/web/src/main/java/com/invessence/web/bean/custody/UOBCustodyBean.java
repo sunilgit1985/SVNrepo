@@ -2819,11 +2819,14 @@ public void onChngRpDtls(String flag){
          msg = true;
       }
 
-      matcher = pattern.matcher(emailID);
-      if (!matcher.matches())
+      if (emailID != null)
       {
+         matcher = pattern.matcher(emailID);
+         if (!matcher.matches())
+         {
 
-         msg = true;
+            msg = true;
+         }
       }
       return msg;
    }

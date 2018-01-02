@@ -103,6 +103,20 @@ public class UOBRiskCalc extends RiskCalc
 
    }
 
+   public Integer getDefaultHorizon(Integer horizon) {
+      Integer calchorizon;
+      Integer age = userRiskProfile.getAge();
+
+      age = (age == null) ? 35 : age;
+      calchorizon = userRiskProfile.getHorizon();
+      horizon = (horizon == null) ? calchorizon : horizon;
+      Integer b5 = userRiskProfile.getDefaultDoubleValue(RiskConst.RETIREMENTAGE, 67.0).intValue();
+      horizon = (horizon != null) ? horizon : b5 - age;
+      horizon = (horizon < 0) ? 1 : horizon; // Cannot be negative.
+      return horizon;
+
+   }
+
    @Override
    public Double ageTimeFormula(Integer age, Integer horizon)
    {
@@ -132,8 +146,7 @@ public class UOBRiskCalc extends RiskCalc
          Double b6 = age.doubleValue();
 
          Double b7;
-         b7 = (horizon != null) ? horizon : b5 - age;
-         b7 = (b7 < 0.0) ? 0.0 : b7; // Cannot be negative.
+         b7 = getDefaultHorizon(horizon).doubleValue();
          Double b8 = userRiskProfile.getAnswerDouble(RiskConst.INITIALINVESTMENT);
          Double b9 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGINVESTMENT);
          Double b10 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGPERIOD);
@@ -182,7 +195,9 @@ public class UOBRiskCalc extends RiskCalc
       {
          years = (years == null || years < 1) ? 1 : years;
          age = userRiskProfile.getAge();
-         horizon = userRiskProfile.getHorizon();
+
+         horizon = getDefaultHorizon(userRiskProfile.getHorizon());
+
          investment = userRiskProfile.getAnswerDouble(RiskConst.INITIALINVESTMENT);
          recurrring = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGINVESTMENT);
          recurringPeriod = userRiskProfile.getAnswerInt(RiskConst.RECURRINGPERIOD);

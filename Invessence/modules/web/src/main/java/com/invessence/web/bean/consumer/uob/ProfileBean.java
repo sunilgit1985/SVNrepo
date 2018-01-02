@@ -171,6 +171,9 @@ public class ProfileBean extends PortfolioCreationUI
       Boolean validated = true;
       if (beanmode.equals(UIMode.New))
       {
+         validated = validateIntroPage();
+      }
+      else {
          validated = validatePage(0);
       }
 
@@ -470,6 +473,37 @@ public class ProfileBean extends PortfolioCreationUI
       this.selectedCurrency = selectedItem;
    }
 
+   private Boolean validateIntroPage() {
+      Boolean dataOK = true;
+      Integer ans;
+      pagemanager.clearErrorMessage(0);
+      if (!hasData(getCustomer().getName()))
+      {
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required", null));
+      }
+      if (!hasData(getCustomer().getEmail()))
+      {
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.email.required", "Email is required", null));
+      }
+      if (beanmode.equals(UIMode.New))
+      {
+         if (!webutil.isUserLoggedIn() && hasData(getCustomer().getEmail()))
+         {
+            String msg = registerUser();
+            if (!msg.isEmpty())
+            {
+               pagemanager.setErrorMessage(msg);
+            }
+         }
+      }
+      if (!hasData(getCustomer().getAge().toString()))
+      {
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required", null));
+      }
+      this.dataOK = dataOK;
+      return dataOK;
+   }
+
 
    private Boolean validatePage(Integer pagenum)
    {
@@ -479,29 +513,9 @@ public class ProfileBean extends PortfolioCreationUI
       switch (pagenum)
       {
          case 0: // This is Intro page
-            if (!hasData(getCustomer().getName()))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required", null));
-            }
-            if (!hasData(getCustomer().getEmail()))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.email.required", "Email is required", null));
-            }
             if (!hasData(getCustomer().getAge().toString()))
             {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required", null));
-            }
-
-            if (beanmode.equals(UIMode.New))
-            {
-               if (!webutil.isUserLoggedIn() && hasData(getCustomer().getEmail()))
-               {
-                  String msg = registerUser();
-                  if (!msg.isEmpty())
-                  {
-                     pagemanager.setErrorMessage(msg);
-                  }
-               }
             }
             break;
          case 1: // Goal Page

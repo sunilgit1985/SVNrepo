@@ -40,7 +40,14 @@ public class Chart
    {
       return primefacechart.pieChart;
    }
-   public String getChartData() { return  chartData.toString(); }
+   public String getChartData()
+   {
+      if (chartData != null)
+      {
+         return chartData.toString();
+      }
+      return null;
+   }
 
    public String create2DDONUTChart(AssetClass[] assetData, Map<String, String> webInfo){
       String chartJSON = "";
