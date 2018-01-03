@@ -182,6 +182,10 @@
         <extension>svg#fontawesomeregular</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
+   <mime-mapping>
+    <extension>pdf</extension>
+    <mime-type>application/pdf</mime-type>
+</mime-mapping>
 
 
 </web-app>

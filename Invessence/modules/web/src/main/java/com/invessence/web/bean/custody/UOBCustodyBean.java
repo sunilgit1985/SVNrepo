@@ -233,10 +233,12 @@ public class UOBCustodyBean implements  Serializable
             onChngObj();
             onChngSrcOfInc();
             loadPrsnlPage();
-
-            updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Upload");
-            updFileLst=custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType());
-            dwnFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Download");
+            if(getReqType()!=null)
+            {
+               updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum, getReqType(), "Upload");
+               updFileLst = custodyService.fetchUploadedFiles(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum, getReqType());
+               dwnFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum, getReqType(), "Download");
+            }
 
             if(updFileLst!=null && updFileMstrLst!=null && updFileMstrLst.size()==updFileLst.size()){
                dsblUpdSubmtBtn=false;
@@ -1206,9 +1208,9 @@ public void onChngRpDtls(String flag){
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().getEmplTypeId().equalsIgnoreCase("UnEmployed"))
          {
             if(uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().getEmplTypeId() != null){
-               dsplNwPriUnEmpRsnPnl=false;
-            }else{
                dsplNwPriUnEmpRsnPnl=true;
+            }else{
+               dsplNwPriUnEmpRsnPnl=false;
             }
             dsplNwPriEmpMnPnl = false;
 
@@ -3049,7 +3051,12 @@ public void onChngRpDtls(String flag){
 
    public void  submitUploadFrm(){
       if(dwnFileMstrLst!=null && dwnFileMstrLst.size()>0){
-         dsplDwnlFile = true;
+         if(dwnlDsclFlag && dwnlGudFlag){
+            genCustodyDocRequest();
+         }else
+         {
+            dsplDwnlFile = true;
+         }
       }else{
          genCustodyDocRequest();
       }
@@ -3146,7 +3153,9 @@ public void onChngRpDtls(String flag){
          dspNewAcctPnl = true;
       }
       dspIntroAcctPnl = false;
-      updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Upload");
+
+         updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum, getReqType(), "Upload");
+
       Boolean status = validateAllPage();
       if(status){
          dsblSubmtBtn=false;
