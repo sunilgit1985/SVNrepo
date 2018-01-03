@@ -5284,7 +5284,7 @@ span.change_goal {
     top: -127px;
     position: absolute;
     right: 120px;
-    z-index: 0;}
+    z-index: 1;}
 .reviewHeader_title .Container30 span {
     float: left;
     margin: 0 10px 0 0;
@@ -5659,11 +5659,18 @@ svg.highcharts-root {
     
 .reviewDonutDts {
     display: none;
-    position: fixed;
-        z-index: 1111;
-    top: 0;
+    position: absolute;
+    z-index: 999;
+    top: 130px;
     background: #fff;
-    height:100%;
+    height: auto;
+    padding: 10px 15px 10px 0;
+    /* box-shadow: 1px 2px 1px 2px #ccc; */
+    width: 74.5%;
+    right: 172px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    
 }
 
 .confirmation_donut_dtl .UserconfTable .ContainerIndent {
@@ -5732,10 +5739,30 @@ svg.highcharts-root {
     top: 2px;
     right: 5px;
 }
+.ui-button-text{background-color: #a4332f}
 
-
-
-
+/**** 03/01/2018 **/
+.Container30.reviewDonuts {
+    float: right;
+}
+.ui-panel > .ui-panel-content, .ui-panel {
+    /* padding: 1px!important; */
+    position: relative;
+}
+form#ceForm {
+    position: relative;
+}
+.reviewDonutDts .highcharts-container {
+    height: 300px !important;
+}
+.reviewDonutDts g.highcharts-drilldown-point {
+    stroke-width: 10px;
+}
+.reviewDonutDts .panelClose {
+    position: absolute;
+    top: -4px;
+    right: -5px;
+}
 
 
 

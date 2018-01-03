@@ -54,7 +54,7 @@
                                             <div class="Container50 Responsive100 date_birth">
                                                 <div class="Container100"><span class="title_line">Date Of Birth</span></div>
                                                 <p:calendar yearRange="c-100:c" id="nwPriHldrDob" navigator="true"
-                                                            showOn="button" placeholder="Date Of Birth (d MMM yyyy)" pattern="d MMM yyyy"
+                                                            showOn="button" placeholder="Date Of Birth (dd mm yyyy)" pattern="d MMM yyyy"
                                                             value="#{uobCustodyBean.dtPriHldrDob}"/>
                                                 <label for="nwPriHldrDob">Date Of Birth</label>
                                             </div>
@@ -79,7 +79,7 @@
                                                         <p:selectOneRadio id="nwPriHldrNation"
                                                                           value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerCitizenshipDetails.nationality}">
                                                             <p:ajax listener="#{uobCustodyBean.onChngNation(true)}" update="nwPriHldNtnPnl"/>
-                                                            <f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+                                                            <f:selectItem itemLabel="Singaporean" itemValue="Singaporean"></f:selectItem>
                                                             <f:selectItem itemLabel="Singapore PR" itemValue="Singapore PR"></f:selectItem>
                                                             <f:selectItem itemLabel="Others" itemValue="Others"></f:selectItem>
                                                         </p:selectOneRadio>
@@ -1275,7 +1275,7 @@
                                                 <h3>Name of Primary School Attend ?</h3>
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
-                                                <p:inputText id="nwPriHldSclNm" placeholder="What is the name of Primary School Attended ?"
+                                                <p:inputText id="nwPriHldSclNm" placeholder="What is the Name of Primary School Attended ?"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.nameOfPrimarySchool}"/>
                                                 <label for="nwPriHldSclNm">Name of Primary School Attended</label>
                                             </div>

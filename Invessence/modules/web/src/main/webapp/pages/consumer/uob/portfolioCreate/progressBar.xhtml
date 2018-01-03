@@ -5,35 +5,32 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <script>
-        $(document).ready(function ()
-                          {
+	<script>
+		$(document).ready(function() {
+			
+			$("#reviewDonutClick").click(function() {
+				
+				// Set the effect type
+				var effect = 'slide';
 
-                              $("#reviewDonutClick").click(function ()
-                                                           {
+				// Set the options for the effect type chosen
+				var options = {
+					direction : 'up'
+				};
 
+				// Set the duration (default: 400 milliseconds)
+				var duration = 700;
 
-                                                               // Set the effect type
-                                                               var effect = 'slide';
+				$('#reviewDonutDts').toggle(effect, options, duration);
 
-                                                               // Set the options for the effect type chosen
-                                                               var options = {direction: 'up'};
+			});
+			$("#cosedPanel").click(function() {
+				$('#reviewDonutDts').hide('2000');
 
-                                                               // Set the duration (default: 400 milliseconds)
-                                                               var duration = 700;
-
-                                                               $('#reviewDonutDts').toggle(effect, options, duration);
-
-                                                           });
-                              $("#cosedPanel").click(function ()
-                                                     {
-                                                         $('#reviewDonutDts').hide('this');
-
-                                                     });
-                          });
-
-    </script>
-    <p:outputPanel id="graphArea" style="border: 0px; background: transparent">
+			});
+		});
+	</script>
+	<p:outputPanel id="graphArea" style="border: 0px; background: transparent">
         <div class="portfolio_selection">
             <div class="Container30">
                 <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
@@ -44,7 +41,7 @@
                     <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
                     </ui:fragment>
                 </div>
-            <div class="Container30">
+            <div class="Container30 reviewDonuts ">
                 <span class="sapn_review">Review</span>
                 <div class="review-donut" id="reviewDonutClick" style="float: right;  width: 100px;  height: 80px;">
 
