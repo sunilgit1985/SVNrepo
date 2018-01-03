@@ -34,7 +34,7 @@ import org.primefaces.model.*;
  */
 @ManagedBean(name = "uobCustodyBean")
 @SessionScoped
-public class UOBCustodyBean
+public class UOBCustodyBean implements  Serializable
 {
    protected final Log logger = LogFactory.getLog(getClass());
    @ManagedProperty("#{uobCustodyService}")
@@ -100,7 +100,9 @@ public class UOBCustodyBean
    private String hasRepDtlY=null,hasRepDtlN=null;
    private Map<String, String> fileupdSucc = new HashMap<String, String>();
    private boolean consentCallFlag=false,consentMsgFlag=false;
-   private boolean dwnlDsclFlag=false,dwnlGudFlag=false;
+   private boolean dwnlDsclFlag=false,dwnlGudFlag=false,dsblAcptBtn=true;
+
+   private StreamedContent contentDsclre,contentGuide;
 
    public void cleanUpAll()
    {
@@ -168,6 +170,7 @@ public class UOBCustodyBean
       dsplDwnlFile=false;
       dwnlDsclFlag=false;
       dwnlGudFlag=false;
+      dsblAcptBtn=true;
    }
 
    public void initCustody()
@@ -239,7 +242,7 @@ public class UOBCustodyBean
             }
 
             if(dwnFileMstrLst!=null && dwnFileMstrLst.size()>0){
-               dsplDwnlFile=true;
+               dsplDwnlFile = true;
                getFileData();
             }
             owTaxDtls = new OwnerTaxationDetails();
@@ -629,7 +632,6 @@ public void onChngRpDtls(String flag){
       }
    }
 
-   private StreamedContent contentDsclre,contentGuide;
 
    public StreamedContent getContentDsclre()
    {
@@ -850,7 +852,7 @@ public void onChngRpDtls(String flag){
          else
          {
             uobDataMaster.getAccountDetails().setRepId("CATCHALL");
-            uobDataMaster.getAccountDetails().setAdvisorId(null);
+            uobDataMaster.getAccountDetails().setAdvisorId(custodyService.getDefaultAdvisor());
          }
          custodyService.saveAcctDetails(uobDataMaster.getAccountDetails(), "" + getBeanLogonId());
          saveActAdditionalDtls(uobDataMaster.getAccountDetails().getAccountMiscDetails(), uobDataMaster.getAccountDetails().getAcctnum(), "ao_acct_misc_details");
@@ -1208,9 +1210,16 @@ public void onChngRpDtls(String flag){
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerZipCode(null);
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerCity(null);
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerZipCountry(null);
+            uobDataMaster.getIndividualOwnersDetails().getOwnerContactDetails().setOfficeTelNumberCD(null);
+            uobDataMaster.getIndividualOwnersDetails().getOwnerContactDetails().setOfficeTelNumber(null);
+            uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerStreetAddress1(null);
+            uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerStreetAddress2(null);
+            uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerStreetAddress3(null);
+            uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerStreetAddress4(null);
          }
          else
          {
+            uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().setReasonForUnemployment(null);
             dsplNwPriEmpMnPnl = true;
             dsplNwPriUnEmpRsnPnl=false;
          }
@@ -1238,6 +1247,16 @@ public void onChngRpDtls(String flag){
             uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().getMailAddressSameAsPhysical().equalsIgnoreCase("Yes"))
          {
             dsplPriHldrMlPnl = false;
+            uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().setReasonForMailAddreDiffer(null);
+            setPriHldrMlAddr(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressCity(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressCountry(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressState(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressZipCode(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet1(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet2(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet3(null);
+            uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet4(null);
          }
          else
          {
@@ -1341,11 +1360,13 @@ public void onChngRpDtls(String flag){
             {
                dsplIcNoInp = true;
                dsplPspNoInp = false;
+               uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setPassport(null);
             }
             else
             {
                dsplIcNoInp = false;
                dsplPspNoInp = true;
+               uobDataMaster.getIndividualOwnersDetails().getOwnerIdentificationDetails().setIcno(null);
             }
          }
       }
@@ -2999,7 +3020,42 @@ public void onChngRpDtls(String flag){
    }
 
    public void  submitUploadFrm(){
-      String eventRef = custodyService.saveCustodyDocReq(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,4l,getReqType());
+      if(dwnFileMstrLst!=null && dwnFileMstrLst.size()>0){
+         dsplDwnlFile = true;
+      }else{
+         genCustodyDocRequest();
+      }
+   }
+
+   public void onChngAccept(){
+      if(dwnlDsclFlag && dwnlGudFlag){
+         dsblAcptBtn=false;
+      }else{
+         dsblAcptBtn=true;
+      }
+   }
+
+   public void onChngAccept1(){
+      if(dwnlDsclFlag && dwnlGudFlag){
+         dsblAcptBtn=false;
+      }else{
+         dsblAcptBtn=true;
+      }
+   }
+
+   public void  submitAccceptFrm(){
+      if(dwnlDsclFlag && dwnlGudFlag){
+         genCustodyDocRequest();
+      }
+   }
+   public void closeAcptFrm(){
+      dsplDwnlFile=false;
+   }
+
+   public void genCustodyDocRequest(){
+
+      String eventRef = custodyService.saveCustodyDocReq(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(),
+                                                         beanAcctNum,custodyService.getDefaultAdvisor(),getReqType());
 
       WSCallResult wsCallResult;
       System.out.println("Custody Doc Request Return " + eventRef);
@@ -3011,8 +3067,8 @@ public void onChngRpDtls(String flag){
 //         for (int i = 0; i < eventNo.length; i++)
 //         {
 //            int eventnum = Integer.parseInt(eventNo[i]);
-            System.out.println("Custody event No " + eventNum);
-            System.out.println("Custody req Id " + reqId);
+         System.out.println("Custody event No " + eventNum);
+         System.out.println("Custody req Id " + reqId);
          try
          {
             String msg;
@@ -3030,6 +3086,7 @@ public void onChngRpDtls(String flag){
 //               msg = wsCallResult.getWSCallStatus().getErrorMessage();
 //               getWebutil().redirecttoMessagePage("SUCCESS", "Document generated successfully", "Success");
 //               sendAlertMessage("P");
+               custodyService.mangeUserProfile(beanAcctNum,"P",getBeanLogonId());
                getUiLayout().doMenuAction("custody", "custodyConfirmation.xhtml");
 
 //               msg = wsCallResult.getWSCallStatus().getErrorMessage();
@@ -4031,5 +4088,15 @@ public void onChngRpDtls(String flag){
    public void setDwnlGudFlag(boolean dwnlGudFlag)
    {
       this.dwnlGudFlag = dwnlGudFlag;
+   }
+
+   public boolean isDsblAcptBtn()
+   {
+      return dsblAcptBtn;
+   }
+
+   public void setDsblAcptBtn(boolean dsblAcptBtn)
+   {
+      this.dsblAcptBtn = dsblAcptBtn;
    }
 }

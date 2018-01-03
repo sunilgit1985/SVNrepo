@@ -26,6 +26,7 @@ public class UOBCustodyServiceImpl  implements CustodyService
    DataSource dataSource;
 
    private JdbcTemplate jdbcTemplate ;
+   private static Long defaultAdvisorId;
 
 
    @Override
@@ -207,6 +208,9 @@ public class UOBCustodyServiceImpl  implements CustodyService
             {
                Map rs = (Map) rows.get(i);
                objMap.put(convert.getStrData(rs.get("displayName")), convert.getStrData(rs.get("rep"))+"~"+convert.getLongData(rs.get("logonid")));
+               if(convert.getStrData(rs.get("rep")).equalsIgnoreCase("CATCHALL")){
+                  setDefaultAdvisorId(convert.getLongData(rs.get("logonid")));
+               }
                i++;
             }
          }
@@ -339,6 +343,40 @@ public class UOBCustodyServiceImpl  implements CustodyService
          ex.printStackTrace();
       }
       return eventNo;
+   }
+
+   @Override
+   public void mangeUserProfile(Long data, String flag, Long logonid)
+   {
+      try {
+         jdbcTemplate = new JdbcTemplate(dataSource);
+         CustodySP sp = new CustodySP(jdbcTemplate, "sp_user_profile_manage",15);
+         Map outMap = sp.mangeUserProfile(  data, flag, logonid);
+      }
+      catch (Exception ex) {
+         System.out.println("UOBCustodyServiceImpl.saveCustodyFiles Exception "+ex);
+         ex.printStackTrace();
+      }
+   }
+
+   @Override
+   public Long getDefaultAdvisor()
+   {
+      return getDefaultAdvisorId();
+   }
+
+
+
+
+
+   public static Long getDefaultAdvisorId()
+   {
+      return defaultAdvisorId;
+   }
+
+   public static void setDefaultAdvisorId(Long defaultAdvisorId)
+   {
+      UOBCustodyServiceImpl.defaultAdvisorId = defaultAdvisorId;
    }
 }
 

@@ -162,6 +162,11 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_correspondentBankSwiftBic", Types.VARCHAR));
             declareParameter(new SqlParameter("p_logonId", Types.VARCHAR));
             break;
+         case 15:
+            declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+            declareParameter(new SqlParameter("p_managed", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
+            break;
         case 20:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
@@ -427,6 +432,15 @@ public class CustodySP extends StoredProcedure
       inputMap.put("p_reqType", reqType);
       return execute(inputMap);
    }
+   public Map mangeUserProfile(Long acctnum,String flag, Long logonid)
+   {
+      Map<String, Object> inputMap = new HashMap<String, Object>();
+      inputMap.put("p_acctnum", acctnum);
+      inputMap.put("p_managed", flag);
+      inputMap.put("p_logonid", logonid);
+      return super.execute(inputMap);
+   }
+
 
    public Map nonParamProcCall()
    {

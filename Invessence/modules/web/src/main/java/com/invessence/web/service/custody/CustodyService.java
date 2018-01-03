@@ -25,4 +25,6 @@ public interface CustodyService
    public List<CustodyFileRequest> fetchUploadedFiles(String Product, Long acctNum,String action);
    public String saveCustodyDocReq(String product,Long acctNum,Long advisorId,String reqType);
    public void saveAccountHolderBankDtls(Long acctNum, int acctOwnerId , String p_logonId, OwnerDetails ownerDetails);
+   public void mangeUserProfile(Long data, String flag, Long logonid);
+   public Long getDefaultAdvisor();
 }

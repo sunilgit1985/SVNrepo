@@ -7,6 +7,7 @@
 
 
     <div class="layout-portlets-box">
+
         <div class="Container100 Responsive100 acc_holder_form">
             <div class="ContainerIndent">
                 <div class="Container100 uplaod_note">
@@ -32,7 +33,7 @@
                         <div class="Container10 upload_file">
                             <p:fileUpload fileUploadListener="#{uobCustodyBean.handleFileUpload}" mode="advanced"
                                           dragDropSupport="false"
-                                          update=":cstdyFrm:uobIpdSubBtn,cstdyFrm:uirep:#{status.index}:updSucces" sizeLimit="250000" fileLimit="10"
+                                          update=":cstdyFrm:uobIpdSubBtn,:cstdyFrm:uobIpdSubBtn1,cstdyFrm:uirep:#{status.index}:updSucces" sizeLimit="250000" fileLimit="10"
                                           auto="true"
                                           allowTypes="/(\.|\/)(bmp|gif|tif|tiff|pdf|jpeg|jpg|doc|docx|xls|xlsx|png|csv)$/" id="idwant#{status.index}"
                                           messageTemplate="Invalid file" label="Select file to upload">
@@ -49,53 +50,102 @@
                         </p:panel>
                     </div>
                 </p:repeat>
-                <p:panel rendered="#{uobCustodyBean.dsplDwnlFile}" class="OverlayPanelDisClo">
-                    <span class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose" id=""></span>
+                <p:panel style="display: none;" class="OverlayPanelDisClo" id="idDwnAccptPnl">
+                    <span class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose hideclass" id="" style="color:#a4332f"></span>
                     <p:tabView>
-                        <p:tab title="Disclosure">
-                            <pe:documentViewer height="500" width="500" value="#{uobCustodyBean.contentDsclre}" download="disclosure.pdf"/>
+                        <p:tab title="Risk Disclosure Statements">
+                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentDsclre}" download="disclosure.pdf" cache="true"/>
                         </p:tab>
-                        <p:tab title="Guide">
-                            <pe:documentViewer height="500" width="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf"/>
+                        <p:tab title="Guide and Cautionary Notes">
+                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf" cache="true"/>
                         </p:tab>
                     </p:tabView>
                     <div class="acc_holder_dtl_block  margin-top acceptTerm">
                         <div class="Container30 Responsive50  margin-top checkBoxOpt">
                             <div class="Container100">
-                                <p:selectBooleanCheckbox id="cstdyDwnDscl" value="#{uobCustodyBean.dwnlGudFlag}"
-                                                         itemLabel="Disclosure">
+                                <p:selectBooleanCheckbox id="cstdyDwnDscl" value="#{uobCustodyBean.dwnlDsclFlag}"
+                                                         itemLabel="I aggreed to Risk Disclosure Statements">
+                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
                                 </p:selectBooleanCheckbox>
-                                </div>
+                            </div>
                         </div>
                         <div class="Container30 Responsive50  margin-top checkBoxOpt">
                             <div class="Container100">
                                 <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}"
-                                                         itemLabel="Guide">
+                                                         itemLabel="I read the Guide and Cautionary Notes">
+                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
                                 </p:selectBooleanCheckbox>
                             </div>
                         </div>
-                        <div class="Container40 Responsive50">
-                            <div class="Container100">
-                                <p:commandButton id="uobAccpt"
-                                                 value="Accept"
-                                                 styleClass="uob_button"
-                                                 actionListener="#{uobCustodyBean.submitUploadFrm}">
-                                </p:commandButton>
-                            </div>
+
+                    </div>
+                    <div class="acc_holder_dtl_block  margin-top acceptTerm">
+                        <div class="Container20 Responsive100 submit_acc_dtl file_submit">
+                            <p:commandButton id="uobAccptClose"
+                                             value="Close"
+                                             styleClass="uob_button hideclass">
+                            </p:commandButton>
+                            <p:commandButton id="uobAccpt"
+                                             value="Accept"
+                                             styleClass="uob_button"
+                                             actionListener="#{uobCustodyBean.submitUploadFrm}" disabled="#{uobCustodyBean.dsblAcptBtn}">
+                            </p:commandButton>
                         </div>
                     </div>
                 </p:panel>
+                <script type="text/javascript">
+                    $(document).ready(function ()
+                                      {
+                                          console.log("Inside Ready");
+                                          $(".hideclass").click(function ()
+                                                                {
+                                                                    debugger;
+                                                                    console.log("Inside hide 1");
+                                                                    $('.OverlayPanelDisClo').hide();
+                                                                    console.log("Inside hide 2");
+                                                                });
+                                          $(".showclass").click(function ()
+                                                                {
+                                                                    debugger;
+                                                                    console.log("Inside ");
+                                                                    if ($('.dwnlFlag').val() == 'true' || $('.dwnlFlag').val() == true)
+                                                                    {
+                                                                        $('.OverlayPanelDisClo').show();
+                                                                    }
+                                                                });
+
+                                      });
+                    function showPdf(){
+                        debugger;
+                        console.log("Inside ");
+                        if ($('.dwnlFlag').val() == 'true' || $('.dwnlFlag').val() == true)
+                        {
+                            $('.OverlayPanelDisClo').show();
+                        }
+                    }
+                </script>
+                <input type="hidden"
+                       value="#{uobCustodyBean.dsplDwnlFile}" class="dwnlFlag"/>
                 <div class="Container20 Responsive100 submit_acc_dtl file_submit">
                     <p:commandButton id="uobUpdBkBtn"
                                      value="Back"
                                      styleClass="uob_button"
                                      actionListener="#{uobCustodyBean.prevDataForm}" update="@form">
                     </p:commandButton>
-                    <p:commandButton id="uobIpdSubBtn"
-                                     value="Submit"
-                                     styleClass="uob_button" disabled="#{uobCustodyBean.dsblUpdSubmtBtn}"
-                                     actionListener="#{uobCustodyBean.submitUploadFrm}">
-                    </p:commandButton>
+                    <ui:fragment rendered="#{uobCustodyBean.dsplDwnlFile}">
+                        <p:commandButton id="uobIpdSubBtn1"
+                                         value="Submit"
+                                         styleClass="uob_button showclass" disabled="#{uobCustodyBean.dsblUpdSubmtBtn}" onclick="showPdf();">
+                        </p:commandButton>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{!uobCustodyBean.dsplDwnlFile}">
+                        <p:commandButton id="uobIpdSubBtn"
+                                         value="Submit"
+                                         styleClass="uob_button " disabled="#{uobCustodyBean.dsblUpdSubmtBtn}"
+                                         actionListener="#{uobCustodyBean.submitUploadFrm}">
+                        </p:commandButton>
+                    </ui:fragment>
+
                 </div>
             </div>
         </div>

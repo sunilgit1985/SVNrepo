@@ -64,7 +64,7 @@
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
                                                 <p:inputText id="nwPriHldrEmailId" placeholder="Email Address"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}" styleClass="vrfyEmail"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}" styleClass="vrfyEmail" maxlength="45"/>
                                                 <label for="nwPriHldrEmailId">Email Address</label>
                                             </div>
                                         </div>
@@ -78,7 +78,8 @@
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
                                                 <p:inputText id="extPriHldrVrfEmailId" placeholder="Verify Email Address"
-                                                             value="#{uobCustodyBean.priHldrCnfEmail}" styleClass="vrfyEmail"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.confirmEmail}"
+                                                             styleClass="vrfyEmail" maxlength="45"/>
                                                 <label for="extPriHldrVrfEmailId">Verify Email Address</label>
                                             </div>
                                         </div>
@@ -169,7 +170,7 @@
                                                <!-- <div class="Container100"><span class="title_line">Account Holder Name</span></div>-->
                                                 <div class="Container100">
                                                     <p:inputText id="nwPriHldrRemBnkAcctHldrNm" placeholder="Account Holder Name"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountHolderName}"/>
+                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountHolderName}" maxlength="60"/>
                                                     <label for="nwPriHldrRemBnkAcctHldrNm">Account Holder Name</label>
                                                 </div>
                                             </div>
@@ -177,7 +178,7 @@
                                                <!-- <div class="Container100"><span class="title_line">Bank Name</span></div>-->
                                                 <div class="Container100">
                                                     <p:inputText id="nwPriHldrRemBnkNm" placeholder="Bank Name"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankName}"/>
+                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankName}" maxlength="60"/>
                                                     <label for="nwPriHldrRemBnkNm">Bank Name</label>
                                                 </div>
                                             </div>
@@ -185,7 +186,7 @@
                                                 <!--<div class="Container100"><span class="title_line">Bank Account No</span></div>-->
                                                 <div class="Container100">
                                                     <p:inputText id="nwPriHldrRemBnkAcctNum" placeholder="Bank Account Number"
-                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountNo}"/>
+                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountNo}" maxlength="20"/>
                                                     <label for="nwPriHldrRemBnkAcctNum">Bank Account Number</label>
                                                 </div>
                                             </div>
@@ -196,7 +197,7 @@
                                             <div class="Container100">
                                                 <p:inputTextarea id="nwPriHldrRemBnkAddr"
                                                                  placeholder="Bank Address"
-                                                                 value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="240"/>
+                                                                 value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="90"/>
                                                 <label for="nwPriHldrRemBnkAddr">Bank Address</label>
                                             </div>
                                         </div>
@@ -204,20 +205,23 @@
                                             <div class="Container30 Responsive100 select_item">
                                                 <div class="Container100"><span class="title_line">Postal Code</span></div>
                                                 <p:inputText id="nwPriHldrRemBnkAddrPoCd" placeholder="Postal Code"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressZipCode}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressZipCode}"
+                                                             maxlength="15"/>
                                                 <!-- <label for="nwPriHldrPhyAddrPoCd">Postal Code</label> -->
                                             </div>
                                             <div class="Container30 Responsive100 select_item">
                                                 <div class="Container100"><span class="title_line">City / State</span></div>
                                                 <p:inputText id="nwPriHldrRemBnkAddrCtySt" placeholder="City / State"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCity}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCity}"
+                                                             maxlength="45"/>
                                                 <!-- <label for="nwPriHldrPhyAddrCtySt">City / State</label> -->
                                             </div>
                                             <div class="Container30 Responsive100 select_item">
                                                 <div class="Container100"><span class="title_line">Country</span></div>
                                                 <p:autoComplete id="nwPriHldrRemBnkAddrCtry" dropdown="true"
                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCountry}"
-                                                                completeMethod="#{uobCustodyBean.completeText}">
+                                                                completeMethod="#{uobCustodyBean.completeText}"
+                                                                maxlength="45">
                                                 </p:autoComplete>
                                             </div>
                                         </div>
@@ -225,19 +229,22 @@
                                             <div class="Container30 Responsive100 select_item">
                                                <!-- <div class="Container100"><span class="title_line">Swift Bic</span></div>-->
                                                 <p:inputText id="nwPriHldrRemSwBic" placeholder="Swift Bic"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.swiftBic}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.swiftBic}"
+                                                             maxlength="25"/>
                                                 <label for="nwPriHldrRemSwBic">Swift Bic</label>
                                             </div>
                                             <div class="Container30 Responsive100 select_item">
                                                <!-- <div class="Container100"><span class="title_line">Correspondent Bank</span></div>-->
                                                 <p:inputText id="nwPriHldrRemCorrBnk" placeholder="Correspondent Bank"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBank}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBank}"
+                                                             maxlength="45"/>
                                                 <label for="nwPriHldrRemCorrBnk">Correspondent Bank</label>
                                             </div>
                                             <div class="Container30 Responsive100 select_item">
                                               <!--  <div class="Container100"><span class="title_line">Correspondent Bank Swift Bic</span></div>-->
                                                 <p:inputText id="nwPriHldrRemCorrBnkSwBic" placeholder="Correspondent Bank Swift Bic"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBankSwiftBic}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBankSwiftBic}"
+                                                             maxlength="45"/>
                                                 <label for="nwPriHldrRemCorrBnkSwBic">Correspondent Bank Swift Bic</label>
                                             </div>
                                         </div>
@@ -341,7 +348,7 @@
                                                         </div>
                                                         <p:autoComplete id="priHldrTaxPnlCtry" dropdown="true"
                                                                         value="#{uobCustodyBean.owTaxDtls.jurisdictionOfTaxResidence}"
-                                                                        completeMethod="#{uobCustodyBean.completeText}">
+                                                                        completeMethod="#{uobCustodyBean.completeText}" maxlength="45">
                                                         </p:autoComplete>
                                                     </div>
                                                     <div class="acc_holder_dtl_block ">
@@ -365,7 +372,7 @@
                                                                 <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxTin}">
                                                                     <div class="Container60 ">
                                                                         <p:inputText id="priHldrTaxPnlTin" placeholder="Tax Identification Number"
-                                                                                     value="#{uobCustodyBean.owTaxDtls.taxIdentificationNumber}"/>
+                                                                                     value="#{uobCustodyBean.owTaxDtls.taxIdentificationNumber}" maxlength="45"/>
                                                                         <label for="priHldrTaxPnlTin">Tax Identification Number</label>
                                                                     </div>
                                                                 </ui:fragment>
@@ -398,7 +405,7 @@
                                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxRsn}">
                                                                         <div class="Container100 Responsive100">
                                                                             <p:inputText id="priHldrTaxPnlReasExpl" placeholder="Please Explain"
-                                                                                         value="#{uobCustodyBean.owTaxDtls.tinUnavailableValue}"/>
+                                                                                         value="#{uobCustodyBean.owTaxDtls.tinUnavailableValue}" maxlength="45"/>
                                                                             <label for="priHldrTaxPnlReasExpl">Explain</label>
                                                                         </div>
                                                                     </ui:fragment>
@@ -594,7 +601,7 @@
                                             <div class="Container60 Responsive100">
                                                 <p:inputText id="nwPriHldMomNm"
                                                              placeholder="What is your Mother's Maiden Name ?"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.motherMaidenName}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.motherMaidenName}" maxlength="45"/>
                                                 <label for="nwPriHldMomNm">Mother's Maiden Name</label>
                                             </div>
                                         </div>
@@ -604,7 +611,7 @@
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
                                                 <p:inputText id="nwPriHldDadNm" placeholder="What is your Father's Name ?"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.fatherName}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.fatherName}" maxlength="45"/>
                                                 <label for="nwPriHldDadNm">Father's Name</label>
                                             </div>
                                         </div>
@@ -614,7 +621,7 @@
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
                                                 <p:inputText id="nwPriHldSclNm" placeholder="What is the name of Primary School Attended ?"
-                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.nameOfPrimarySchool}"/>
+                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.nameOfPrimarySchool}" maxlength="45"/>
                                                 <label for="nwPriHldSclNm">Name of Primary School Attended</label>
                                             </div>
                                         </div>
