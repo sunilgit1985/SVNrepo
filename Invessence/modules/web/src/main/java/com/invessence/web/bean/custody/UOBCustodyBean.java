@@ -186,30 +186,33 @@ public class UOBCustodyBean implements  Serializable
                getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
                return;
             }
-            if(getWebutil().getWebprofile()==null){
+            if (getWebutil().getWebprofile() == null)
+            {
 
                getWebutil().accessdenied();
                return;
             }
             setBeanAcctNum(Long.parseLong(getBeanAccount()));
-            String valOutput = isValidAcctNum();
-
-            // If account is managed
-            if (valOutput.equalsIgnoreCase("ACCOUNTMANAGED"))
+            if (!getWebutil().hasRole("Demo"))
             {
-               msgheader = "dctd.103";
-               getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
-               return;
-            }
+               String valOutput = isValidAcctNum();
 
-            if (!valOutput.equalsIgnoreCase("success"))
-            {
-               // msgheader = "dctd.102";
-               // webutil.redirecttoMessagePage("ERROR", "Access Denied", msgheader);
-               getWebutil().accessdenied();
-               return;
+               // If account is managed
+               if (valOutput.equalsIgnoreCase("ACCOUNTMANAGED"))
+               {
+                  msgheader = "dctd.103";
+                  getWebutil().redirecttoMessagePage("ERROR", "Access Denied", msgheader);
+                  return;
+               }
+
+               if (!valOutput.equalsIgnoreCase("success"))
+               {
+                  // msgheader = "dctd.102";
+                  // webutil.redirecttoMessagePage("ERROR", "Access Denied", msgheader);
+                  getWebutil().accessdenied();
+                  return;
+               }
             }
-//Need To Remove
 
             cleanUpAll();
             uobDataMaster = custodyService.fetch(getBeanAcctNum(), false);
@@ -918,7 +921,8 @@ public void onChngRpDtls(String flag){
       {
          sb.append("Type of account like to open is required.<br/>");
       }
-      if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()))
+      if (hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()) &&
+         !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()))
       {
          if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV")){
             sb.append("Please select Existing Individual Securities trading account on UOBKH Yes/No.<br/>");
@@ -1201,8 +1205,12 @@ public void onChngRpDtls(String flag){
          if (uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().getEmplTypeId() == null ||
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().getEmplTypeId().equalsIgnoreCase("UnEmployed"))
          {
+            if(uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().getEmplTypeId() != null){
+               dsplNwPriUnEmpRsnPnl=false;
+            }else{
+               dsplNwPriUnEmpRsnPnl=true;
+            }
             dsplNwPriEmpMnPnl = false;
-            dsplNwPriUnEmpRsnPnl=true;
 
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setOccupation(null);
             uobDataMaster.getIndividualOwnersDetails().getOwnerEmploymentDetails().setEmployerName(null);
@@ -1642,6 +1650,26 @@ public void onChngRpDtls(String flag){
          ownerDetails.setMailingAddressStreet2(addrdtls[1]);
          ownerDetails.setMailingAddressStreet3(addrdtls[2]);
 //         ownerDetails.setMailingAddressStreet4(addrdtls[3]);
+      }
+
+      if(ownerDetails.getOwnerMiscDetails().getMailAddressSameAsPhysical().equalsIgnoreCase("Yes")){
+         ownerDetails.setMailingAddressStreet1(ownerDetails.getPhysicalAddressStreet1());
+         ownerDetails.setMailingAddressStreet2(ownerDetails.getPhysicalAddressStreet2());
+         ownerDetails.setMailingAddressStreet3(ownerDetails.getPhysicalAddressStreet3());
+         ownerDetails.setMailingAddressStreet4(ownerDetails.getPhysicalAddressStreet4());
+         ownerDetails.setMailingAddressZipCode(ownerDetails.getPhysicalAddressZipCode());
+         ownerDetails.setMailingAddressState(ownerDetails.getPhysicalAddressState());
+         ownerDetails.setMailingAddressCity(ownerDetails.getPhysicalAddressCity());
+         ownerDetails.setMailingAddressCountry(ownerDetails.getPhysicalAddressCountry());
+      }else{
+         ownerDetails.setMailingAddressStreet1(null);
+         ownerDetails.setMailingAddressStreet2(null);
+         ownerDetails.setMailingAddressStreet3(null);
+         ownerDetails.setMailingAddressStreet4(null);
+         ownerDetails.setMailingAddressZipCode(null);
+         ownerDetails.setMailingAddressState(null);
+         ownerDetails.setMailingAddressCity(null);
+         ownerDetails.setMailingAddressCountry(null);
       }
       custodyService.saveAddressDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
       saveAdditionalDtls(ownerDetails.getOwnerMiscDetails(), acctNum, acctOwnerId, "ao_owners_misc_details");
@@ -2208,7 +2236,7 @@ public void onChngRpDtls(String flag){
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.empStat", "Employment status is required!", null));
       }
 
-      if (hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()) &&
+      if (hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()) && hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()) &&
          ownerDetails.getOwnerEmploymentDetails().getEmplTypeId().equalsIgnoreCase("UnEmployed") &&
          !hasRequiredData(ownerDetails.getOwnerMiscDetails().getReasonForUnemployment()))
       {

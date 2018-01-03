@@ -572,12 +572,14 @@
                                     <span class="ui-button-icon-center ui-icon ui-c fa fa-edit fa-chevron-left"></span>
                                 </p:commandLink>
                             </div>
-                            <div class="Container50 next_btn save_form_btn">
+                            <div class="Container50 next_btn ">
 
-                                <p:commandButton id="extSave" value="Save"
-                                                 update=":cstdyFrm:extAccordian,cstdyFrm:uobExtSubmitBtn"
-                                                 actionListener="#{uobCustodyBean.nextPage}">
-                                </p:commandButton>
+                                <p:commandLink id="newNxt5"
+                                               actionListener="#{uobCustodyBean.nextPage}"
+                                               update=":cstdyFrm:extAccordian">
+                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-chevron-right"></span>
+
+                                </p:commandLink>
                             </div>
 
                         </div>
@@ -674,13 +676,11 @@
                                     <span class="ui-button-icon-center ui-icon ui-c fa fa-edit fa-chevron-left"></span>
                                 </p:commandLink>
                             </div>
-                            <div class="Container50 next_btn">
-
-                                <p:commandLink id="newNxt5"
-                                               actionListener="#{uobCustodyBean.nextPage}"
-                                               update=":cstdyFrm:newAccordian">
-                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-chevron-right"></span>
-                                </p:commandLink>
+                            <div class="Container50 next_btn save_form_btn">
+                                <p:commandButton id="extSave" value="Save"
+                                                 update=":cstdyFrm:extAccordian,cstdyFrm:uobExtSubmitBtn"
+                                                 actionListener="#{uobCustodyBean.nextPage}">
+                                </p:commandButton>
                             </div>
                         </div>
                     </p:tab>
