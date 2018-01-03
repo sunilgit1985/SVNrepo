@@ -5,17 +5,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
 
-<!--
-    <div class="ring_widget">
-        <p:ring id="introRing" value="#{uobProfile.goalsdata}" var="goal" autoplay="true" autoplayDuration="2000"
-                styleClass="image-ring" easing="easeInOutBack">
-            <p:graphicImage name="#{goal.image}" library="#{uiLayout.webProfile.cssdir}"/>
-            <p:outputPanel style="text-align: center;" layout="block">#{goal.displayName}</p:outputPanel>
-
-        </p:ring>
-    </div>
--->
-
     <div class="caraousle Container100">
 
         <div class="header_tab">
@@ -25,12 +14,12 @@
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.cancelCS}"> Cancel </p:commandLink>
+                                       actionListener="#{uobProfile.gotoCSStrategy}"> Next </p:commandLink>
                     </div>
                     <div class="Container50 pre_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoCSStrategy}"> Next </p:commandLink>
+                                       actionListener="#{uobProfile.cancelCS}"> Cancel </p:commandLink>
                     </div>
                 </p:outputPanel>
             </div>

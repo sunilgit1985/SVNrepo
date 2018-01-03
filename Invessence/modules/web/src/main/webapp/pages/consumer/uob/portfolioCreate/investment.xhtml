@@ -43,6 +43,7 @@
                 I like to invest in
                 <p:selectOneMenu id="tradeCurrency" value="#{uobProfile.tradeCurrency}"
                                     update=":ceForm:initialinvestment">
+                    <p:ajax update=":ceForm:initialinvestment"/>
                     <f:selectItems
                             value="#{uobProfile.currencyMap.entrySet()}"
                             var="currency" itemLabel="#{currency.key}"

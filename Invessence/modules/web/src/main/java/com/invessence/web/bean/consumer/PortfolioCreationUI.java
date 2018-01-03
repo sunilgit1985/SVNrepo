@@ -12,6 +12,7 @@ import com.invessence.web.constant.*;
 import com.invessence.web.dao.common.*;
 import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
+import com.invessence.web.util.*;
 import com.invmodel.model.ModelUtil;
 import com.invmodel.risk.data.*;
 import org.apache.commons.logging.*;
@@ -169,19 +170,6 @@ public class PortfolioCreationUI extends UserInterface
             customer.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
             // For both new and existing client, this fetch is called.  It determines the default values.
             fetchClientData();
-
-/*
-            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf")!=null){
-               setInterfaceMode(UIMode.Confirm.toString());
-               // dsplStrategyCnfPnl=(Boolean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf");
-               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf");
-            }
-
-            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf1")!=null){
-               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ProfileCnf1");
-               setInterfaceMode(UIMode.New.toString());
-            }
-*/
          }
       }
       catch (Exception e)
@@ -522,7 +510,6 @@ public class PortfolioCreationUI extends UserInterface
    {
       progressbar.nextProgress();
       pagemanager.setPage(0);
-      beanmode = UIMode.Edit;  //  Force it to edit mode.
       uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
    }
 
@@ -615,7 +602,7 @@ public class PortfolioCreationUI extends UserInterface
 
       if (selectedCSOption.equalsIgnoreCase(ChangeStrategyOptions.Question.toString()))
       {
-         uiLayout.doMenuAction("custody", "portfolioCreate/cEdit.xhtml");
+         gotoRiskQuestions();
       }
       else
       {

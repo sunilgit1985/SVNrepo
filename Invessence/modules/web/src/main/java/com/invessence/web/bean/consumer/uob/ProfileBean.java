@@ -38,18 +38,30 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setDefault()
    {
-      setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
       pagemanager.initPage();
 
-      // Client Specific Process
-      Integer savedGoal = 0;
-
-      loadDropDownList();  // This process will reload all dropdown list.
       // Since Risk Score Question #2 and #3 are knockout question, we'll assume the default (Only on New account)
-      if (beanmode == UIMode.New)
+      if (beanmode.equals(UIMode.New))
       {
+         setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
          setRiskAns2(true);
          setRiskAns3(false);
+      }
+      loadDropDownList();  // This process will reload all dropdown list.
+
+      if (webutil.isUserLoggedIn()) {
+         if (getCustomer().getAcctnum() != null) {
+            HashMap<String, WebMenuItem>  currencyMap = webMenuList.getMenuItemMap(WebMenuList.ListComponent.CURRENCY.toString());
+            if (currencyMap.containsKey(getCustomer().getGoal().toUpperCase())) {
+               selectedGoal = currencyMap.get(getCustomer().getGoal());
+               Boolean retiredflag = getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.GOALS.RETIRED.toString());
+               if (retiredflag != null)
+               {
+                  selectRetireType(retiredflag ? 2 : 1);
+               }
+               reOrganizeGoalList();
+            }
+         }
       }
       createAssetPortfolio(1);
    }
@@ -98,6 +110,11 @@ public class ProfileBean extends PortfolioCreationUI
 
             if (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.ChangeStrategy))
             {
+               // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
+               if (webutil.isUserLoggedIn()) {
+                  gotoRiskQuestions();
+               }
+
                initUI();
                super.preRenderView();
                setDefault();
@@ -434,22 +451,20 @@ public class ProfileBean extends PortfolioCreationUI
       if (selectedItem != null)
       {
          String goalName = selectedItem.getDisplayName();
-         getCustomer().setGoal(goalName);
+         getCustomer().setGoal(selectedItem.getKey());
          getCustomer().setPortfolioName(goalName);
          // reOrganizeGoalList(selectedItem.getDisplayName());
          // Reset Rest of data.
          getCustomer().horizon = null;  // Only reset profiledata
          setWithdrawlPeriod(null);
-         if (goalName.equals(RiskConst.GOALS.BUILDWEALTH.getDisplayValue()))
+         if (goalName.equalsIgnoreCase(RiskConst.GOALS.BUILDWEALTH.getDisplayValue()))
          {
             getCustomer().setCustomName(null);
          }
          else
          {
             getCustomer().setCustomName(goalName);
-
-
-         }
+        }
       }
    }
 
@@ -767,11 +782,13 @@ public class ProfileBean extends PortfolioCreationUI
          selectedRetirementGoal = value;
          if (value == 2)
          {
-            getCustomer().setGoal(RiskConst.GOALS.RETIRED.toString());
+            getCustomer().setCustomName(RiskConst.GOALS.RETIRED.toString());
+            getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(),true);
          }
          else
          {
-            getCustomer().setGoal(RiskConst.GOALS.RETIRED.toString());
+            getCustomer().setCustomName(RiskConst.GOALS.RETIREMENT.toString());
+            getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(),false);
          }
       }
    }
