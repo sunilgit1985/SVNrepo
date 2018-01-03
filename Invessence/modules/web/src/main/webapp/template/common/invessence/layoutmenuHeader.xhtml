@@ -183,7 +183,10 @@
                 </li>
 
                 <li id="menutem">
-                    <a href="/pages/custody/uob/index.xhtml?acct=99999" id="menutemplink">Open Account</a>
+                    <p:commandLink rendered="true" id="opnAcct"
+                                   actionListener="#{uobdash.doOptionMenuAction()}">
+                        <h:outputText value="Open Account"/>
+                    </p:commandLink>
                 </li>
             </ui:fragment>
 

@@ -241,6 +241,27 @@ public class ConsumerDashBean extends CustomerData implements Serializable
       return ("success");
    }
 
+   public String doOpenAccountAction(){
+      String whichXML;
+      try
+      {
+//         if (getSelectedAccount().isUnopened())
+//         {
+//            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=E&acct=" + selectedAccount.getAcctnum().toString());
+//         }
+//         else
+//         {
+            uiLayout.doMenuAction("consumer", "portfolioedit.xhtml?app=E&acct=" + selectedAccount.getAcctnum().toString());
+//         }
+      }
+      catch (Exception ex)
+      {
+         return ("failed");
+      }
+
+      return ("success");
+   }
+
    public String doFundingAction()
    {
       String whichXML;
@@ -298,8 +319,17 @@ public class ConsumerDashBean extends CustomerData implements Serializable
       String whichXML;
       try
       {
-
-         uiLayout.doMenuAction("custody", "editaddress.xhtml?app=E&acct=" + selectedAccount.getAcctnum().toString());
+         if (manageAccountList != null && manageAccountList.size() > 0)
+         {
+            for (int i = 0; i < manageAccountList.size(); i++)
+            {
+               if (manageAccountList.get(i).getUnopened())
+               {
+                  uiLayout.doMenuAction("custody", "index.xhtml?acct=" + manageAccountList.get(i).getAcctnum().toString());
+                  break;
+               }
+            }
+         }
       }
       catch (Exception ex)
       {

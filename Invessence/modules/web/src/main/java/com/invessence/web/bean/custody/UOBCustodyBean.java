@@ -1663,16 +1663,17 @@ public void onChngRpDtls(String flag){
          ownerDetails.setMailingAddressState(ownerDetails.getPhysicalAddressState());
          ownerDetails.setMailingAddressCity(ownerDetails.getPhysicalAddressCity());
          ownerDetails.setMailingAddressCountry(ownerDetails.getPhysicalAddressCountry());
-      }else{
-         ownerDetails.setMailingAddressStreet1(null);
-         ownerDetails.setMailingAddressStreet2(null);
-         ownerDetails.setMailingAddressStreet3(null);
-         ownerDetails.setMailingAddressStreet4(null);
-         ownerDetails.setMailingAddressZipCode(null);
-         ownerDetails.setMailingAddressState(null);
-         ownerDetails.setMailingAddressCity(null);
-         ownerDetails.setMailingAddressCountry(null);
       }
+//      else{
+//         ownerDetails.setMailingAddressStreet1(null);
+//         ownerDetails.setMailingAddressStreet2(null);
+//         ownerDetails.setMailingAddressStreet3(null);
+//         ownerDetails.setMailingAddressStreet4(null);
+//         ownerDetails.setMailingAddressZipCode(null);
+//         ownerDetails.setMailingAddressState(null);
+//         ownerDetails.setMailingAddressCity(null);
+//         ownerDetails.setMailingAddressCountry(null);
+//      }
       custodyService.saveAddressDtls(acctNum, acctOwnerId, p_logonId, ownerDetails);
       saveAdditionalDtls(ownerDetails.getOwnerMiscDetails(), acctNum, acctOwnerId, "ao_owners_misc_details");
       return true;
@@ -2021,7 +2022,7 @@ public void onChngRpDtls(String flag){
                ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States")))
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Invalid Country of nationality is selected!", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
             }
          }
 
@@ -2054,7 +2055,7 @@ public void onChngRpDtls(String flag){
                ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States")))
             {
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Invalid Country of nationality is selected!", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
             }
          }
          if (hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationality()))
@@ -2280,6 +2281,11 @@ public void onChngRpDtls(String flag){
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.empCtry", "Country is required!", null));
          }
 
+         if(hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry()) &&ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry().equalsIgnoreCase("United States")){
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
+         }
+
          if (!hasRequiredData(ownerDetails.getOwnerContactDetails().getOfficeTelNumberCD()))
          {
             dataOK = false;
@@ -2319,6 +2325,10 @@ public void onChngRpDtls(String flag){
       {
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.phyCtry", "Residential country is required!", null));
+      }
+      if(hasRequiredData(ownerDetails.getPhysicalAddressCountry()) &&ownerDetails.getPhysicalAddressCountry().equalsIgnoreCase("United States")){
+         dataOK = false;
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
       }
       if (!hasRequiredData(ownerDetails.getOwnerMiscDetails().getMailAddressSameAsPhysical()))
       {
@@ -3032,6 +3042,11 @@ public void onChngRpDtls(String flag){
       dspNewAcctPnl = false;
       dspExtAcctPnl = false;
       dspIntroAcctPnl = false;
+      dwnFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum, getReqType(), "Download");
+      if(dwnFileMstrLst!=null && dwnFileMstrLst.size()>0){
+         dsplDwnlFile = true;
+         getFileData();
+      }
       updFileMstrLst = custodyService.fetchFileMasterList(getWebutil().getWebprofile().getWebInfo().get("SERVICE.PRODUCT").toString(), beanAcctNum,getReqType(),"Upload");
 
       fileupdSucc=new HashMap<String,String>();
