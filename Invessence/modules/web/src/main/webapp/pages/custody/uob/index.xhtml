@@ -10,6 +10,12 @@
         <f:viewParam name="l" value="#{uobCustodyBean.beanLogonId}"/>
         <f:event type="preRenderView" listener="#{uobCustodyBean.initCustody}"/>
     </f:metadata>
+    <script>
+        $(document).ready(function() {
+            $('form').attr('autocomplete','off');
+        });
+
+    </script>
     <ui:define name="content">
         <div class="layout-portlets-box open_client_layout acc_holder_form">
             <h:form id="cstdyFrm">
@@ -95,7 +101,7 @@
                                             Eg. Individual Account name with our record is Amy. Robo Account name must be opened as Amy only.
                                             </span></div>
                                             <div class="Container100 margin-top">
-                                                <p:inputText id="extIndInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
+                                                <p:inputText autocomplete="off" id="extIndInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
                                                              placeholder="Enter your existing Individual UOBKH Securities Trading account number" maxlength="7"/>
                                                 <label for="extIndInp">Existing Individual UOBKH account number</label>
                                             </div>
@@ -110,7 +116,7 @@
                                             Eg. Joint Account name with our record is Amy or Elise.Robo Account name must be opened as Amy or Elise/ Elise or Amy, but it can not be Amy or Calvin.
                                             </span></div>
                                             <div class="Container100 margin-top">
-                                                <p:inputText id="extJntInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
+                                                <p:inputText autocomplete="off" id="extJntInp" value="#{uobCustodyBean.uobDataMaster.accountDetails.accountMiscDetails.existingTradeAcctNumber}"
                                                              placeholder="Enter your existing Joint UOBKH Securities Trading account number" maxlength="7"/>
                                                 <label for="extJntInp">Existing Joint UOBKH account number</label>
                                             </div>
