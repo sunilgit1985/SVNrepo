@@ -918,18 +918,24 @@ public void onChngRpDtls(String flag){
    public boolean validateIntroPage()
    {
       Boolean dataOK = true;
-      StringBuilder sb = new StringBuilder();
+//      StringBuilder sb = new StringBuilder();
       if (!hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()))
       {
-         sb.append("Type of account like to open is required.<br/>");
+//         sb.append("Type of account like to open is required.<br/>");
+         dataOK = false;
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTyp"+"<br/>", "Type of account like to open is required.", null);
       }
       if (hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()) &&
          !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()))
       {
          if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV")){
-            sb.append("Please select Existing Individual Securities trading account on UOBKH Yes/No.<br/>");
+//            sb.append("Please select Existing Individual Securities trading account on UOBKH Yes/No.<br/>");
+            dataOK = false;
+            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypIndiv"+"<br/>", "Please select Existing Individual Securities trading account on UOBKH Yes/No.", null);
          }else if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT")){
-            sb.append("Please select Existing Joint Securities trading account on UOBKH Yes/No.<br/>");
+//            sb.append("Please select Existing Joint Securities trading account on UOBKH Yes/No.<br/>");
+            dataOK = false;
+            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypJoint"+"<br/>", "Please select Existing Joint Securities trading account on UOBKH Yes/No.", null);
          }
       }
       if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null &&
@@ -937,39 +943,49 @@ public void onChngRpDtls(String flag){
          !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber())){
          if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV"))
          {
-            sb.append("Enter your existing Individual UOBKH Securities Trading account number.<br/>");
+//            sb.append("Enter your existing Individual UOBKH Securities Trading account number.<br/>");
+            dataOK = false;
+            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extIndivActNum"+"<br/>", "Enter your existing Individual UOBKH Securities Trading account number.", null);
          }
          else if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT"))
          {
-            sb.append("Enter your existing Joint UOBKH Securities Trading account number.<br/>");
+//            sb.append("Enter your existing Joint UOBKH Securities Trading account number.<br/>");
+            dataOK = false;
+            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extJointActNum"+"<br/>", "Enter your existing Joint UOBKH Securities Trading account number.", null);
          }
       }
       if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls()))
       {
-         sb.append("Trading Representative details are required.<br/>");
+//         sb.append("Trading Representative details are required.<br/>");
+         dataOK = false;
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRep"+"<br/>", "Trading Representative details are required.", null);
       }
       if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls() != null &&
          uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls().trim().equalsIgnoreCase("Yes"))
       {
          if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
          {
-            sb.append("Trading Representative Name is required.<br/>");
+//            sb.append("Trading Representative Name is required.<br/>");
+            dataOK = false;
+            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNm"+"<br/>", "Trading Representative Name is required.", null);
          }
          else if (!repList.contains(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
          {
-            sb.append("Trading Representative Name is not valid.<br/>");
+//            sb.append("Trading Representative Name is not valid.<br/>");
+            dataOK = false;
+            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNmInv"+"<br/>", "Trading Representative Name is not valid.", null);
          }
       }
-      if (sb.length() > 0)
-      {
-         dataOK = false;
-         introError = sb.toString();
-      }
-      else
-      {
-         dataOK = true;
-         introError = null;
-      }
+//      if (sb.length() > 0)
+//      {
+//         dataOK = false;
+//         introError = sb.toString();
+//      }
+//      else
+//      {
+//         dataOK = true;
+//         introError = null;
+//      }
       return dataOK;
    }
 
@@ -1067,41 +1083,51 @@ public void onChngRpDtls(String flag){
    public boolean validateTaxPnl()
    {
       Boolean dataOK = true;
-      StringBuilder sb = new StringBuilder();
+//      StringBuilder sb = new StringBuilder();
       taxError = null;
       if (!hasRequiredData(owTaxDtls.getJurisdictionOfTaxResidence()) || owTaxDtls.getJurisdictionOfTaxResidence().trim().equalsIgnoreCase(""))
       {
-         sb.append("Country / Jurisdiction of tax residence is required.<br/>");
+//         sb.append("Country / Jurisdiction of tax residence is required.<br/>");
+         dataOK = false;
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.cntryDtl"+"<br/>", "Country / Jurisdiction of tax residence is required.", null);
       }
       if (!hasRequiredData(owTaxDtls.getIsTINAvailable()))
       {
-         sb.append("Tax Identification Number (Yes / No ) is required.<br/>");
+//         sb.append("Tax Identification Number (Yes / No ) is required.<br/>");
+         dataOK = false;
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.havTaxNum"+"<br/>", "Tax Identification Number (Yes / No ) is required.", null);
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("Yes") && !hasRequiredData(owTaxDtls.getTaxIdentificationNumber()))
       {
-         sb.append("Tax Identification Number is required.<br/>");
+//         sb.append("Tax Identification Number is required.<br/>");
+         dataOK = false;
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.taxNum"+"<br/>", "Tax Identification Number is required.", null);
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("No") && !hasRequiredData(owTaxDtls.getTinUnavailableReason()))
       {
-         sb.append("Reason for no Tax identification number is required.<br/>");
+//         sb.append("Reason for no Tax identification number is required.<br/>");
+         dataOK = false;
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.rsnTaxNum"+"<br/>", "Reason for no Tax identification number is required.", null);
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("No") &&
          (owTaxDtls.getTinUnavailableReason() != null && owTaxDtls.getTinUnavailableReason().equalsIgnoreCase("B")) &&
          !hasRequiredData(owTaxDtls.getTinUnavailableValue()))
       {
-         sb.append("Explaination for Reason B is required.<br/>");
-      }
-      if (sb.length() > 0)
-      {
+//         sb.append("Explaination for Reason B is required.<br/>");
          dataOK = false;
-         taxError = sb.toString();
+         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.rsnTaxNumExpl"+"<br/>", "Explaination for Reason B is required.", null);
       }
-      else
-      {
-         dataOK = true;
-         taxError = null;
-      }
-      sb = null;
+//      if (sb.length() > 0)
+//      {
+//         dataOK = false;
+//         taxError = sb.toString();
+//      }
+//      else
+//      {
+//         dataOK = true;
+//         taxError = null;
+//      }
+//      sb = null;
       return dataOK;
    }
 
@@ -1153,7 +1179,7 @@ public void onChngRpDtls(String flag){
    {
       try
       {
-         if (uobDataMaster.getIndividualOwnersDetails().getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singapore"))
+         if (uobDataMaster.getIndividualOwnersDetails().getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singaporean"))
          {
             dsplNricInp = true;
             dsplOtrCntry = false;
@@ -1700,18 +1726,33 @@ public void onChngRpDtls(String flag){
 
    public boolean saveFinDtls(Long acctNum, int acctOwnerId, OwnerDetails ownerDetails)
    {
+      if(!ownerDetails.getOwnersFinancialDetails().getSourceOfFundsWealth().equalsIgnoreCase("Others")){
+         ownerDetails.getOwnersFinancialDetails().setSourceOfFundsWealthSpecify(null);
+      }
       saveAdditionalDtls(ownerDetails.getOwnersFinancialDetails(), acctNum, acctOwnerId, "ao_owners_finacial_details");
       return true;
    }
 
    public boolean saveRelDtls(Long acctNum, int acctOwnerId, OwnerDetails ownerDetails)
    {
+      if(ownerDetails.getOwnerRegularityDetails().getRelatedToAnyEmplfUOB().equalsIgnoreCase("No")){
+         ownerDetails.getOwnerRegularityDetails().setRelatedToAnyEmplName1(null);
+         ownerDetails.getOwnerRegularityDetails().setRelatedToAnyEmplName2(null);
+         ownerDetails.getOwnerRegularityDetails().setRelatedToAnyEmplRelation1(null);
+         ownerDetails.getOwnerRegularityDetails().setRelatedToAnyEmplRelation2(null);
+      }
       saveAdditionalDtls(ownerDetails.getOwnerRegularityDetails(), acctNum, acctOwnerId, "ao_owners_regularity_details");
       return true;
    }
 
    public boolean saveObjDtls(Long acctNum, int acctOwnerId, OwnerDetails ownerDetails)
    {
+      if(ownerDetails.getOwnersFinancialDetails().getAreYouUnableToPayYouDebts().equalsIgnoreCase("No")){
+         ownerDetails.getOwnersFinancialDetails().setAreYouUnableToPayYouDebtsDescribe(null);
+      }
+      if(ownerDetails.getOwnersFinancialDetails().getDoYouHaveAnyDisputedAccount().equalsIgnoreCase("No")){
+         ownerDetails.getOwnersFinancialDetails().setDoYouHaveAnyDisputedAccountDescribe(null);
+      }
       saveAdditionalDtls(ownerDetails.getOwnersFinancialDetails(), acctNum, acctOwnerId, "ao_owners_finacial_details");
       return true;
    }
@@ -2018,9 +2059,9 @@ public void onChngRpDtls(String flag){
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.ctry", "Country of nationality is required!", null));
             }else if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Singapore Pr")
-               && (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
-               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States")))
+               && ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States"))
             {
+//               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
             }
@@ -2051,9 +2092,10 @@ public void onChngRpDtls(String flag){
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.otrNatCtry", "Other nationality country is required!", null));
             }else if (ownerDetails.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")
-               && (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
-               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States")))
+               &&
+               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("United States"))
             {
+//               (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
                dataOK = false;
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
             }
