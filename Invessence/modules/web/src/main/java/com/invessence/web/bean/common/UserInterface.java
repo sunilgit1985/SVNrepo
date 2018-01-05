@@ -141,4 +141,28 @@ public class UserInterface implements Logger
       return false;
    }
 
+   public Boolean hasData(Long data)
+   {
+      if (data == null || data == 0)
+      {
+         return false;
+      }
+      return true;
+   }
+   public Boolean hasData(Integer data)
+   {
+      if (data == null || data == 0)
+      {
+         return false;
+      }
+      return true;
+   }
+   public Boolean hasData(Double data)
+   {
+      if (data == null || data == 0.0)
+      {
+         return false;
+      }
+      return true;
+   }
 }

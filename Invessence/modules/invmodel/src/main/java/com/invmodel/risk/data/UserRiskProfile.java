@@ -174,6 +174,40 @@ public class UserRiskProfile
       return value;
    }
 
+   public Integer getDefaultIntValue(String key, Integer defaultValue)
+   {
+      Integer value = defaultValue;
+      if (getRiskData().containsKey(key))
+      {
+         value = getRiskData().get(key).getAnswerInt();
+      }
+      else
+      {
+         if (getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(key))
+         {
+            value = getAdvisorRiskMaster().getAdvisorMasterdata().get(key).getDefaultIntValue();
+         }
+      }
+      return value;
+   }
+
+   public Boolean getDefaultBooleanValue(String key, Boolean defaultValue)
+   {
+      Boolean value = defaultValue;
+      if (getRiskData().containsKey(key))
+      {
+         value = getRiskData().get(key).getAnswerBoolean();
+      }
+      else
+      {
+         if (getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(key))
+         {
+            value = getAdvisorRiskMaster().getAdvisorMasterdata().get(key).getDefaultBooleanValue();
+         }
+      }
+      return value;
+   }
+
    public Long getAcctnum()
    {
       return acctnum;

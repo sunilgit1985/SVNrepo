@@ -26,6 +26,28 @@
             </p:outputLabel>
         </ui:fragment>
 -->
+        <ui:fragment rendered="#{uobProfile.selectedGoalValue == 0}">
+            <div class="caraousle Container100">
+
+                <div class="header_tab">
+                    <div class="header_title Container30">Select Investment goal</div>
+                </div>
+                <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                         style="margin-top: 7px;border: 0px; background: transparent"
+                         styleClass="Container100">
+                    <h:outputText styleClass="errorText"
+                                  value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+                    <div class="EmptyBox5"></div>
+                </p:panel>
+
+                <div class="Container100 tab_dtl">
+                    <h2>Please select one of the goal above.</h2>
+                </div>
+
+
+            </div>
+        </ui:fragment>
         <ui:fragment rendered="#{uobProfile.selectedGoalValue == 1}">
             <div class="caraousle Container100">
 
@@ -63,7 +85,6 @@
                         <div class="Container100 CustomWidthAccountypePanel">
                             <p:commandLink id="uobretire1"
                                            actionListener="#{uobProfile.selectRetireType(1)}"
-                                           process="@this"
                                            update=":ceForm:retireQPanel, :ceForm:goalInfo"  >
                                 <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter #{uobProfile.getSelectedClass(1)}">
                                     <div class="Container70">
@@ -84,7 +105,6 @@
                         <div class="Container100 CustomWidthAccountypePanel">
                             <p:commandLink id="uobretire2"
                                            actionListener="#{uobProfile.selectRetireType(2)}"
-                                           process="@this"
                                            update=":ceForm:retireQPanel, :ceForm:goalInfo">
                                 <p:panel id="retireP2" styleClass="Wid95 MarCenter #{uobProfile.getSelectedClass(2)}">
                                     <div class="Container70">
@@ -101,8 +121,12 @@
                         </div>
                     </div>
 
-                    <p:panel id="retireQPanel" style="border: 0px; background: transparent"
-                                rendered="#{uobProfile.selectedRetirementGoal > 0}">
+                    <p:panel id="retireQPanel" style="border: 0px; background: transparent">
+                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 0}">
+                            <p>
+                            Select one of the choices above.
+                            </p>
+                        </ui:fragment>
                         <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 1}">
                             <p>
                                 I intend to retire and start utilising my funds in
@@ -113,6 +137,7 @@
                                 years
                             </p>
                         </ui:fragment>
+                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal > 1}">
                         <p>
                             When I start withdrawing money for my retirement, I plan to withdraw the funds over a period of
                             <p:inputNumber id="uobRW" class="input_no_type"
@@ -121,6 +146,7 @@
                             </p:inputNumber>
                             years
                         </p>
+                        </ui:fragment>
 
                     </p:panel>
                 </div>

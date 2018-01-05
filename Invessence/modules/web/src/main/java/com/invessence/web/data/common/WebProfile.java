@@ -556,4 +556,8 @@ public class WebProfile
    {
       this.supportPhoneInfo = supportPhoneInfo;
    }
+
+   public String getDefaultCurrency() {
+      return getInfo("DEFAULT.CURRENCY");
+   }
 }

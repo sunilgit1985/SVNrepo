@@ -43,13 +43,15 @@
                 I like to invest in
                 <p:selectOneMenu id="tradeCurrency" value="#{uobProfile.tradeCurrency}"
                                     update=":ceForm:initialinvestment">
-                    <p:ajax update=":ceForm:initialinvestment"/>
+                    <p:ajax update=":ceForm:investQuestions"/>
                     <f:selectItems
                             value="#{uobProfile.currencyMap.entrySet()}"
                             var="currency" itemLabel="#{currency.key}"
                             itemValue="#{currency.key}"/>
                 </p:selectOneMenu>
            </div>
+            <p:outputPanel id="investQuestions" style="background: transparent; border: 0px">
+
             <p>
                 My initial investment in this account will be #{uobProfile.selectedCurrency.shortname}
                 <p:inputNumber id="initialinvestment" class="input_no_type"
@@ -58,21 +60,21 @@
                 </p:inputNumber>
             </p>
             <p>
-                I intend to contribute
+                I intend to contribute S$
+                <p:inputNumber id="recurringInvestment" class="input_no_type"
+                                                         value="#{uobProfile.recurringInvestment}"
+                                                         thousandSeparator="," decimalPlaces="0">
+                </p:inputNumber>
             </p>
             <p>
-                <p:inputNumber id="recurringInvestment" class="input_no_type"
-                               value="#{uobProfile.recurringInvestment}" symbol="S$ "
-                               thousandSeparator="," decimalPlaces="0">
-                </p:inputNumber>
-
-                per annum to this investment account over the next
+                 per annum to this investment account over the next
                 <p:inputNumber id="recurringPeriod" class="input_no_type"
                                value="#{uobProfile.recurringPeriod}"
                                minValue="1" maxValue="60"
                                decimalPlaces="0">
                         </p:inputNumber> years
             </p>
+            </p:outputPanel>
 
         </div>
 
