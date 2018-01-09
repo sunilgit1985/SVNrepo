@@ -5209,6 +5209,7 @@ span.change_goal {
 .reviewHeader_title .fineTuneBtn {
     width: 49px;
     /* padding: 0px; */
+    z-index:0;
 }
 .reviewHeader_title .fineTuneBtnImg > .ui-icon {
     width: 22px !important;
