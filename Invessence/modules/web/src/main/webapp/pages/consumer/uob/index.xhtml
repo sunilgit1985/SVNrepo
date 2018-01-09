@@ -353,7 +353,7 @@
                         </h:outputText>
                      </h1>
                      <p:panel id="graphArea" style="border: 0px; background: white;">
-                        <input type="hidden" id="idGraphFlag" value="#{uobdash.selAccountList.get(0).managed and uobdash.dsplPrflDtl}"/>
+                        <input type="hidden" id="idGraphFlag" class="graphFlagCss" value="#{uobdash.selAccountList.get(0).managed and !uobdash.dsplPrflDtl}"/>
                         <script>
                            $(document).ready(function ()
                                              {
@@ -365,7 +365,7 @@
 //                                                         draw2dDonut1lyrChartDyna('uobIndxform');
 //                                                      }
 //                                                   }
-                                                   if($('.idGraphFlag').val()=='true' || $('.idGraphFlag').val()==true)
+                                                   if($('.graphFlagCss').val()=='false' || $('.graphFlagCss').val()==false)
                                                    {
                                                       draw2dDonut1lyrChartDyna('idPieChartArea', 'idPieChartValue');
                                                    }
