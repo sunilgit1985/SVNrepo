@@ -160,6 +160,19 @@ public class FixedModelOptimizer
          return false;
    }
 
+   public String getCashColor(String theme) {
+      if (isThisFixedTheme(theme)) {
+         if (themesMap.containsKey(theme))
+         {
+            if (themesMap.get(theme).getAsset().containsKey("Cash"))
+            {
+               String color = themesMap.get(theme).getAsset().get("Cash").getColor();
+            }
+         }
+      }
+      return "#f5f5f5";
+   }
+
    public ArrayList<String> getListOfThemes() {
       ArrayList<String> arrayList = new ArrayList<String>();
       if (fixedThemeMap != null) {

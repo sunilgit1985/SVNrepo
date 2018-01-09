@@ -41,14 +41,12 @@ public class NewRiskCalc
       String advisor = "UOB";
       Long acctnum = null;
 
-
       advisorRiskMaster = new AdvisorRiskMaster(advisor);
 
       // Use existing account to collect data
       userRiskProfile = new UserRiskProfile(advisor, acctnum);
 
       // overrideRisk(userRiskProfile);
-      riskCalc = new UOBRiskCalc(userRiskProfile);
       modelUtil.refreshData();
 
       // Data needed for Profiledata
@@ -70,58 +68,23 @@ public class NewRiskCalc
       profileData.setAdvisor(advisor);
       profileData.setTheme(userRiskProfile.getAnswer(RiskConst.THEME));
 
-      calculateOneRisk();
+      calculateSingleRisk();
       System.out.print("Done");
    }
 
-   public static void calculateOneRisk() {
-      riskCalc.ageTimeFormula(64,3);
+   public static void calculateSingleRisk() {
+      AssetClass assetClass;
+      Portfolio portfolio;
+      riskCalc = new UOBRiskCalc(userRiskProfile);
       riskCalc.calculate();
+      assetClass = modelUtil.createAssetAllocation(riskCalc);
+      portfolio = modelUtil.createPortfolioAllocation(assetClass, riskCalc);
+
       System.out.println("Score:" + userRiskProfile.getScore(0));
    }
 
 
-   public static void calculateRisk() {
-      Integer startingQuestion = 4;
-      Integer lastQuestion = userRiskProfile.getRiskQuestion();
-      Boolean skipKnockout = true;
-      int[][] possibleChoices = createGrid(skipKnockout);
-
-      Integer key = 0;
-      for (Integer age = 0; age < 100; age+=5) {
-         for (Integer horizon = 1; horizon < 35; horizon+=5) {
-            riskCalc.ageTimeFormula(age,horizon);
-/*
-            for (Integer loop = 0; loop < possibleChoices.length; loop++)
-            {
-               for (Integer q = startingQuestion; q <= lastQuestion; q++)
-               {
-                  riskCalc.setQuestionsRisk(q, possibleChoices[loop][q-1], null);
-               }
-               riskCalc.calculate(0);
-
-****
-               AssetClass[] aamc = modelUtil.buildAllocation(userRiskProfile, profileData);
-               Portfolio[] pfclass = modelUtil.buildPortfolio(aamc, userRiskProfile, profileData);
-
-               PrintData printData = new PrintData(profileData, aamc, pfclass);
-               printDataMap.put(key.toString(), printData);
-******
-
-            }
-         */
-         }
-      }
-      try
-      {
-         createPortfolioArray(printDataMap);
-      }
-      catch (Exception ex) {
-
-      }
-
-   }
-   public static int[][] createGrid(Boolean skipKnockout)
+   public static int[][] calculateRiskQuestionsGrid(Boolean skipKnockout)
    {
       // Skip Question #1, it is part of Goal legecy!
 

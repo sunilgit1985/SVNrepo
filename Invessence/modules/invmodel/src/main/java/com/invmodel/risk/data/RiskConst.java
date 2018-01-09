@@ -88,6 +88,7 @@ public class RiskConst
 
    public static String THEME                = "THEME";
 
+   public static String PREDEFINEDMODEL   = "FIXED";
    public static String RISKQUESTIONS     = "RISKQUESTIONS";
    public static String CALCMETHOD        = "CALCMETHOD";
    public static String CALCFORMULA       = "CALCFORMULA";
@@ -106,7 +107,9 @@ public class RiskConst
    public static String TAXABLE           = "TAXABLE";
    public static String TAXRATE           = "TAXRATE";
    public static String EXPERIENCE        = "EXPERIENCE";
+   public static String INTERESTRATE      = "INTERESTRATE";
 
+   public static String WITHDRAWLAMOUNT   = "WITHDRAWLAMOUNT";
    public static String WITHDRAWLRATE     = "WITHDRAWLRATE";
    public static String AGEPOWERVALUE     = "AGEPOWERVALUE";
    public static String AGEWEIGHT         = "AGEWEIGHT";
@@ -115,6 +118,7 @@ public class RiskConst
    public static String RETIREMENTAGE     = "65";
    public static String WITHDRAWLAGE      = "95";
 
+   public static String FINETUNEAJUSTMENTS   = "FINETUNEAJUSTMENTS";
    public static Integer RISKQSORTNUM      = 900;
    public static Integer CUSTOMSORTNUM    = 999;
 }

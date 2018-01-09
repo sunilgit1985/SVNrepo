@@ -225,7 +225,7 @@ public class UserRiskProfile
 
    public void addKnockout()
    {
-      this.knockout = (this.knockout + 1 > this.riskScores.size()) ? this.riskScores.size() : this.knockout + 1;
+      this.knockout = (this.knockout == null) ? 1 : this.knockout + 1;
    }
 
    public void removeKnockout()

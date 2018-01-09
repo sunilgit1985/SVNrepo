@@ -13,7 +13,9 @@ import com.invessence.web.dao.common.*;
 import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
 import com.invessence.web.util.*;
+import com.invmodel.asset.data.AssetClass;
 import com.invmodel.model.ModelUtil;
+import com.invmodel.portfolio.data.Portfolio;
 import com.invmodel.risk.data.*;
 import org.apache.commons.logging.*;
 import org.primefaces.event.*;
@@ -128,6 +130,7 @@ public class PortfolioCreationUI extends UserInterface
    public Boolean displayGoalGraph;
    public Boolean displayDataPanel;
    public Boolean displayConfirmPanel;
+   public Boolean displayFTPanel;
    public Boolean dataOK = true;
 
    // Buttons
@@ -156,7 +159,7 @@ public class PortfolioCreationUI extends UserInterface
       displayDataPanel = false;
       displayConfirmPanel = false;
       backURL = null;
-
+      displayFTPanel=false;
       resetData();
    }
 
@@ -280,6 +283,16 @@ public class PortfolioCreationUI extends UserInterface
       this.backURL = backURL;
    }
 
+   public Boolean getDisplayFTPanel()
+   {
+      return displayFTPanel;
+   }
+
+   public void setDisplayFTPanel(Boolean displayFTPanel)
+   {
+      this.displayFTPanel = displayFTPanel;
+   }
+
    public String getSelectedCSOption()
    {
       return selectedCSOption;
@@ -338,6 +351,7 @@ public class PortfolioCreationUI extends UserInterface
    public Boolean getConfirmationCSCheck() {
       return (csCheck1 && csCheck2);
    }
+
    public void fetchClientData()
    {
       try
@@ -396,45 +410,78 @@ public class PortfolioCreationUI extends UserInterface
    public void onAllocSlider(SlideEndEvent event)
    {
 //      System.out.println(event.getValue());
-      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
-      customer.riskProfile.setScore(event.getValue());
-      customer.riskProfile.setAssetScore(event.getValue());
-      formEdit = true;
-      createAssetPortfolio(1);
+      Integer eventValue;
+      if (event != null) {
+         eventValue = event.getValue();
+         customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
+         riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
+         riskCalc.setAssetRisk(0,eventValue.doubleValue());
+         formEdit = true;
+         createAssetPortfolio();
+      }
    }
 
    public void onPortfolioSlider(SlideEndEvent event)
    {
-      //setDefaultRiskIndex(event.getValue());
-      customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
-      customer.riskProfile.setPortfolioScore(event.getValue());
-      formEdit = true;
-      createAssetPortfolio(1);
+      Integer eventValue;
+      if (event != null) {
+         eventValue = event.getValue();
+         customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
+         riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
+         riskCalc.setPortfolioRisk(0,eventValue.doubleValue());
+         formEdit = true;
+         createAssetPortfolio();
+      }
    }
 
    public void doAllocReset()
    {
       customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
-      createAssetPortfolio(1);
-//      System.out.println(" doAllocReset ind "+getAllocationIndex());
-      customer.setSliderAllocationIndex(customer.riskProfile.getStandardScore(0).intValue());
+      riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+      riskCalc.calculate();
+      createAssetPortfolio();
+      customer.setSliderAllocationIndex(riskCalc.getRiskScore().intValue());
    }
 
    public void refresh()
    {
-      createAssetPortfolio(1);
+      createAssetPortfolio();
    }
 
-   public void createAssetPortfolio(Integer numofYears)
+   public void createAssetPortfolio()
    {
-      formEdit = true;
-      numofYears = (numofYears == null || numofYears == 0) ? 1 : numofYears;
-      riskCalc.calculate(numofYears);
-      customer.createAssetPortfolio();
-      chart.createAssetChart(customer.getAssetData(), webutil);
+      AssetClass[] aamc;
+      Portfolio[] pfclass;
+      try
+      {
+         formEdit = true;
+         riskCalc.calculate();
 
-      setCanOpenAccount(!riskCalc.getKnockOutFlag()); // Knockout returns true, so canOpen needs to be set false!
+         getCustomer().setAssetData(null);
+         aamc = new AssetClass[1];
+         aamc[0] = modelUtil.createAssetAllocation(riskCalc);
+         if (aamc != null)
+         {
+            getCustomer().setAssetData(aamc);
+            pfclass = new Portfolio[1];
+            pfclass[0] = modelUtil.createPortfolioAllocation(aamc[0], riskCalc);
+            if (pfclass != null)
+            {
+               getCustomer().setPortfolioData(pfclass);
+               getCustomer().loadPortfolioList(0);
+               getCustomer().rollupAssetClass(pfclass[0]);
+               getCustomer().buildHistoricalReturns();
+            }
+            chart.createAssetChart(customer.getAssetData(), webutil);
+            setCanOpenAccount(!riskCalc.getKnockOutFlag()); // Knockout returns true, so canOpen needs to be set false!
+         }
+      }
+      catch (Exception ex)
+      {
+         ex.printStackTrace();
+      }
    }
+
 
    public void saveProfile()
    {
@@ -458,7 +505,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void savePrefProfile(ActionEvent event)
    {
-      createAssetPortfolio(1);
+      createAssetPortfolio();
       customer.saveProfile();
       formEdit = false;
    }
@@ -734,73 +781,23 @@ public class PortfolioCreationUI extends UserInterface
    // Fine Tune Panel/Widget Management
    public void showFTPanel()
    {
-/*    To redesign
-      if (customer.getSavedRiskFormula() == null || customer.getSavedRiskFormula().isEmpty())
-      {
-         customer.setSavedRiskFormula(customer.getRiskCalcMethod());
-//         System.out.println(" showFTPanel if  ind "+getAllocationIndex());
-         customer.setSavedAllocSliderIndex(customer.getAllocationIndex());
-      }
-//      System.out.println(" showFTPanel ifouter  ind "+getAllocationIndex());
-      setSliderAllocationIndex(getAllocationIndex());
       setDisplayFTPanel(true);
-      setEnableChangeStrategy(false);
-      setAltrOnChngStrategy(false);
-//      System.out.println("riskVariance "+riskVariance);
-      if(formEdit)
-      {
-         setCstmSliderMaxAlloc(((getAllocationIndex() + riskVariance) >= 99 ? 99 : getAllocationIndex() + riskVariance));
-         setCstmSliderMinAlloc(((getAllocationIndex() - riskVariance) < 0 ? 0 : getAllocationIndex() - riskVariance));
-      }else{
-         setCstmSliderMaxAlloc(((riskCalculator.getRiskByQuestion().intValue() + riskVariance) >= 99 ? 99 : riskCalculator.getRiskByQuestion().intValue() + riskVariance));
-         setCstmSliderMinAlloc(((riskCalculator.getRiskByQuestion().intValue() - riskVariance) < 0 ? 0 : riskCalculator.getRiskByQuestion().intValue() - riskVariance));
-      }
-*/
-
    }
 
    public void saveFTPanel()
    {
-/*
-      setSavedRiskFormula(getRiskCalcMethod());
-//      System.out.println(" saveFTPanel ifouter  ind "+getAllocationIndex());
-      setSavedAllocSliderIndex(getAllocationIndex());
-      setSliderAllocationIndex(getAllocationIndex());
-      if(formEdit){
-         riskCalculator.setRiskOverride(Double.parseDouble(""+getAllocationIndex()));
-      }else{
-         riskCalculator.setRiskByQuestion(Double.parseDouble(""+getAllocationIndex()));
-      }
-      savePanelProfile();
-      closeFTPanel();
-*/
+      riskCalc.setScore(0, riskCalc.getRiskScore());
    }
 
    public void closeFTPanel()
    {
-/*
       setDisplayFTPanel(false);
-      setEnableChangeStrategy(true);
-      setAltrOnChngStrategy(true);
-      // RequestContext context = RequestContext.getCurrentInstance();
-      //context.execute("PF('wvfineTunePanel.hide()')");
-      //context.update("fineTunePanel");
-*/
    }
 
    public void cancelFTPanel()
    {
-/*
-//      System.out.println("cancelFTPanel In");
-      setRiskCalcMethod(getSavedRiskFormula());
-      setSliderAllocationIndex(getSavedAllocSliderIndex());
-      // riskCalculator.setRiskFormula(savedRiskFormula);
-      setAllocationIndex(getSavedAllocSliderIndex());
-      Double riskIndex = riskCalculator.calculateRisk();
-      createAssetPortfolio(1, riskIndex);
       closeFTPanel();
-//      System.out.println("cancelFTPanel Out");
-*/
+      riskCalc.setRiskScore(riskCalc.getStandardScore(0));
    }
 
 

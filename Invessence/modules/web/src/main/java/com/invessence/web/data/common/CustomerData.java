@@ -1708,11 +1708,11 @@ public class CustomerData extends ProfileData
       try
       {
          setAssetData(null);
-         aamc = modelUtil.buildAllocation(riskProfile, getProfileInstance());
+         aamc = modelUtil.buildAllocation(getProfileInstance());
          if (aamc != null)
          {
             setAssetData(aamc);
-            pfclass = modelUtil.buildPortfolio(aamc, riskProfile, getProfileInstance());
+            pfclass = modelUtil.buildPortfolio(aamc, getProfileInstance());
             if (pfclass != null)
             {
                setPortfolioData(pfclass);

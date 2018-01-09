@@ -57,31 +57,19 @@ public class PortfolioModel
       this.fixedOptimizer = fixedOptimizer;
    }
 
-   public double calcAssetValue(double invCapital, double avgYearReturns) throws Exception
+   public Portfolio createPortfolio(AssetClass assetClass, RiskCalc calc)
    {
-
-      double intEarned = 0;
-
-      intEarned = avgYearReturns * invCapital;
-      invCapital = invCapital + intEarned;
-
-      return invCapital;
-   }
-
-   public Portfolio[] buildPortfolio(AssetClass[] assetData, UserRiskProfile userRiskProfile, ProfileData profileData)
-   {
-
-
-      String theme = profileData.getTheme();
+      String theme = assetClass.getTheme();
       if (fixedOptimizer != null)
       {
          if (fixedOptimizer.isThisFixedTheme(theme))
          {
-            return createFixedPortfolio(assetData, userRiskProfile, profileData);
+            return createFixedPortfolio(assetClass, calc);
          }
       }
 
-      return getOptimizedPortfolio(assetData, profileData, userRiskProfile);
+      return createOptimizedPortfolio(assetClass, calc);
+
 
    }
 
@@ -229,191 +217,29 @@ public class PortfolioModel
       return null;
    }
 
-   public Integer getPortfolioIndex(ProfileData pdata)
+   public Double getPortfolioScore(RiskCalc riskCalc)
    {
-
-      if (pdata == null)
-      {
-         return InvConst.PORTFOLIO_DEFAULT_POINT;
-      }
-
-      if (pdata.getAssetData() == null)
-      {
-         return InvConst.PORTFOLIO_DEFAULT_POINT;
-      }
-
-      Double riskOffset = pdata.getAssetData()[0].getRiskOffset();
-      Integer duration = pdata.getDefaultHorizon();
-
-      int offset = (int) (StrictMath.sqrt(StrictMath.pow(duration, 2.0) - StrictMath.pow((double) 0, 2.0))) * (InvConst.PORTFOLIO_INTERPOLATION / duration);
-      offset = (int) (riskOffset * (double) offset);
-      offset = (offset > InvConst.PORTFOLIO_INTERPOLATION - 1) ? InvConst.PORTFOLIO_INTERPOLATION - 1 : offset;
-      if (offset < 0)
-      {
-         offset = 0;
-      }
-
-      return offset;
+      return ((riskCalc == null) ? InvConst.PORTFOLIO_DEFAULT_POINT : riskCalc.getRiskScore());
    }
 
-   public Double getPortfolioScore(UserRiskProfile userRiskProfile, ProfileData pdata, Integer year)
+   private Portfolio createOptimizedPortfolio(AssetClass assetclass, RiskCalc riskCalc)
    {
-      Double score;
-
-      RiskScore riskScore = userRiskProfile.getRiskScoreObj(year);
-
-      RiskConst.CALCFORMULAS formula;
-      ;
-
-      if (RiskConst.CALCFORMULAS.valueOf(riskScore.getCalcFormula()) == RiskConst.CALCFORMULAS.C)
-      {
-         score = riskScore.getScore();
-      }
-      else
-      {
-         score = riskScore.getPortfolioScore();
-      }
-
-      if (score == null)
-      {
-         return (double) InvConst.PORTFOLIO_DEFAULT_POINT;
-      }
-
-      if (pdata.getAssetData() == null)
-      {
-         return (double) InvConst.PORTFOLIO_DEFAULT_POINT;
-      }
-
-   /*
-      Double riskOffset = pdata.getAssetData()[0].getRiskOffset();
-      Integer duration = pdata.getDefaultHorizon();
-
-      Double offset = (StrictMath.sqrt(StrictMath.pow(duration, 2.0) - StrictMath.pow((double) 0.0, 2.0))) * ((double) InvConst.PORTFOLIO_INTERPOLATION / (double) duration);
-      offset = (riskOffset * offset);
-      offset = (offset > (double) InvConst.PORTFOLIO_INTERPOLATION - 1) ? (double) InvConst.PORTFOLIO_INTERPOLATION - 1 : offset;
-      if (offset < 0.0)
-      {
-         offset = 0.0;
-      }
-      score = offset;
-   */
-
-      return score;
-   }
-
-   private Portfolio[] getOrigPortfolioByIndex(AssetClass[] assetData, ProfileData profileData, Integer riskIndex,
-                                               String advisor, String theme, Double invCapital, Double investment,
-                                               Double reinvestment, Double keepLiquidCash, Integer duration, Double riskOffset)
-   {
-      String assetName;
-
-      try
-      {
-         // This actualInvestment already is reduced by KeepLiquid
-         double actualInvestment = investment;
-
-         //Asset data is for each year of investment horizon
-         int years = (profileData.getNumOfPortfolio() == null || profileData.getNumOfPortfolio() == 0) ? profileData.getAssetData().length : profileData.getNumOfPortfolio();
-         years = (profileData.getAssetData().length < years) ? profileData.getAssetData().length : years;
-         Portfolio[] portfolioclass = new Portfolio[years];
-         int offset = (riskIndex == null) ? InvConst.PORTFOLIO_DEFAULT_POINT : riskIndex;
-         offset = (offset > InvConst.PORTFOLIO_INTERPOLATION - 1) ? InvConst.PORTFOLIO_INTERPOLATION - 1 : offset;
-         offset = (offset < 0) ? 0 : offset;
-         for (int investmentYear = 0; investmentYear < years; investmentYear++)
-         {
-            portfolioclass[investmentYear] = new Portfolio();
-            portfolioclass[investmentYear].setTheme(theme);
-
-            //JAV added keepLiquid
-            portfolioclass[investmentYear].setCashMoney(invCapital);
-
-
-            //offset = (int) (StrictMath.sqrt(StrictMath.pow(duration, 2.0) - StrictMath.pow((double) investmentYear, 2.0)))*(InvConst.PORTFOLIO_INTERPOLATION/duration);
-            //offset = (int) (riskOffset * (double) offset);
-
-            // Actual Investment is investment and recurring the next year.  Does not contain the returns.
-            portfolioclass[investmentYear].setActualInvestments(invCapital);
-            if (theme.toLowerCase().contains("mfs"))
-            {
-               createPortfolioWithMFS(advisor, theme, assetData[investmentYear], portfolioclass[investmentYear],
-                                      invCapital, investment, keepLiquidCash,
-                                      investmentYear, profileData, offset);
-            }
-            else
-            {
-               createPortfolio(advisor, theme, assetData[investmentYear], portfolioclass[investmentYear],
-                               invCapital, investment, keepLiquidCash,
-                               investmentYear, profileData, offset);
-
-            }
-
-            // Total Money = Investment + Projection
-            portfolioclass[investmentYear].setTotalMoney(invCapital);
-            actualInvestment += reinvestment;
-            invCapital += reinvestment;
-
-            // Total Money = Investment + Projection
-            if (investmentYear == 0)
-            {
-               portfolioclass[investmentYear].setTotalMoney(invCapital);
-            }
-            else
-            {
-               portfolioclass[investmentYear].setTotalMoney(invCapital);
-            }
-
-            if (investmentYear > 0)
-            {
-               portfolioclass[investmentYear].setUpperTotalMoney((2 * portfolioclass[investmentYear - 1].getTotalRisk() * investment)
-                                                                    + investment);
-               portfolioclass[investmentYear].setLowerTotalMoney(investment -
-                                                                    (2 * portfolioclass[investmentYear - 1].getTotalRisk() * investment));
-            }
-            else
-            {
-               portfolioclass[investmentYear].setUpperTotalMoney(investment);
-               portfolioclass[investmentYear].setLowerTotalMoney(investment);
-
-            }
-            investment = portfolioclass[investmentYear].getTotalMoney() +
-               portfolioclass[investmentYear].getTotalCapitalGrowth() +
-               reinvestment;
-
-         }
-         //assign total risk and expReturn JAV
-         return portfolioclass;
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
-      return null;
-
-   }
-
-   private Portfolio[] getOptimizedPortfolio(AssetClass[] assetData, ProfileData pdata, UserRiskProfile userRiskProfile)
-   {
-      String assetName;
       Double actualInvestment, reinvestment;
-      Integer numofPortfolio;
-      Portfolio[] portfolioclass;
       String advisor, theme;
 
 
       try
       {
 
-         theme = pdata.getTheme();
-         advisor = pdata.getAdvisor();
-         actualInvestment = userRiskProfile.getDefaultInitialInvestment();
-         reinvestment = userRiskProfile.getDefaultRecurringInvestment();
+         theme = assetclass.getTheme();
+         advisor = riskCalc.getAdvisor();
+         actualInvestment = riskCalc.getDefaultInvestment();
+         reinvestment = riskCalc.getDefaultRecurring();
 
-         if (actualInvestment == 0.0) {
-            return createCashOnlyPortfolio(assetData, userRiskProfile, pdata);
+         if (actualInvestment == 0.0)
+         {
+            return thisCashPortfolio(1.0, assetclass);
          }
-         numofPortfolio = numofPortfoliosToCreate(assetData, userRiskProfile);
-
-         portfolioclass = new Portfolio[numofPortfolio];
 
          // NOTE:  If Theme is default, then use Invessence - Core portfolio.
          // However, the Asset Weights may have been defined by Advisor's mapping.
@@ -439,42 +265,12 @@ public class PortfolioModel
             secCollection.loadDataFromDB(advisor, theme);
          }
 
-         pdata.setMaxPortfolioAllocationPoints(InvConst.PORTFOLIO_INTERPOLATION - 1);
+         Portfolio portfolio = createPortfolioAllocation(assetclass, riskCalc);
 
-         for (int investmentYear = 0; investmentYear < numofPortfolio; investmentYear++)
-         {
-            portfolioclass[investmentYear] = createPortfolio(assetData[investmentYear], pdata, userRiskProfile, investmentYear);
-
-            // Total Money = Investment + Projection
-            if (investmentYear == 0)
-            {
-               portfolioclass[investmentYear].setTotalMoney(actualInvestment);
-            }
-            else
-            {
-               portfolioclass[investmentYear].setTotalMoney(actualInvestment);
-            }
-
-            if (investmentYear > 0)
-            {
-               portfolioclass[investmentYear].setUpperTotalMoney((2 * portfolioclass[investmentYear - 1].getTotalRisk() * actualInvestment)
-                                                                    + actualInvestment);
-               portfolioclass[investmentYear].setLowerTotalMoney(actualInvestment -
-                                                                    (2 * portfolioclass[investmentYear - 1].getTotalRisk() * actualInvestment));
-            }
-            else
-            {
-               portfolioclass[investmentYear].setUpperTotalMoney(actualInvestment);
-               portfolioclass[investmentYear].setLowerTotalMoney(actualInvestment);
-
-            }
-            actualInvestment = portfolioclass[investmentYear].getTotalMoney() +
-               portfolioclass[investmentYear].getTotalCapitalGrowth() +
-               reinvestment;
-
-         }
+         portfolio.setActualInvestments(actualInvestment);
+         portfolio.setTotalMoney(actualInvestment);
          //assign total risk and expReturn JAV
-         return portfolioclass;
+         return portfolio;
       }
       catch (Exception e)
       {
@@ -484,17 +280,30 @@ public class PortfolioModel
 
 
    }
-
-   private Portfolio createPortfolio(AssetClass assetClass, ProfileData pdata, UserRiskProfile userRiskProfile, Integer year)
+   private Portfolio createPortfolioAllocation(AssetClass assetClass, RiskCalc riskCalc)
    {
       Portfolio pclass;
       String advisor, theme;
       Double investment, keepLiquidCash, invCapital;
       Double remaining2Invest;
 
-      investment = pdata.getDefaultInvestment();
       try
       {
+
+         if (riskCalc == null)
+         {
+            return thisCashPortfolio(1.0, assetClass);
+         }
+         theme = riskCalc.getTheme();
+         advisor = riskCalc.getAdvisor();
+
+         investment = 0.0;
+         keepLiquidCash = 0.0;
+         if (riskCalc.getUserRiskProfile() != null)
+         {
+            keepLiquidCash = riskCalc.getUserRiskProfile().getDefaultDoubleValue(RiskConst.KEEPLIQUID, 0.0);
+            investment = riskCalc.getDefaultInvestment();
+         }
 
          Double totalPortfolioWeight = 0.0;
          Double ticker_weight;
@@ -511,16 +320,13 @@ public class PortfolioModel
          double[][] primeAssetWeights;
          Double assetWgt;
 
-         theme = pdata.getTheme();
-         advisor = pdata.getAdvisor();
-         keepLiquidCash = userRiskProfile.getKeepLiquidCash();
-
          pclass = new Portfolio();
          pclass.setTheme(theme);
-         Double score = getPortfolioScore(userRiskProfile, pdata, year);
+
+         Double score = getPortfolioScore(riskCalc);
 
          //Initially, all of the money is in Cash bucket (including the keep liquid)
-         pclass.setCashMoney(investment);
+         pclass.setCashMoney(riskCalc.getDefaultInvestment());
          invCapital = investment - keepLiquidCash;
          remaining2Invest = invCapital;
          pclass.setActualInvestments(invCapital);
@@ -567,9 +373,9 @@ public class PortfolioModel
                            settleMoney = settleShare * settlePrice;
 
                            // Only create this portfolio if there are shares and money
+                           totalPortfolioWeight = 0.0;
                            if ((shares > 0.0) && (money > 0.0))
                            {
-                              totalPortfolioWeight = 0.0;
                               if (remaining2Invest > 0.0)
                               {
                                  totalPortfolioWeight = money / invCapital;
@@ -614,10 +420,12 @@ public class PortfolioModel
                   asset.setRisk(assetdata.getPrimeAssetrisk()[offset]);
                }
                asset.setValue(investByAsset);
-               if (invCapital == 0.0) {
+               if (invCapital == 0.0)
+               {
                   asset.setActualweight(0.0);
                }
-               else {
+               else
+               {
                   asset.setActualweight(investByAsset / invCapital);
                }
             }
@@ -628,10 +436,12 @@ public class PortfolioModel
             SecurityData sd = secCollection.getSecurity("CASH");
             assetdata = portfolioOptimizer.getAssetData(theme, "Cash");
             asset = assetClass.getAsset("Cash");
-            if (invCapital == 0.0) {
+            if (invCapital == 0.0)
+            {
                assetWgt = 0.0;
             }
-            else {
+            else
+            {
                assetWgt = (remaining2Invest + keepLiquidCash) / invCapital;
             }
 
@@ -673,13 +483,14 @@ public class PortfolioModel
                asset.setRisk(assetdata.getPrimeAssetrisk()[offset]);
             }
             asset.setValue(investByAsset);
-            if (invCapital == 0.0) {
+            if (invCapital == 0.0)
+            {
                asset.setActualweight(0.0);
             }
-            else {
+            else
+            {
                asset.setActualweight(investByAsset / invCapital);
             }
-
 
 
          }
@@ -704,15 +515,287 @@ public class PortfolioModel
       }
       catch (Exception e)
       {
-         return thisCashPortfolio(pdata, 1.0);
+         return thisCashPortfolio(1.0, assetClass);
       }
+   }
+
+   private Portfolio thisCashPortfolio(Double totalWeight, AssetClass assetclass)
+   {
+      Portfolio thisportfolio = null;
+      String tradeCurrency, settmentCurrency;
+      Double investment = 100000.0;
+      try
+      {
+         if (assetclass != null)
+         {
+            investment = assetclass.getTotalInvested();
+         }
+         totalWeight = (totalWeight == null) ? 1.0 : totalWeight;
+
+         Double money = totalWeight * investment;
+
+         thisportfolio = new Portfolio();
+         thisportfolio.setCashMoney(money);
+         thisportfolio.setPortfolio("Cash", "Cash", null,
+                                    null, null, "Cash", "Cash",
+                                    1.0, totalWeight,
+                                    0.0, 0.0, 0.0, 0.0,
+                                    money, money, 999999, 1.0,
+                                    "", "", "",
+                                    null, null, 1.0,
+                                    money, 1.0, money);
+
+         thisportfolio.addSubclassMap("Cash", "Cash",
+                                      null,
+                                      totalWeight, money, true);
+         thisportfolio.setExpReturns(0.0);
+         thisportfolio.setTotalRisk(0.0);
+         thisportfolio.setTotalCapitalGrowth(0.0);
+         thisportfolio.setAvgExpense(0.0);
+         thisportfolio.setTheme(assetclass.getTheme());
+      }
+      catch (Exception ex)
+      {
+         thisportfolio = null;
+      }
+
+      return thisportfolio;
+
+   }
+
+   private Portfolio createFixedPortfolio(AssetClass assetclass, RiskCalc riskCalc)
+   {
+
+      String theme = assetclass.getTheme();
+      Double price;
+      String type, style;
+      String assetname, subclass, color, sec_name;
+      Integer sortorder;
+      Double totalWeight = 1.0;
+      Double investment = riskCalc.getDefaultInvestment();
+      Double amount_remain = investment;
+
+      try
+      {
+         // Integer riskFormula = userRiskProfile.convertCalcFormula2Int(userRiskProfile.getCalcFormula());  Not used in the current process.
+         Double score;
+         FMData fixedModelData;
+
+         score = riskCalc.getRiskScore();
+
+         fixedModelData = fixedOptimizer.getTheme(theme, score);
+         Portfolio thisportfolio = new Portfolio();
+         investment = (investment == null || investment == 0.0) ? 100000.0 : investment;
+         thisportfolio.setCashMoney(investment);
+
+         for (FMPortfolioData portfoliodata : fixedModelData.getPortfolioData())
+         {
+            Double wght = portfoliodata.getWeight();
+            String ticker = portfoliodata.getTicker();
+            double shares = 0.0;
+
+            if (wght < 0)
+            {
+               wght = 0.0;
+            }
+            price = 100.00;
+            type = portfoliodata.getAsset();
+            style = portfoliodata.getDisplayname();
+            subclass = portfoliodata.getDisplayname();
+            assetname = portfoliodata.getAsset();
+            color = portfoliodata.getColor();
+            sortorder = portfoliodata.getSortorder();
+            sec_name = portfoliodata.getSec_name();
+
+
+            if (ticker.equalsIgnoreCase("Cash"))
+            {
+               wght = totalWeight;
+            }
+            else
+            {
+               if ((totalWeight - wght) < 0.0)
+               {
+                  wght = totalWeight;
+               }
+            }
+            totalWeight -= wght;
+
+            shares = Math.round(((investment * wght) / price) - 0.5);
+
+            Double money = wght * investment;
+            Double totalPortfolioWeight = money / investment;
+            thisportfolio.setPortfolio(ticker, sec_name, color,
+                                       type, style, assetname, subclass,
+                                       price, wght,
+                                       0.0, 0.0, 0.0, 0.0,
+                                       shares, money, sortorder, totalPortfolioWeight,
+                                       "", "", "",
+                                       null, null, 1.0,
+                                       shares, price, money);
+            thisportfolio.addSubclassMap(assetname, subclass,
+                                         color,
+                                         totalPortfolioWeight, amount_remain, true);
+            amount_remain = amount_remain - money;
+            thisportfolio.setCashMoney(amount_remain);
+         }
+
+         if (!thisportfolio.getPortfolioMap().containsKey("Cash"))
+         {
+            thisportfolio = thisCashPortfolio(totalWeight, assetclass);
+         }
+         Double expectedReturn = fixedModelData.getExpectedreturn();
+         Double expectedRisk = fixedModelData.getExpectedrisk();
+         thisportfolio.setTheme(assetclass.getTheme());
+         thisportfolio.setTotalCapitalGrowth(0.0);
+         thisportfolio.setAvgExpense(0.0);
+
+         if (fixedModelData.getExpectedreturn() != null && fixedModelData.getExpectedreturn() != 0.0)
+         {
+            thisportfolio.setExpReturns(expectedReturn);
+            thisportfolio.setTotalRisk(expectedRisk);
+         }
+         else
+         {
+            thisportfolio.setExpReturns(0.0);
+            thisportfolio.setTotalRisk(0.0);
+         }
+
+         if (fixedModelData.getExpectedrisk() != null && fixedModelData.getExpectedrisk() != 0.0)
+         {
+            thisportfolio.setExpReturns(expectedReturn);
+            thisportfolio.setTotalRisk(expectedRisk);
+         }
+         else
+         {
+            thisportfolio.setExpReturns(0.0);
+            thisportfolio.setTotalRisk(0.0);
+         }
+         return thisportfolio;
+      }
+      catch (Exception ex)
+      {
+         return thisCashPortfolio(totalWeight, assetclass);
+      }
+   }
+
+
+   // ----------------------------------------------------------
+   // All of this is obsolete code
+   public Integer getPortfolioIndex(ProfileData pdata)
+   {
+
+      if (pdata == null)
+      {
+         return InvConst.PORTFOLIO_DEFAULT_POINT;
+      }
+
+      if (pdata.getAssetData() == null)
+      {
+         return InvConst.PORTFOLIO_DEFAULT_POINT;
+      }
+
+      Double riskOffset = pdata.getAssetData()[0].getRiskOffset();
+      Integer duration = pdata.getDefaultHorizon();
+
+      int offset = (int) (StrictMath.sqrt(StrictMath.pow(duration, 2.0) - StrictMath.pow((double) 0, 2.0))) * (InvConst.PORTFOLIO_INTERPOLATION / duration);
+      offset = (int) (riskOffset * (double) offset);
+      offset = (offset > InvConst.PORTFOLIO_INTERPOLATION - 1) ? InvConst.PORTFOLIO_INTERPOLATION - 1 : offset;
+      if (offset < 0)
+      {
+         offset = 0;
+      }
+
+      return offset;
+   }
+
+
+   private Portfolio[] getOrigPortfolioByIndex(AssetClass[] assetData, ProfileData profileData, Integer riskIndex,
+                                               String advisor, String theme, Double invCapital, Double investment,
+                                               Double reinvestment, Double keepLiquidCash, Integer duration, Double riskOffset)
+   {
+      String assetName;
+
+      try
+      {
+         // This actualInvestment already is reduced by KeepLiquid
+         double actualInvestment = investment;
+
+         //Asset data is for each year of investment horizon
+         int years = (profileData.getNumOfPortfolio() == null || profileData.getNumOfPortfolio() == 0) ? profileData.getAssetData().length : profileData.getNumOfPortfolio();
+         years = (profileData.getAssetData().length < years) ? profileData.getAssetData().length : years;
+         Portfolio[] portfolioclass = new Portfolio[years];
+         int offset = (riskIndex == null) ? InvConst.PORTFOLIO_DEFAULT_POINT : riskIndex;
+         offset = (offset > InvConst.PORTFOLIO_INTERPOLATION - 1) ? InvConst.PORTFOLIO_INTERPOLATION - 1 : offset;
+         offset = (offset < 0) ? 0 : offset;
+         for (int investmentYear = 0; investmentYear < years; investmentYear++)
+         {
+            portfolioclass[investmentYear] = new Portfolio();
+            portfolioclass[investmentYear].setTheme(theme);
+
+            //JAV added keepLiquid
+            portfolioclass[investmentYear].setCashMoney(invCapital);
+
+
+            //offset = (int) (StrictMath.sqrt(StrictMath.pow(duration, 2.0) - StrictMath.pow((double) investmentYear, 2.0)))*(InvConst.PORTFOLIO_INTERPOLATION/duration);
+            //offset = (int) (riskOffset * (double) offset);
+
+            // Actual Investment is investment and recurring the next year.  Does not contain the returns.
+            portfolioclass[investmentYear].setActualInvestments(invCapital);
+               createPortfolio(advisor, theme, assetData[investmentYear], portfolioclass[investmentYear],
+                               invCapital, investment, keepLiquidCash,
+                               investmentYear, profileData, offset);
+
+
+            // Total Money = Investment + Projection
+            portfolioclass[investmentYear].setTotalMoney(invCapital);
+            actualInvestment += reinvestment;
+            invCapital += reinvestment;
+
+            // Total Money = Investment + Projection
+            if (investmentYear == 0)
+            {
+               portfolioclass[investmentYear].setTotalMoney(invCapital);
+            }
+            else
+            {
+               portfolioclass[investmentYear].setTotalMoney(invCapital);
+            }
+
+            if (investmentYear > 0)
+            {
+               portfolioclass[investmentYear].setUpperTotalMoney((2 * portfolioclass[investmentYear - 1].getTotalRisk() * investment)
+                                                                    + investment);
+               portfolioclass[investmentYear].setLowerTotalMoney(investment -
+                                                                    (2 * portfolioclass[investmentYear - 1].getTotalRisk() * investment));
+            }
+            else
+            {
+               portfolioclass[investmentYear].setUpperTotalMoney(investment);
+               portfolioclass[investmentYear].setLowerTotalMoney(investment);
+
+            }
+            investment = portfolioclass[investmentYear].getTotalMoney() +
+               portfolioclass[investmentYear].getTotalCapitalGrowth() +
+               reinvestment;
+
+         }
+         //assign total risk and expReturn JAV
+         return portfolioclass;
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      return null;
+
    }
 
    private void createPortfolio(String advisor, String theme,
                                 AssetClass assetClass, Portfolio pclass,
                                 double invCapital, double investment, double keepLiquidCash,
                                 int year, ProfileData pdata, int offset)
-    {
+   {
       try
       {
 
@@ -892,433 +975,7 @@ public class PortfolioModel
       }
    }
 
-   private void createPortfolioWithMFS(String advisor, String theme,
-                                       AssetClass assetClass, Portfolio pclass,
-                                       double invCapital, double investment, double keepLiquidCash,
-                                       int year, ProfileData pdata, int offset)
-   {
-/*
-      try
-      {
 
-         double amount2Allocate = investment;
-
-         double totalPortfolioWeight = 0.0;
-         double ticker_weight;
-         double portfolioReturns = 0.0;
-         double portfolioRisk = 0.0;
-         double avgExpense = 0.0;
-         double incEarned = 0.0;
-         double secExpense = 0.0;
-
-
-         Map<String, Integer> tickerMap = new LinkedHashMap<String, Integer>();
-         ArrayList<String> tickerList = new ArrayList<String>();
-         Map<String, Double> primeWeights = new LinkedHashMap<String, Double>();
-         Integer sizeofTickerList = 0;
-         String addTicker = "";
-
-         for (SecurityData sd : secCollection.getOrderedSecurityList())
-         {
-            addTicker = sd.getTicker();
-            if (!addTicker.toUpperCase().equals("CASH"))
-            {
-               if (!tickerMap.containsKey(addTicker))
-               {
-                  tickerMap.put(addTicker, sizeofTickerList);
-                  tickerList.add(addTicker);
-                  sizeofTickerList++;
-               }
-            }
-         }
-
-         // secCollection.doCustomSQLQuery(advisor, theme, tickerList); // Use this to load Security details for given Tickers
-         for (String assetname : portfolioOptimizer.getAdvisorOrdertedAssetList(theme))
-         {
-            int tickerNum = 0;
-            AssetData assetdata = portfolioOptimizer.getAssetData(theme, assetname);
-            Asset asset = assetClass.getAsset(assetname);
-            asset.setActualweight(0.0);
-            asset.setValue(0.0);
-
-            if (!asset.getAsset().toUpperCase().equals("CASH"))
-            {
-               for (PrimeAssetClassData pacd : assetdata.getOrderedPrimeAssetData())
-               {
-                  primeWeights.put(pacd.getTicker(), (asset.getUserweight() * assetdata.getPrimeAssetweights()[offset][tickerNum++]));
-               }
-
-            }
-         }
-
-         String[] tickers = new String[sizeofTickerList];
-         int j = 0;
-         for (String ticker : tickerList)
-         {
-            if (j < sizeofTickerList)
-            {
-               tickers[j] = ticker;
-               j++;
-            }
-         }
-
-         // Since PrimeAssetList order is different then Security List, we are putting the data in order of the security list.
-         Integer sizeofPrimeTickerList = primeWeights.size();
-         double[][] tmpPrimeWeights = new double[sizeofPrimeTickerList][1];
-         for (String ticker : primeWeights.keySet())
-         {
-            if (tickerMap.containsKey(ticker))
-            {
-               if (tickerMap.get(ticker) <= sizeofPrimeTickerList)
-               {
-                  j = tickerMap.get(ticker);
-                  tmpPrimeWeights[j][0] = primeWeights.get(ticker);
-               }
-            }
-         }
-
-         HolisticOptimizedData hoptdata = portfolioOptimizer.getHolisticWeight(theme, tickers, tmpPrimeWeights, primeWeights);
-         hoptdata.setPrimeAssetInfo(primeWeights);
-
-         // Now that we have optomized Portfolio, let's do the allocation and rollup to appropriate AssetClass and PrimeAssetClass
-         double investByAsset = 0.0;
-         double cash = invCapital;
-         String ticker;
-         AssetClass[] newAssetclass = new AssetClass[1];
-         SecurityData sd;
-
-         Map<String, Asset> newAssets = new HashMap<String, Asset>();
-         for (Integer i = 0; i < hoptdata.getRbsatickers().length; i++)
-         {
-            ticker = hoptdata.getRbsatickers()[i]; // NOTE: Tickers are in same order as weights...
-            ticker_weight = hoptdata.getOptimizedWeights()[i];
-            HolisticModelOptimizer hoptimizer = portfolioOptimizer.getHoptimizer();
-            double shares = 0.0, money = 0.0;
-            double rbsa_weight = 0.0;
-            double price = 0.0;
-            for (PrimeAssetClassData pacd : hoptimizer.getHolisticdataMap().get(ticker).getPrimeassets().values())
-            {
-               sd = secCollection.getSecurity(theme, pacd.getTicker());
-               if (sd == null)
-               {
-                  sd = secCollection.getSecurity(ticker);
-               }
-
-               if (!sd.getTicker().toUpperCase().equals("CASH"))
-               {
-
-                  rbsa_weight = pacd.getWeight() * ticker_weight;
-                  price = sd.getDailyprice();
-                  if (rbsa_weight > 0.0 && price > 0.0)
-                  {
-                     shares = Math.round(((invCapital * rbsa_weight) / price) - 0.5);
-                     money = shares * price;
-                     if (shares > 0 && money > 0.0)
-                     {
-                        String assetname = sd.getAssetclass();
-                        AssetData assetdata = portfolioOptimizer.getAssetData(theme, assetname);
-                        if (!assetClass.getAssetclass().containsKey(assetname))
-                        {
-                           assetClass.addAssetClass(assetname, assetname, sd.getAssetcolor(), 0.0, 0.0);
-                        }
-                        Asset asset = assetClass.getAsset(assetname);
-                        Double moneyInvestedinThisAsset = asset.getValue() + money;
-                        asset.setValue(moneyInvestedinThisAsset);
-                        asset.setActualweight(moneyInvestedinThisAsset / invCapital);
-                        // asset.setExpectedReturn(assetdata.getPrimeAssetreturns()[offset]);
-                        // asset.setRisk(assetdata.getPrimeAssetrisk()[offset]);
-
-                        pclass.setPortfolio(sd.getTicker(), sd.getName(), sd.getAssetcolor(),
-                                            sd.getType(), sd.getStyle(),
-                                            sd.getSecurityAssetClass(), sd.getSecuritySubAssetClass(),
-                                            price, rbsa_weight,
-                                            0.0, 0.0, 0.0, 0.0,
-                                            shares, money, sd.getSortorder(), totalPortfolioWeight,
-                                            sd.getIsin(),  sd.getCusip(), sd.getRic());
-                        pclass.addSubclassMap(sd.getSecurityAssetClass(), sd.getSecurityAssetClass(),
-                                              sd.getAssetcolor(),
-                                              totalPortfolioWeight, money, true);
-
-
-                        secExpense = secExpense + 0.0 * rbsa_weight;
-
-                        cash = cash - money;
-                        pclass.setCashMoney(cash);
-                     }
-                  }
-               }
-            }
-         }
-         // Add remining into cash...
-         if (cash > 0.0)
-         {
-            ticker = "Cash";
-            sd = secCollection.getSecurity(ticker);
-
-            Asset asset = assetClass.getAsset(sd.getAssetclass());
-            // asset.setExpectedReturn(assetdata.getPrimeAssetreturns()[offset]);
-            // asset.setRisk(assetdata.getPrimeAssetrisk()[offset]);
-            Double moneyInvestedinThisAsset = asset.getValue() + cash;
-            asset.setValue(moneyInvestedinThisAsset);
-            asset.setActualweight(moneyInvestedinThisAsset / invCapital);
-            pclass.setPortfolio(sd.getTicker(), sd.getName(), sd.getAssetcolor(),
-                                sd.getType(), sd.getStyle(), sd.getAssetclass(), sd.getPrimeassetclass(),
-                                1.0, 1.0,
-                                0.0, 0.0, 0.0, 0.0,
-                                cash, cash, sd.getSortorder(), totalPortfolioWeight,
-                                sd.getIsin(), sd.getCusip(), sd.getRic());
-            pclass.addSubclassMap(sd.getAssetclass(), sd.getPrimeassetclass(),
-                                  asset.getColor(),
-                                  totalPortfolioWeight, cash, true);
-         }
-
-         pclass.setTotalRisk(hoptdata.getRiskOffset(hoptdata.getOffset()));
-         pclass.setExpReturns(hoptdata.getPortReturnsOffset(hoptdata.getOffset()));
-         pclass.setTotalCapitalGrowth(0.0);
-         pclass.setAvgExpense(0.0 * invCapital);
-
-         if (InvConst.MIN_MNGT_FEES_DOLLARS > InvConst.MNGT_FEES * invCapital)
-         {
-            pclass.setAvgCost(InvConst.MIN_MNGT_FEES_DOLLARS);
-            pclass.setTotalCost(InvConst.MIN_MNGT_FEES_DOLLARS + secExpense * invCapital);
-         }
-         else
-         {
-            pclass.setAvgCost(InvConst.MNGT_FEES * invCapital);
-            pclass.setTotalCost(InvConst.MNGT_FEES * invCapital + secExpense * invCapital);
-         }
-
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
-*/
-   }
-
-   private Integer numofPortfoliosToCreate(AssetClass[] assetData, UserRiskProfile userRiskProfile)
-   {
-      Integer numofPortfolio = 1;
-      if (userRiskProfile != null)
-      {
-         if (assetData != null)
-         {
-            numofPortfolio = userRiskProfile.getALLRiskScores().size();
-            numofPortfolio = (assetData.length < numofPortfolio) ? assetData.length : numofPortfolio;
-         }
-      }
-      return numofPortfolio;
-
-   }
-
-   private Portfolio thisCashPortfolio(ProfileData pdata, Double totalWeight)
-   {
-      Portfolio thisportfolio = null;
-      try
-      {
-         String tradeCurrency = (pdata.getTradeCurrency() == null) ? "USD" : pdata.getTradeCurrency();
-         String settleCurrency = (pdata.getSettleCurrency() == null) ? "USD" : pdata.getSettleCurrency();
-         Double investment = pdata.getActualInvestment();
-         totalWeight = (totalWeight == null) ? 1.0 : totalWeight;
-
-         Double money = totalWeight * investment;
-
-         thisportfolio = new Portfolio();
-         thisportfolio.setCashMoney(money);
-         thisportfolio.setPortfolio("Cash", "Cash", null,
-                                    null, null, "Cash", "Cash",
-                                    1.0, totalWeight,
-                                    0.0, 0.0, 0.0, 0.0,
-                                    money, money, 999999, 1.0,
-                                    "", "", "",
-                                    tradeCurrency, settleCurrency, 1.0,
-                                    money, 1.0, money);
-
-         thisportfolio.addSubclassMap("Cash", "Cash",
-                                      null,
-                                      totalWeight, money, true);
-         thisportfolio.setExpReturns(0.0);
-         thisportfolio.setTotalRisk(0.0);
-         thisportfolio.setTotalCapitalGrowth(0.0);
-         thisportfolio.setAvgExpense(0.0);
-         thisportfolio.setTheme(pdata.getTheme());
-         pdata.setHasReturn(false);
-         pdata.setHasRisk(false);
-      }
-      catch (Exception ex) {
-         thisportfolio = null;
-      }
-
-      return thisportfolio;
-
-   }
-
-   private Portfolio[] createCashOnlyPortfolio(AssetClass[] assetData, UserRiskProfile userRiskProfile, ProfileData pdata)
-   {
-      Portfolio[] portfolio = null;
-      Integer numofPortfolio = numofPortfoliosToCreate(assetData, userRiskProfile);
-
-      numofPortfolio = (numofPortfolio == null || numofPortfolio < 1) ? 1 : numofPortfolio;
-      portfolio = new Portfolio[numofPortfolio];
-      for (Integer counter = 0; counter < numofPortfolio; counter++)
-      {
-         portfolio[counter] = thisCashPortfolio(pdata, 1.0);
-      }
-
-      return portfolio;
-   }
-
-   private Portfolio[] createFixedPortfolio(AssetClass[] assetData, UserRiskProfile userRiskProfile, ProfileData pdata)
-   {
-
-      String theme = pdata.getTheme();
-      Double price;
-      String type, style;
-      String assetname, subclass, color, sec_name;
-      Integer sortorder;
-      Portfolio[] portfolio = null;
-      double totalWeight = 1.0;
-      double investment = pdata.getDefaultInvestment();
-      double amount_remain = investment;
-
-      try
-      {
-         Integer numofPortfolio;
-
-
-         numofPortfolio = userRiskProfile.getALLRiskScores().size();
-         if (numofPortfolio == null || numofPortfolio < 0)
-         {
-            return null;
-         }
-
-         portfolio = new Portfolio[numofPortfolio];
-         // Integer riskFormula = userRiskProfile.convertCalcFormula2Int(userRiskProfile.getCalcFormula());  Not used in the current process.
-         Double score;
-         FMData fixedModelData;
-
-         for (Integer counter = 0; counter < numofPortfolio; counter++)
-         {
-            score = getPortfolioScore(userRiskProfile, pdata, counter);
-            fixedModelData = fixedOptimizer.getTheme(theme, score);
-            // For first one, set the properties in profileData (Code should be on Portfolio)
-            if (counter == 0)
-            {
-               pdata.setFixedFMModel(fixedModelData);
-               pdata.setHasReturn(true);
-               pdata.setHasRisk(true);
-            }
-
-            score = getPortfolioScore(userRiskProfile, pdata, counter);
-
-            fixedModelData = fixedOptimizer.getTheme(theme, score);
-            Portfolio thisportfolio = new Portfolio();
-            thisportfolio.setCashMoney(investment);
-
-            pdata.setAllocationIndex(fixedModelData.getIndex());
-            pdata.setPortfolioIndex(fixedModelData.getIndex());
-            String tradeCurrency = (pdata.getTradeCurrency() == null) ? "USD" : pdata.getTradeCurrency();
-            String settleCurrency = (pdata.getSettleCurrency() == null) ? "USD" : pdata.getSettleCurrency();
-            for (FMPortfolioData portfoliodata : fixedModelData.getPortfolioData())
-            {
-               Double wght = portfoliodata.getWeight();
-               String ticker = portfoliodata.getTicker();
-               double shares = 0.0;
-
-               if (wght < 0)
-               {
-                  wght = 0.0;
-               }
-               price = 100.00;
-               type = portfoliodata.getAsset();
-               style = portfoliodata.getDisplayname();
-               subclass = portfoliodata.getDisplayname();
-               assetname = portfoliodata.getAsset();
-               color = portfoliodata.getColor();
-               sortorder = portfoliodata.getSortorder();
-               sec_name = portfoliodata.getSec_name();
-
-
-               if (ticker.equalsIgnoreCase("Cash"))
-               {
-                  wght = totalWeight;
-               }
-               else
-               {
-                  if ((totalWeight - wght) < 0.0)
-                  {
-                     wght = totalWeight;
-                  }
-               }
-               totalWeight -= wght;
-
-               shares = Math.round(((investment * wght) / price) - 0.5);
-
-               Double money = wght * investment;
-               Double totalPortfolioWeight = money / investment;
-               thisportfolio.setPortfolio(ticker, sec_name, color,
-                                          type, style, assetname, subclass,
-                                          price, wght,
-                                          0.0, 0.0, 0.0, 0.0,
-                                          shares, money, sortorder, totalPortfolioWeight,
-                                          "", "", "",
-                                          tradeCurrency, settleCurrency, 1.0,
-                                          shares, price, money);
-               thisportfolio.addSubclassMap(assetname, subclass,
-                                            color,
-                                            totalPortfolioWeight, amount_remain, true);
-               amount_remain = amount_remain - money;
-               thisportfolio.setCashMoney(amount_remain);
-            }
-            if (!thisportfolio.getPortfolioMap().containsKey("Cash"))
-            {
-               thisportfolio = thisCashPortfolio(pdata, totalWeight);
-            }
-            Double expectedReturn = fixedModelData.getExpectedreturn();
-            Double expectedRisk = fixedModelData.getExpectedrisk();
-            thisportfolio.setTheme(pdata.getTheme());
-            thisportfolio.setTotalCapitalGrowth(0.0);
-            thisportfolio.setAvgExpense(0.0);
-
-            if (fixedModelData.getExpectedreturn() != null && fixedModelData.getExpectedreturn() != 0.0)
-            {
-               pdata.setHasReturn(true);
-               thisportfolio.setExpReturns(expectedReturn);
-               thisportfolio.setTotalRisk(expectedRisk);
-            }
-            else
-            {
-               pdata.setHasReturn(false);
-               thisportfolio.setExpReturns(0.0);
-               thisportfolio.setTotalRisk(0.0);
-            }
-
-            if (fixedModelData.getExpectedrisk() != null && fixedModelData.getExpectedrisk() != 0.0)
-            {
-               pdata.setHasRisk(true);
-               thisportfolio.setExpReturns(expectedReturn);
-               thisportfolio.setTotalRisk(expectedRisk);
-            }
-            else
-            {
-               pdata.setHasRisk(false);
-               thisportfolio.setExpReturns(0.0);
-               thisportfolio.setTotalRisk(0.0);
-            }
-
-            // This this portfolio and create next one based on next risk and additional investment.
-            portfolio[counter] = thisportfolio;
-            investment = investment + pdata.getRecurringInvestment();
-         }
-      }
-      catch (Exception ex)
-      {
-         return createCashOnlyPortfolio(assetData, userRiskProfile, pdata);
-      }
-
-
-      return portfolio;
-   }
 
    private Portfolio createOrigFixedPortfolio(AssetClass[] assetData, ProfileData pdata)
    {

@@ -83,10 +83,12 @@
 
                     <div class="Container45 Responsive100 LeftBlockAcctType Fleft">
                         <div class="Container100 CustomWidthAccountypePanel">
-                            <p:commandLink id="uobretire1"
-                                           actionListener="#{uobProfile.selectRetireType(1)}"
-                                           update=":ceForm:retireQPanel, :ceForm:goalInfo"  >
-                                <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter #{uobProfile.getSelectedClass(1)}">
+
+                                <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter">
+                                    <p:commandLink id="uobretire1"
+                                                   process="@this"
+                                                   actionListener="#{uobProfile.selectRetireType1}"
+                                                   update=":ceForm:retireQPanel, :ceForm:goalInfo">
                                     <div class="Container70">
                                         <h4>I want to save for retirement</h4>
 
@@ -96,17 +98,20 @@
                                     <div class="Container30 textAlign">
                                         <img src="#{uobProfile.getRetireImage(1)}" class="atCheckMarkImg"/>
                                     </div>
+                                    </p:commandLink>
                                 </p:panel>
-                            </p:commandLink>
+
 
                         </div>
                     </div>
                     <div class="Container45 Responsive100 FrightForced RightBlockAcctType">
                         <div class="Container100 CustomWidthAccountypePanel">
-                            <p:commandLink id="uobretire2"
-                                           actionListener="#{uobProfile.selectRetireType(2)}"
-                                           update=":ceForm:retireQPanel, :ceForm:goalInfo">
-                                <p:panel id="retireP2" styleClass="Wid95 MarCenter #{uobProfile.getSelectedClass(2)}">
+
+                                <p:panel id="retireP2" styleClass="Wid95 MarCenter">
+                                    <p:commandLink id="uobretire2"
+                                                   actionListener="#{uobProfile.selectRetireType2}"
+                                                   process="@this"
+                                                   update=":ceForm:retireQPanel, :ceForm:goalInfo">
                                     <div class="Container70">
                                         <h4>I am retired</h4>
 
@@ -116,17 +121,13 @@
                                     <div class="Container30 textAlign">
                                         <img src="#{uobProfile.getRetireImage(2)}" class="atCheckMarkImg"/>
                                     </div>
+                                    </p:commandLink>
                                 </p:panel>
-                            </p:commandLink>
+
                         </div>
                     </div>
 
                     <p:panel id="retireQPanel" style="border: 0px; background: transparent">
-                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 0}">
-                            <p>
-                            Select one of the choices above.
-                            </p>
-                        </ui:fragment>
                         <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 1}">
                             <p>
                                 I intend to retire and start utilising my funds in

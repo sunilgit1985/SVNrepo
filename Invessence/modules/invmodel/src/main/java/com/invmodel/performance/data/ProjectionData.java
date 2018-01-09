@@ -23,10 +23,12 @@ public class ProjectionData
    double upperBand2;
    double lowerBand1;
    double lowerBand2;
+   double withdrawlAmount;
    double goalsrequired;
 
 
-   public ProjectionData() {
+   public ProjectionData()
+   {
    }
 
    public Integer getYear()
@@ -129,37 +131,55 @@ public class ProjectionData
       this.totalGains = totalGains;
    }
 
-   public double getInvestmentRisk() {
-        return investmentRisk;
-    }
+   public double getInvestmentRisk()
+   {
+      return investmentRisk;
+   }
 
-    public void setInvestmentRisk(double investmentRisk) {
-        this.investmentRisk = investmentRisk;
-    }
+   public void setInvestmentRisk(double investmentRisk)
+   {
+      this.investmentRisk = investmentRisk;
+   }
 
-    public double getInvestmentReturns() {
-        return investmentReturns;
-    }
+   public double getInvestmentReturns()
+   {
+      return investmentReturns;
+   }
 
-    public void setInvestmentReturns(double investmentReturns) {
-        this.investmentReturns = investmentReturns;
-    }
+   public void setInvestmentReturns(double investmentReturns)
+   {
+      this.investmentReturns = investmentReturns;
+   }
 
-    public double getTotalCost() {
-        return totalCost;
-    }
+   public double getTotalCost()
+   {
+      return totalCost;
+   }
 
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
-    }
+   public void setTotalCost(double totalCost)
+   {
+      this.totalCost = totalCost;
+   }
 
-    public double getTotalCapitalWithGains() {
-        return totalCapitalWithGains;
-    }
+   public double getTotalCapitalWithGains()
+   {
+      return totalCapitalWithGains;
+   }
 
-    public void setTotalCapitalWithGains(double totalCapitalWithGains) {
-           this.totalCapitalWithGains = totalCapitalWithGains;
-    }
+   public void setTotalCapitalWithGains(double totalCapitalWithGains)
+   {
+      this.totalCapitalWithGains = totalCapitalWithGains;
+   }
+
+   public double getWithdrawlAmount()
+   {
+      return withdrawlAmount;
+   }
+
+   public void setWithdrawlAmount(double withdrawlAmount)
+   {
+      this.withdrawlAmount = withdrawlAmount;
+   }
 
    public double getGoalsrequired()
    {

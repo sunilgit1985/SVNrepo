@@ -176,6 +176,28 @@ public class PortfolioOptimizer
       return assetDataList;
    }
 
+   public String getCashColor(String theme) {
+      read.lock();
+      try
+      {
+         String key = buildAssetKey(checkThemeName(theme), "Cash");
+         if (assetDataMap.containsKey(key)) {
+            return assetDataMap.get(key).getColor();
+         }
+         return "#f5f5f5";
+      }
+      catch (Exception ex)
+      {
+
+      }
+      finally
+      {
+         read.unlock();
+      }
+      return null;
+
+   }
+
    public AssetData getAssetData(String theme, String assetName)
    {
       read.lock();

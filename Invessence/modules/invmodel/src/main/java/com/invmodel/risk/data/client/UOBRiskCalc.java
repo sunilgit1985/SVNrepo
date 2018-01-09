@@ -22,20 +22,7 @@ public class UOBRiskCalc extends RiskCalc
       super(userRiskProfile, acctnum);
    }
 
-   private Double calcRiskPercentile(Double duration)
-   {
-      if (duration == null || duration < 2.0)
-      {
-         return 0.0;
-      }
-
-      Double maxScore = userRiskProfile.getMaxScore();
-      Double riskPercentile = (duration - 2.0) / 28 * maxScore;
-      riskPercentile = Math.min(riskPercentile, maxScore);
-      return (riskPercentile < 0.0 ? 0.0 : riskPercentile);
-   }
-
-   private Integer getUOBDuration(Integer age, Integer horizon)
+   private Integer getDuration(Integer age, Integer horizon)
    {
       if (age == null || age < 2)
       {
@@ -86,45 +73,18 @@ public class UOBRiskCalc extends RiskCalc
       return 30;
    }
 
-   public Double ageTimeFormula(Double maxScore, Integer age, Integer horizon,
-                                Double investment, Double recurrring,
-                                Integer recurringPeriod, Integer withDrwalPeriod,
-                                Double interestRate) {
-
-      Double presentvalue = presentValue(recurrring,interestRate,horizon);
-      Double goalDuration = 30.0;
-      if (investment > 0.0)
-      {
-         goalDuration = Math.max(Math.min(Math.round((horizon + presentvalue / investment * recurringPeriod / 2) + withDrwalPeriod / 2), 30.0), 2.0);
-      }
-      Double value = Math.min((goalDuration-2)/28*maxScore,maxScore);
-      value = maxScore - value ;
-      return value;
-
-   }
-
-   public Integer getDefaultHorizon(Integer horizon) {
-      Integer calchorizon;
-      Integer age = userRiskProfile.getAge();
-
-      age = (age == null) ? 35 : age;
-      calchorizon = userRiskProfile.getHorizon();
-      horizon = (horizon == null) ? calchorizon : horizon;
-      Integer b5 = userRiskProfile.getDefaultDoubleValue(RiskConst.RETIREMENTAGE, 67.0).intValue();
-      horizon = (horizon != null) ? horizon : b5 - age;
-      horizon = (horizon < 0) ? 1 : horizon; // Cannot be negative.
-      return horizon;
-
-   }
-
    @Override
-   public Double ageTimeFormula(Integer age, Integer horizon)
+   public Double ageTimeFormula(Integer age, Integer horizon,
+                                Double investment, Double recurring,
+                                Integer recurringPeriod, Integer withDrwalPeriod
+   )
    {
-      Double maxScore = userRiskProfile.getMaxScore();
-      Double value = 0.0;
-      Integer duration;
-      try
+      Double interestRate = 0.04;
+      if (userRiskProfile != null)
       {
+         interestRate = userRiskProfile.getDefaultDoubleValue(RiskConst.INTERESTRATE, 0.04);
+      }
+
          /* Formula
          Input values
          B5. Retirement Age: Age +_ Horizon (Default RETIREMENTAGE from property.
@@ -139,125 +99,18 @@ public class UOBRiskCalc extends RiskCalc
          I. Risk Percentile: = MIN((B12-2)/28*100,100)
          */
 
-         // RiskConst.GOALS goal = RiskConst.GOALS.valueOf(userRiskProfile.getAnswer(RiskConst.GOAL));
-
-         duration = horizon;
-         Double b5 = userRiskProfile.getDefaultDoubleValue(RiskConst.RETIREMENTAGE, 67.0);
-         Double b6 = age.doubleValue();
-
-         Double b7;
-         b7 = getDefaultHorizon(horizon).doubleValue();
-         Double b8 = userRiskProfile.getAnswerDouble(RiskConst.INITIALINVESTMENT);
-         Double b9 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGINVESTMENT);
-         Double b10 = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGPERIOD);
-
-         Double b11 = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWALPERIOD, 0.0);
-         // Double b11 = 95 - b5;
-         Double interestRate = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWLRATE, 0.04);
-
-         Double b13 = ageTimeFormula(maxScore, age, b7.intValue(),b8, b9, b10.intValue(), b11.intValue(), interestRate);
-         b13 = maxScore - b13;
-         return b13;
-      }
-      catch (Exception ex)
+      horizon = getDefaultHorizon();
+      Double presentvalue = presentValue(recurring, interestRate, horizon);
+      Double goalDuration = 30.0;
+      withDrwalPeriod = (withDrwalPeriod == null) ? 0 : withDrwalPeriod;
+      if (investment > 0.0)
       {
-         value = 0.0;
+         goalDuration = Math.max(Math.min(Math.round((horizon + presentvalue / investment * recurringPeriod / 2) + withDrwalPeriod / 2), 30.0), 2.0);
       }
+      Double value = Math.min((goalDuration - 2) / 28 * maxScore, maxScore);
+      value = maxScore - value;
       return value;
-   }
 
-   @Override
-   public void calculate(Integer years)
-   {
-
-      Double maxScore;
-      Integer age;
-      Integer horizon;
-      Double investment, recurrring;
-      Integer recurringPeriod, withDrwalPeriod;
-      Double interestRate;
-
-      if (userRiskProfile == null)
-      {
-         return;
-      }
-
-      if (userRiskProfile.getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(RiskConst.MAXSCORE))
-      {
-         maxScore = userRiskProfile.getAdvisorRiskMaster().getAdvisorMasterdata().get(RiskConst.MAXSCORE).getDefaultDoubleValue();
-      }
-      else
-         maxScore = 100.0;
-
-      Integer numberofQuestions = userRiskProfile.getRiskQuestion();
-
-      if (userRiskProfile.getCalcFormula() == RiskConst.CALCFORMULAS.C)
-      {
-         years = (years == null || years < 1) ? 1 : years;
-         age = userRiskProfile.getAge();
-
-         horizon = getDefaultHorizon(userRiskProfile.getHorizon());
-
-         investment = userRiskProfile.getAnswerDouble(RiskConst.INITIALINVESTMENT);
-         recurrring = userRiskProfile.getAnswerDouble(RiskConst.RECURRINGINVESTMENT);
-         recurringPeriod = userRiskProfile.getAnswerInt(RiskConst.RECURRINGPERIOD);
-         if (recurringPeriod == null)
-            recurringPeriod = 0;
-
-         withDrwalPeriod = userRiskProfile.getAnswerInt(RiskConst.WITHDRAWALPERIOD);
-         if (withDrwalPeriod == null)
-            withDrwalPeriod = 1;
-
-         // Double b11 = 95 - b5;
-         interestRate = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWLRATE, 0.04);
-
-
-         userRiskProfile.getALLRiskScores().clear();
-         for (Integer thisyear = 0 ; thisyear <= years - 1 ; thisyear++)  {
-
-            if (userRiskProfile.getKnockout() > 0)
-            {
-               userRiskProfile.setAllCashFlag(thisyear, true);
-               continue;
-            }
-
-            Double tempWeight = 0.0;
-            Double value;
-            // This will redetermine the score since age and horizon are changing over period of years.
-            value = ageTimeFormula(maxScore, age, horizon, investment, recurrring,
-                                          recurringPeriod, withDrwalPeriod,
-                                          interestRate);
-
-            // The reason, we are NOT starting with Zero, is because the Zero represents Age/Horizon Risk default.
-            // Above Age and Horizon are already calculated in value.  *** Can we optimize!
-            for (int loop = 1; loop <= numberofQuestions + 1; loop++)
-            {
-               tempWeight = userRiskProfile.getRiskAnswerWeight(loop);
-               if (tempWeight != null)
-               {
-                  value = (tempWeight > value) ? tempWeight : value;
-               }
-            }
-
-            value = (value < 0.0) ? 0.0 : value;
-            value = (value > maxScore) ? maxScore : value;
-            value = (maxScore - value);
-            userRiskProfile.initRiskScore(thisyear, false, value);
-            age = (age++ >= 100) ? 100 : age; // Increase the age.
-            horizon = (horizon-- <= 0) ? 0 : horizon; // Decrease horizon
-            recurrring = (recurrring-- <= 0) ? 0 : recurrring; // Decrease the recurring
-            // Only once the horizon is reaced to zero, then start the withdrawl
-            if (horizon <= 0)
-            {
-               withDrwalPeriod = (withDrwalPeriod-- <= 0) ? 0 : withDrwalPeriod;
-            }
-         }
-      }
-   }
-
-   @Override
-   public void calculate() {
-      calculate(0);
    }
 
 }

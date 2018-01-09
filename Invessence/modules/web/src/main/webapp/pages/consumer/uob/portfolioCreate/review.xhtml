@@ -78,23 +78,23 @@
 
 
         <h:form id="ceForm">
+            <p:outputPanel id="reviewArea" style="background: transparent; border: 0px">
+                <div class="layout-portlets-box open_client_layout portfolio_layout ">
+                    <div class="Container100 Responsive100">
+                        <div class="portfolio_selection">
+                            <div class="Container30">
+                                <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
+                            </div>
+                            <div class="Container30 risk_meter">
+                                <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
+                            </div>
+                            <div class="Container30">
+                                <span class="sapn_review">Review</span>
+                                <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
+                                <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
 
-            <div class="layout-portlets-box open_client_layout portfolio_layout ">
-                <div class="Container100 Responsive100">
-                    <div class="portfolio_selection">
-                        <div class="Container30">
-                            <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
-                        </div>
-                        <div class="Container30 risk_meter">
-                            <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
-                        </div>
-                        <div class="Container30">
-                            <span class="sapn_review">Review</span>
-                            <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
-                            <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
-
-                                <h:form id="ceForm">
-                                    <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+                                    <h:form id="ceForm">
+                                        <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
 
                                             <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
                                             <script>
@@ -129,329 +129,358 @@
 
 
                                         </p:panel>
-                                </h:form>
+                                    </h:form>
 
+                                </div>
                             </div>
+
+                        </div>
+                        <div class="portfolio_progress_bar">
+                            <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
                         </div>
 
-                    </div>
-                    <div class="portfolio_progress_bar">
-                        <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
-                    </div>
+                        <div class="caraousle Container100 ">
 
-                    <div class="caraousle Container100 ">
-
-                        <div class="header_tab reviewHeader_title">
-                            <div class="header_title Container30">
-                                <div class="Container50"><span>Review</span></div>
-                                <div class="Container30 fine_tune_btn" id="fine_tune_btn">
-                                    <ui:fragment rendered="true">
-                                        <p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
-                                                         icon="ui-icon-image"	>
-                                        </p:commandButton>
-                                        <span class="ftBtnLabel">Fine Tune</span>
-                                    </ui:fragment>
-                                </div>
-
-                                <div id="fineTunePanel" Class="fineTuneBlock" >
-                                    <div class="Container100 FTLabel">
-                                        <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
-                                        <!-- <div class="Wid10 closeFTBtn Fright">
-                                            <p:commandButton id="uobftclose" styleClass="fineTuneBtn" icon="fa fa-times">
+                            <div class="header_tab reviewHeader_title">
+                                <div class="header_title Container30">
+                                    <div class="Container50"><span>Review</span></div>
+                                    <div class="Container30 fine_tune_btn" id="fine_tune_btn">
+                                        <ui:fragment rendered="true">
+                                            <p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
+                                                             icon="ui-icon-image"
+                                                             update=":ceForm:reviewArea"
+                                                             actionListener="#{uobProfile.showFTPanel}">
                                             </p:commandButton>
-
-                                        </div> -->
+                                            <span class="ftBtnLabel">Fine Tune</span>
+                                        </ui:fragment>
                                     </div>
-                                    <div class="Fs13 fineTuneDetail">
-                                        Rather than having a strategy recommended to me based on my time
-                                        horizon and risk tolerance, I would rather directly choose my investment
-                                        strategy and am familiar with the associated risks.
-                                        The strategy I choose is:
-                                    </div>
-                                    <div class="EmptyBox20"></div>
-                                    <div class="Container100 DispBlock gray">
 
-                                        <div class="Container25 TexAlRight Fs14 uobSliderLabel firstLabel">
-                                            <span class="conservative_minus"><span class="ui-button-icon-center ui-icon ui-c fa fa-minus"></span></span>
-                                            Conservative
-                                        </div>
-                                        <div class="Container50 TexAlCenter Fs20">
-                                            <h:inputHidden id="allocValue" value="#{uobpb.sliderAllocationIndex}"/>
-                                            <h:inputHidden id="minAllocValue" value="#{uobpb.cstmSliderMinAlloc}"/>
-                                            <h:inputHidden id="maxAllocValue" value="#{uobpb.cstmSliderMaxAlloc}"/>
-                                            <p:slider id="allocSlider" for="allocValue" minValue="#{uobpb.cstmSliderMinAlloc}"
-                                                      maxValue="#{uobpb.cstmSliderMaxAlloc}" step="1">
-                                                <p:ajax event="slideEnd"
-                                                />
-                                            </p:slider>
-                                        </div>
-                                        <div class="Container25 TexAlLeft Fs14 uobSliderLabel lastLabel">
-                                            <span class="conservative_plus"><span class="ui-button-icon-center ui-icon ui-c fa fa-plus"></span></span>
-                                            Aggressive
-                                        </div>
-                                        <div class="EmptyBox5"></div>
-                                        <div class="Container100 TexAlCenter recommend_btn">
-                                            <div class="ContainerIndent">
-                                                <p:commandButton id="allocSliderResetButton" value="Recommended"
-                                                                 styleClass="uob_button"
-                                                >
-                                                </p:commandButton>
+                                    <p:panel id="fineTunePanel" widgetVar="wvfineTunePanel"
+                                             styleClass="fineTuneBlock"
+                                             rendered="#{uobProfile.displayFTPanel}">
+                                            <div class="Container100 FTLabel">
+                                                <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
+                                                <!-- <div class="Wid10 closeFTBtn Fright">
+                                                    <p:commandButton id="uobftclose" styleClass="fineTuneBtn" icon="fa fa-times">
+                                                    </p:commandButton>
+
+                                                </div> -->
                                             </div>
-                                        </div>
-                                        <div class="Container100 TexAlCenter actionBtn">
-                                            <div class="ContainerIndent" style="margin-top: 50px;">
-                                                <p:commandButton id="uobFTCancel"
-                                                                 value="Cancel"
-                                                                 styleClass="uob_button"
-                                                                 style="width: 100px; margin-right: 60px;"
-                                                >
-                                                </p:commandButton>
-                                                <p:commandButton id="uobFTSave"
-                                                                 value="Save"
-                                                                 styleClass="uob_button"
-                                                                 style="width: 100px;"
-                                                >
-                                                </p:commandButton>
+                                            <div class="Fs13 fineTuneDetail">
+                                                Rather than having a strategy recommended to me based on my time
+                                                horizon and risk tolerance, I would rather directly choose my investment
+                                                strategy and am familiar with the associated risks.
+                                                The strategy I choose is:
                                             </div>
+                                            <div class="EmptyBox20"></div>
+                                            <div class="Container100 DispBlock gray">
+
+                                                <div class="Container25 TexAlRight Fs14 uobSliderLabel firstLabel">
+                                                    <p:commandLink id="allocDecr"
+                                                                   actionListener="#{uobProfile.allocDecrement}"
+                                                                   process="@this"
+                                                                   update=":ceForm:allocSlider">
+                                                    <span class="conservative_minus">
+                                                        <span class="ui-button-icon-center ui-icon ui-c fa fa-minus">
+                                                        </span>
+                                                    </span>
+                                                        Conservative
+                                                    </p:commandLink>
+                                                </div>
+                                                <div class="Container50 TexAlCenter Fs20">
+                                                    <h:inputHidden id="allocValue" value="#{uobProfile.riskCalc.riskScore}"/>
+                                                    <h:inputHidden id="minAllocValue" value="#{uobProfile.riskCalc.scoreLowerBound}"/>
+                                                    <h:inputHidden id="maxAllocValue" value="#{uobProfile.riskCalc.scoreUpperBound}"/>
+                                                    <p:slider id="allocSlider" for="allocValue"
+                                                              minValue="#{uobProfile.riskCalc.scoreLowerBound}"
+                                                              maxValue="#{uobProfile.riskCalc.scoreUpperBound}"
+                                                              step="1">
+                                                        <p:ajax event="slideEnd"
+                                                                listener="#{uobProfile.onAllocSlider}" />
+                                                    </p:slider>
+                                                </div>
+                                                <div class="Container25 TexAlLeft Fs14 uobSliderLabel lastLabel">
+                                                    <p:commandLink id="allocIncr"
+                                                                   actionListener="#{uobProfile.allocIncrement}"
+                                                                   process="@this"
+                                                                   update=":ceForm:allocSlider">
+                                                    <span class="conservative_plus">
+                                                        <span class="ui-button-icon-center ui-icon ui-c fa fa-plus">
+                                                        </span>
+                                                    </span>
+                                                        Aggressive
+                                                    </p:commandLink>
+                                                </div>
+                                                <div class="EmptyBox5"></div>
+                                                <div class="Container100 TexAlCenter recommend_btn">
+                                                    <div class="ContainerIndent">
+                                                        <p:commandButton id="allocSliderResetButton" value="Recommended"
+                                                                         styleClass="uob_button"
+                                                                         update=":ceForm:allocSlider"
+                                                                         actionListener="#{uobProfile.doAllocReset}">
+                                                        </p:commandButton>
+                                                    </div>
+                                                </div>
+                                                <div class="Container100 TexAlCenter actionBtn">
+                                                    <div class="ContainerIndent" style="margin-top: 50px;">
+                                                        <p:commandButton id="uobFTCancel"
+                                                                         value="Cancel"
+                                                                         styleClass="uob_button"
+                                                                         style="width: 100px; margin-right: 60px;"
+                                                                         update=":ceForm:reviewArea"
+                                                                         actionListener="#{uobProfile.cancelFTPanel}">
+                                                        </p:commandButton>
+                                                        <p:commandButton id="uobFTSave"
+                                                                         value="Save"
+                                                                         styleClass="uob_button"
+                                                                         style="width: 100px;"
+                                                                         update=":ceForm:reviewArea"
+                                                                         actionListener="#{uobProfile.closeFTPanel}">
+                                                        </p:commandButton>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    </p:panel>
+
+
+                                </div>
+                                <div class="header_link prenext_btn Container70 review_btn" >
+                                    <div class="Container50 next_btn">
+                                        <ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
+                                            <p:commandLink rendered="true" class="next_pg_link"
+                                                           actionListener="#{uobProfile.gotoFinalConfim}"> Next
+                                            </p:commandLink>
+
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
+                                            <p:commandLink rendered="true" class="next_pg_link"
+                                                           actionListener="#{uobProfile.gotoCustody}"> Open Account
+                                            </p:commandLink>
+
+                                        </ui:fragment>
+                                    </div>
+                                    <div class="Container50 pre_btn">
+                                        <p:commandLink rendered="true" class="next_pg_link"
+                                                       process="@this"
+                                                       actionListener="#{uobProfile.gotoRiskQuestions}"> Start Over </p:commandLink>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="Container100 tab_dtl review_dtl">
+                                <div class="slidePanelleft" id="slidePanelleft"><span
+                                        class="ui-button-icon-center ui-icon ui-c fa fa-angle-left"></span>Goal Details
+                                </div>
+
+                                <div class="Container20" id="leftpanel">
+                                    <div class="Container100">
+                                        <div class="Container20 reviewGoal_heding">
+                                            Goal :
+                                        </div>
+                                        <div class="Container50 selected_reviewGoal">
+                                            <p:graphicImage name="#{uobProfile.selectedGoal.image}" library="#{uiLayout.webProfile.cssdir}" width="60px"/>
+                                            <span>#{uobProfile.selectedGoal.displayName}</span>
                                         </div>
                                     </div>
-                                </div>
-
-
-                            </div>
-                            <div class="header_link prenext_btn Container70 review_btn" >
-                                <div class="Container50 next_btn">
-                                    <ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
-                                        <p:commandLink rendered="true" class="next_pg_link"
-                                                       actionListener="#{uobProfile.gotoFinalConfim}"> Next
-                                        </p:commandLink>
-
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
-                                        <p:commandLink rendered="true" class="next_pg_link"
-                                                       actionListener="#{uobProfile.gotoCustody}"> Open Account
-                                        </p:commandLink>
-
-                                    </ui:fragment>
-                                </div>
-                                <div class="Container50 pre_btn">
-                                    <p:commandLink rendered="true" class="next_pg_link"
-                                                   process="@this"
-                                                   actionListener="#{uobProfile.gotoRiskQuestions}"> Start Over </p:commandLink>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="Container100 tab_dtl review_dtl">
-                            <div class="slidePanelleft" id="slidePanelleft"><span
-                                    class="ui-button-icon-center ui-icon ui-c fa fa-angle-left"></span>Goal Details
-                            </div>
-
-                            <div class="Container20" id="leftpanel">
-                                <div class="Container100">
-                                    <div class="Container20 reviewGoal_heding">
-                                        Goal :
+                                    <div class="Container100">
+                                        Expected year funds needed: <span class="output_review">#{uobProfile.horizon} years</span>
                                     </div>
-                                    <div class="Container50 selected_reviewGoal">
-                                        <p:graphicImage name="#{uobProfile.selectedGoal.image}" library="#{uiLayout.webProfile.cssdir}" width="60px"/>
-                                        <span>#{uobProfile.selectedGoal.displayName}</span>
+                                    <div class="Container100">
+                                        Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{uobProfile.initialInvestment}</span>
+                                    </div>
+                                    <div class="Container100">
+                                        Recurring Investment: <span class="output_review">S$ #{uobProfile.customer.recurringInvestment}</span>
+                                    </div>
+                                    <div class="Container100">
+                                        Current Net Worth: <span class="output_review">S$ #{uobProfile.customer.accountFinancials.networth}</span>
                                     </div>
                                 </div>
                                 <div class="Container100">
-                                    Expected year funds needed: <span class="output_review">#{uobProfile.horizon} years</span>
-                                </div>
-                                <div class="Container100">
-                                    Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{uobProfile.initialInvestment}</span>
-                                </div>
-                                <div class="Container100">
-                                    Recurring Investment: <span class="output_review">S$ #{uobProfile.customer.recurringInvestment}</span>
-                                </div>
-                                <div class="Container100">
-                                    Current Net Worth: <span class="output_review">S$ #{uobProfile.customer.accountFinancials.networth}</span>
-                                </div>
-                            </div>
-                            <div class="Container100">
-                                <div class="Container100 Responsive50 tp20 confirmation_donut_dtl">
-                                    <!-- ROHIT's CHANGE -->
-                                    <div class="ContainerIndent">
+                                    <div class="Container100 Responsive50 tp20 confirmation_donut_dtl">
+                                        <!-- ROHIT's CHANGE -->
+                                        <div class="ContainerIndent">
 
-                                        <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
-                                            <script>
-                                                $(document).ready(function ()
-                                                                  {
-                                                                      //if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-                                                                      //{
-                                                                      //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                                      //{
-                                                                      // draw2dDonut1lyrChartDyna('CNFPrflo');
-                                                                      draw2dDonut1lyrChartDyna('idPieChartArea', 'idPieChartValue');
-                                                                      //}
-                                                                      //}
+                                            <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+                                                <script>
+                                                    $(document).ready(function ()
+                                                                      {
+                                                                          //if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                                          //{
+                                                                          //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                                          //{
+                                                                          // draw2dDonut1lyrChartDyna('CNFPrflo');
+                                                                          draw2dDonut1lyrChartDyna('idPieChartArea', 'idPieChartValue');
+                                                                          //}
+                                                                          //}
 
 
-                                                                      /* line chart */
-                                                                      var chart = Highcharts.chart('container', {
+                                                                          /* line chart */
+                                                                          var chart = Highcharts.chart('container', {
 
-                                                                          title: {
-                                                                              text: 'Chart.update'
-                                                                          },
+                                                                              title: {
+                                                                                  text: 'Chart.update'
+                                                                              },
 
-                                                                          subtitle: {
-                                                                              text: 'Plain'
-                                                                          },
+                                                                              subtitle: {
+                                                                                  text: 'Plain'
+                                                                              },
 
-                                                                          xAxis: {
-                                                                              categories: ['35', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90']
-                                                                          },
+                                                                              xAxis: {
+                                                                                  categories: ['35', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90']
+                                                                              },
 
-                                                                          series: [{
-                                                                              type: 'column',
-                                                                              colorByPoint: true,
-                                                                              data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                                                                              showInLegend: false
-                                                                          }]
+                                                                              series: [{
+                                                                                  type: 'column',
+                                                                                  colorByPoint: true,
+                                                                                  data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                                                                                  showInLegend: false
+                                                                              }]
+
+                                                                          });
+
+
+                                                                          $('#plain').click(function ()
+                                                                                            {
+                                                                                                chart.update({
+                                                                                                                 chart: {
+                                                                                                                     inverted: false,
+                                                                                                                     polar: false
+                                                                                                                 },
+                                                                                                                 subtitle: {
+                                                                                                                     text: 'Plain'
+                                                                                                                 }
+                                                                                                             });
+                                                                                            });
+
+                                                                          $('#inverted').click(function ()
+                                                                                               {
+                                                                                                   chart.update({
+                                                                                                                    chart: {
+                                                                                                                        inverted: true,
+                                                                                                                        polar: false
+                                                                                                                    },
+                                                                                                                    subtitle: {
+                                                                                                                        text: 'Inverted'
+                                                                                                                    }
+                                                                                                                });
+                                                                                               });
+
+                                                                          $('#polar').click(function ()
+                                                                                            {
+                                                                                                chart.update({
+                                                                                                                 chart: {
+                                                                                                                     inverted: false,
+                                                                                                                     polar: true
+                                                                                                                 },
+                                                                                                                 subtitle: {
+                                                                                                                     text: 'Polar'
+                                                                                                                 }
+                                                                                                             });
+                                                                                            });
 
                                                                       });
 
 
-                                                                      $('#plain').click(function ()
-                                                                                        {
-                                                                                            chart.update({
-                                                                                                             chart: {
-                                                                                                                 inverted: false,
-                                                                                                                 polar: false
-                                                                                                             },
-                                                                                                             subtitle: {
-                                                                                                                 text: 'Plain'
-                                                                                                             }
-                                                                                                         });
-                                                                                        });
+                                                </script>
+                                                <div class="Container100">
+                                                    <div class="Container30 donutChartGraph">
+                                                        <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
 
-                                                                      $('#inverted').click(function ()
-                                                                                           {
-                                                                                               chart.update({
-                                                                                                                chart: {
-                                                                                                                    inverted: true,
-                                                                                                                    polar: false
-                                                                                                                },
-                                                                                                                subtitle: {
-                                                                                                                    text: 'Inverted'
-                                                                                                                }
-                                                                                                            });
-                                                                                           });
-
-                                                                      $('#polar').click(function ()
-                                                                                        {
-                                                                                            chart.update({
-                                                                                                             chart: {
-                                                                                                                 inverted: false,
-                                                                                                                 polar: true
-                                                                                                             },
-                                                                                                             subtitle: {
-                                                                                                                 text: 'Polar'
-                                                                                                             }
-                                                                                                         });
-                                                                                        });
-
-                                                                  });
+                                                        <input type="hidden"
+                                                               value="#{uobProfile.chart.chartData}"
+                                                               class="idPieChartValue"/>
+                                                        <input type="hidden" value="HIGHCHART.2DDONUT"
+                                                               class="idChartType"/>
 
 
-                                            </script>
-                                            <div class="Container100">
-                                                <div class="Container30 donutChartGraph">
-                                                    <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
+                                                    </div>
+                                                    <div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
 
-                                                    <input type="hidden"
-                                                           value="#{uobProfile.chart.chartData}"
-                                                           class="idPieChartValue"/>
-                                                    <input type="hidden" value="HIGHCHART.2DDONUT"
-                                                           class="idChartType"/>
+                                                        <div class="ContainerIndent ">
+                                                            <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
+                                                                         value="#{uobProfile.customer.displayPortfolioList}">
+                                                                <!-- <p:column style="width:5%; background-color: #{ticker.color}">
+                                                                    <h:outputText value=" "/>
+                                                                </p:column> -->
+                                                                <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
+                                                                    <span style="background-color:  #{ticker.color}">HI</span>
+                                                                </p:column>
 
+                                                                <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
+                                                                    <f:facet name="header">
+                                                                        <h:outputText value="Name"/>
+                                                                    </f:facet>
+                                                                    <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
+                                                                </p:column>
+                                                                <p:column style="width:10%;"
+                                                                          styleClass="Fs12 num-text-align TexAlRight">
+                                                                    <!-- ROHIT's CHANGE -->
+                                                                    <f:facet name="header">
+                                                                        <h:outputText value="Allocated"/>
+                                                                    </f:facet>
+                                                                    <h:outputText id="uobtalloc2" value="#{ticker.weight}">
+                                                                        <f:convertNumber pattern="##0%"/>
+                                                                    </h:outputText>
+                                                                </p:column>
 
-                                                </div>
-                                                <div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
+                                                                <p:column style="width:10%;"
+                                                                          styleClass="Fs12 num-text-align TexAlRight">
+                                                                    <!-- Prashant intro 2017-Sept -->
+                                                                    <f:facet name="header">
+                                                                        <h:outputText value="Currency"/>
+                                                                    </f:facet>
+                                                                    <h:outputText id="uobbasecurrency" value="#{ticker.tradeCurrency}">
+                                                                    </h:outputText>
+                                                                </p:column>
 
-                                                    <div class="ContainerIndent ">
-                                                        <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
-                                                                     value="#{uobProfile.customer.displayPortfolioList}">
-                                                            <!-- <p:column style="width:5%; background-color: #{ticker.color}">
-                                                                <h:outputText value=" "/>
-                                                            </p:column> -->
-                                                            <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
-																<span style="background-color:  #{ticker.color}">HI</span>
-			                                                </p:column>
-			                                                            
-                                                            <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Name"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
-                                                            </p:column>
-                                                            <p:column style="width:10%;"
-                                                                      styleClass="Fs12 num-text-align TexAlRight">
-                                                                <!-- ROHIT's CHANGE -->
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Allocated"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobtalloc2" value="#{ticker.weight}">
-                                                                    <f:convertNumber pattern="##0%"/>
-                                                                </h:outputText>
-                                                            </p:column>
+                                                                <p:column style="width:19%;"
+                                                                          styleClass="Fs12 num-text-align TexAlRight">
+                                                                    <!-- ROHIT's CHANGE -->
+                                                                    <f:facet name="header">
+                                                                        <h:outputText value="Value"/>
+                                                                    </f:facet>
+                                                                    <h:outputText id="uobtval" value="#{ticker.value}">
+                                                                        <f:convertNumber pattern="##,###,###"/>
+                                                                    </h:outputText>
+                                                                </p:column>
 
-                                                            <p:column style="width:10%;"
-                                                                      styleClass="Fs12 num-text-align TexAlRight">
-                                                                <!-- Prashant intro 2017-Sept -->
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Currency"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobbasecurrency" value="#{ticker.tradeCurrency}">
-                                                                </h:outputText>
-                                                            </p:column>
-
-                                                            <p:column style="width:19%;"
-                                                                      styleClass="Fs12 num-text-align TexAlRight">
-                                                                <!-- ROHIT's CHANGE -->
-                                                                <f:facet name="header">
-                                                                    <h:outputText value="Value"/>
-                                                                </f:facet>
-                                                                <h:outputText id="uobtval" value="#{ticker.value}">
-                                                                    <f:convertNumber pattern="##,###,###"/>
-                                                                </h:outputText>
-                                                            </p:column>
-
-                                                            <p:columnGroup type="footer">
-                                                                <p:row>
-                                                                    <p:column/>
-                                                                    <p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
-                                                                              footerText="Total">
-                                                                    </p:column>
-                                                                    <p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
-                                                                              footerText="#{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}">
-                                                                    </p:column>
-                                                                </p:row>
-                                                            </p:columnGroup>
-                                                        </p:dataTable>
+                                                                <p:columnGroup type="footer">
+                                                                    <p:row>
+                                                                        <p:column/>
+                                                                        <p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
+                                                                                  footerText="Total">
+                                                                        </p:column>
+                                                                        <p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
+                                                                                  footerText="#{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}">
+                                                                        </p:column>
+                                                                    </p:row>
+                                                                </p:columnGroup>
+                                                            </p:dataTable>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="Container100 donutChartGraph chart_graph">
-                                                <div id="container"></div>
-                                            </div>
-                                        </p:panel>
+                                                <div class="Container100 donutChartGraph chart_graph">
+                                                    <div id="container"></div>
+                                                </div>
+                                            </p:panel>
 
-                                        <!--<p:panel id="fineTunePanel" styleClass="fineTuneBlock" rendered="#{uobpb.displayFTPanel}">-->
+                                            <!--<p:panel id="fineTunePanel" styleClass="fineTuneBlock" rendered="#{uobpb.displayFTPanel}">-->
 
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
-
-
                 </div>
-            </div>
+
+            </p:outputPanel>
+
         </h:form>
     </ui:define>
 
