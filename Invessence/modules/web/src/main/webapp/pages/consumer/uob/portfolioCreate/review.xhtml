@@ -36,54 +36,58 @@
                         library="#{uiLayout.webProfile.cssdir}"/>
 
 
-        <script>
-            $(document).ready(function ()
-                              {
-                                  $("#slidePanelleft").click(function ()
-                                                             {
+		<script>
+			$(document).ready(function() {
+				$(".GoalClickEvent").click(function() {
 
+					// Set the effect type
+					var effect = 'slide';
 
-                                                                 // Set the effect type
-                                                                 var effect = 'slide';
+					// Set the options for the effect type chosen
+					var options = {
+						direction : 'left'
+					};
 
-                                                                 // Set the options for the effect type chosen
-                                                                 var options = {direction: 'left'};
+					// Set the duration (default: 400 milliseconds)
+					var duration = 700;
 
-                                                                 // Set the duration (default: 400 milliseconds)
-                                                                 var duration = 700;
+					$('#leftpanel').toggle(effect, options, duration);
 
-                                                                 $('#leftpanel').toggle(effect, options, duration);
+				});
 
-                                                             });
+				$("#fine_tune_btn").click(function() {
 
+					// Set the effect type
+					var effect = 'slide';
 
-                                  $("#fine_tune_btn").click(function () {
+					// Set the options for the effect type chosen
+					var options = {
+						direction : 'up'
+					};
 
+					// Set the duration (default: 400 milliseconds)
+					var duration = 700;
 
-                                      // Set the effect type
-                                      var effect = 'slide';
+					$('.fineTuneBlock').toggle(effect, options, duration);
 
-                                      // Set the options for the effect type chosen
-                                      var options = { direction: 'up' };
+				});
 
-                                      // Set the duration (default: 400 milliseconds)
-                                      var duration = 700;
+				$(".panelClose").click(function() {
+					$('.fineTuneBlock').hide(300);
+					$('#leftpanel').hide(300);
+				});
+			});
+		</script>
 
-                                      $('#fineTunePanel').toggle(effect, options, duration);
-
-                                  });
-                              });
-
-        </script>
-
-
-        <h:form id="ceForm">
+		<h:form id="ceForm">
             <p:outputPanel id="reviewArea" style="background: transparent; border: 0px">
                 <div class="layout-portlets-box open_client_layout portfolio_layout ">
                     <div class="Container100 Responsive100">
                         <div class="portfolio_selection">
-                            <div class="Container30">
-                                <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
+                            <div class="Container30 ">
+                            <span class="GoalClickEvent">
+                                <p:graphicImage  name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
+                            </span>
                             </div>
                             <div class="Container30 risk_meter">
                                 <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
@@ -158,7 +162,8 @@
                                     <p:panel id="fineTunePanel" widgetVar="wvfineTunePanel"
                                              styleClass="fineTuneBlock"
                                              rendered="#{uobProfile.displayFTPanel}">
-                                            <div class="Container100 FTLabel">
+                                        <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
+                                        <div class="Container100 FTLabel">
                                                 <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
                                                 <!-- <div class="Wid10 closeFTBtn Fright">
                                                     <p:commandButton id="uobftclose" styleClass="fineTuneBtn" icon="fa fa-times">
@@ -270,18 +275,21 @@
 
                             </div>
                             <div class="Container100 tab_dtl review_dtl">
-                                <div class="slidePanelleft" id="slidePanelleft"><span
-                                        class="ui-button-icon-center ui-icon ui-c fa fa-angle-left"></span>Goal Details
+                                <div class="slidePanelleft GoalClickEvent" id="slidePanelleft">
+                                    <span class="ui-button-icon-center ui-icon ui-c fa fa-angle-left"></span>
+                                    <span style="float:left; ">Goal Details</span>
+                                    <p:graphicImage name="images/invtGoal.png" library="#{uiLayout.webProfile.cssdir}"/>
                                 </div>
 
                                 <div class="Container20" id="leftpanel">
+                                    <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
                                     <div class="Container100">
                                         <div class="Container20 reviewGoal_heding">
                                             Goal :
                                         </div>
                                         <div class="Container50 selected_reviewGoal">
                                             <p:graphicImage name="#{uobProfile.selectedGoal.image}" library="#{uiLayout.webProfile.cssdir}" width="60px"/>
-                                            <span>#{uobProfile.selectedGoal.displayName}</span>
+                                            <span style="float:left;width:100%;">#{uobProfile.selectedGoal.displayName}</span>
                                         </div>
                                     </div>
                                     <div class="Container100">

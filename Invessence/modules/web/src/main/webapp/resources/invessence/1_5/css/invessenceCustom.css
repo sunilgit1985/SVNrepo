@@ -1542,7 +1542,7 @@ input {
 }
 .tax_info td a {
     float: left;
-   /*  margin: 5px; */
+    /*  margin: 5px; */
 }
 .input, .ui-selectonemenu, .ui-selectcheckboxmenu {
     color: #546e7a !important;
@@ -1770,7 +1770,7 @@ a {
 
 .FullContainer {
     margin: 10px 0px;
-   /*  padding-top: 50px; */
+    /*  padding-top: 50px; */
 }
 .layout-portlets-box.strategy_layout {
     /*margin-top: -50px;*/
@@ -1944,14 +1944,15 @@ span > input {
 .fineTuneBlock {
     width: 90%;
     height: 340px;
-    position: absolute;
+    position: absolute !important;
     background: white;
     border: 0;
     z-index: 200;
     left: 0;
     margin: 0 5%;
     box-shadow: 2px 2px 5px 1px #c5c5c5;
-    top:90px;
+    top:60px;
+    display:none;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
 .fineTuneDetail {
@@ -4515,7 +4516,7 @@ th.del_edit_col span {
 
 .acc_holder_form table {
     width: 99%;
-   
+
 }
 .acc_holder_form .tax_info table {
     width: 99%;
@@ -4571,7 +4572,7 @@ th.del_edit_col span {
     position: relative;
     padding: 0 !important;
     color: #000;
-    line-height: 1.6; 
+    line-height: 1.6;
     font-size: 17px !important;
 }
 .go-bottom .radio_label label {
@@ -4632,7 +4633,7 @@ th.del_edit_col span {
     width: 97%;
     height: 85px !important;
     padding: 19px 12px 0 5px !important;
-        overflow: hidden !important;
+    overflow: hidden !important;
 }
 /*** 12/10/2017 uob account opening page**/
 .Container50 .ui-selectonemenu {width:100%;}
@@ -5255,10 +5256,10 @@ span.change_goal {
     padding: 12px;
 }
 .selectRadio .ui-radiobutton .ui-radiobutton-box {
-     border: solid 1px #a4332f;
+    border: solid 1px #a4332f;
 }
 .selectRadio .ui-icon-bullet {
-    background-color: #a4332f !important;   
+    background-color: #a4332f !important;
 }
 .portfolio_progress_bar .ui-progressbar-value {
     background-color: #a4332f;}
@@ -5345,8 +5346,8 @@ span.output_review {
 }
 .Container100.donutChartGraph.chart_graph {
     position: relative;
-   /*  top: -132px; */
-   margin-bottom:150px;
+    /*  top: -132px; */
+    margin-bottom:150px;
 }
 .chart_graph .highcharts-series rect {
     fill: #27aae1;
@@ -5383,7 +5384,7 @@ span.output_review {
 }
 .review_dtl .Container30.donutChartGraph {
     position: relative;
-   /*  top: 48px; */
+    /*  top: 48px; */
 }
 .select_item .ui-autocomplete {
     width: 100%;
@@ -5398,7 +5399,7 @@ span.output_review {
 }
 .width35
 {
-	width:35%;
+    width:35%;
 }
 .select_item button {
     display: none;
@@ -5406,8 +5407,8 @@ span.output_review {
 .ui-autocomplete-panel {
     border-top: solid 3px #a4332f;
     border-bottom: solid 3px #a4332f;}
-    .go-bottom input:focus::-moz-placeholder {
-    opacity: 0;    
+.go-bottom input:focus::-moz-placeholder {
+    opacity: 0;
 }
 .go-bottom textarea:focus::-moz-placeholder {
     opacity: 0;
@@ -5439,12 +5440,13 @@ span.output_review {
 .Container100.uplaod_note {
     width: 100%;
     float: left;
-   /*  background: #fcf8e3; */
+    /*  background: #fcf8e3; */
     padding: 10px;
     margin: 0px 0 2%;
-   /* text-align: center;*/
+    /* text-align: center;*/
     color: #000;
     line-height:1.60;
+    font-size:18px;
 }
 .upload_file .ui-button-text {
     background-color: #a4332f;
@@ -5465,9 +5467,9 @@ span.output_review {
 /*** 11/12/2017 file upload css**/
 .upload_file .ui-fileupload-content {
     width: 203px;
-     left: 250px;
+    left: 250px;
     top: -10px;
-  /*  margin-left: 700%;*/
+    /*  margin-left: 700%;*/
     position: absolute;
 }
 .upload_file span.ui-messages-error-detail {
@@ -5492,7 +5494,6 @@ span.output_review {
     list-style: disc;
     line-height: 1.70;
     font-size:17px;
-	font-weight:bold;
 }
 .file_nm {
     text-align: center;
@@ -5510,7 +5511,7 @@ span.output_review {
     /* padding: 0 35%; */
     width: auto;
     margin: 1% 41% 3%;
-   position:relative;
+    position:relative;
 
 }
 
@@ -5533,7 +5534,15 @@ div.slidePanelleft {
     left: 0;
     padding: 7px;
     cursor: pointer;
-    width: 110px;
+    width: 145px;
+    z-index: 1;
+    height: 25px;
+    line-height: 25px;
+}
+.slidePanelleft img {
+    height: 40px;
+    position: relative;
+    top: -8px;
 }
 div#leftpanel {
     position: absolute;
@@ -5600,7 +5609,7 @@ div#leftpanel {
     font-size: 17px;
     color: #a4332f;
     padding: 8px 12px 7px 15px!important;
-        font-family: helvetica;
+    font-family: helvetica;
 }
 .advButton > span{border: solid 2px #a4332f;background: #eee7db!important;}
 .AdvisorGridtcmLayout.ui-datatable .ui-paginator .ui-paginator-rpp-options.ui-state-hover, .AdvisorGridtcmLayout.ui-datatable .ui-paginator .ui-paginator-rpp-options.ui-state-focus, .AdvisorGridtcmLayout.ui-datatable .ui-paginator .ui-paginator-rpp-options
@@ -5611,15 +5620,17 @@ div#leftpanel {
 .ui-datatable .ui-paginator .ui-paginator-first, .ui-datatable .ui-paginator .ui-paginator-prev, .ui-datatable .ui-paginator .ui-paginator-pages .ui-paginator-page, .ui-datatable .ui-paginator .ui-paginator-next, .ui-datatable .ui-paginator .ui-paginator-last, .ui-datatable .ui-paginator .ui-paginator-rpp-options
 {border: solid 1px #a4332f;}
 .slideDwnpanel {
-    position: absolute;
+    position: absolute !important;
     top: 0;
     background: #fff;
     left: 0;
-    z-index: 16000003;
+    z-index: 123;
     transition-timing-function: ease-in;
     transition-duration: 0.3s;
-    height:100%;
-    width:99.9%;
+    height: auto;
+    width: 99%;
+    padding: 10px !important;
+    box-shadow: 1px 1px 2px 1px #ccc;
 
 }
 .uobbtn .ui-fieldset-legend {
@@ -5674,7 +5685,7 @@ div#leftpanel {
 .getStartcaraousle{width:75%;}
 svg.highcharts-root {
     height: auto !important;}
-    
+
 .reviewDonutDts {
     display: none;
     position: absolute;
@@ -5688,18 +5699,18 @@ svg.highcharts-root {
     right: 172px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    
+
 }
 
 .confirmation_donut_dtl .UserconfTable .ContainerIndent {
     margin: 0px auto;
 }
-.reviewHeader_title span.conservative_minus{    
-	float: right;
+.reviewHeader_title span.conservative_minus{
+    float: right;
     right: -16px;
     top: -2px;
     width: 22px;}
-    span.conservative_plus {
+span.conservative_plus {
     float: left;
     width: 19px;
 }
@@ -5782,8 +5793,21 @@ form#ceForm {
     top: -4px;
     right: -5px;
 }
+/*** 8/01/2018 ***/
 
-
+.Uploadlayout-portlets-box {
+    margin: 0 auto 8px;
+}
+.Uploadlayout-portlets-box h2 {
+    text-align: center;
+}
+.tab_dtl h2 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #a4332f;
+    padding: 10px 0;
+    text-transform: capitalize;
+}
 
 
 
