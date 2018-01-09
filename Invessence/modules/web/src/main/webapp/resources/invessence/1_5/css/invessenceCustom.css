@@ -4970,6 +4970,7 @@ td.bullet_td span {
     vertical-align: top;
     line-height: 72px;
     font-weight:bold;
+    cursor:pointer;
 }
 .ui-carousel-header.ui-widget-header.ui-corner-all {
     background: #fff;
@@ -5768,6 +5769,7 @@ span.conservative_plus {
     top: 2px;
     right: 5px;
     z-index: 1;
+    cursor:pointer;
 }
 .ui-button-text{background-color: #a4332f}
 
