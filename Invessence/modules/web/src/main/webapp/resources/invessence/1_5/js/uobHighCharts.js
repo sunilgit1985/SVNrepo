@@ -342,8 +342,8 @@ try{
 //              chartValue = document.getElementById('ceForm:twodDonutValueChartCnf').value;
 //              vChrtId='2dDonutChartCnf';
 //          }
-          console.log("draw2dDonut1lyrChartDyna Chart Div "+vChrtId);
-          console.log("draw2dDonut1lyrChartDyna Chart Value "+chartValue);
+          console.log("draw2dDonut1lyrChartDyna Chart Div "+ vChrtId);
+          console.log("draw2dDonut1lyrChartDyna Chart Value "+ chartValue);
 
 
           var assetJSON = $.parseJSON(chartValue)

@@ -125,12 +125,13 @@ public class ProfileBean extends PortfolioCreationUI
             if (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.ChangeStrategy))
             {
                // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
+
+               initUI();
                if (webutil.isUserLoggedIn())
                {
                   gotoRiskQuestions();
                }
 
-               initUI();
                super.preRenderView();
                setDefault();
                if (beanmode.equals(UIMode.ChangeStrategy))
@@ -142,6 +143,8 @@ public class ProfileBean extends PortfolioCreationUI
       }
       catch (Exception ex)
       {
+         System.out.println("Error "+ex);
+         ex.printStackTrace();
       }
    }
 

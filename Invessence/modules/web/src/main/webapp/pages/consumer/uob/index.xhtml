@@ -353,16 +353,21 @@
                         </h:outputText>
                      </h1>
                      <p:panel id="graphArea" style="border: 0px; background: white;">
+                        <input type="hidden" id="idGraphFlag" value="#{uobdash.selAccountList.get(0).managed and uobdash.dsplPrflDtl}"/>
                         <script>
                            $(document).ready(function ()
                                              {
                                                 try{
-                                                   if (document.getElementById('uobIndxform:typeOfCharts') != null)
+//                                                   if (document.getElementById('uobIndxform:typeOfCharts') != null)
+//                                                   {
+//                                                      if (document.getElementById('uobIndxform:typeOfCharts').value == 'HIGHCHART.2DDONUT')
+//                                                      {
+//                                                         draw2dDonut1lyrChartDyna('uobIndxform');
+//                                                      }
+//                                                   }
+                                                   if($('.idGraphFlag').val()=='true' || $('.idGraphFlag').val()==true)
                                                    {
-                                                      if (document.getElementById('uobIndxform:typeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                      {
-                                                         draw2dDonut1lyrChartDyna('uobIndxform');
-                                                      }
+                                                      draw2dDonut1lyrChartDyna('idPieChartArea', 'idPieChartValue');
                                                    }
                                                 }catch(e){
                                                    console.log("Dashboar graph error "+e);
@@ -419,10 +424,14 @@
                               <div class="Container50 donutChartGraph">
 
                                  <ui:fragment rendered="#{uobdash.typeOfChart == 'HIGHCHART.2DDONUT'}">
-                                    <div id="2dDonutChart"></div>
-                                    <h:inputHidden value="#{uobdash.resultChart}"
-                                                   id="twodDonutValueChart"/>
-                                    <h:inputHidden value="#{uobdash.typeOfChart}" id="typeOfCharts"/>
+                                    <div id="2dDonutChart" class="idPieChartArea"></div>
+
+                                    <input type="hidden"
+                                           value="#{uobdash.resultChart}"
+                                           class="idPieChartValue"/>
+                                    <input type="hidden" value="#{uobdash.typeOfChart}"
+                                           class="idChartType"/>
+
                                  </ui:fragment>
                               </div>
                               <div class="Container50 donutChartTable">

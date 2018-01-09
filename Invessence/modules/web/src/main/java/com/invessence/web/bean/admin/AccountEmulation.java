@@ -33,7 +33,7 @@ public class AccountEmulation
          {
             System.out.print("processAccount Account Number " + accountNumber);
             System.out.print("processAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step1_process_account", 0);
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step1_process_account", 0,webutil.getLogonid());
          }
          else
          {
@@ -55,7 +55,7 @@ public class AccountEmulation
          {
             System.out.print("openAccount Account Number " + accountNumber);
             System.out.print("openAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step2_openaccount", 0);
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step2_openaccount", 0,webutil.getLogonid());
          }
          else
          {
@@ -84,7 +84,7 @@ public class AccountEmulation
          {
             System.out.print("activeAccount Account Number " + accountNumber);
             System.out.print("activeAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step3_activateaccount", 1);
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step3_activateaccount", 1,webutil.getLogonid());
          }
       }
       catch (Exception e)
@@ -110,7 +110,7 @@ public class AccountEmulation
          {
             System.out.print("fundAccount Account Number " + accountNumber);
             System.out.print("fundAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step4_funding", 1);
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step4_funding", 1,webutil.getLogonid());
          }
       }
       catch (Exception e)
@@ -132,7 +132,7 @@ public class AccountEmulation
          }
          else
          {
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step5_position", 0);
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step5_position", 0,webutil.getLogonid());
          }
       }
       catch (Exception e)
@@ -147,7 +147,7 @@ public class AccountEmulation
       {
          System.out.print("emulateTrade Account Number " + accountNumber);
          System.out.print("emulateTrade Amount " + amount);
-         getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_test1", 0);
+         getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_test1", 0,webutil.getLogonid());
       }
       catch (Exception e)
       {

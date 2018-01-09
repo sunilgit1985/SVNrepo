@@ -625,11 +625,12 @@ public class CustodySaveSP extends StoredProcedure
       return super.execute(inputMap);
    }
 
-   public Map tdMangedUserProfile(Long acctnum)
+   public Map tdMangedUserProfile(Long acctnum,Long logonid)
    {
       Map<String, Object> inputMap = new HashMap<String, Object>();
       inputMap.put("p_acctnum", acctnum);
       inputMap.put("p_managed", "P");
+      inputMap.put("p_logonid",logonid);
       return super.execute(inputMap);
    }
 

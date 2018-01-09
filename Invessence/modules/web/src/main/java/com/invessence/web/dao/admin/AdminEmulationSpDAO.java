@@ -29,22 +29,22 @@ public class AdminEmulationSpDAO
 
    private JdbcTemplate jdbcTemplate;
 
-   public String processAccountRequest(Long acctnum, Double amount, String procedure, int mode)
+   public String processAccountRequest(Long acctnum, Double amount, String procedure, int mode,Long logonid)
    {
       SQLData convert = new SQLData();
       String response = null;
       jdbcTemplate = new JdbcTemplate(dataSource);
-      AdminEmulationSp extInfoSP = new AdminEmulationSp(jdbcTemplate, procedure, mode);
+      AdminEmulationSp extInfoSP = new AdminEmulationSp(jdbcTemplate, procedure, mode,logonid);
       Map outMap = null;
       try
       {
          if (mode == 0)
          {
-            outMap = extInfoSP.execute(acctnum);
+            outMap = extInfoSP.execute(acctnum,logonid);
          }
          else
          {
-            outMap = extInfoSP.execute(acctnum, amount);
+            outMap = extInfoSP.execute(acctnum, amount,logonid);
          }
          System.out.println("dbResponse = [" + outMap.toString() + "]");
          if (outMap != null)

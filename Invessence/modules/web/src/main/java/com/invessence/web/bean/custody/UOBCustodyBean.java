@@ -1293,10 +1293,18 @@ public void onChngRpDtls(String flag){
             uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet2(null);
             uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet3(null);
             uobDataMaster.getIndividualOwnersDetails().setMailingAddressStreet4(null);
+
          }
          else
          {
             dsplPriHldrMlPnl = true;
+            if (!hasRequiredData(uobDataMaster.getIndividualOwnersDetails().getOwnerMiscDetails().getReasonForMailAddreDiffer()))
+            {
+               uobDataMaster.getIndividualOwnersDetails().setMailingAddressCity(null);
+               uobDataMaster.getIndividualOwnersDetails().setMailingAddressCountry(null);
+               uobDataMaster.getIndividualOwnersDetails().setMailingAddressState(null);
+               uobDataMaster.getIndividualOwnersDetails().setMailingAddressZipCode(null);
+            }
          }
 
       }
@@ -1513,6 +1521,9 @@ public void onChngRpDtls(String flag){
                   }else if(ownDtls.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")){
                      ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("No");
                   }
+                  if(!ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
+                     ownDtls.getOwnerMiscDetails().setQualificationsSpecify(null);
+                  }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                }
                else
@@ -1524,6 +1535,9 @@ public void onChngRpDtls(String flag){
                      ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("Yes");
                   }else if(ownDtls.getOwnerCitizenshipDetails().getNationality().equalsIgnoreCase("Others")){
                      ownDtls.getOwnerMiscDetails().setPermanentRsdntOfSingapore("No");
+                  }
+                  if(!ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
+                     ownDtls.getOwnerMiscDetails().setQualificationsSpecify(null);
                   }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, "" + getBeanLogonId(), ownDtls);
                }
@@ -1580,6 +1594,10 @@ public void onChngRpDtls(String flag){
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                   // uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
+
+                  if(!ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
+                     ownDtls.getOwnerMiscDetails().setQualificationsSpecify(null);
+                  }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
                }
                else
@@ -1587,6 +1605,9 @@ public void onChngRpDtls(String flag){
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 //                  uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
+                  if(!ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
+                     ownDtls.getOwnerMiscDetails().setQualificationsSpecify(null);
+                  }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, "" + getBeanLogonId(), ownDtls);
                }
                break;
