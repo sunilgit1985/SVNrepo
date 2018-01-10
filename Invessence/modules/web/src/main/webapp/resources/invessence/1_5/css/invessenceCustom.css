@@ -4970,7 +4970,6 @@ td.bullet_td span {
     vertical-align: top;
     line-height: 72px;
     font-weight:bold;
-    cursor:pointer;
 }
 .ui-carousel-header.ui-widget-header.ui-corner-all {
     background: #fff;
@@ -5132,34 +5131,76 @@ span.change_goal {
     right: 50px;
 }
 .risk_switch .ui-inputswitch-handle.ui-state-default {
-    background: #a4332f;
-    border-color: #a4332f !important;
+    background: transparent;
+    border-color: transparent !important;
     background-image: none !important;
-    width: 50px !important;
+    /* width: 50px !important; */
+    border-radius: 20px;
 }
 .risk_switch .ui-inputswitch {
-    width: 100px !important;
+    width: 165px !important;
+    border-radius: 20px;
+    position: relative;
+    top: 8px;
+    background: #f7f7f7;
 }
-.risk_switch .ui-state-active:after {
+.ui-inputswitch .ui-inputswitch-on {
+    left: -6px;
+    padding-right: 7px;
+    border: 0 none;
+    height: 28px;
+    top: 0px;
+    background: #a4332f;
+}
+.ui-inputswitch .ui-inputswitch-off span {
+    display: inline-block;
+    text-align: center;
+    /* padding-left: 0px; */
+    /* padding-right: 10px; */
+    background: #a4332f;
+    padding: 6px 7px;
+    color: #fff;
+}
+.ui-inputswitch .ui-inputswitch-off {
+    right: 0px;
+    text-align: right;
+    height: 33px;
+    top: -4px;
+    color: #000;
+}
+.ui-inputswitch .ui-inputswitch-on span {
+    display: inline-block;
+    text-align: center;
+    /* padding-left: 12px; */
+    /* padding-right: 0; */
+    color: #fff;
+    padding: 2px 0px 0px 10px;
+    /* background: #a4332f; */
+    /* top: -3px; */
+    position: relative;
+}
+/* .risk_switch .ui-state-active:after {
+    content: 'Yes';
     color: #a4332f;
     top: 3px;
     position: absolute;
     left: 9px;
     font-weight: bold;
     font-size: 16px;
-}
-.risk_switch .ui-inputswitch .ui-inputswitch-on span,
+} */
+/* .risk_switch .ui-inputswitch .ui-inputswitch-on span,
 .risk_switch .ui-inputswitch .ui-inputswitch-off span {
     display: none;
-}
-.risk_switch .ui-inputswitch-off:after {
+} */
+/* .risk_switch .ui-inputswitch-off:after {
+
     position: relative;
     color: #424242;
     font-size: 16px;
     font-weight: bold;
     right: 11px;
     top: 4px;
-}
+} */
 .risk_switch .ui-inputswitch:hover,
 .risk_switch .ui-inputswitch:focus {
     border: solid 1px #a4332f;
@@ -5534,7 +5575,7 @@ div.slidePanelleft {
     left: 0;
     padding: 7px;
     cursor: pointer;
-    width: 150px;
+    width: 145px;
     z-index: 1;
     height: 25px;
     line-height: 25px;
@@ -5768,7 +5809,6 @@ span.conservative_plus {
     top: 2px;
     right: 5px;
     z-index: 1;
-    cursor:pointer;
 }
 .ui-button-text{background-color: #a4332f}
 
