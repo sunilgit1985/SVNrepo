@@ -80,55 +80,33 @@
                 </p:panel>
 
                 <div class="Container100 tab_dtl">
-
                     <div class="Container45 Responsive100 LeftBlockAcctType Fleft">
                         <div class="Container100 CustomWidthAccountypePanel">
 
-                                <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter">
-                                    <p:commandLink id="uobretire1"
-                                                   process="@this"
-                                                   actionListener="#{uobProfile.selectRetireType1}"
-                                                   update=":ceForm:retireQPanel, :ceForm:goalInfo">
+                                <p:panel id="retireP1" styleClass="Wid95 Fleft MarCenter risk_switch">
                                     <div class="Container70">
-                                        <h4>I want to save for retirement</h4>
+                                        <h4>I <p:inputSwitch id="retireswitch"
+                                                                value="#{uobProfile.selectedRetirementGoal}"
+                                                                onLabel=" am NOT " offLabel=" am ">
+                                                <p:ajax update=":ceForm:retireQPanel" />
+                                            </p:inputSwitch>
+                                            retired</h4>
 
                                         <div class="EmptyBox5"></div>
                                         <h6 class="FontNormal"></h6>
                                     </div>
                                     <div class="Container30 textAlign">
-                                        <img src="#{uobProfile.getRetireImage(1)}" class="atCheckMarkImg"/>
                                     </div>
-                                    </p:commandLink>
                                 </p:panel>
 
 
                         </div>
                     </div>
-                    <div class="Container45 Responsive100 FrightForced RightBlockAcctType">
-                        <div class="Container100 CustomWidthAccountypePanel">
+                </div>
 
-                                <p:panel id="retireP2" styleClass="Wid95 MarCenter">
-                                    <p:commandLink id="uobretire2"
-                                                   actionListener="#{uobProfile.selectRetireType2}"
-                                                   process="@this"
-                                                   update=":ceForm:retireQPanel, :ceForm:goalInfo">
-                                    <div class="Container70">
-                                        <h4>I am retired</h4>
-
-                                        <div class="EmptyBox5"></div>
-                                        <h6 class="FontNormal"></h6>
-                                    </div>
-                                    <div class="Container30 textAlign">
-                                        <img src="#{uobProfile.getRetireImage(2)}" class="atCheckMarkImg"/>
-                                    </div>
-                                    </p:commandLink>
-                                </p:panel>
-
-                        </div>
-                    </div>
-
+                <div class="Container100 tab_dtl ">
                     <p:panel id="retireQPanel" style="border: 0px; background: transparent">
-                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal == 1}">
+                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal}">
                             <p>
                                 I intend to retire and start utilising my funds in
                                 <p:inputNumber id="uobRetirePeriod" class="input_no_type"
@@ -138,7 +116,6 @@
                                 years
                             </p>
                         </ui:fragment>
-                        <ui:fragment rendered="#{uobProfile.selectedRetirementGoal > 1}">
                         <p>
                             When I start withdrawing money for my retirement, I plan to withdraw the funds over a period of
                             <p:inputNumber id="uobRW" class="input_no_type"
@@ -147,7 +124,6 @@
                             </p:inputNumber>
                             years
                         </p>
-                        </ui:fragment>
 
                     </p:panel>
                 </div>

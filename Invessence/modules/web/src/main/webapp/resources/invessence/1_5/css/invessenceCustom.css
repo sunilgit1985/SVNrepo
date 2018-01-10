@@ -5141,7 +5141,6 @@ span.change_goal {
     width: 100px !important;
 }
 .risk_switch .ui-state-active:after {
-    content: 'Yes';
     color: #a4332f;
     top: 3px;
     position: absolute;
@@ -5154,7 +5153,6 @@ span.change_goal {
     display: none;
 }
 .risk_switch .ui-inputswitch-off:after {
-    content: 'No';
     position: relative;
     color: #424242;
     font-size: 16px;

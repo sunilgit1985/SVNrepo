@@ -25,7 +25,7 @@ public class ProfileBean extends PortfolioCreationUI
    private Map<String, WebMenuItem> currencyMap = null;
    public WebMenuItem selectedGoal;
    public WebMenuItem selectedCurrency;
-   public Integer selectedRetirementGoal = 0;
+   public Boolean selectedRetirementGoal = true;
 
    @Override
    public void initUI()
@@ -592,13 +592,7 @@ public class ProfileBean extends PortfolioCreationUI
                RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
                if (thisgoal.equals(RiskConst.GOALS.RETIREMENT))
                {
-                  if (getSelectedRetirementGoal() == 0)
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirementflag.required", "Choose one of the choices below.", null));
-                  }
-                  else
-                  {
-                     if (getSelectedRetirementGoal() == 1)
+                     if (getSelectedRetirementGoal())
                      {
                         if (!hasData(getCustomer().getHorizon()))
                         {
@@ -609,7 +603,6 @@ public class ProfileBean extends PortfolioCreationUI
                      {
                         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.withdrwl.required", "Please enter when you plan to withdrwal", null));
                      }
-                  }
                }
                if (thisgoal.equals(RiskConst.GOALS.PROPERTY))
                {
@@ -846,21 +839,34 @@ public class ProfileBean extends PortfolioCreationUI
       formEdit = true;
    }
 
-   public Integer getSelectedRetirementGoal()
+   public Boolean getSelectedRetirementGoal()
    {
-      return (selectedRetirementGoal == null) ? 0 : selectedRetirementGoal;
+      return (selectedRetirementGoal == null) ? true : selectedRetirementGoal;
    }
+
+   public void setSelectedRetirementGoal(Boolean flag)
+   {
+      selectedRetirementGoal = flag;
+      getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(), ! flag);
+      if (flag) {
+         getCustomer().setCustomName(RiskConst.GOALS.RETIREMENT.getDisplayValue());
+      }
+      else {
+         getCustomer().setCustomName(RiskConst.GOALS.RETIRED.getDisplayValue());
+      }
+   }
+
 
    public void selectRetireType1()
    {
-      selectedRetirementGoal = 1;
+      selectedRetirementGoal = true;
       getCustomer().setCustomName(RiskConst.GOALS.RETIREMENT.getDisplayValue());
       getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(), false);
    }
 
    public void selectRetireType2()
    {
-      selectedRetirementGoal = 2;
+      selectedRetirementGoal = false;
       getCustomer().setCustomName(RiskConst.GOALS.RETIRED.getDisplayValue());
       getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(), true);
    }
@@ -869,7 +875,7 @@ public class ProfileBean extends PortfolioCreationUI
    {
       if (num != null)
       {
-         return ((getSelectedRetirementGoal() == num) ? selectedCheckedImage : defaultCheckedImage);
+         return ((getSelectedRetirementGoal()) ? selectedCheckedImage : defaultCheckedImage);
       }
       else
       {
@@ -882,7 +888,7 @@ public class ProfileBean extends PortfolioCreationUI
    {
       if (num != null)
       {
-         return ((getSelectedRetirementGoal() == num) ? "selRetGoal" : "");
+         return ((getSelectedRetirementGoal()) ? "selRetGoal" : "");
       }
       else
       {

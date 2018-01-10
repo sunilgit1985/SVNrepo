@@ -1,9 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions">
+                xmlns:p="http://primefaces.org/ui">
 
     <div class="caraousle Container100">
 
@@ -38,23 +36,15 @@
 
         <div class="Container100 tab_dtl risk_switch ">
             <div class="Container100">
-                <div class="Container80 margin-top">
-                    I have an emergency funds to cover three months of living expenses.
-                </div>
-                <div class="Container20">
-                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                        <p:inputSwitch id="r2a1" value="#{uobProfile.riskAns2}"/>
-                    </h:panelGrid>
+                <div class="Container100 margin-top">
+                    I <p:inputSwitch id="r2a1" value="#{uobProfile.riskAns2}" onLabel="have" offLabel="don't have"/>
+                    an emergency funds to cover three months of living expenses.
                 </div>
             </div>
             <div class="Container100">
-                <div class="Container80">
-                    I cannot afford any losses on the investment that I am making.
-                </div>
-                <div class="Container20">
-                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                        <p:inputSwitch id="r3a1" value="#{uobProfile.riskAns3}"/>
-                    </h:panelGrid>
+                <div class="Container100">
+                    I <p:inputSwitch id="r3a1" value="#{uobProfile.riskAns3}" onLabel="can" offLabel="cannot"/>
+                    afford any losses on the investment that I am making.
                 </div>
             </div>
 
