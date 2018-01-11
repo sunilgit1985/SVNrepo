@@ -181,6 +181,7 @@
                                             <div class="Container100 DispBlock gray">
 
                                                 <div class="Container25 TexAlRight Fs14 uobSliderLabel firstLabel">
+                                                    Conservative
                                                     <p:commandLink id="allocDecr"
                                                                    actionListener="#{uobProfile.allocDecrement}"
                                                                    process="@this"
@@ -189,7 +190,7 @@
                                                         <span class="ui-button-icon-center ui-icon ui-c fa fa-minus">
                                                         </span>
                                                     </span>
-                                                        Conservative
+
                                                     </p:commandLink>
                                                 </div>
                                                 <div class="Container50 TexAlCenter Fs20">
@@ -205,6 +206,7 @@
                                                     </p:slider>
                                                 </div>
                                                 <div class="Container25 TexAlLeft Fs14 uobSliderLabel lastLabel">
+                                                    Aggressive
                                                     <p:commandLink id="allocIncr"
                                                                    actionListener="#{uobProfile.allocIncrement}"
                                                                    process="@this"
@@ -213,7 +215,7 @@
                                                         <span class="ui-button-icon-center ui-icon ui-c fa fa-plus">
                                                         </span>
                                                     </span>
-                                                        Aggressive
+
                                                     </p:commandLink>
                                                 </div>
                                                 <div class="EmptyBox5"></div>
@@ -413,7 +415,7 @@
                                                                     <h:outputText value=" "/>
                                                                 </p:column> -->
                                                                 <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
-                                                                    <span style="background-color: #{ticker.color}">HI</span>
+                                                                    <span style="background-color: #{ticker.color}">&#160;</span>
                                                                 </p:column>
 
                                                                 <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">

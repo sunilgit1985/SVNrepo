@@ -1970,6 +1970,7 @@ span > input {
 .fineTuneBtn.ui-state-hover > .ui-button-text,
 .fineTuneBtn.ui-state-focus > .ui-button-text {
     background: #666666;
+    width:100%;
 }
 
 .fineTuneBtn > span,
@@ -4518,12 +4519,14 @@ th.del_edit_col span {
     width: 99%;
 
 }
-.acc_holder_form .tax_info table {
+.acc_holder_form .tax_info table,
+.user_table table {
     width: 99%;
     border: 1px solid #e1e1e1;
     box-shadow: 1px 17px 6px 2px #ccc;
 }
-.acc_holder_form .tax_info .acc_panel_block table {
+.acc_holder_form .tax_info .acc_panel_block table
+{
     box-shadow: none;
     border: none;
 }
@@ -4531,14 +4534,20 @@ th.del_edit_col span {
     width: 30px;
     float: left;
 }
-.tax_info tr.ui-widget-content.ui-datatable-even td {
+.tax_info tr.ui-widget-content.ui-datatable-even td,
+.user_table tr.ui-widget-content.ui-datatable-even td
+{
     background: #f7f7f7;
 }
-.tax_info .ui-datatable {
+.tax_info .ui-datatable,
+.user_table .ui-datatable
+{
     background: #fff;
     width: 100%;
 }
-.tax_info table td {
+.tax_info table td,
+.user_table table td
+{
     border: none !important;
 }
 .go-bottom .Container80 {
@@ -4859,7 +4868,7 @@ td.bullet_td span {
     height: 13px;
     width: 13px;
     background: #333F50;
-    padding: 3px 4px;
+    padding: 2px 9px;
     border-radius: 40px;
     color:transparent;
 }
@@ -5130,14 +5139,14 @@ span.change_goal {
     height: 23px;
     right: 50px;
 }
-.risk_switch .ui-inputswitch-handle.ui-state-default {
+.generic_switch .ui-inputswitch-handle.ui-state-default {
     background: transparent;
     border-color: transparent !important;
     background-image: none !important;
     /* width: 50px !important; */
     border-radius: 20px;
 }
-.risk_switch .ui-inputswitch {
+.generic_switch .ui-inputswitch {
     width: 165px !important;
     border-radius: 20px;
     position: relative;
@@ -5201,8 +5210,8 @@ span.change_goal {
     right: 11px;
     top: 4px;
 } */
-.risk_switch .ui-inputswitch:hover,
-.risk_switch .ui-inputswitch:focus {
+.generic_switch .ui-inputswitch:hover,
+.generic_switch .ui-inputswitch:focus {
     border: solid 1px #a4332f;
 }
 
@@ -5310,8 +5319,9 @@ span.change_goal {
 .acc_holder_form .ui-datatable .ui-datatable-odd {
     background: #fff !important;
 }
-.acc_holder_form .ui-datatable table thead tr th {
-    background: #fff;
+.acc_holder_form .ui-datatable table thead tr th,
+.user_table .ui-datatable table thead tr th {
+    background: #fff !important;
     border: none;
     color: #000;
     text-align: left;
@@ -5849,7 +5859,13 @@ form#ceForm {
     padding: 10px 0;
     text-transform: capitalize;
 }
-
+/*** 11/01/2018 **/
+.panelDiv {
+    width: 83%;
+    margin: 2%;
+    border: 1px solid #ccc;
+    padding: 5%;
+}
 
 
 
@@ -6142,7 +6158,7 @@ form#ceForm {
         float: right;
         margin: 0 8px;
     }
-    .risk_switch .Container80 {
+    .generic_switch .Container80 {
         width: 64%;
         margin: 3% 5px;
         font-size: 18px;

@@ -1,37 +1,180 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
-                template="/template/common/template.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/template/common/template.xhtml">
 
-   <ui:define name="content">
+	<ui:define name="content">
 
-      <div class="layout-portlets-box open_client_layout" >
-         <div class="Container100 Responsive50">
+		<div class="layout-portlets-box open_client_layout ">
+			<div class="Container100 Responsive50 go-bottom">
 
-            <h3 class="BigTopic">Fund Your Account</h3>
+				<h3 class="BigTopic">Fund Your Account</h3>
 
-            <!--<div class="client_acc_select">-->
-               <!--<p:selectOneRadio id="radio" value="" >-->
-                  <!--<f:selectItem itemLabel="New Client" itemValue="New Client" />-->
-                  <!--<f:selectItem itemLabel="Existing Client" itemValue="Existing Client" />-->
+				<div class="Container100 account_type_block">
+					<p:panel id="fundAcct" styleClass="Container50">
+						<div class="Container80 label_opacity">
+							<label>Do you want to fund this account </label>
+						</div>
+						<div class="Container10 textAlign">
+							<p:selectOneRadio id="fundAct"
+								value="#{uobCustodyBean.selIndAcctTyp}">
+								<!-- <p:ajax	listener='#{uobCustodyBean.onSelAcctTypAsInd("ACINDIV")}' update="@form" /> -->
+								<f:selectItem itemLabel="" itemValue="Account_Fund"></f:selectItem>
+							</p:selectOneRadio>
+						</div>
+					</p:panel>
+					<p:panel id="Sendinfo" styleClass="Container50">
+						<div class="Container80 label_opacity">
+							<label>Do you want to change sending information</label>
+						</div>
+						<div class="Container10 textAlign">
+							<p:selectOneRadio id="sendInfo"
+								value="#{uobCustodyBean.selIndAcctTyp}">
+								<!-- <p:ajax	listener='#{uobCustodyBean.onSelAcctTypAsInd("ACINDIV")}' update="@form" /> -->
+								<f:selectItem itemLabel="" itemValue="Send_information"></f:selectItem>
+							</p:selectOneRadio>
+						</div>
+					</p:panel>
+				</div>
 
-               <!--</p:selectOneRadio>-->
-            <!--</div>-->
-            <!--<h:form>-->
-               <p:commandButton id="uobForwardBtn"
-                                value="Back"
-                                styleClass="uob_button"
-                                actionListener="#{uobpb.goBack}">
-               </p:commandButton>
+				<div class="Container100 panelDiv margin-top">
+					<span id=""
+						class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
+					<div class="Container100  user_table">
+						<p:dataTable>
+							<p:column headerText="Amount">
+								<p:inputText id="amtInput" />
+							</p:column>
 
-            <!--</h:form>-->
+							<p:column headerText="Date">
+								<p:inputText id="DtInput" />
+							</p:column>
 
-         </div>
 
-      </div>
-   </ui:define>
+						</p:dataTable>
+						<div class="Container100 margin-top">
+							<div class="Container50 margin-top">
+								<p:commandButton value="Cancel" />
+							</div>
+							<div class="Container50 float-right margin-top">
+								<p:commandButton value="Submit" />
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+				<!--  for remittance  -->
+				<div class="Container100 panelDiv margin-top">
+					<span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
+
+					<div class=" Container100">
+						<div class="Container100  width99">
+							<!-- <div class="Container100"><span class="title_line">Account Holder Name</span></div>-->
+							<div class="Container100">
+								<p:inputText id="nwPriHldrRemBnkAcctHldrNm"
+									placeholder="Account Holder Name"
+									value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountHolderName}"
+									maxlength="60" />
+								<label for="nwPriHldrRemBnkAcctHldrNm">Account Holder
+									Name</label>
+							</div>
+						</div>
+						<div class="Container50 Responsive50 margin-top">
+							<!-- <div class="Container100"><span class="title_line">Bank Name</span></div>-->
+							<div class="Container100">
+								<p:inputText id="nwPriHldrRemBnkNm" placeholder="Bank Name"
+									value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankName}"
+									maxlength="60" />
+								<label for="nwPriHldrRemBnkNm">Bank Name</label>
+							</div>
+						</div>
+						<div class="Container50 Responsive50 margin-top margin-left">
+							<!-- <div class="Container100"><span class="title_line">Bank Account No</span></div>-->
+							<div class="Container100">
+								<p:inputText id="nwPriHldrRemBnkAcctNum"
+									placeholder="Bank Account Number"
+									value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountNo}"
+									maxlength="25" />
+								<label for="nwPriHldrRemBnkAcctNum">Bank Account Number</label>
+							</div>
+						</div>
+						<div class="Container100 margin-top">
+							<p:inputTextarea id="nwPriHldrRemBnkAddr" placeholder="Bank Address"
+								value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="90" />
+							<label for="nwPriHldrRemBnkAddr">Bank Address</label>
+						</div>
+					</div>
+					<div class="acc_holder_dtl_block">
+						<div class="Container30 Responsive100 select_item">
+							<div class="Container100">
+								<span class="title_line">Postal Code</span>
+							</div>
+							<p:inputText id="nwPriHldrRemBnkAddrPoCd"
+								placeholder="Postal Code"
+								value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressZipCode}"
+								maxlength="15" />
+							<!-- <label for="nwPriHldrPhyAddrPoCd">Postal Code</label> -->
+						</div>
+						<div class="Container30 Responsive100 select_item">
+							<div class="Container100">
+								<span class="title_line">City / State</span>
+							</div>
+							<p:inputText id="nwPriHldrRemBnkAddrCtySt"
+								placeholder="City / State"
+								value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCity}"
+								maxlength="45" />
+							<!-- <label for="nwPriHldrPhyAddrCtySt">City / State</label> -->
+						</div>
+						<div class="Container30 Responsive100 select_item">
+							<div class="Container100">
+								<span class="title_line">Country</span>
+							</div>
+							<p:autoComplete id="nwPriHldrRemBnkAddrCtry" dropdown="true"
+								value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCountry}"
+								completeMethod="#{uobCustodyBean.completeText}" maxlength="45">
+							</p:autoComplete>
+						</div>
+					</div>
+					<div class="acc_holder_dtl_block">
+						<div class="Container30 Responsive100 ">
+							<!-- <div class="Container100"><span class="title_line">Swift Bic</span></div>-->
+							<p:inputText id="nwPriHldrRemSwBic" placeholder="Swift Bic"
+								value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.swiftBic}"
+								maxlength="20" />
+							<label for="nwPriHldrRemSwBic">Swift Bic</label>
+						</div>
+						<div class="Container30 Responsive100 ">
+							<!--<div class="Container100"><span class="title_line">Correspondent Bank</span></div>-->
+							<p:inputText id="nwPriHldrRemCorrBnk"
+								placeholder="Correspondent Bank"
+								value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBank}"
+								maxlength="45" />
+							<label for="nwPriHldrRemCorrBnk">Correspondent Bank</label>
+						</div>
+						<div class="Container30 Responsive100 ">
+							<!-- <div class="Container100"><span class="title_line">Correspondent Bank Swift Bic</span></div>-->
+							<p:inputText id="nwPriHldrRemCorrBnkSwBic"
+								placeholder="Correspondent Bank Swift Bic"
+								value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBankSwiftBic}"
+								maxlength="45" />
+							<label for="nwPriHldrRemCorrBnkSwBic">Correspondent Bank
+								Swift Bic</label>
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+			</div>
+
+		</div>
+	</ui:define>
 
 </ui:composition>

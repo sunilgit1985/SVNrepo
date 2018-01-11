@@ -434,14 +434,17 @@
 
                                  </ui:fragment>
                               </div>
-                              <div class="Container50 donutChartTable">
+                              <div class="Container50 donutChartTable user_table">
                                  <div class="EmptyBox20 donutChartTableEB"></div>
                                  <p:dataTable styleClass="uob_graphTable" id="uobtablesummary"
                                               value="#{uobdash.editableAsset}" var="assetList">
 
-                                    <p:column
+                                   <!-- <p:column
                                             style="width: 5%; background-color: #{assetList.color}; border:0px!important;">
                                        <h:outputText value=" "/>
+                                    </p:column>-->
+                                    <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
+                                       <span style="background-color: #{assetList.color}">&#160;</span>
                                     </p:column>
 
                                     <p:column style="width: 65%" styleClass="Wid50 Fs12 TexAlLeft"
