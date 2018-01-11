@@ -7,7 +7,10 @@ import com.invessence.converter.*;
 import com.invessence.web.dao.common.CommonDAO;
 import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.*;
+import com.invmodel.asset.data.AssetClass;
 import com.invmodel.model.ModelUtil;
+import com.invmodel.performance.data.ProjectionData;
+import com.invmodel.portfolio.data.Portfolio;
 import org.apache.commons.logging.*;
 
 /**
@@ -33,6 +36,7 @@ public class UserInterface implements Logger
 
    // Charts
    public Chart chart;
+   public List<ProjectionData> projectionDatas;
 
    // Utils
    public SQLData converter;
@@ -52,6 +56,7 @@ public class UserInterface implements Logger
       converter = new SQLData();
       chart = new Chart();
       cal = Calendar.getInstance();
+      projectionDatas = new ArrayList<>();
 
    }
 

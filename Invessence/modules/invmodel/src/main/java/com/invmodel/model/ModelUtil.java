@@ -26,7 +26,7 @@ public class ModelUtil
 {
    private AssetAllocationModel assetmodel;
    private PortfolioModel portfolioModel;
-   private ForwardProjection projectiondata;
+   private ForwardProjection forwardProjection;
    private static ModelUtil instance;
    private PortfolioOptimizer poptimizer = null;
    private FixedModelOptimizer fixoptimizer = null;
@@ -48,7 +48,7 @@ public class ModelUtil
    {
       super();
       portfolioModel = PortfolioModel.getInstance();
-      projectiondata = ForwardProjection.getInstance();
+      forwardProjection = ForwardProjection.getInstance();
       assetmodel = AssetAllocationModel.getInstance();
       poptimizer = PortfolioOptimizer.getInstance();
       fixoptimizer = FixedModelOptimizer.getInstance();
@@ -65,15 +65,26 @@ public class ModelUtil
       this.portfolioModel = portfolioModel;
    }
 
-   public void setProjectiondata(ForwardProjection projectiondata)
+   public void setProjectiondata(ForwardProjection forwardProjection)
    {
-      this.projectiondata = projectiondata;
+      this.forwardProjection = forwardProjection;
    }
 
    public AssetClass createAssetAllocation(RiskCalc riskCalc)
    {
       return assetmodel.createAllocation(riskCalc);
 
+   }
+
+   public Portfolio createPortfolioAllocation(AssetClass assetclass, RiskCalc riskCalc)
+   {
+      return portfolioModel.createPortfolio(assetclass, riskCalc);
+   }
+
+   public ArrayList<ProjectionData> createGlidePath(Integer years, RiskCalc riskCalc) {
+      if (forwardProjection == null)
+         return null;
+      return forwardProjection.createGlidePath(years, riskCalc);
    }
 
    public AssetClass[] buildAllocation(ProfileData pdata)
@@ -121,27 +132,22 @@ public class ModelUtil
       return null;
    }
 
-   public Portfolio createPortfolioAllocation(AssetClass assetclass, RiskCalc riskCalc)
-   {
-      return portfolioModel.createPortfolio(assetclass, riskCalc);
-   }
-
    public Portfolio[] buildPortfolio(AssetClass[] assetData, ProfileData profileData)
    {
       return portfolioModel.buildPortfolio(assetData, profileData);
    }
 
    public ProjectionData[] buildPerformanceChart(ProfileData pdata, FMData fmdata) {
-      return projectiondata.buildFMPerformanceData(pdata, fmdata);
+      return forwardProjection.buildFMPerformanceData(pdata, fmdata);
    }
 
    public ArrayList<ProjectionData[]> buildProjectionData(ProfileData pdata) {
-      if (projectiondata == null)
+      if (forwardProjection == null)
          return null;
-       return projectiondata.buildProjectionData(pdata);
+       return forwardProjection.buildProjectionData(pdata);
    }
 
    public void goalTracking(ProfileData pdata) {
-      projectiondata.goalTracking(pdata);
+      forwardProjection.goalTracking(pdata);
    }
 }

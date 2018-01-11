@@ -533,6 +533,35 @@ public class PrimefacesCharts implements Serializable
       }
    }
 
+   public BarChartModel createGlidePath(ArrayList<ProjectionData> projectionDatas) {
+      String color;
+      Integer year;
+      try
+      {
+         BarChartModel glidpath = new BarChartModel();
+         BarChartSeries gain = new BarChartSeries();
+         BarChartSeries withdrawl = new BarChartSeries();
+         Calendar cal = Calendar.getInstance();
+         calendarYear = cal.get(cal.YEAR);
+         gain.setLabel("Growth");
+         withdrawl.setLabel("Withdrawl");
+         for (ProjectionData pdata : projectionDatas) {
+            year = calendarYear + pdata.getYear();
+            Double money = pdata.getTotalCapitalWithGains();
+            gain.set(year, money);
+            Double withdrawlmoney = pdata.getWithdrawlAmount();
+            withdrawl.set(year, money);
+         }
+         glidpath.addSeries(gain);
+         glidpath.addSeries(withdrawl);
+         return glidpath;
+      }
+      catch (Exception ex) {
+
+      }
+      return null;
+   }
+
    public void createBarChart(AssetClass[] assetclasses, Integer offset)
    {
       String color;

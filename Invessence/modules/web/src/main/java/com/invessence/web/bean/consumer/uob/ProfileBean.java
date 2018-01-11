@@ -4,9 +4,7 @@ import java.util.*;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
-import com.invessence.converter.SQLData;
 import com.invessence.web.bean.consumer.PortfolioCreationUI;
-import com.invessence.web.constant.WebConst;
 import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.*;
 import com.invmodel.risk.data.RiskConst;
@@ -61,13 +59,6 @@ public class ProfileBean extends PortfolioCreationUI
                reOrganizeGoalList();  // Reorg the list so that last selected one shows up
 
                Boolean retiredflag = getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.GOALS.RETIRED.toString());
-               if (retiredflag != null)
-               {
-                  if (retiredflag)
-                     selectRetireType2();
-                  else
-                     selectRetireType1();
-               }
             }
 
             // Now load the Currency info.
@@ -122,7 +113,7 @@ public class ProfileBean extends PortfolioCreationUI
                }
             }
 
-            if (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.ChangeStrategy))
+            if (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.ChangeStrategy) || beanmode.equals(UIMode.Edit))
             {
                // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
 
@@ -856,46 +847,6 @@ public class ProfileBean extends PortfolioCreationUI
       }
    }
 
-
-   public void selectRetireType1()
-   {
-      selectedRetirementGoal = true;
-      getCustomer().setCustomName(RiskConst.GOALS.RETIREMENT.getDisplayValue());
-      getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(), false);
-   }
-
-   public void selectRetireType2()
-   {
-      selectedRetirementGoal = false;
-      getCustomer().setCustomName(RiskConst.GOALS.RETIRED.getDisplayValue());
-      getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(), true);
-   }
-
-   public String getRetireImage(Integer num)
-   {
-      if (num != null)
-      {
-         return ((getSelectedRetirementGoal()) ? selectedCheckedImage : defaultCheckedImage);
-      }
-      else
-      {
-         return defaultCheckedImage;
-      }
-
-   }
-
-   public String getSelectedClass(Integer num)
-   {
-      if (num != null)
-      {
-         return ((getSelectedRetirementGoal()) ? "selRetGoal" : "");
-      }
-      else
-      {
-         return "";
-      }
-
-   }
 
    public String getPrintName()
    {

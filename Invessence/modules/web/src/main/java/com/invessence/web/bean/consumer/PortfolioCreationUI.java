@@ -1,5 +1,6 @@
 package com.invessence.web.bean.consumer;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
@@ -15,10 +16,12 @@ import com.invessence.web.data.common.*;
 import com.invessence.web.util.*;
 import com.invmodel.asset.data.AssetClass;
 import com.invmodel.model.ModelUtil;
+import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.Portfolio;
 import com.invmodel.risk.data.*;
 import org.apache.commons.logging.*;
 import org.primefaces.event.*;
+import org.primefaces.model.chart.BarChartModel;
 
 /**
  * Created by prashant on 11/16/2017.
@@ -482,6 +485,13 @@ public class PortfolioCreationUI extends UserInterface
       }
    }
 
+   public BarChartModel getGlidePath() {
+      Integer horizon = riskCalc.getDefaultHorizon();
+      Integer withdrawl = (riskCalc.getWithDrwalPeriod() == null) ? 1 : riskCalc.getWithDrwalPeriod();
+
+      ArrayList<ProjectionData> projectionDatas = modelUtil.createGlidePath(horizon + withdrawl, riskCalc);
+      return chart.createGlidePath(projectionDatas);
+   }
 
    public void saveProfile()
    {

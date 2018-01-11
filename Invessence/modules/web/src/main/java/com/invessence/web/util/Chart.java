@@ -4,6 +4,8 @@ import java.util.*;
 
 import com.invessence.web.data.common.*;
 import com.invmodel.asset.data.*;
+import com.invmodel.performance.data.ProjectionData;
+import org.primefaces.model.chart.BarChartModel;
 import org.springframework.jca.cci.CannotCreateRecordException;
 
 /**
@@ -96,4 +98,8 @@ public class Chart
       }
    }
 
+   public BarChartModel createGlidePath(ArrayList<ProjectionData> projectionDatas)
+   {
+      return primefacechart.createGlidePath(projectionDatas);
+   }
 }
