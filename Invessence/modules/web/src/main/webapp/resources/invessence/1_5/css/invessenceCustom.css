@@ -5937,6 +5937,10 @@ form#ceForm {
         font-size: 18px;
     }
 
+    /** 12/01/2018 **/
+    .review-donut{right:23%;}
+    .portfolio_selection .sapn_review{z-index:2;left: -50px;}
+
 }
 
 /* Smartphones (portrait and landscape) ----------- */
@@ -6208,7 +6212,15 @@ form#ceForm {
     .caraousle .review_dtl .Container70 {
         width: 100%;}
 
-
+    /*** 12/01/2018**/
+    .input_no_type {
+        width: 100%;
+        float: left;
+    }
+    .risk_meter .highcharts-data-label {
+        top: 0px !important;
+    }
+    .caraousle .Container50.pre_btn:before{right:46px;}
 
 }
 
