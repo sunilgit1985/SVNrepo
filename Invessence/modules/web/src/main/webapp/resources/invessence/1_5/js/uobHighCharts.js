@@ -320,7 +320,7 @@ function draw2dDonut1lyrChartDyna(vForm)
 
 
 
-function draw2dDonut1lyrChartDyna(vDivClass,vValClass)
+function draw2dDonut1lyrChartClassBase(vDivClass,vValClass)
 {
 try{
     $(function ()
@@ -420,7 +420,7 @@ try{
                                                                color_value = this.color;
 
                                                                //draw2dDonut1lyrChart();
-                                                               draw2dDonut1lyrChartDyna(vChrtId,chartValue);
+                                                               draw2dDonut1lyrChartClassBase(vChrtId,chartValue);
                                                            },
                                                            legendItemClick: function ()
                                                            {
@@ -435,7 +435,7 @@ try{
                                                                color_value = this.color;
 
                                                                //draw2dDonut1lyrChart();
-                                                               draw2dDonut1lyrChartDyna(vChrtId,chartValue);
+                                                               draw2dDonut1lyrChartClassBase(vChrtId,chartValue);
                                                                return false;
                                                            }
                                                        }
@@ -489,6 +489,6 @@ try{
           weight_value = "";name_value="";amount_value="";
       });
 }catch(e){
-	console.log("draw2dDonut1lyrChartDyna Exception "+e);
+	console.log("draw2dDonut1lyrChartClassBase Exception "+e);
 }
 }

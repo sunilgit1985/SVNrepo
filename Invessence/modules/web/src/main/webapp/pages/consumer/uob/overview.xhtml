@@ -50,22 +50,32 @@
                             <p:tab title="Current Holding">
                                 <div class="Container100">
                                     <div class="Container30 Responsive50 tp20">
-                                        <div id="2dDonutChart"></div>
-                                        <h:inputHidden value="#{uobpos.strDonutString}"
-                                                       id="twodDonutValueChart"/>
-                                        <h:inputHidden value="HIGHCHART.2DDONUT" id="typeOfCharts"/>
+                                        <div id="2dDonutChart" class="idPieChartArea"></div>
+
+                                        <input type="hidden"
+                                               value="#{uobpos.strDonutString}"
+                                               class="idPieChartValue"/>
+                                        <input type="hidden" value="HIGHCHART.2DDONUT"
+                                               class="idChartType"/>
                                         <!-- ROHIT's CHANGE -->
                                         <script>
                                             $(document).ready(function ()
                                                               {
-                                                                  if (document.getElementById('idOverviewFrm:idAccrdPnl:typeOfCharts') != null)
-                                                                  {
-                                                                      if (document.getElementById('idOverviewFrm:idAccrdPnl:typeOfCharts').value == 'HIGHCHART.2DDONUT')
-                                                                      {
-                                                                          draw2dDonut1lyrChartDyna('idOverviewFrm');
-                                                                      }
+                                                                  try{
+//                                                if (document.getElementById('idOverviewFrm:idAccrdPnl:typeOfCharts') != null)
+//                                                {
+//                                                    if (document.getElementById('idOverviewFrm:idAccrdPnl:typeOfCharts').value == 'HIGHCHART.2DDONUT')
+//                                                    {
+//                                                        draw2dDonut1lyrChartDyna('idOverviewFrm');
+//                                                    }
+//                                                }
+                                                                      draw2dDonut1lyrChartClassBase('idPieChartArea', 'idPieChartValue');
+                                                                  }catch(e){
+                                                                      console.log("Overview graph error "+e);
                                                                   }
                                                               });
+
+
                                         </script>
                                         <!--<div class="ContainerIndent">-->
                                             <!--<p:chart type="pie" model="#{uobpos.pieModel}" styleClass="PieGraphPosition"-->

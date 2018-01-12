@@ -623,11 +623,12 @@ public void onChngRpDtls(String flag){
                copy.addPage(copy.getImportedPage(reader, ++i));
             }
             document.close();
-            if(dwnFileMstrLst.get(j).getReqType().equalsIgnoreCase("ACCT_DSCL"))
-            {
+            if(dwnFileMstrLst.get(j).getReqType().equalsIgnoreCase("ACCT_DSCL"))            {
                contentDsclre = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf");
-            }else{
+            }else if(dwnFileMstrLst.get(j).getReqType().equalsIgnoreCase("ACCT_GUD")){
                contentGuide = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf");
+            }else if(dwnFileMstrLst.get(j).getReqType().equalsIgnoreCase("ACCT_MSTR_AGGR")){
+               contentMstrTrdAggr= new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf");
             }
          }
       }

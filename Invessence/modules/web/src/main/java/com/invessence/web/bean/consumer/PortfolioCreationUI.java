@@ -47,14 +47,14 @@ public class PortfolioCreationUI extends UserInterface
 
    public enum UIMode
    {
-      New("N"),
-      Edit("E"),
-      Review("R"),
-      Startover("S"),
-      ChangeStrategy("C"),
-      Confirm("A"),
-      View("V"),
-      Advisor("D");
+      New("N"),//Status 0
+      Edit("E"),//Status 0
+//      Startover("S"),
+      ChangeStrategy("C"),//Status 1
+      Confirm("A"),//Status = 2
+      Review("R"),//Status > 2
+      View("V"),//Status > 2
+      Advisor("D");//Status > 2
 
       String codeValue;
 
@@ -243,19 +243,31 @@ public class PortfolioCreationUI extends UserInterface
 
    public Integer getInterfaceIntMode()
    {
+      if (interfaceMode.equalsIgnoreCase(UIMode.New.getCodeValue()) || interfaceMode.equalsIgnoreCase(UIMode.Edit.getCodeValue()))
+      {
+         return 0;
+      }
       if (interfaceMode.equalsIgnoreCase(UIMode.ChangeStrategy.getCodeValue()))
       {
          return 1;
       }
-      if (interfaceMode.equalsIgnoreCase(UIMode.Confirm.getCodeValue()))
+      else
       {
-         return 2;
+         if (interfaceMode.equalsIgnoreCase(UIMode.Confirm.getCodeValue()))
+         {
+            return 2;
+         }
+         else
+         {
+            return 3;
+         }
+//         if (interfaceMode.equalsIgnoreCase(UIMode.Review.getCodeValue()))
+//         {
+//            return 3;
+//         }
       }
-      if (interfaceMode.equalsIgnoreCase(UIMode.Review.getCodeValue()))
-      {
-         return 3;
-      }
-      return 0;
+
+//      return 0;
    }
 
    public String getInterfaceMode()
