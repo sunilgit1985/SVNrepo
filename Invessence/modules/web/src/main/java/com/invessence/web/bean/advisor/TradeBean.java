@@ -545,7 +545,7 @@ public class TradeBean extends TradeClientData implements Serializable
       {
          if (getSelectedClient() != null)
          {
-            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=E&acct=" + getSelectedClient().getAcctnum().toString());
+            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=D&acct=" + getSelectedClient().getAcctnum().toString());
          }
       }
       catch (Exception ex)

@@ -182,11 +182,23 @@
                     </p:commandLink>
                 </li>
 
-                <li id="menutem">
-                    <p:commandLink rendered="true" id="opnAcct"
-                                   actionListener="#{uobdash.doOptionMenuAction()}">
-                        <h:outputText value="Open Account"/>
-                    </p:commandLink>
+
+            </ui:fragment>
+
+            <ui:fragment
+                    rendered="#{(webutil.hasSubMenu('Demo') and webutil.hasAccess('User'))}">
+                <li class="">
+                    <a href="#" class="submenuDemoBtn" id="menuDemobtn">Demo</a>
+                    <ul>
+                        <ui:fragment rendered="#{webutil.hasMenu('Open Account','Demo')}">
+                            <li id="menutem">
+                                <p:commandLink rendered="true" id="opnAcct"
+                                               actionListener="#{uobdash.doOptionMenuAction()}">
+                                    <h:outputText value="Open Account"/>
+                                </p:commandLink>
+                            </li>
+                        </ui:fragment>
+                    </ul>
                 </li>
             </ui:fragment>
 

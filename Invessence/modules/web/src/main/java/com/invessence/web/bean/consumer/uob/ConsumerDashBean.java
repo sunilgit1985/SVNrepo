@@ -212,7 +212,7 @@ public class ConsumerDashBean extends CustomerData implements Serializable
       String whichXML;
       try
       {
-         if (selAccountList.get(0).isUnopened())
+         if (!selAccountList.get(0).isUnopened())
          {
 //            dsplStrategyPnl=false;
 //            if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ProfileCnf")!=null){

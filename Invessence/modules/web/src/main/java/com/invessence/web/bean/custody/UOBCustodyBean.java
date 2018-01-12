@@ -100,9 +100,9 @@ public class UOBCustodyBean implements  Serializable
    private String hasRepDtlY=null,hasRepDtlN=null;
    private Map<String, String> fileupdSucc = new HashMap<String, String>();
    private boolean consentCallFlag=false,consentMsgFlag=false;
-   private boolean dwnlDsclFlag=false,dwnlGudFlag=false,dsblAcptBtn=true;
+   private boolean dwnlDsclFlag=false,dwnlGudFlag=false,dsblAcptBtn=true,dwnlMstrTrdAggrFlag=false;
 
-   private StreamedContent contentDsclre,contentGuide;
+   private StreamedContent contentDsclre,contentGuide,contentMstrTrdAggr;
 
    public void cleanUpAll()
    {
@@ -171,6 +171,7 @@ public class UOBCustodyBean implements  Serializable
       dwnlDsclFlag=false;
       dwnlGudFlag=false;
       dsblAcptBtn=true;
+      dwnlMstrTrdAggrFlag=false;
    }
 
    public void initCustody()
@@ -193,8 +194,7 @@ public class UOBCustodyBean implements  Serializable
                return;
             }
             setBeanAcctNum(Long.parseLong(getBeanAccount()));
-            if (!getWebutil().hasRole("Demo"))
-            {
+
                String valOutput = isValidAcctNum();
 
                // If account is managed
@@ -212,7 +212,6 @@ public class UOBCustodyBean implements  Serializable
                   getWebutil().accessdenied();
                   return;
                }
-            }
 
             cleanUpAll();
             uobDataMaster = custodyService.fetch(getBeanAcctNum(), false);
@@ -601,6 +600,9 @@ public void onChngRpDtls(String flag){
          }else{
             onChngRpDtls("");
          }
+      }else
+      {
+         onChngRpDtls("");
       }
    }
    public void getFileData()
@@ -918,24 +920,24 @@ public void onChngRpDtls(String flag){
    public boolean validateIntroPage()
    {
       Boolean dataOK = true;
-//      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new StringBuilder();
       if (!hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()))
       {
-//         sb.append("Type of account like to open is required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTyp"+"<br/>", "Type of account like to open is required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTyp", "Type of account like to open is required.", null));
+//         dataOK = false;
+//         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTyp", "Type of account like to open is required.", null);
       }
       if (hasRequiredData(uobDataMaster.getAccountDetails().getAcctTypeId()) &&
          !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct()))
       {
          if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV")){
-//            sb.append("Please select Existing Individual Securities trading account on UOBKH Yes/No.<br/>");
-            dataOK = false;
-            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypIndiv"+"<br/>", "Please select Existing Individual Securities trading account on UOBKH Yes/No.", null);
+            sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypIndiv", "Please select Existing Individual Securities trading account on UOBKH Yes/No.", null));
+//            dataOK = false;
+//            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypIndiv", "Please select Existing Individual Securities trading account on UOBKH Yes/No.", null);
          }else if(uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT")){
-//            sb.append("Please select Existing Joint Securities trading account on UOBKH Yes/No.<br/>");
-            dataOK = false;
-            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypJoint"+"<br/>", "Please select Existing Joint Securities trading account on UOBKH Yes/No.", null);
+            sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypJoint", "Please select Existing Joint Securities trading account on UOBKH Yes/No.", null));
+//            dataOK = false;
+//            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.actTypJoint", "Please select Existing Joint Securities trading account on UOBKH Yes/No.", null);
          }
       }
       if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct() != null &&
@@ -943,49 +945,50 @@ public void onChngRpDtls(String flag){
          !hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getExistingTradeAcctNumber())){
          if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACINDIV"))
          {
-//            sb.append("Enter your existing Individual UOBKH Securities Trading account number.<br/>");
-            dataOK = false;
-            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extIndivActNum"+"<br/>", "Enter your existing Individual UOBKH Securities Trading account number.", null);
+            sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extIndivActNum", "Enter your existing Individual UOBKH Securities Trading account number.", null));
+//            dataOK = false;
+//            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extIndivActNum", "Enter your existing Individual UOBKH Securities Trading account number.", null);
          }
          else if (uobDataMaster.getAccountDetails().getAcctTypeId().equalsIgnoreCase("ACJOINT"))
          {
-//            sb.append("Enter your existing Joint UOBKH Securities Trading account number.<br/>");
-            dataOK = false;
-            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extJointActNum"+"<br/>", "Enter your existing Joint UOBKH Securities Trading account number.", null);
+            sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extJointActNum", "Enter your existing Joint UOBKH Securities Trading account number.", null));
+//            dataOK = false;
+//            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.extJointActNum", "Enter your existing Joint UOBKH Securities Trading account number.", null);
          }
       }
       if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls()))
       {
-//         sb.append("Trading Representative details are required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRep"+"<br/>", "Trading Representative details are required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRep", "Trading Representative details are required.", null));
+//         dataOK = false;
+//         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRep", "Trading Representative details are required.", null);
       }
       if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls() != null &&
          uobDataMaster.getAccountDetails().getAccountMiscDetails().getHavingRepDtls().trim().equalsIgnoreCase("Yes"))
       {
          if (!hasRequiredData(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
          {
-//            sb.append("Trading Representative Name is required.<br/>");
-            dataOK = false;
-            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNm"+"<br/>", "Trading Representative Name is required.", null);
+            sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNm", "Trading Representative Name is required.", null));
+//            dataOK = false;
+//            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNm", "Trading Representative Name is required.", null);
          }
          else if (!repList.contains(uobDataMaster.getAccountDetails().getAccountMiscDetails().getSalesPersonName()))
          {
-//            sb.append("Trading Representative Name is not valid.<br/>");
-            dataOK = false;
-            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNmInv"+"<br/>", "Trading Representative Name is not valid.", null);
+            sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNmInv", "Trading Representative Name is not valid.", null));
+//            dataOK = false;
+//            introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.intro.tradeRepNmInv", "Trading Representative Name is not valid.", null);
          }
       }
-//      if (sb.length() > 0)
-//      {
-//         dataOK = false;
-//         introError = sb.toString();
-//      }
-//      else
-//      {
-//         dataOK = true;
-//         introError = null;
-//      }
+      if (sb.length() > 0)
+      {
+         dataOK = false;
+         introError = sb.toString();
+      }
+      else
+      {
+         dataOK = true;
+         introError = null;
+      }
+      sb=null;
       return dataOK;
    }
 
@@ -1083,51 +1086,41 @@ public void onChngRpDtls(String flag){
    public boolean validateTaxPnl()
    {
       Boolean dataOK = true;
-//      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new StringBuilder();
       taxError = null;
       if (!hasRequiredData(owTaxDtls.getJurisdictionOfTaxResidence()) || owTaxDtls.getJurisdictionOfTaxResidence().trim().equalsIgnoreCase(""))
       {
-//         sb.append("Country / Jurisdiction of tax residence is required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.cntryDtl"+"<br/>", "Country / Jurisdiction of tax residence is required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.cntryDtl", "Country / Jurisdiction of tax residence is required.", null));
       }
       if (!hasRequiredData(owTaxDtls.getIsTINAvailable()))
       {
-//         sb.append("Tax Identification Number (Yes / No ) is required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.havTaxNum"+"<br/>", "Tax Identification Number (Yes / No ) is required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.havTaxNum", "Tax Identification Number (Yes / No ) is required.", null));
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("Yes") && !hasRequiredData(owTaxDtls.getTaxIdentificationNumber()))
       {
-//         sb.append("Tax Identification Number is required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.taxNum"+"<br/>", "Tax Identification Number is required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.taxNum", "Tax Identification Number is required.", null));
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("No") && !hasRequiredData(owTaxDtls.getTinUnavailableReason()))
       {
-//         sb.append("Reason for no Tax identification number is required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.rsnTaxNum"+"<br/>", "Reason for no Tax identification number is required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.rsnTaxNum", "Reason for no Tax identification number is required.", null));
       }
       if (owTaxDtls.getIsTINAvailable() != null && owTaxDtls.getIsTINAvailable().equalsIgnoreCase("No") &&
          (owTaxDtls.getTinUnavailableReason() != null && owTaxDtls.getTinUnavailableReason().equalsIgnoreCase("B")) &&
          !hasRequiredData(owTaxDtls.getTinUnavailableValue()))
       {
-//         sb.append("Explaination for Reason B is required.<br/>");
-         dataOK = false;
-         introError= webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.rsnTaxNumExpl"+"<br/>", "Explaination for Reason B is required.", null);
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.rsnTaxNumExpl", "Explaination for Reason B is required.", null));
       }
-//      if (sb.length() > 0)
-//      {
-//         dataOK = false;
-//         taxError = sb.toString();
-//      }
-//      else
-//      {
-//         dataOK = true;
-//         taxError = null;
-//      }
-//      sb = null;
+      if (sb.length() > 0)
+      {
+         dataOK = false;
+         taxError = sb.toString();
+      }
+      else
+      {
+         dataOK = true;
+         taxError = null;
+      }
+      sb = null;
       return dataOK;
    }
 
@@ -1595,7 +1588,7 @@ public void onChngRpDtls(String flag){
                   // uobDataMaster.getIndividualOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getIndividualOwnersDetails().setOwnership("Individual");
 
-                  if(!ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
+                  if(ownDtls.getOwnerMiscDetails().getQualifications()!=null && !ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
                      ownDtls.getOwnerMiscDetails().setQualificationsSpecify(null);
                   }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 1, "" + getBeanLogonId(), ownDtls);
@@ -1605,7 +1598,7 @@ public void onChngRpDtls(String flag){
                   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 //                  uobDataMaster.getJointOwnersDetails().setDob(sdf.format(dtPriHldrDob));
                   uobDataMaster.getJointOwnersDetails().setOwnership("Joint");
-                  if(!ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
+                  if(ownDtls.getOwnerMiscDetails().getQualifications()!=null && !ownDtls.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Others")){
                      ownDtls.getOwnerMiscDetails().setQualificationsSpecify(null);
                   }
                   saveAcctHldrDtls(uobDataMaster.getAccountDetails().getAcctnum(), 2, "" + getBeanLogonId(), ownDtls);
@@ -3129,7 +3122,7 @@ public void onChngRpDtls(String flag){
 
    public void  submitUploadFrm(){
       if(dwnFileMstrLst!=null && dwnFileMstrLst.size()>0){
-         if(dwnlDsclFlag && dwnlGudFlag){
+         if(dwnlDsclFlag && dwnlGudFlag && dwnlMstrTrdAggrFlag){
             genCustodyDocRequest();
          }else
          {
@@ -3141,7 +3134,7 @@ public void onChngRpDtls(String flag){
    }
 
    public void onChngAccept(){
-      if(dwnlDsclFlag && dwnlGudFlag){
+      if(dwnlDsclFlag && dwnlGudFlag && dwnlMstrTrdAggrFlag){
          dsblAcptBtn=false;
       }else{
          dsblAcptBtn=true;
@@ -3149,7 +3142,7 @@ public void onChngRpDtls(String flag){
    }
 
    public void onChngAccept1(){
-      if(dwnlDsclFlag && dwnlGudFlag){
+      if(dwnlDsclFlag && dwnlGudFlag && dwnlMstrTrdAggrFlag){
          dsblAcptBtn=false;
       }else{
          dsblAcptBtn=true;
@@ -3157,7 +3150,7 @@ public void onChngRpDtls(String flag){
    }
 
    public void  submitAccceptFrm(){
-      if(dwnlDsclFlag && dwnlGudFlag){
+      if(dwnlDsclFlag && dwnlGudFlag && dwnlMstrTrdAggrFlag){
          genCustodyDocRequest();
       }
    }
@@ -4213,5 +4206,25 @@ public void onChngRpDtls(String flag){
    public void setDsblAcptBtn(boolean dsblAcptBtn)
    {
       this.dsblAcptBtn = dsblAcptBtn;
+   }
+
+   public boolean isDwnlMstrTrdAggrFlag()
+   {
+      return dwnlMstrTrdAggrFlag;
+   }
+
+   public void setDwnlMstrTrdAggrFlag(boolean dwnlMstrTrdAggrFlag)
+   {
+      this.dwnlMstrTrdAggrFlag = dwnlMstrTrdAggrFlag;
+   }
+
+   public StreamedContent getContentMstrTrdAggr()
+   {
+      return contentMstrTrdAggr;
+   }
+
+   public void setContentMstrTrdAggr(StreamedContent contentMstrTrdAggr)
+   {
+      this.contentMstrTrdAggr = contentMstrTrdAggr;
    }
 }
