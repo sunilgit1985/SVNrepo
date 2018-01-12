@@ -46,8 +46,8 @@ BEGIN
 	WHERE upper(ticker) = 'CASH';
 
 	INSERT INTO tmp_historical_dates
-	SELECT daily.ticker,
-		   daily.dest_currency,
+	SELECT `daily`.`ticker`,
+		   `tmp_ticker_list`.`tradeCurrency` as `tradeCurrency`,
 		   min(businessdate) as min_businessdate, 
 		   max(businessdate) as max_businessdate
 	FROM `rbsa`.`rbsa_daily` daily,
@@ -56,7 +56,9 @@ BEGIN
     AND   daily.dest_currency = tmp_ticker_list.tradeCurrency
 	group by daily.ticker, daily.dest_currency;
 
-	SELECT daily.ticker, daily.dest_currency, count(*) as maxrows
+	SELECT  `daily`.`ticker`,
+		   `tmp_ticker_list`.`tradeCurrency` as `tradeCurrency`, 
+            count(*) as maxrows
 	FROM 
 		 tmp_ticker_list,
 		 `rbsa`.`rbsa_daily` daily,
