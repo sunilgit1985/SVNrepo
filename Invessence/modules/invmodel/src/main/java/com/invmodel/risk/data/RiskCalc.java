@@ -487,7 +487,7 @@ public class RiskCalc
          }
 
          age = (age == null) ? defaultAge : age;
-         horizon = getDefaultHorizon();
+         horizon = (horizon == null) ? getDefaultHorizon() : horizon;
          Double horPowerAdj = horizon / maxDuration;
          if (horPowerAdj > 1.0)
          {

@@ -68,7 +68,7 @@ public class NewRiskCalc
       profileData.setAdvisor(advisor);
       profileData.setTheme(userRiskProfile.getAnswer(RiskConst.THEME));
 
-      calculateSingleRisk();
+      calculateRiskQuestionsGrid(true);
       System.out.print("Done");
    }
 

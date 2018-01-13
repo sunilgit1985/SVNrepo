@@ -501,6 +501,12 @@ public class PortfolioCreationUI extends UserInterface
       Integer horizon = riskCalc.getDefaultHorizon();
       Integer withdrawl = (riskCalc.getWithDrwalPeriod() == null) ? 1 : riskCalc.getWithDrwalPeriod();
 
+      /*
+      riskCalc.setAge(50);
+      riskCalc.setWithDrwalPeriod(5);
+      riskCalc.setWithdrawlamount(20000.00);
+      */
+
       ArrayList<ProjectionData> projectionDatas = modelUtil.createGlidePath(horizon + withdrawl, riskCalc);
       return chart.createGlidePath(projectionDatas);
    }
@@ -822,6 +828,21 @@ public class PortfolioCreationUI extends UserInterface
       riskCalc.setRiskScore(riskCalc.getStandardScore(0));
    }
 
+   public void allocDecrement() {
+      Double thisScore = riskCalc.getRiskScore();
+      if (thisScore > riskCalc.getScoreLowerBound())
+      {
+         riskCalc.setRiskScore(thisScore - 1.0);
+      }
+   }
+
+   public void allocIncrement() {
+      Double thisScore = riskCalc.getRiskScore();
+      if (thisScore < riskCalc.getScoreUpperBound())
+      {
+         riskCalc.setRiskScore(thisScore + 1.0);
+      }
+   }
 
    public void alertAdvisor()
    {

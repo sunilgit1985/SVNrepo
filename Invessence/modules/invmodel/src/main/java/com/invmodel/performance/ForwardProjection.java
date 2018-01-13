@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.invmodel.Const.InvConst;
 import com.invmodel.asset.data.AssetClass;
-import com.invmodel.dao.data.AssetData;
+import com.invmodel.dao.data.*;
 import com.invmodel.model.dynamic.PortfolioOptimizer;
 import com.invmodel.model.fixedmodel.FixedModelOptimizer;
 import com.invmodel.model.fixedmodel.data.*;
@@ -120,7 +120,7 @@ public class ForwardProjection
             assetdata = portfolioOptimizer.getAssetData(theme, assetname);
 
             Double ticker_weight = 0.0;
-            assetWgt = score;
+            assetWgt = assetdata.getWeight(score.intValue());
             if (assetWgt < 0.0001)
             {
                continue;
@@ -132,9 +132,14 @@ public class ForwardProjection
             int tickerNum = 0;
             for (String primeassetclass : assetdata.getOrderedPrimeAssetList())
             {
+               PrimeAssetClassData primeAssetClassData = assetdata.getPrimeAssetData(primeassetclass);
+               String ticker = primeAssetClassData.getTicker();
                ticker_weight = assetWgt * primeAssetWeights[offset][tickerNum];
-               portfolioReturns = portfolioReturns + assetdata.getPrimeAssetreturns()[offset] * ticker_weight;
-               portfolioRisk = portfolioRisk + assetdata.getPrimeAssetrisk()[offset] * ticker_weight;
+               Double expectedReturn = primeAssetClassData.getExpectedReturn();
+               Double expectedRisk = primeAssetClassData.getRiskSTD();
+               portfolioReturns = portfolioReturns + (expectedReturn * ticker_weight);
+               portfolioRisk = portfolioRisk + (assetdata.getPrimeAssetrisk()[offset] * ticker_weight);
+               tickerNum++;
             }
          }
          pdata.setYear(thisyear);
@@ -150,6 +155,7 @@ public class ForwardProjection
          recurringPeriod--;
          if (recurringPeriod <= 0) {
             recurring = 0.0;
+            recurringPeriod = 0;
          }
          horizon = (horizon <= 0) ? 0 : horizon;
 
@@ -174,7 +180,8 @@ public class ForwardProjection
             }
             withDrwalPeriod--;
          }
-         invCapital = invCapital * (1 + (portfolioReturns/100));
+         invCapital = invCapital * (1 + portfolioReturns);
+         invCapital += recurring;
          investment += recurring;
          projectiondatas.add(thisyear,pdata);
       }

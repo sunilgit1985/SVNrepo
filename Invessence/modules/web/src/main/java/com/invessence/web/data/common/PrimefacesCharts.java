@@ -538,7 +538,7 @@ public class PrimefacesCharts implements Serializable
       Integer year;
       try
       {
-         BarChartModel glidpath = new BarChartModel();
+         BarChartModel glidepath = new BarChartModel();
          BarChartSeries gain = new BarChartSeries();
          BarChartSeries withdrawl = new BarChartSeries();
          Calendar cal = Calendar.getInstance();
@@ -550,11 +550,12 @@ public class PrimefacesCharts implements Serializable
             Double money = pdata.getTotalCapitalWithGains();
             gain.set(year, money);
             Double withdrawlmoney = pdata.getWithdrawlAmount();
-            withdrawl.set(year, money);
+            withdrawl.set(year, withdrawlmoney);
          }
-         glidpath.addSeries(gain);
-         glidpath.addSeries(withdrawl);
-         return glidpath;
+         glidepath.addSeries(gain);
+         glidepath.addSeries(withdrawl);
+         glidepath.setStacked(true);
+         return glidepath;
       }
       catch (Exception ex) {
 

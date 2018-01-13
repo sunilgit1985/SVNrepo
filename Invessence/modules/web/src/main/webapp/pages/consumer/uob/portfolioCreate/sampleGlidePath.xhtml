@@ -34,16 +34,19 @@
                         library="#{uiLayout.webProfile.cssdir}"/>
         <h:outputScript name="js/riskMeter.js"
                         library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/glidepath.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
 
 
-		<h:form id="ceForm">
+        <h:form id="ceForm">
             <p:outputPanel id="reviewArea" style="background: transparent; border: 0px">
                 <div class="layout-portlets-box open_client_layout portfolio_layout ">
                     <div class="Container100 Responsive100">
                         <div class="portfolio_selection">
                             <div class="Container30 ">
                             <span class="GoalClickEvent">
-                                <p:graphicImage  name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
+                                <p:graphicImage name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}"
+                                                width="80px"/><span>Goal</span>
                             </span>
                             </div>
                             <div class="Container30 risk_meter">
@@ -98,7 +101,6 @@
                         </div>
 
                         <div class="caraousle Container100 ">
-                            <p:chart type="bar" model="#{uobProfile.glidePath}" style="height:300px"/>
                         </div>
 
 
