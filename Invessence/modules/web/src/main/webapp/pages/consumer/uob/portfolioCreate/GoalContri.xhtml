@@ -48,13 +48,14 @@
 									<script>
 										$(document).ready(function ()
 														  {
-															  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
-															  {
-																  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
-																  {
-																	  draw2dDonut1lyrChartDyna('CNFPrflo');
-																  }
-															  }
+//															  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+//															  {
+//																  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+//																  {
+//																	  draw2dDonut1lyrChartDyna('CNFPrflo');
+//																  }
+//															  }
+															  draw2dDonut1lyrChartClassBase('idPieChartArea', 'idPieChartValue');
 
 														  });
 
@@ -64,11 +65,13 @@
 									</script>
 
 									<div class="Container100 donutChartGraph review_graph">
-										<div id="2dDonutChartCnf"></div>
-										<h:inputHidden value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
-													   id="twodDonutValueChartCnf"/>
-										<h:inputHidden value="HIGHCHART.2DDONUT" id="cnftypeOfCharts"/>
 
+										<div id="2dDonutChart" class="idPieChartArea"></div>
+										<input type="hidden"
+											   value='[{"name":"Fixed Income","y":41.455600000000004,"drilldown":"Fixed Income","color":"#47566D","amount":45601},{"name":"Alternative","y":4.993745454545454,"drilldown":"Alternative","color":"#5E5E5E","amount":5493},{"name":"Cash","y":0.2397818181818182,"drilldown":"Cash","color":"#8E8E8E","amount":263},{"name":"Equity","y":53.31087272727273,"drilldown":"Equity","color":"#333F50","amount":58641}]'
+											   class="idPieChartValue"/>
+										<input type="hidden" value="HIGHCHART.2DDONUT"
+											   class="idChartType"/>
 									</div>
 
 

@@ -54,7 +54,7 @@ function draw2dDonut1lyrChart()
                                                pie: {
                                                    center: ['50%', '40%'],
                                                    size:'80%',
-                                                   allowPointSelect: true,
+                                                   allowPointSelect: false,
                                                    cursor: 'pointer',
                                                    dataLabels: {
                                                        enabled: false
@@ -66,7 +66,7 @@ function draw2dDonut1lyrChart()
                                                },
                                                showInLegend: true,
                                                series: {
-                                                   allowPointSelect: true, // remove if using details level details part
+                                                   allowPointSelect: false, // remove if using details level details part
                                                    cursor: 'pointer',
                                                    dataLabels: {
                                                        enabled: false,
@@ -211,7 +211,7 @@ function draw2dDonut1lyrChartDyna(vForm)
                                                pie: {
                                                    center: ['50%', '40%'],
                                                    size:'80%',
-                                                   allowPointSelect: true,
+                                                   allowPointSelect: false,
                                                    cursor: 'pointer',
                                                    dataLabels: {
                                                        enabled: false
@@ -223,7 +223,7 @@ function draw2dDonut1lyrChartDyna(vForm)
                                                },
                                                showInLegend: true,
                                                series: {
-                                                   allowPointSelect: true, // remove if using details level details part
+                                                   allowPointSelect: false, // remove if using details level details part
                                                    cursor: 'pointer',
                                                    dataLabels: {
                                                        enabled: false,
@@ -385,7 +385,7 @@ try{
                                                pie: {
                                                    center: ['50%', '40%'],
                                                    size:'80%',
-                                                   allowPointSelect: true,
+                                                   allowPointSelect: false,
                                                    cursor: 'pointer',
                                                    dataLabels: {
                                                        enabled: false
@@ -397,7 +397,7 @@ try{
                                                },
                                                showInLegend: true,
                                                series: {
-                                                   allowPointSelect: true, // remove if using details level details part
+                                                   allowPointSelect: false, // remove if using details level details part
                                                    cursor: 'pointer',
                                                    dataLabels: {
                                                        enabled: false,
