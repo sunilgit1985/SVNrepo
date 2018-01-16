@@ -497,7 +497,7 @@ public class PortfolioCreationUI extends UserInterface
       }
    }
 
-   public BarChartModel getGlidePath() {
+   public void createGlidePath() {
       Integer horizon = riskCalc.getDefaultHorizon();
       Integer withdrawl = (riskCalc.getWithDrwalPeriod() == null) ? 1 : riskCalc.getWithDrwalPeriod();
 
@@ -508,7 +508,11 @@ public class PortfolioCreationUI extends UserInterface
       */
 
       ArrayList<ProjectionData> projectionDatas = modelUtil.createGlidePath(horizon + withdrawl, riskCalc);
-      return chart.createGlidePath(projectionDatas);
+      chart.createGlidePath(projectionDatas);
+   }
+
+   public BarChartModel getGlidePath() {
+      return chart.getGlidePath();
    }
 
    public void saveProfile()

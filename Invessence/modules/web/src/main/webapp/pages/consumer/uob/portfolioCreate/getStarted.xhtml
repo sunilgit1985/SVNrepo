@@ -42,25 +42,26 @@
         </p:panel>
 
         <div class="Container100 tab_dtl">
-            <p>
-                Hi, what is your full name ?
-                <p:inputText style="width:190px;" value="#{uobProfile.customer.name}"
-                             disabled="#{uobProfile.disableModeForIntroPage}"
-                             id="uobCustomerName" placeholder="Enter Your Full Name"
-                             maxlength="60">
-                    <p:ajax listener="#{uobProfile.onChangeName}"
-                            update=":ceForm:introPanel"/>
-                </p:inputText>
-            </p>
-            <p:outputPanel id="introPanel" style="border: 0px; background: transparent">
+            <p:outputPanel id="introPanel" style="background: transparent; border: 0px"
+                           rendered="#{uobProfile.disableModeForIntroPage}">
+                <p>
+                    Hi, what is your full name ?
+                    <p:inputText style="width:190px;" value="#{uobProfile.customer.name}"
+                                 id="uobCustomerName" placeholder="Enter Your Full Name"
+                                 maxlength="60">
+                        <p:ajax listener="#{uobProfile.onChangeName}"
+                                update=":ceForm:introPanel"/>
+                    </p:inputText>
+                </p>
                 <p>
                     <span class="input_value">#{uobProfile.printName}</span> What is your e-mail address?
                     <p:inputText style="width:190px;" value="#{uobProfile.customer.email}"
-                                 disabled="#{uobProfile.disableModeForIntroPage}"
                                  id="uobCustomerEmail" placeholder="Enter Your Email"
                                  maxlength="60">
                     </p:inputText>
                 </p>
+            </p:outputPanel>
+            <p:outputPanel style="border: 0px; background: transparent">
                 <p class="wid55">
                     <span class="input_value">#{uobProfile.printName}</span> How old are you?
                     <p:inputNumber id="uobAge" class="input_no_type"

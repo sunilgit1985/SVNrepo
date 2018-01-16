@@ -9,6 +9,7 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{uobProfile.preRenderReview}"/>
     </f:metadata>
+
     <ui:define name="content">
         <h:outputScript name="js/invCharts.js"
                         library="#{uiLayout.webProfile.cssdir}"/>
@@ -101,6 +102,8 @@
                         </div>
 
                         <div class="caraousle Container100 ">
+                            <p:chart type="bar" model="#{uobProfile.glidePath}"
+                                     style="height:300px"/>
                         </div>
 
 

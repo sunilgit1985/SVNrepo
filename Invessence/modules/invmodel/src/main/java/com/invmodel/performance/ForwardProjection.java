@@ -165,8 +165,8 @@ public class ForwardProjection
             {
                if (withdrawlamount == null || withdrawlamount <= 0.0)
                {
-                  Integer yearsRemain = (years - thisyear);
-                  withdrawlamount = (investment + recurring) / (yearsRemain / years);
+                  Integer yearsRemain = (years - thisyear) - 1;
+                  withdrawlamount = (invCapital / ((yearsRemain <= 0) ? 1 : yearsRemain));
                }
             }
          }

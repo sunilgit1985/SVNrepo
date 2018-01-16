@@ -43,7 +43,7 @@ public class ProfileBean extends PortfolioCreationUI
       {
          setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
          setRiskAns2(true);
-         setRiskAns3(false);
+         setRiskAns3(true);
       }
       loadDropDownList();  // This process will reload all dropdown list.
 
@@ -76,6 +76,7 @@ public class ProfileBean extends PortfolioCreationUI
 
       if (!FacesContext.getCurrentInstance().isPostback())
       {
+         // Need to find out why this is being tested???
          if (getCustomer() == null)
          {
             initUI();
@@ -86,7 +87,11 @@ public class ProfileBean extends PortfolioCreationUI
             super.preRenderView();
             setDefault();
             getCustomer().copyData(getSavedCustomer());
+         }
+
+         if (getCustomer() != null) {
             createAssetPortfolio();
+            createGlidePath();
          }
       }
    }
@@ -118,10 +123,13 @@ public class ProfileBean extends PortfolioCreationUI
                // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
 
                initUI();
+
+               /*  Don't redirect, let the cadd handle the appropriate page.
                if (webutil.isUserLoggedIn())
                {
                   gotoRiskQuestions();
                }
+               */
 
                super.preRenderView();
                setDefault();
@@ -202,7 +210,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void gotoPortfolioCreation()
    {
       Boolean validated = true;
-      if (beanmode.equals(UIMode.New))
+      if (beanmode.equals(UIMode.New) && ! webutil.isUserLoggedIn())
       {
          validated = validateIntroPage();
       }
@@ -330,9 +338,12 @@ public class ProfileBean extends PortfolioCreationUI
    {
       if (beanmode == null || beanmode == UIMode.New)
       {
-         return false;
+         if (webutil.isUserLoggedIn()) {
+            return false;
+         }
+         return true;
       }
-      return true;
+      return false;
    }
 
    public Integer getAge()

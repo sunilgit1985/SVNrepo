@@ -30,6 +30,7 @@ public class PrimefacesCharts implements Serializable
    public BarChartModel riskbarChart;
    public LineChartModel goalChart;
    private String resultChart;
+   private BarChartModel glidepath;
 
    public PrimefacesCharts()
    {
@@ -119,6 +120,11 @@ public class PrimefacesCharts implements Serializable
    public void setGoalChart(LineChartModel goalChart)
    {
       this.goalChart = goalChart;
+   }
+
+   public BarChartModel getGlidepath()
+   {
+      return glidepath;
    }
 
    public void setMeterGuage(Integer pointer)
@@ -533,12 +539,12 @@ public class PrimefacesCharts implements Serializable
       }
    }
 
-   public BarChartModel createGlidePath(ArrayList<ProjectionData> projectionDatas) {
+   public void createGlidePath(ArrayList<ProjectionData> projectionDatas) {
       String color;
       Integer year;
       try
       {
-         BarChartModel glidepath = new BarChartModel();
+         glidepath = new BarChartModel();
          BarChartSeries gain = new BarChartSeries();
          BarChartSeries withdrawl = new BarChartSeries();
          Calendar cal = Calendar.getInstance();
@@ -555,12 +561,11 @@ public class PrimefacesCharts implements Serializable
          glidepath.addSeries(gain);
          glidepath.addSeries(withdrawl);
          glidepath.setStacked(true);
-         return glidepath;
+         // glidepath.setExtender("glidepath_bar");
       }
       catch (Exception ex) {
 
       }
-      return null;
    }
 
    public void createBarChart(AssetClass[] assetclasses, Integer offset)

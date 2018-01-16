@@ -98,8 +98,12 @@ public class Chart
       }
    }
 
-   public BarChartModel createGlidePath(ArrayList<ProjectionData> projectionDatas)
+   public void createGlidePath(ArrayList<ProjectionData> projectionDatas)
    {
-      return primefacechart.createGlidePath(projectionDatas);
+       primefacechart.createGlidePath(projectionDatas);
+   }
+
+   public BarChartModel getGlidePath() {
+      return primefacechart.getGlidepath();
    }
 }
