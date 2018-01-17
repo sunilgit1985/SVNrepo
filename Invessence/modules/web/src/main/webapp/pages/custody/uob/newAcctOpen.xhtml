@@ -39,7 +39,7 @@
                                             <div class="Container80 Responsive100">
                                                 <p:inputText id="nwPriHldrNm" placeholder="Full Name as in Identity Card or Passport" maxlength="60"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.fullName}"/>
-                                                <label for="nwPriHldrNm">Full Name</label>
+                                                <label for="nwPriHldrNm">Full Name as in Identity Card or Passport</label>
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block Container100">
@@ -146,7 +146,7 @@
                                         </p:panel>
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container50">
-                                                <div class="Container100"><span class="title_line">Educational Qualification</span></div>
+                                                <div class="Container100"><span class="title_line">Educational Qualifications</span></div>
                                                 <p:selectOneMenu id="nwPriHldrQual"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.qualifications}">
                                                     <p:ajax listener="#{uobCustodyBean.onChngEmplt}" update="nwPriHldEmpOtrDtlPnl"/>
@@ -160,7 +160,7 @@
                                             </div>
                                             <p:panel id="nwPriHldEmpOtrDtlPnl" style="border-color: transparent;" class="Container50">
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplNwPriEmpOtrDtlPnl}">
-                                                    <div class="Container100"><span class="title_line">Other Qualification</span></div>
+                                                    <div class="Container100"><span class="title_line">Other Qualifications</span></div>
                                                     <div class="Container100 ">
                                                         <p:inputText id="nwPriHldrQualOtr" placeholder="Other"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.qualificationsSpecify}"
@@ -640,10 +640,10 @@
                                             <div class="Container100  width99">
                                                <!-- <div class="Container100"><span class="title_line">Account Holder Name</span></div>-->
                                                 <div class="Container100">
-                                                    <p:inputText id="nwPriHldrRemBnkAcctHldrNm" placeholder="Account Holder Name"
+                                                    <p:inputText id="nwPriHldrRemBnkAcctHldrNm" placeholder="Bank Account Holder Name"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountHolderName}"
                                                                  maxlength="60"/>
-                                                    <label for="nwPriHldrRemBnkAcctHldrNm">Account Holder Name</label>
+                                                    <label for="nwPriHldrRemBnkAcctHldrNm">Bank Account Holder Name</label>
                                                 </div>
                                             </div>
                                             <div class="Container50 Responsive50 margin-top">
@@ -866,7 +866,7 @@
                                                                                 itemLabel="B. The Account Holder is otherwise unable to obtain a Tax Identification Number or equivalent number (Please explain why you are unable to obtain a Tax Identification Number in the below table if you have selected this reason)"
                                                                                 itemValue="B"></f:selectItem>
                                                                         <f:selectItem
-                                                                                itemLabel="C. No Tax Identification Number is required as the domestic law of relevant jurisdiction does not require the collection of the Tax Identification Number issues by such jurisdiction"
+                                                                                itemLabel="C. No Tax Identification Number is required as the domestic law of relevant jurisdiction does not require the collection of the Tax Identification Number issued by such jurisdiction"
                                                                                 itemValue="C"></f:selectItem>
                                                                     </p:selectOneRadio>
                                                                 </div>
