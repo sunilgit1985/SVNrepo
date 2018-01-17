@@ -432,7 +432,7 @@ public class RiskCalc
 
    public Integer getDefaultWithDrwalPeriod()
    {
-      return withDrwalPeriod;
+      return (withDrwalPeriod==null ? 0 :withDrwalPeriod);
    }
 
    public Double getDefaultInvestment()
@@ -447,7 +447,7 @@ public class RiskCalc
 
    public Double getDefaultWithdrawlAmount()
    {
-      return withdrawlamount;
+      return (withdrawlamount== null ? 0.0:withdrawlamount);
    }
 
    public Double ageTimeFormula(Integer age, Integer horizon)
