@@ -1,0 +1,10 @@
+DELETE FROM `invdb`.`user_basket_access` WHERE `advisor`='UOB' and`theme`='0.SGWealthSGD' and`primary`='Y';
+DELETE FROM `invdb`.`user_basket_access` WHERE `advisor`='UOB' and`theme`='0.SGWealthSGD.Un' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='0' WHERE `advisor`='UOB' and`theme`='8.UOB' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='1' WHERE `advisor`='UOB' and`theme`='T.8.UOB' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='2' WHERE `advisor`='UOB' and`theme`='8.UOB.Sing' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='3' WHERE `advisor`='UOB' and`theme`='T.8.UOB.Sing' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='0' WHERE `advisor`='BB' and`theme`='0.BB' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='1' WHERE `advisor`='BB' and`theme`='T.0.BB' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='0' WHERE `advisor`='BB-TCM' and`theme`='0.TA' and`primary`='Y';
+UPDATE `invdb`.`user_basket_access` SET `sortorder`='1' WHERE `advisor`='BB-TCM' and`theme`='T.0.TA' and`primary`='Y';
