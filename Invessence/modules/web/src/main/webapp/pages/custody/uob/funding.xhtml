@@ -35,7 +35,7 @@
                                 </p:selectOneRadio>
                             </div>
                         </p:panel>
-                        <p:panel id="Sendinfo" styleClass="Container50">
+                        <p:panel id="Sendinfo" styleClass="Container50 margin-left">
                             <div class="Container80 label_opacity">
                                 <label>I/We want to change Standing Instruction</label>
                             </div>
@@ -62,7 +62,7 @@
                                     <h:outputText id="nwPriHldrTaxMsg" styleClass="errorText"
                                                   value="#{uobFundBean.fndError}" escape="false"/>
                                 </p:panel>
-                                <div class="Container50 Responsive100 date_birth">
+                                <div class="Container50 Responsive100 date_birth ">
                                     <div class="Container100"><span class="title_line">Investment Date</span></div>
                                     <p:calendar  id="fndInvDt" navigator="true"
                                                 showOn="button" placeholder="Date Of Birth (dd mm yyyy)" pattern="d MMM yyyy"
@@ -70,9 +70,10 @@
                                     <label for="fndInvDt">Investment Date</label>
                                 </div>
                                 <div class="Container50 Responsive100 ">
+                                    <div class="Container100"><span class="title_line">Amount</span></div>
                                     <p:inputText id="fndInvAmt" placeholder="Amount"
                                                  value="#{uobFundBean.invstmAmount}" maxlength="12"/>
-                                    <label for="fndInvAmt">Amount</label>
+                                    <!--<label for="fndInvAmt">Amount</label>-->
                                 </div>
                             </div>
                             <div class="Container100 margin-top">
