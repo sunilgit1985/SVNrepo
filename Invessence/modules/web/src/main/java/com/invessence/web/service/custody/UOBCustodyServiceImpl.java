@@ -360,6 +360,20 @@ public class UOBCustodyServiceImpl  implements CustodyService
    }
 
    @Override
+   public void saveFundingEditDtls(Long acctNum, String clientAccountID, String investmentDate,Long newAmount,String status)
+   {
+      try {
+         jdbcTemplate = new JdbcTemplate(dataSource);
+         CustodySP sp = new CustodySP(jdbcTemplate, "sp_custody_fund_save",16);
+         Map outMap = sp.saveFundingEditDtls( acctNum,  clientAccountID,  investmentDate, newAmount, status);
+      }
+      catch (Exception ex) {
+         System.out.println("UOBCustodyServiceImpl.saveFundingEditDtls Exception "+ex);
+         ex.printStackTrace();
+      }
+   }
+
+   @Override
    public Long getDefaultAdvisor()
    {
       return getDefaultAdvisorId();

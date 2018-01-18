@@ -167,6 +167,13 @@ public class CustodySP extends StoredProcedure
             declareParameter(new SqlParameter("p_managed", Types.VARCHAR));
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
             break;
+         case 16:
+            declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+            declareParameter(new SqlParameter("p_clientAccountID", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_investmentDate", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_netAmount", Types.DOUBLE));
+            declareParameter(new SqlParameter("p_status", Types.VARCHAR));
+            break;
         case 20:
             declareParameter(new SqlParameter("p_acctnum", Types.NUMERIC));
             declareParameter(new SqlParameter("p_eventnum", Types.NUMERIC));
@@ -438,6 +445,18 @@ public class CustodySP extends StoredProcedure
       inputMap.put("p_acctnum", acctnum);
       inputMap.put("p_managed", flag);
       inputMap.put("p_logonid", logonid);
+      return super.execute(inputMap);
+   }
+
+   public Map saveFundingEditDtls(Long acctNum, String clientAccountID, String investmentDate,Long newAmount,String status)
+   {
+      Map<String, Object> inputMap = new HashMap<String, Object>();
+      inputMap.put("p_acctnum", acctNum);
+      inputMap.put("p_clientAccountID", clientAccountID);
+      inputMap.put("p_investmentDate", investmentDate);
+      inputMap.put("p_netAmount", newAmount);
+      inputMap.put("p_status", status);
+
       return super.execute(inputMap);
    }
 
