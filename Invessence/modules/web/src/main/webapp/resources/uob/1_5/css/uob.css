@@ -3987,13 +3987,14 @@ button.acc_detl_btn {
     text-decoration: underline;
 }
 .outer_stategy_block {
-    width: 90%;
+    /*width: 90%;
     margin: 10px 5%;
-    /* background: #fbafa7; */
+    !* background: #fbafa7; *!
     padding: 10px;
     box-shadow: 2px 2px 5px 1px #fbafa7;
     border-radius: 4px;
-    float:left;
+    float:left;*/
+    text-align:left;
 }
 p.top_line {
     width: 100%;
@@ -5857,7 +5858,7 @@ form#ceForm {
     font-weight: normal;
     color: #a4332f;
     padding: 10px 0;
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
 }
 /*** 11/01/2018 **/
 .panelDiv {
