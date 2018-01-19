@@ -757,7 +757,7 @@ public class PortfolioCreationUI extends UserInterface
          if (!userInfoDAO.validateEmail(getCustomer().getEmail()))
          {
             msgheader = "signup.U000";
-            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email format is invalid!", null);
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This email format is invalid. Please re-enter email address.", null);
             return msg;
          }
 
@@ -775,7 +775,7 @@ public class PortfolioCreationUI extends UserInterface
          {
             logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
             msgheader = "signup.U100";
-            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This email address is already registered!", null);
             return msg;
          }
 

@@ -47,16 +47,16 @@
                 <p>
                     Hi, what is your full name ?
                     <p:inputText style="width:190px;" value="#{uobProfile.customer.name}"
-                                 id="uobCustomerName" placeholder="Enter Your Full Name"
+                                 id="uobCustomerName" placeholder="Enter your full name"
                                  maxlength="60">
                         <p:ajax listener="#{uobProfile.onChangeName}"
                                 update=":ceForm:introPanel"/>
                     </p:inputText>
                 </p>
                 <p>
-                    <span class="input_value">#{uobProfile.printName}</span> What is your e-mail address?
+                    <span class="input_value">#{uobProfile.printName}</span> What is your email address?
                     <p:inputText style="width:190px;" value="#{uobProfile.customer.email}"
-                                 id="uobCustomerEmail" placeholder="Enter Your Email"
+                                 id="uobCustomerEmail" placeholder="Enter your email"
                                  maxlength="60">
                     </p:inputText>
                 </p>

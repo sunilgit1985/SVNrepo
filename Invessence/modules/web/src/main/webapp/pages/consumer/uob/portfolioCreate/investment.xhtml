@@ -7,7 +7,7 @@
     <div class="caraousle Container100">
 
         <div class="header_tab">
-            <div class="header_title Container30">Lets talk about your contribution towards your goal for <span class="change_goal">#{uobProfile.selectedGoal.displayName}</span>
+            <div class="header_title Container30">Your contribution towards your goal for <span class="change_goal">#{uobProfile.selectedGoal.displayName}</span>
             </div>
             <div class="header_link prenext_btn Container70">
                 <div class="Container100">
@@ -40,7 +40,7 @@
 
         <div class="Container100 tab_dtl">
             <div class="selectList">
-                I like to invest in
+                I'd like to invest in
                 <p:selectOneMenu id="tradeCurrency" value="#{uobProfile.tradeCurrency}"
                                     update=":ceForm:initialinvestment">
                     <p:ajax update=":ceForm:investQuestions"/>
@@ -65,14 +65,15 @@
                                                          value="#{uobProfile.recurringInvestment}"
                                                          thousandSeparator="," decimalPlaces="0">
                 </p:inputNumber>
+                per annum
             </p>
             <p>
-                 per annum to this investment account over the next
+                to this investment account over the next
                 <p:inputNumber id="recurringPeriod" class="input_no_type"
                                value="#{uobProfile.recurringPeriod}"
                                minValue="1" maxValue="60"
                                decimalPlaces="0">
-                        </p:inputNumber> years
+                        </p:inputNumber> years.
             </p>
             </p:outputPanel>
 
