@@ -1,0 +1,7 @@
+ALTER TABLE `invdb`.`ext_acct_info` 
+CHANGE COLUMN `dob` `dob` VARCHAR(15) NULL DEFAULT NULL AFTER `faxNbr`,
+CHANGE COLUMN `ssn` `identification` VARCHAR(60) NULL DEFAULT NULL ,
+CHANGE COLUMN `acctType` `idType` VARCHAR(15) NULL DEFAULT NULL ,
+CHANGE COLUMN `taxable` `taxable` VARCHAR(1) NULL DEFAULT NULL ,
+CHANGE COLUMN `objective` `objective` VARCHAR(20) NULL DEFAULT NULL ,
+ADD COLUMN `fullname` VARCHAR(60) NULL AFTER `applicantLName`;
