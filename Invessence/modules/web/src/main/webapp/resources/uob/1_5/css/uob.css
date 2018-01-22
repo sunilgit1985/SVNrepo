@@ -1941,7 +1941,7 @@ span > input {
     float:left !important;
 }
 
-.fineTuneBlock {
+.fineTuneBlock .fineTuneInrDiv {
     width: 90%;
     height: 340px;
     position: absolute !important;
@@ -1952,7 +1952,7 @@ span > input {
     margin: 0 5%;
     box-shadow: 2px 2px 5px 1px #c5c5c5;
     top:60px;
-    display:none;
+    /*display:none;*/
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
 .fineTuneDetail {

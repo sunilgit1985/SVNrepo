@@ -39,19 +39,20 @@ public class ProfileBean extends PortfolioCreationUI
       pagemanager.initPage();
 
       // Since Risk Score Question #2 and #3 are knockout question, we'll assume the default (Only on New account)
-      if (beanmode.equals(UIMode.New))
+      if (beanmode.equals(UIMode.New) )
       {
-         setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
+//         setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
          setRiskAns2(true);
          setRiskAns3(true);
       }
+      setAdvisor(getCustomer().getAdvisor());
       loadDropDownList();  // This process will reload all dropdown list.
 
       if (webutil.isUserLoggedIn())
       {
          if (getCustomer().getAcctnum() != null)
          {
-            Map<String, WebMenuItem> goalMap = webMenuList.getMenuItemMap(WebMenuList.ListComponent.CURRENCY.toString());
+            Map<String, WebMenuItem> goalMap = webMenuList.getMenuItemMap(WebMenuList.ListComponent.GOAL.toString());
             if (goalMap.containsKey(getCustomer().getGoal().toUpperCase()))
             {
                // Upload the data from DB and set selection as if user selected it.

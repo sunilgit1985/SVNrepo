@@ -15,7 +15,7 @@ public class RiskCalc
    public RiskConst.CALCFORMULAS riskFormula;
    public Integer maxScore;
 
-   public Integer age, horizon, recurringPeriod, withDrwalPeriod;
+   public Integer age, horizon, recurringPeriod, withDrwalPeriod,intRiskScore;
    public Double investment, recurring, withdrawlamount;
 
    private Double scoreDeviation;
@@ -207,7 +207,7 @@ public class RiskCalc
       this.riskScore = riskScore;
    }
 
-   private Integer getScoreInfo() {
+   public Integer getScoreInfo() {
       if (userRiskProfile != null) {
          if (userRiskProfile.getRiskScoreObj(0) != null) {
             return userRiskProfile.getRiskScoreObj(0).standardScore.intValue();
@@ -218,17 +218,30 @@ public class RiskCalc
 
    private Integer getScoreAdjustments()
    {
-      if (userRiskProfile != null)
-      {
-         if (userRiskProfile.getRiskScoreObj(0) != null)
-         {
-            if (userRiskProfile.getRiskScoreObj(0).adjustment >= 0.0)
-            {
-               return userRiskProfile.getRiskScoreObj(0).adjustment.intValue();
-            }
-         }
+      if (userRiskProfile != null){
+         return userRiskProfile.getDefaultIntValue(RiskConst.RISKADUSTMENT,15);
       }
-      return scoreDeviation.intValue();
+
+//      if (userRiskProfile != null)
+//      {
+//         if (userRiskProfile.getRiskScoreObj(0) != null)
+//         {
+//            if (userRiskProfile.getRiskScoreObj(0).adjustment >= 0.0)
+//            {
+//               return userRiskProfile.getRiskScoreObj(0).adjustment.intValue();
+//            }
+//         }
+//      }
+      return 0;
+   }
+
+   public void setScoreLowerBound(Integer scoreLowerBound)
+   {
+   }
+
+   public void setScoreUpperBound(Integer scoreUpperBound)
+   {
+
    }
 
    public Integer getScoreLowerBound() {
@@ -540,8 +553,9 @@ public class RiskCalc
       Integer age, horizon;
       Double investment, recurring, withdrawlamount;
       Integer recurringPeriod, withDrwalPeriod;
+      Double thisscore;
 
-      if (userRiskProfile != null)
+      if (userRiskProfile != null && userRiskProfile.getCalcFormula().toString().equalsIgnoreCase(RiskConst.CALCFORMULAS.C.toString()))
       {
          age = getDefaultAge();
          horizon = getDefaultHorizon();
@@ -550,29 +564,20 @@ public class RiskCalc
          recurringPeriod = getDefaultRecurringPeriod();
          withDrwalPeriod = getDefaultWithDrwalPeriod();
          withdrawlamount = getDefaultWithdrawlAmount();
-         Double thisscore;
+
          if (getKnockOutFlag())
          {
-            if (userRiskProfile != null)
-            {
-               userRiskProfile.initRiskScore(0, true, 0.0);
-            }
+            thisscore = 0.0;
+            userRiskProfile.initRiskScore(0, true, 0.0);
          }
          else
          {
             thisscore = calculateRisk(age, horizon, investment,
                                       recurring, recurringPeriod,
                                       withDrwalPeriod, withdrawlamount);
-            if (userRiskProfile != null)
-            {
-               userRiskProfile.initRiskScore(0, false, thisscore);
-            }
+            userRiskProfile.initRiskScore(0, false, thisscore);
          }
-         age++;
-         horizon--;
-
-         age = (age > 110) ? 110 : age;
-         horizon = (horizon <= 0) ? 0 : horizon;
+         setRiskScore(thisscore);
       }
 
    }
@@ -614,5 +619,18 @@ public class RiskCalc
       }
 
       return riskScore;
+   }
+
+   public Integer getIntRiskScore()
+   {
+      if (userRiskProfile != null) {
+         if (userRiskProfile.getRiskScoreObj(0) != null) {
+            return userRiskProfile.getRiskScoreObj(0).getScore().intValue();
+         }
+      }
+      return riskScore.intValue();
+   }
+
+   public void setIntRiskScore(Integer intRiskScore)  {
    }
 }

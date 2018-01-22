@@ -152,7 +152,7 @@
                                         <ui:fragment rendered="true">
                                             <p:commandButton id="uobfinetunebtnCnf" styleClass="fineTuneBtn fineTuneBtnImg"
                                                              icon="ui-icon-image"
-                                                             update=":ceForm:reviewArea"
+                                                             update="ceForm:fineTunePanel"
                                                              actionListener="#{uobProfile.showFTPanel}">
                                             </p:commandButton>
                                             <span class="ftBtnLabel">Fine Tune</span>
@@ -160,8 +160,10 @@
                                     </div>
 
                                     <p:panel id="fineTunePanel" widgetVar="wvfineTunePanel"
-                                             styleClass="fineTuneBlock"
-                                             rendered="#{uobProfile.displayFTPanel}">
+                                            style="border-color: transparent;"
+                                             >
+                                        <ui:fragment rendered="#{uobProfile.displayFTPanel}">
+                                            <div class="fineTuneInrDiv">
                                         <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
                                         <div class="Container100 FTLabel">
                                                 <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
@@ -194,7 +196,7 @@
                                                     </p:commandLink>
                                                 </div>
                                                 <div class="Container50 TexAlCenter Fs20">
-                                                    <h:inputHidden id="allocValue" value="#{uobProfile.riskCalc.riskScore}"/>
+                                                    <h:inputHidden id="allocValue" value="#{uobProfile.riskCalc.intRiskScore}"/>
                                                     <h:inputHidden id="minAllocValue" value="#{uobProfile.riskCalc.scoreLowerBound}"/>
                                                     <h:inputHidden id="maxAllocValue" value="#{uobProfile.riskCalc.scoreUpperBound}"/>
                                                     <p:slider id="allocSlider" for="allocValue"
@@ -215,7 +217,6 @@
                                                         <span class="ui-button-icon-center ui-icon ui-c fa fa-plus">
                                                         </span>
                                                     </span>
-
                                                     </p:commandLink>
                                                 </div>
                                                 <div class="EmptyBox5"></div>
@@ -247,7 +248,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            </div>
+                                    </ui:fragment>
                                     </p:panel>
 
 
@@ -336,26 +338,26 @@
                                                                                   $('#leftpanel').toggle(effect, options, duration);
 
                                                                               });
-
-                                                                              $("#fine_tune_btn").click(function() {
-
-                                                                                  // Set the effect type
-                                                                                  var effect = 'slide';
-
-                                                                                  // Set the options for the effect type chosen
-                                                                                  var options = {
-                                                                                      direction : 'up'
-                                                                                  };
-
-                                                                                  // Set the duration (default: 400 milliseconds)
-                                                                                  var duration = 700;
-
-                                                                                  $('.fineTuneBlock').toggle(effect, options, duration);
-
-                                                                              });
-
+//
+//                                                                              $("#fine_tune_btn").click(function() {
+//
+//                                                                                  // Set the effect type
+//                                                                                  var effect = 'slide';
+//
+//                                                                                  // Set the options for the effect type chosen
+//                                                                                  var options = {
+//                                                                                      direction : 'up'
+//                                                                                  };
+//
+//                                                                                  // Set the duration (default: 400 milliseconds)
+//                                                                                  var duration = 700;
+//
+//                                                                                  $('.fineTuneBlock').toggle(effect, options, duration);
+//
+//                                                                              });
+//
                                                                               $(".panelClose").click(function() {
-                                                                                  $('.fineTuneBlock').hide(300);
+//                                                                                  $('.fineTuneBlock').hide(300);
                                                                                   $('#leftpanel').hide(300);
                                                                               });
 

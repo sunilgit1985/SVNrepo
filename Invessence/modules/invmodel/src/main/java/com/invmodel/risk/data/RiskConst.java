@@ -115,8 +115,9 @@ public class RiskConst
    public static String AGEWEIGHT         = "AGEWEIGHT";
    public static String MAXDURATION       = "MAXDURATION";
    public static String MAXSCORE          = "MAXSCORE";
-   public static String RETIREMENTAGE     = "65";
-   public static String WITHDRAWLAGE      = "95";
+   public static String RETIREMENTAGE     = "RETIREMENTAGE";
+   public static String WITHDRAWLAGE      = "WITHDRAWLAGE";
+   public static String RISKADUSTMENT      = "RISKADJUSTMENT";
 
    public static String FINETUNEAJUSTMENTS   = "FINETUNEAJUSTMENTS";
    public static Integer RISKQSORTNUM      = 900;

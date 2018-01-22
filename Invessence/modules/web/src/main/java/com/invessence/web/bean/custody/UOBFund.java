@@ -199,7 +199,7 @@ public class UOBFund implements Serializable
          {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             custodyService.saveFundingEditDtls(Long.parseLong(beanacctnum), "a123", sdf.format(dtInvstDate), invstmAmount, "T");
-            custodyService.mangeUserProfile(getBeanAcctNum(),"P",getBeanLogonId());
+            custodyService.mangeUserProfile(getBeanAcctNum(),"D",getBeanLogonId());
             getUiLayout().doMenuAction("custody", "custodyConfirmation.xhtml");
             dtInvstDate = new Date();
             invstmAmount = null;

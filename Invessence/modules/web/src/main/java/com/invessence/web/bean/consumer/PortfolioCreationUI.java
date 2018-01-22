@@ -823,12 +823,15 @@ public class PortfolioCreationUI extends UserInterface
 
    public void closeFTPanel()
    {
+      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       setDisplayFTPanel(false);
+      createAssetPortfolio();
    }
 
    public void cancelFTPanel()
    {
       closeFTPanel();
+      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
       riskCalc.setRiskScore(riskCalc.getStandardScore(0));
    }
 
