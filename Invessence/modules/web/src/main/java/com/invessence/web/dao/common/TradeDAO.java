@@ -193,12 +193,12 @@ public class TradeDAO extends JdbcDaoSupport implements Serializable
       return userTradePreprocess;
    }
 
-   public List<TradeClientData> getTradeProfileData(Long logonid, String filter)
+   public List<TradeClientData> getTradeProfileData(Long logonid, String filter, String advisor)
    {
       DataSource ds = getDataSource();
       TradeSP sp = new TradeSP(ds, "sel_collectTradeProfile", 103);
       List<TradeClientData> listProfiles = new ArrayList<TradeClientData>();
-      Map outMap = sp.loadProfile(logonid, filter);
+      Map outMap = sp.loadProfile(logonid, filter, advisor);
       if (outMap != null)
       {
          ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
@@ -208,6 +208,8 @@ public class TradeDAO extends JdbcDaoSupport implements Serializable
             Map rs = (Map) rows.get(i);
             TradeClientData data = new TradeClientData();
 
+            data.setAdvisor(convert.getStrData(rs.get("advisor")));
+            data.setTheme(convert.getStrData(rs.get("theme")));
             data.setAcctnum(convert.getLongData(rs.get("acctnum")));
             data.setClientAccountID(convert.getStrData(rs.get("clientAccountID")));
             data.setTradeStatus(convert.getStrData(rs.get("tradeStatus")));
@@ -215,6 +217,7 @@ public class TradeDAO extends JdbcDaoSupport implements Serializable
             data.setReason(convert.getStrData(rs.get("reason")));
             data.setFirstname(convert.getStrData(rs.get("applicantFName")));
             data.setLastname(convert.getStrData(rs.get("applicantLName")));
+            data.setFullname(convert.getStrData(rs.get("fullname")));
             data.setLastTraded(convert.getStrData(rs.get("lastTraded")));
             data.setCash(convert.getDoubleData(rs.get("cash")));
             data.setInvestment(convert.getDoubleData(rs.get("investment")));
@@ -226,12 +229,12 @@ public class TradeDAO extends JdbcDaoSupport implements Serializable
       return null;
    }
 
-   public List<TradeSummary> getTradeSummaryData(Long logonid, String filter)
+   public List<TradeSummary> getTradeSummaryData(Long logonid, String filter, String advisor)
    {
       DataSource ds = getDataSource();
       TradeSP sp = new TradeSP(ds, "sel_TradeSummaryDetail", 104);
       List<TradeSummary> listProfiles = new ArrayList<TradeSummary>();
-      Map outMap = sp.loadTradeSummaryData(logonid, filter);
+      Map outMap = sp.loadTradeSummaryData(logonid, filter, advisor);
       if (outMap != null)
       {
          ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");

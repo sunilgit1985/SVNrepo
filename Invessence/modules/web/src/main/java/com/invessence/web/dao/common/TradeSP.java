@@ -72,10 +72,12 @@ public class TradeSP extends StoredProcedure
             break;
          case 103: // sel_collectTradeProfile
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
+            declareParameter(new SqlParameter("p_advisor", Types.VARCHAR));
             declareParameter(new SqlParameter("p_filter", Types.VARCHAR));
             break;
          case 104: // sel_collectTradeSummary
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
+            declareParameter(new SqlParameter("p_advisor", Types.VARCHAR));
             declareParameter(new SqlParameter("p_filter", Types.VARCHAR));
             break;
          case 105: // save_executedTrades
@@ -204,18 +206,20 @@ public class TradeSP extends StoredProcedure
       return super.execute(inputMap);
    }
 
-   public Map loadTradeSummaryData(Long logonid, String filter)
+   public Map loadTradeSummaryData(Long logonid, String filter, String advisor)
    {
       Map inputMap = new HashMap();
       inputMap.put("p_logonid", logonid);
+      inputMap.put("p_advisor", advisor);
       inputMap.put("p_filter", filter);
       return super.execute(inputMap);
    }
 
-   public Map loadProfile(Long logonid, String filter)
+   public Map loadProfile(Long logonid, String filter, String advisor)
    {
       Map inputMap = new HashMap();
       inputMap.put("p_logonid", logonid);
+      inputMap.put("p_advisor", advisor);
       inputMap.put("p_filter", filter);
       return super.execute(inputMap);
    }

@@ -35,6 +35,8 @@ public class InvModelSP extends StoredProcedure
                case 0:
                   declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
                   declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+                  declareParameter(new SqlParameter("p_advisor", Types.VARCHAR));
+                  declareParameter(new SqlParameter("p_rep", Types.VARCHAR));
                   break;
                case 1:
                   declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
@@ -109,12 +111,14 @@ public class InvModelSP extends StoredProcedure
    }
 
    @SuppressWarnings({"unchecked", "rawtypes"})
-   public Map loadDBData(Long p_logonid, Long p_acctnum)
+   public Map loadDBData(Long p_logonid, Long p_acctnum, String advisor, String rep)
    {
 
       Map inputMap = new HashMap();
       inputMap.put("p_logonid", p_logonid);
       inputMap.put("p_acctnum", p_acctnum);
+      inputMap.put("p_advisor", advisor);
+      inputMap.put("p_rep", rep);
       return super.execute(inputMap);
    }
 

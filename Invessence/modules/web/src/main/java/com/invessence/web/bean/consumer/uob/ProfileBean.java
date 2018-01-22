@@ -118,7 +118,7 @@ public class ProfileBean extends PortfolioCreationUI
                }
             }
 
-            if (beanmode.equals(UIMode.New) || beanmode.equals(UIMode.ChangeStrategy) || beanmode.equals(UIMode.Edit))
+            if (getCustomer() == null)
             {
                // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
 

@@ -93,6 +93,11 @@ public class
    // private String iblinkmaster = "https://www.interactivebrokers.com/Universal/servlet/formWelcome?&partnerID=Invessence&invitedBy=NDE4aW52ZXN0&invitation_id=6596230&token=56551";
    private String iblink = "https://www.interactivebrokers.com/Universal/servlet/formWelcome?&invitation_id=11204955&token=81843&partnerID=Invessence&invitedBy=dmNtMDMxNzE2";
 
+   public ProfileData()
+   {
+      riskProfile = new UserRiskProfile();
+   }
+
    private Map<String, CustomAllocation> customAllocations = new HashMap<String, CustomAllocation>();
 
    public Double getShortLossCarry()

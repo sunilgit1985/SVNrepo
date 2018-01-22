@@ -9,6 +9,8 @@ package com.invessence.web.data.common;
  */
 public class TradeClientData
 {
+   private String advisor;
+   private String theme;
    private Long acctnum;
    private String clientAccountID;
    private String tradeStatus;
@@ -16,6 +18,7 @@ public class TradeClientData
    private String reason;
    private String firstname;
    private String lastname;
+   private String fullname;
    private String lastTraded;
    private Double cash;
    private Double investment;
@@ -23,6 +26,26 @@ public class TradeClientData
    public TradeClientData getInstance()
    {
       return this;
+   }
+
+   public String getAdvisor()
+   {
+      return advisor;
+   }
+
+   public void setAdvisor(String advisor)
+   {
+      this.advisor = advisor;
+   }
+
+   public String getTheme()
+   {
+      return theme;
+   }
+
+   public void setTheme(String theme)
+   {
+      this.theme = theme;
    }
 
    public Long getAcctnum()
@@ -72,6 +95,17 @@ public class TradeClientData
       else
          return getLastname();
    }
+
+   public String getFullname()
+   {
+      return fullname;
+   }
+
+   public void setFullname(String fullname)
+   {
+      this.fullname = fullname;
+   }
+
    public String getProcessStatus()
    {
       return processStatus;
@@ -111,6 +145,7 @@ public class TradeClientData
    {
       this.tradeStatus = tradeStatus;
    }
+
 
    public String getTradeDisplayStatus()
    {

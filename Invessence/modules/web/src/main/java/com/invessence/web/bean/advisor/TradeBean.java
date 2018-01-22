@@ -20,6 +20,7 @@ import com.invessence.web.io.TradeWriter;
 import com.invessence.web.util.*;
 import com.invmodel.rebalance.RebalanceProcess;
 import com.invmodel.rebalance.data.*;
+import com.invmodel.risk.data.*;
 import org.primefaces.event.*;
 import org.primefaces.model.*;
 
@@ -48,6 +49,9 @@ public class TradeBean extends TradeClientData implements Serializable
 
    private List<UserTradePreprocess> rebalancetradedatalist;
    private Map<String, UserTradePreprocess> assetMap = new HashMap<String, UserTradePreprocess>();
+
+   private Map<Long, UserRiskProfile> userriskprofileMap;
+   private UserRiskProfile selectedRiskProfile;
 
    private List<String> tradeFilters;
    Double sumHoldingValue= 0.0, sumCurValue = 0.0, sumNewValue = 0.0;
@@ -428,7 +432,7 @@ public class TradeBean extends TradeClientData implements Serializable
       try
       {
          Long logonid = webutil.getLogonid();
-         tradeClientDataList = tradeDAO.getTradeProfileData(logonid, "N");
+         tradeClientDataList = tradeDAO.getTradeProfileData(logonid, "N", webutil.getWebprofile().getDefaultAdvisor());
          filterClientData2Display();
       }
       catch (Exception ex)
@@ -545,7 +549,9 @@ public class TradeBean extends TradeClientData implements Serializable
       {
          if (getSelectedClient() != null)
          {
-            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=D&acct=" + getSelectedClient().getAcctnum().toString());
+            //uiLayout.doMenuAction("consumer", "cadd.xhtml?app=D&acct=" + getSelectedClient().getAcctnum().toString());
+            selectedRiskProfile = new UserRiskProfile(getSelectedClient().getAdvisor(), getSelectedClient().getAcctnum());
+            uiLayout.doMenuAction("advisor", "userRisk.xhtml?");
          }
       }
       catch (Exception ex)
@@ -713,7 +719,7 @@ public class TradeBean extends TradeClientData implements Serializable
       try
       {
          Long logonid = webutil.getLogonid();
-         tradeSummaryData = tradeDAO.getTradeSummaryData(logonid, "R");
+         tradeSummaryData = tradeDAO.getTradeSummaryData(logonid, "R", getAdvisor());
          filterSummaryData2Display();
       }
       catch (Exception ex)
@@ -839,6 +845,62 @@ public class TradeBean extends TradeClientData implements Serializable
          showGrowl(msg, "Error");
          ex.printStackTrace();
       }
+   }
+
+   public ArrayList<UserRiskData> getRiskData() {
+      ArrayList<UserRiskData> userRiskList = new ArrayList<>();
+      if (selectedRiskProfile != null) {
+         for (Integer riskq = 0; riskq < selectedRiskProfile.getRiskQuestion(); riskq++) {
+            String key = RiskConst.RISKQUESTIONKEY + riskq.toString();
+            UserRiskData data = selectedRiskProfile.getRiskData().get(key);
+            userRiskList.add(data);
+         }
+
+         if (selectedRiskProfile.getRiskScoreObj(0) != null) {
+            UserRiskData totaldata = new UserRiskData();
+            totaldata.setKey("Total");
+            if (selectedRiskProfile.getRiskScoreObj(0).getAllCashFlag()) {
+               totaldata.setRiskScore(0.0);
+            }
+            else
+            {
+               totaldata.setRiskScore(selectedRiskProfile.getRiskScoreObj(0).getScore());
+            }
+            userRiskList.add(totaldata);
+
+            UserRiskData formuladata = new UserRiskData();
+            formuladata.setKey("Formula");
+            formuladata.setAnswer(selectedRiskProfile.getRiskScoreObj(0).getCalcFormula(), "T");
+            userRiskList.add(formuladata);
+
+
+         }
+
+      }
+      return userRiskList;
+   }
+
+   public ArrayList<UserRiskData> getRiskProfile() {
+      ArrayList<UserRiskData> userProfileList = new ArrayList<>();
+      if (selectedRiskProfile != null) {
+         for (UserRiskData udata : selectedRiskProfile.getRiskData().values()) {
+            String key = udata.getKey();
+            if (udata.getSortorder() >= RiskConst.RISKQSORTNUM)
+               continue;
+            userProfileList.add(udata);
+         }
+      }
+      return userProfileList;
+   }
+
+   public ArrayList<AdvisorRiskMapping> getAdvisorMapping() {
+      ArrayList<AdvisorRiskMapping> advisorMappingList = new ArrayList<>();
+      if (selectedRiskProfile != null) {
+         for (AdvisorRiskMapping advdata : selectedRiskProfile.getAdvisorRiskMaster().getAdvisorMappings().values()) {
+            advisorMappingList.add(advdata);
+         }
+      }
+      return advisorMappingList;
    }
 
 
