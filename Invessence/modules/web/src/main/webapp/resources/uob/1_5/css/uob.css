@@ -1941,8 +1941,8 @@ span > input {
     float:left !important;
 }
 
-.fineTuneBlock .fineTuneInrDiv {
-    width: 90%;
+.fineTuneInrDiv {
+    /*width: 90%;
     height: 340px;
     position: absolute !important;
     background: white;
@@ -1952,7 +1952,13 @@ span > input {
     margin: 0 5%;
     box-shadow: 2px 2px 5px 1px #c5c5c5;
     top:60px;
-    /*display:none;*/
+    !*display:none;*!*/
+}
+.fineTuneOtrDiv {
+    position: absolute !important;
+    z-index: 2;
+    background: #fff;
+    top: 40px;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
 .fineTuneDetail {
@@ -1969,7 +1975,7 @@ span > input {
 .fineTuneBtn > .ui-button-text,
 .fineTuneBtn.ui-state-hover > .ui-button-text,
 .fineTuneBtn.ui-state-focus > .ui-button-text {
-    background: #666666;
+    background: #a4332f;
     width:100%;
 }
 
@@ -2759,7 +2765,7 @@ main.customtabs {
 }
 
 .customtabs button span {
-    background-color: #009abb !important;
+    background-color: #a4332f !important;
     border: none !important;
     height: 20px !important;
     line-height: 20px !important;
@@ -3105,10 +3111,13 @@ main.customtabs {
 .customAcco h3.ui-accordion-header {
     background: transparent;
     background-color: #a9a9a9 !important;
-    color: #666;
+    color: #fff;
     font-size: 18px !important;
 }
-
+.ui-button.ui-state-focus .ui-button-text, .ui-inputswitch-handle.ui-state-focus, .ui-slider-handle.ui-state-focus {
+    background-color: #bf3934;
+}
+.customtabs input:checked + label.tabsu{.customtabs input:checked + label.tabsui}
 .customAcco h3.ui-state-active {
     background: transparent;
     /*  background-color: #009abb !important; */
@@ -4101,10 +4110,10 @@ li.strategy_list {
     background: none;
 }
 .customtabs_model .tabspad label {
-    box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, .24);
     padding: 12px 30px;
     font-size: 18px;
-    color: #009abb;
+    color: #a4332f !important;
 }
 .customtabs_model input#tab2 + label:after,
 .customtabs_model input#tab3 + label:after,
@@ -4201,8 +4210,11 @@ li.strategy_list {
     display: none;
 }
 .customtabs_model .tabspad {
-    border-bottom: 2px solid #009abb;
+    border-bottom: 2px solid #a4332f;
 }
+.customtabs_model_bb h3.ui-accordion-header.ui-helper-reset.ui-state-default.ui-corner-all, .customtabs_model_bb h3.ui-accordion-header.ui-helper-reset.ui-state-default.ui-state-active.ui-corner-top
+{    background: #a4332f !important;}
+
 /*.customtabs_model #updExtForm .uploadradiobutton label {
     width: 32%;
     padding: 14px 0;
@@ -4216,8 +4228,9 @@ li.strategy_list {
 }
 
 main.customtabs.customtabs_model {
-    background: #f6fafc;width:98%;
+    background: #fff;width:98%;
 }
+.ui-accordion{background: #fff;}
 .customtabs_model #content2 .uploadbuttons .ui-fileupload-upload {
     width: 108px !important;
 }
@@ -5258,7 +5271,7 @@ span.change_goal {
 .reviewHeader_title .fineTuneBtn {
     width: 49px;
     /* padding: 0px; */
-    z-index:0;
+    z-index:1;
 }
 .reviewHeader_title .fineTuneBtnImg > .ui-icon {
     width: 22px !important;
