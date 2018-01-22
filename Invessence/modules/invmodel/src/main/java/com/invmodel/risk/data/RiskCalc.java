@@ -15,7 +15,7 @@ public class RiskCalc
    public RiskConst.CALCFORMULAS riskFormula;
    public Integer maxScore;
 
-   public Integer age, horizon, recurringPeriod, withDrwalPeriod,intRiskScore;
+   public Integer age, horizon, recurringPeriod, withDrwalPeriod;
    public Double investment, recurring, withdrawlamount;
 
    private Double scoreDeviation;
@@ -577,6 +577,8 @@ public class RiskCalc
                                       withDrwalPeriod, withdrawlamount);
             userRiskProfile.initRiskScore(0, false, thisscore);
          }
+
+         riskScore = thisscore;
          setRiskScore(thisscore);
       }
 
@@ -614,7 +616,6 @@ public class RiskCalc
          value = (value < 0.0) ? 0.0 : value;
          value = (value > maxScore) ? maxScore : value;
          value = (maxScore - value);
-         riskScore = value;
          return value;
       }
 
@@ -623,7 +624,8 @@ public class RiskCalc
 
    public Integer getIntRiskScore()
    {
-      if (userRiskProfile != null) {
+      System.out.println("Final risk score ["+getRiskScore()+"]");
+      if (riskScore==null && userRiskProfile != null) {
          if (userRiskProfile.getRiskScoreObj(0) != null) {
             return userRiskProfile.getRiskScoreObj(0).getScore().intValue();
          }
@@ -632,5 +634,6 @@ public class RiskCalc
    }
 
    public void setIntRiskScore(Integer intRiskScore)  {
+      riskScore=intRiskScore.doubleValue();
    }
 }

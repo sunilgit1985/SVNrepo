@@ -825,6 +825,7 @@ public class PortfolioCreationUI extends UserInterface
    {
       getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       setDisplayFTPanel(false);
+      getCustomer().getRiskProfile().setScore(0,riskCalc.getIntRiskScore().doubleValue());
       createAssetPortfolio();
    }
 

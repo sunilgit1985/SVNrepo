@@ -842,7 +842,7 @@ public class UserRiskProfile
 
    public void setCalcFormula(String method)
    {
-      setNewAnswer(RiskConst.CALCMETHOD, method, "T", 0.0);
+      setNewAnswer(RiskConst.CALCFORMULA, method, "T", 0.0);
    }
 
    public RiskConst.CALCFORMULAS getCalcFormula()

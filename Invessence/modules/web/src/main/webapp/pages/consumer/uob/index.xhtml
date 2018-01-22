@@ -372,6 +372,7 @@
                                                 }catch(e){
                                                    console.log("Dashboard graph error "+e);
                                                 }
+                                                try{
                                                 $('#idDbdGoalSave').hide();
                                                 $('#idDbdGoalCancel').hide();
                                                 document.getElementById("uobIndxform:inpDbGoal").disabled = true;
@@ -404,7 +405,7 @@
                                                 })
 
 
-                                                $("#idDbdGoalDesc").keyup(function(i){
+                                                $(".edit_input").keyup(function(i){
                                                    var len=$(this).text().trim().length;
 
 //                                                               console.log( "Handler for .keyup() called." );
@@ -414,6 +415,9 @@
                                                    }
                                                 });
 
+                                                }catch(e){
+                                                   console.log("Dashboard script error "+e);
+                                                }
                                              });
                         </script>
                         <h:inputHidden value="#{uobdash.dsplPrflDtl}"
