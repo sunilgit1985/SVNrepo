@@ -456,6 +456,11 @@ public class PortfolioCreationUI extends UserInterface
       riskCalc.calculate();
       createAssetPortfolio();
       customer.setSliderAllocationIndex(riskCalc.getRiskScore().intValue());
+
+
+//      riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+//      createAssetPortfolio();
+
    }
 
    public void refresh()
@@ -834,21 +839,40 @@ public class PortfolioCreationUI extends UserInterface
       closeFTPanel();
       getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
       riskCalc.setRiskScore(riskCalc.getStandardScore(0));
+      riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+      riskCalc.setIntRiskScore(riskCalc.getStandardScore(0).intValue());
+      createAssetPortfolio();
    }
 
    public void allocDecrement() {
       Double thisScore = riskCalc.getRiskScore();
       if (thisScore > riskCalc.getScoreLowerBound())
       {
-         riskCalc.setRiskScore(thisScore - 1.0);
+//         riskCalc.setRiskScore(thisScore - 1.0);
+         customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
+         riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
+//         riskCalc.setIntRiskScore(riskCalc.getIntRiskScore()-1);
+         riskCalc.setRiskScore(riskCalc.getIntRiskScore().doubleValue() - 1.0);
+         riskCalc.setAssetRisk(0,riskCalc.getIntRiskScore().doubleValue() - 1.0);
+         formEdit = true;
+         createAssetPortfolio();
       }
+
    }
 
    public void allocIncrement() {
       Double thisScore = riskCalc.getRiskScore();
       if (thisScore < riskCalc.getScoreUpperBound())
       {
-         riskCalc.setRiskScore(thisScore + 1.0);
+//         riskCalc.setRiskScore(thisScore + 1.0);
+
+         customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
+         riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
+//         riskCalc.setIntRiskScore(riskCalc.getIntRiskScore() + 1);
+         riskCalc.setRiskScore(riskCalc.getIntRiskScore().doubleValue() + 1.0);
+         riskCalc.setAssetRisk(0,riskCalc.getIntRiskScore().doubleValue() + 1.0);
+         formEdit = true;
+         createAssetPortfolio();
       }
    }
 

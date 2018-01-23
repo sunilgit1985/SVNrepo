@@ -160,11 +160,14 @@
                                     </div>
 
                                     <p:panel id="fineTunePanel" widgetVar="wvfineTunePanel" class="fineTuneOtrDiv"
-                                            style="border-color: transparent;"
+
                                              >
                                         <ui:fragment rendered="#{uobProfile.displayFTPanel}">
                                             <div class="fineTuneInrDiv">
-                                        <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
+                                                <p:commandLink id="idUobCancelIcon" update=":ceForm:reviewArea"
+                                                                actionListener="#{uobProfile.cancelFTPanel}">
+                                        <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose" style="color:#a4332f"></span>
+                                                </p:commandLink>
                                         <div class="Container100 FTLabel">
                                                 <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
                                                 <!-- <div class="Wid10 closeFTBtn Fright">
@@ -187,7 +190,7 @@
                                                     <p:commandLink id="allocDecr"
                                                                    actionListener="#{uobProfile.allocDecrement}"
                                                                    process="@this"
-                                                                   update=":ceForm:allocSlider">
+                                                                   update=":ceForm:reviewArea">
                                                     <span class="conservative_minus">
                                                         <span class="ui-button-icon-center ui-icon ui-c fa fa-minus">
                                                         </span>
@@ -212,7 +215,7 @@
                                                     <p:commandLink id="allocIncr"
                                                                    actionListener="#{uobProfile.allocIncrement}"
                                                                    process="@this"
-                                                                   update=":ceForm:allocSlider">
+                                                                   update=":ceForm:reviewArea">
                                                     <span class="conservative_plus">
                                                         <span class="ui-button-icon-center ui-icon ui-c fa fa-plus">
                                                         </span>
@@ -224,7 +227,7 @@
                                                     <div class="ContainerIndent">
                                                         <p:commandButton id="allocSliderResetButton" value="Recommended"
                                                                          styleClass="uob_button"
-                                                                         update=":ceForm:allocSlider"
+                                                                         update=":ceForm:reviewArea"
                                                                          actionListener="#{uobProfile.doAllocReset}">
                                                         </p:commandButton>
                                                     </div>

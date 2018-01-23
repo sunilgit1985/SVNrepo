@@ -1959,6 +1959,7 @@ span > input {
     z-index: 2;
     background: #fff;
     top: 40px;
+    right: 1px;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
 .fineTuneDetail {

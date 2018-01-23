@@ -277,6 +277,8 @@ public class ProfileBean extends PortfolioCreationUI
          {
             reOrganizeGoalList();
          }
+
+         pagemanager.clearErrorMessage(pagemanager.getPage());
          super.gotoPrevPage();
       }
       catch (Exception ex)

@@ -624,7 +624,6 @@ public class RiskCalc
 
    public Integer getIntRiskScore()
    {
-      System.out.println("Final risk score ["+getRiskScore()+"]");
       if (riskScore==null && userRiskProfile != null) {
          if (userRiskProfile.getRiskScoreObj(0) != null) {
             return userRiskProfile.getRiskScoreObj(0).getScore().intValue();
