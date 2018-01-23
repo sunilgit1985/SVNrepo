@@ -1678,7 +1678,7 @@ public class CustomerData extends ProfileData
          {
             saveVisitor(null);
             setAcctnum(acctnum);
-            if (riskProfile != null) {
+            if (riskProfile != null && riskProfile.getALLRiskScores().size()!=0) {
                riskProfile.saveAllData();
             }
             else

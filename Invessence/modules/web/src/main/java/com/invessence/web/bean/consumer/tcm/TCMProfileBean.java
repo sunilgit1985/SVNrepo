@@ -983,9 +983,10 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
                {
                   setDoesUserHavaLogonID(false); // If it is null, we are forcing to be false.
                   setSaveVisitor(true);
-                  loadNewClientData();
                }
             }
+
+            loadNewClientData();
 
          }
 
