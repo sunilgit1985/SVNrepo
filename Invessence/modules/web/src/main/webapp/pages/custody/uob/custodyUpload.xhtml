@@ -54,26 +54,27 @@
                 <p:panel style="display: none;" class="OverlayPanelDisClo" id="idDwnAccptPnl">
                     <span class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose hideclass" id="" style="color:#a4332f"></span>
                     <p:tabView>
-                        <p:tab title="Risk Disclosure Statements">
-                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentDsclre}" download="disclosure.pdf" cache="true"/>
-                        </p:tab>
-                        <p:tab title="Guide and Cautionary Notes">
+						<p:tab title="Risk Disclosure Statements">
+							<pe:documentViewer height="500"
+								value="#{uobCustodyBean.contentDsclre}"
+								download="disclosure.pdf" cache="true" />
+							<div class="acc_holder_dtl_block   acceptTerm">
+								<div class="Container30 Responsive50   checkBoxOpt">
+									<div class="Container100">
+										<p:selectBooleanCheckbox id="cstdyDwnDscl"
+											value="#{uobCustodyBean.dwnlDsclFlag}"
+											itemLabel="I agreed to Risk Disclosure Statements">
+											<p:ajax listener='#{uobCustodyBean.onChngAccept()}'
+												update=":cstdyFrm:uobAccpt" />
+										</p:selectBooleanCheckbox>
+									</div>
+								</div>
+							</div>
+						</p:tab>
+						<p:tab title="Guide and Cautionary Notes">
                             <pe:documentViewer height="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf" cache="true"/>
-                        </p:tab>
-                        <p:tab title="Master Trade Agreement">
-                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentMstrTrdAggr}" download="masterTradeAgreement.pdf" cache="true"/>
-                        </p:tab>
-                    </p:tabView>
-                    <div class="acc_holder_dtl_block  margin-top acceptTerm">
-                        <div class="Container30 Responsive50  margin-top checkBoxOpt">
-                            <div class="Container100">
-                                <p:selectBooleanCheckbox id="cstdyDwnDscl" value="#{uobCustodyBean.dwnlDsclFlag}"
-                                                         itemLabel="I agreed to Risk Disclosure Statements">
-                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
-                                </p:selectBooleanCheckbox>
-                            </div>
-                        </div>
-                        <div class="Container30 Responsive50  margin-top checkBoxOpt">
+                      <div class="acc_holder_dtl_block   acceptTerm">
+                      <div class="Container30 Responsive50   checkBoxOpt">
                             <div class="Container100">
                                 <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}"
                                                          itemLabel="I read the Guide and Cautionary Notes">
@@ -81,16 +82,29 @@
                                 </p:selectBooleanCheckbox>
                             </div>
                         </div>
-                        <div class="Container30 Responsive50  margin-top checkBoxOpt">
-                            <div class="Container100">
-                                <p:selectBooleanCheckbox id="cstdyDwnMstrTrdAggr" value="#{uobCustodyBean.dwnlMstrTrdAggrFlag}"
-                                                         itemLabel="I agreed to Master Trade Agreement">
-                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
-                                </p:selectBooleanCheckbox>
-                            </div>
                         </div>
+ </p:tab>
+                        <p:tab title="Master Trade Agreement">
+                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentMstrTrdAggr}" download="masterTradeAgreement.pdf" cache="true"/>
+                        	  <div class="acc_holder_dtl_block  acceptTerm">
+                        	  <div class="Container30 Responsive50  checkBoxOpt">
+		                            <div class="Container100">
+		                                <p:selectBooleanCheckbox id="cstdyDwnMstrTrdAggr" value="#{uobCustodyBean.dwnlMstrTrdAggrFlag}"
+		                                                         itemLabel="I agreed to Master Trade Agreement">
+		                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
+		                                </p:selectBooleanCheckbox>
+		                            </div>
+		                        </div>
+		                        </div>
+                        
+                        </p:tab>
+                    </p:tabView>
+                    
+                        
+                        
+                      
 
-                    </div>
+                    
                     <div class="acc_holder_dtl_block  margin-top acceptTerm">
                         <div class="Container20 Responsive100 submit_acc_dtl file_submit">
                             <p:commandButton id="uobAccptClose"
