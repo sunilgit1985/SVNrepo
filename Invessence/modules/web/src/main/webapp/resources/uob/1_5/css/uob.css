@@ -5880,6 +5880,7 @@ form#ceForm {
     border: 1px solid #ccc;
     padding: 5%;
 }
+.jqplot-xaxis-tick{transform:rotate(-30deg);}
 
 
 
