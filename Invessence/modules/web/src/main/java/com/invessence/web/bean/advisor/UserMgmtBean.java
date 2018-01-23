@@ -41,7 +41,7 @@ public class UserMgmtBean extends TCMCustomer implements Serializable
          {
             logger.debug("LOG: Validate UserID failed: " + getEmail());
             msgheader = "signup.U100";
-            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This Email is already registered!", null);
+            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This email address is already registered!", null);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
          }
          else

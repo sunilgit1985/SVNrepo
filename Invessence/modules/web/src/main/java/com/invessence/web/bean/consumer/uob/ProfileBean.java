@@ -540,11 +540,11 @@ public class ProfileBean extends PortfolioCreationUI
       pagemanager.clearErrorMessage(0);
       if (!hasData(getCustomer().getName()))
       {
-         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required", null));
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required.", null));
       }
       if (!hasData(getCustomer().getEmail()))
       {
-         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.email.required", "Email address is required", null));
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.email.required", "Email address is required.", null));
       }
       if (beanmode.equals(UIMode.New))
       {
@@ -559,7 +559,7 @@ public class ProfileBean extends PortfolioCreationUI
       }
       if (!hasData(getCustomer().getAge()))
       {
-         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required", null));
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required.", null));
       }
 
       if (hasData(pagemanager.getErrorMessage()))
@@ -581,7 +581,7 @@ public class ProfileBean extends PortfolioCreationUI
          case 0: // This is Intro page
             if (!hasData(getCustomer().getAge()))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required.", null));
             }
             break;
          case 1: // Goal Page
@@ -599,12 +599,12 @@ public class ProfileBean extends PortfolioCreationUI
                      {
                         if (!hasData(getCustomer().getHorizon()))
                         {
-                           pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.horizon.required", "Please enter when you plan to retire", null));
+                           pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.horizon.required", "Please enter when you plan to retire.", null));
                         }
                      }
                      if (!hasData(getWithdrawlPeriod()))
                      {
-                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.withdrwl.required", "Please enter when you plan to withdrwal", null));
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.withdrwl.required", "Please enter when you plan to withdraw.", null));
                      }
                }
                if (thisgoal.equals(RiskConst.GOALS.PROPERTY))
@@ -643,13 +643,13 @@ public class ProfileBean extends PortfolioCreationUI
          case 2: // Investment Page
             if (!hasData(getInitialInvestment()))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.initialInvestment.required", "Initial Investment is required", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.initialInvestment.required", "Initial investment amount is required.", null));
             }
             break;
          case 3: // Asset/Liabilty/Networth
             if (!hasData(getCustomer().getAccountFinancials().getNetworth()))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.networth.required", "Current net worth amount is required", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.networth.required", "Current net worth amount is required.", null));
             }
             break;
          case 4: // Risk Questions start (First two are imbedded in this page.
@@ -659,7 +659,7 @@ public class ProfileBean extends PortfolioCreationUI
             ans = getCustomer().riskProfile.getRiskAnswer(4);
             if (ans == null || ans == 0)
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
             }
             break;
          case 6:
@@ -673,21 +673,21 @@ public class ProfileBean extends PortfolioCreationUI
             ans = getCustomer().riskProfile.getRiskAnswer(6);
             if (!hasData(ans))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
             }
             break;
          case 8:
             ans = getCustomer().riskProfile.getRiskAnswer(7);
             if (!hasData(ans))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
             }
             break;
          case 9:
             ans = getCustomer().riskProfile.getRiskAnswer(8);
             if (!hasData(ans))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
             }
             break;
       }
