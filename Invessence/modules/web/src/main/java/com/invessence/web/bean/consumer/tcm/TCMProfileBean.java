@@ -676,6 +676,7 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
 
    private void resetDataForm()
    {
+      setAcctnum(null);
       disablegraphtabs = true;
       disabledetailtabs = true;
       displayGoalGraph = false;

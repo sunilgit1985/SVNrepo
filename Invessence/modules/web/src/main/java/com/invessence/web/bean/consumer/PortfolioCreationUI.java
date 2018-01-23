@@ -187,7 +187,9 @@ public class PortfolioCreationUI extends UserInterface
    public void resetData()
    {
       customer = new CustomerData();
-
+      if(beanmode.equals(UIMode.New)){
+         setBeanAcctnum(null);
+      }
       // This is short term solution.  Since Data needs DAO object to collect data.
       // We are passing it as collected on UI.
       customer.initDao(webutil, modelUtil, uiLayout,

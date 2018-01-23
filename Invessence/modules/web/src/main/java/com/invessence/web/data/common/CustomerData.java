@@ -1569,7 +1569,7 @@ public class CustomerData extends ProfileData
       try
       {
          listDAO.getNewClientProfileData((CustomerData) this.getInstance());
-         riskProfile.fetchUserRiskData(getAdvisor(), getAcctnum());
+         riskProfile.fetchUserRiskData(getAdvisor(), null);
          if (! webutil.isUserLoggedIn())
             setSaveVisitor(true); // If it is new client, then save Visitor's info.
          setDefaults();

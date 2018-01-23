@@ -119,8 +119,8 @@ public class ProfileBean extends PortfolioCreationUI
                }
             }
 
-            if (getCustomer() == null)
-            {
+//            if (getCustomer() == null)
+//            {
                // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
 
                initUI();
@@ -138,7 +138,7 @@ public class ProfileBean extends PortfolioCreationUI
                {
                   getCustomer().copyData(getSavedCustomer());
                }
-            }
+//            }
          }
       }
       catch (Exception ex)
