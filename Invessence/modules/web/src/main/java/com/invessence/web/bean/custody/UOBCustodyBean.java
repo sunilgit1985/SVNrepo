@@ -2050,6 +2050,15 @@ public void onChngRpDtls(String flag){
             dataOK = false;
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.ctryOfBrth", "Country of birth is required!", null));
          }
+
+         if ((ownerDetails.getCountryOfBirth() != null || !ownerDetails.getCountryOfBirth().equalsIgnoreCase("select"))
+            && ownerDetails.getCountryOfBirth().equalsIgnoreCase("United States"))
+         {
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.ctryOfBrthUS", "Application denied, if client’s country of birth is US.", null));
+         }
+
+
          if (ownerDetails.getOwnerCitizenshipDetails().getNationality() == null ||
             ownerDetails.getOwnerCitizenshipDetails().getNationality().trim().equalsIgnoreCase(""))
          {
@@ -2078,7 +2087,7 @@ public void onChngRpDtls(String flag){
             {
 //               ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "US Citizen is not eligible to open Robo account.", null));
             }
          }
 
@@ -2112,7 +2121,7 @@ public void onChngRpDtls(String flag){
             {
 //               (ownerDetails.getOwnerCitizenshipDetails().getNationalitySpecify().trim().equalsIgnoreCase("Singapore") ||
                dataOK = false;
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "US Citizen is not eligible to open Robo account.", null));
             }
          }
          if (hasRequiredData(ownerDetails.getOwnerCitizenshipDetails().getNationality()))
@@ -2340,7 +2349,7 @@ public void onChngRpDtls(String flag){
 
          if(hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry()) &&ownerDetails.getOwnerEmploymentDetails().getEmployerZipCountry().equalsIgnoreCase("United States")){
             dataOK = false;
-            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryEmp", "US Citizen is not eligible to open Robo account.", null));
          }
 
          if (!hasRequiredData(ownerDetails.getOwnerContactDetails().getOfficeTelNumberCD()))
@@ -2385,7 +2394,7 @@ public void onChngRpDtls(String flag){
       }
       if(hasRequiredData(ownerDetails.getPhysicalAddressCountry()) &&ownerDetails.getPhysicalAddressCountry().equalsIgnoreCase("United States")){
          dataOK = false;
-         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Currently US citizen is not allow to open account at this time!", null));
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryResPhy", "US Resident is not eligible to open Robo account.", null));
       }
       if (!hasRequiredData(ownerDetails.getOwnerMiscDetails().getMailAddressSameAsPhysical()))
       {
@@ -2420,6 +2429,11 @@ public void onChngRpDtls(String flag){
          {
             dataOK = false;
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malCtry", "Mailing country is required!", null));
+         }
+
+         if(hasRequiredData(ownerDetails.getMailingAddressCountry()) &&ownerDetails.getMailingAddressCountry().equalsIgnoreCase("United States")){
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryResMail", "US Resident is not eligible to open Robo account.", null));
          }
       }
       return dataOK;
@@ -2463,6 +2477,11 @@ public void onChngRpDtls(String flag){
       {
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.bnkAddrCtry","Bank address Country is required!", null));
+      }
+      if(hasRequiredData(ownerDetails.getOwnerBankDetails().getBankAddressCountry()) &&
+         ownerDetails.getOwnerBankDetails().getBankAddressCountry().equalsIgnoreCase("United States")){
+         dataOK = false;
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryBnkAddr","US Citizen is not eligible to open Robo account", null));
       }
       if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getSwiftBic()) )
       {

@@ -20,7 +20,7 @@
                         <li>Allowable extension types - bmp, gif, tif, tiff, pdf, jpeg, jpg, doc, docx, xls, xlsx.</li>
                         <li>Files cannot exceed 2 MB.</li>
                         <li>Submitting an invalid form of ID could result in your application being delayed or denied.</li>
-                        <li>Supporting documents for Proof of Residential/ Mailing Address Examples: Bank Statement, Central Provident Fund (CPF)Statement dated within the last 3 months or Latest Notice of Income Tax Statement, Tax  Property Statement.</li>
+                        <li>Supporting documents for Proof of Residential/ Mailing Address Examples: Bank Statement, Central Provident Fund (CPF)Statement dated within the last 3 months or Latest Notice of Income Tax Statement, Tax Property Statement.</li>
                     </ul>
 
 
@@ -34,7 +34,8 @@
                         <div class="Container10 upload_file">
                             <p:fileUpload fileUploadListener="#{uobCustodyBean.handleFileUpload}" mode="advanced"
                                           dragDropSupport="false"
-                                          update=":cstdyFrm:uobIpdSubBtn,:cstdyFrm:uobIpdSubBtn1,cstdyFrm:uirep:#{status.index}:updSucces" sizeLimit="250000" fileLimit="10"
+                                          update=":cstdyFrm:uobIpdSubBtn,:cstdyFrm:uobIpdSubBtn1,cstdyFrm:uirep:#{status.index}:updSucces"
+                                          sizeLimit="2000000" fileLimit="10"
                                           auto="true"
                                           allowTypes="/(\.|\/)(bmp|gif|tif|tiff|pdf|jpeg|jpg|doc|docx|xls|xlsx|png|csv)$/" id="idwant#{status.index}"
                                           messageTemplate="Invalid file" label="Select file to upload">
@@ -54,57 +55,51 @@
                 <p:panel style="display: none;" class="OverlayPanelDisClo" id="idDwnAccptPnl">
                     <span class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose hideclass" id="" style="color:#a4332f"></span>
                     <p:tabView>
-						<p:tab title="Risk Disclosure Statements">
-							<pe:documentViewer height="500"
-								value="#{uobCustodyBean.contentDsclre}"
-								download="disclosure.pdf" cache="true" />
-							<div class="acc_holder_dtl_block   acceptTerm">
-								<div class="Container30 Responsive50   checkBoxOpt">
-									<div class="Container100">
-										<p:selectBooleanCheckbox id="cstdyDwnDscl"
-											value="#{uobCustodyBean.dwnlDsclFlag}"
-											itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Risk Disclosure statements">
-											<p:ajax listener='#{uobCustodyBean.onChngAccept()}'
-												update=":cstdyFrm:uobAccpt" />
-										</p:selectBooleanCheckbox>
-									</div>
-								</div>
-							</div>
-						</p:tab>
-						<p:tab title="Guide and Cautionary Notes">
-                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf" cache="true"/>
-                      <div class="acc_holder_dtl_block   acceptTerm">
-                      <div class="Container30 Responsive50   checkBoxOpt">
-                            <div class="Container100">
-                                <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}"
-                                                         itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Guide and Cautionary Notes">
-                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
-                                </p:selectBooleanCheckbox>
+                        <p:tab title="Risk Disclosure Statements">
+                            <pe:documentViewer height="500"
+                                               value="#{uobCustodyBean.contentDsclre}"
+                                               download="disclosure.pdf" cache="true"/>
+                            <div class="acc_holder_dtl_block   acceptTerm">
+                                <div class="Container30 Responsive50   checkBoxOpt">
+                                    <div class="Container100">
+                                        <p:selectBooleanCheckbox id="cstdyDwnDscl"
+                                                                 value="#{uobCustodyBean.dwnlDsclFlag}"
+                                                                 itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Risk Disclosure statements">
+                                            <p:ajax listener='#{uobCustodyBean.onChngAccept()}'
+                                                    update=":cstdyFrm:uobAccpt"/>
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        </div>
- </p:tab>
-                        <p:tab title="Master Trade Agreement">
-                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentMstrTrdAggr}" download="masterTradeAgreement.pdf" cache="true"/>
-                        	  <div class="acc_holder_dtl_block  acceptTerm">
-                        	  <div class="Container30 Responsive50  checkBoxOpt">
-		                            <div class="Container100">
-		                                <p:selectBooleanCheckbox id="cstdyDwnMstrTrdAggr" value="#{uobCustodyBean.dwnlMstrTrdAggrFlag}"
-		                                                         itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Master Trade Agreement">
-		                                    <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
-		                                </p:selectBooleanCheckbox>
-		                            </div>
-		                        </div>
-		                        </div>
-                        
+                        </p:tab>
+                        <p:tab title="Guide and Cautionary Notes">
+                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf" cache="true"/>
+                            <div class="acc_holder_dtl_block   acceptTerm">
+                                <div class="Container30 Responsive50   checkBoxOpt">
+                                    <div class="Container100">
+                                        <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}"
+                                                                 itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Guide and Cautionary Notes">
+                                            <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:tab>
+                        <p:tab title="Declarations">
+                            <pe:documentViewer height="500" value="#{uobCustodyBean.contentMstrTrdAggr}" download="Declarations.pdf"
+                                               cache="true"/>
+                            <div class="acc_holder_dtl_block  acceptTerm">
+                                <div class="Container30 Responsive50  checkBoxOpt">
+                                    <div class="Container100">
+                                        <p:selectBooleanCheckbox id="cstdyDwnMstrTrdAggr" value="#{uobCustodyBean.dwnlMstrTrdAggrFlag}"
+                                                                 itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Declarations.">
+                                            <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
+                                        </p:selectBooleanCheckbox>
+                                    </div>
+                                </div>
+                            </div>
                         </p:tab>
                     </p:tabView>
-                    
-                        
-                        
-                      
-
-                    
                     <div class="acc_holder_dtl_block  margin-top acceptTerm">
                         <div class="Container20 Responsive100 submit_acc_dtl file_submit">
                             <p:commandButton id="uobAccptClose"
@@ -141,7 +136,8 @@
                                                                 });
 
                                       });
-                    function showPdf(){
+                    function showPdf()
+                    {
                         debugger;
                         console.log("Inside ");
                         if ($('.dwnlFlag').val() == 'true' || $('.dwnlFlag').val() == true)

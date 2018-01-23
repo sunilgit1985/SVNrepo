@@ -39,13 +39,13 @@ public class ProfileBean extends PortfolioCreationUI
       pagemanager.initPage();
 
       // Since Risk Score Question #2 and #3 are knockout question, we'll assume the default (Only on New account)
+      setAdvisor(getCustomer().getAdvisor());
       if (beanmode.equals(UIMode.New) )
       {
 //         setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
          setRiskAns2(true);
          setRiskAns3(true);
       }
-      setAdvisor(getCustomer().getAdvisor());
       loadDropDownList();  // This process will reload all dropdown list.
 
       if (webutil.isUserLoggedIn())

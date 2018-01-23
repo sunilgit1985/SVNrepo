@@ -1014,7 +1014,7 @@
                                                     <input id="jointexplain" name="explain" type="text" placeholder="Explain"/>
                                                     <p:selectOneRadio id="jointradio5" value="" class="last_radio">
                                                         <f:selectItem
-                                                                itemLabel="C. No Tax Identification Number is required as the domestic law of relevant jurisdiction does not require the collection of the Tax Identification Number issues by such jurisdiction "
+                                                                itemLabel="C. No Tax Identification Number is required as the domestic law of relevant jurisdiction does not require the collection of the Tax Identification Number issued by such jurisdiction "
                                                                 itemValue="value1"></f:selectItem>
                                                     </p:selectOneRadio>
                                                 </div>
@@ -1140,10 +1140,12 @@
                                                 <div class="acc_holder_dtl_block">
                                                     <div class="Container50 Responsive100">
                                                         <div class="Container20 Responsive100">
+                                                            <span>Country Code</span>
                                                             <p:inputText id="nwPriHldrOffNoCd" placeholder="" maxlength="5"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.officeTelNumberCD}"/>
                                                         </div>
                                                         <div class="Container80 Responsive100">
+                                                            <span>Area Code / Number</span>
                                                             <p:inputText id="nwPriHldrOffNo" placeholder="Office Tel No" maxlength="16"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.officeTelNumber}"/>
                                                             <label for="nwPriHldrOffNo">Office Tel No</label>
