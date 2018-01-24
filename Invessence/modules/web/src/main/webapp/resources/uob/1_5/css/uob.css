@@ -5140,19 +5140,22 @@ span.change_goal {
     line-height: 1.50;
 }
 .caraousle .Container50.next_btn {
-    width: 10%;
+    width: auto;
     float: right;
+    padding: 0 5px;
 }
 .caraousle .Container50.pre_btn {
-    width: 22%;
+    width: auto;
     float: right;
+    position: relative;
+    padding: 0 10px;
 }
 .caraousle .Container50.pre_btn:before {
     content: '';
     position: absolute;
     border-left: 2px solid #000;
     height: 23px;
-    right: 50px;
+    right: 0px;
 }
 .generic_switch .ui-inputswitch-handle.ui-state-default {
     background: transparent;
@@ -5260,13 +5263,16 @@ span.change_goal {
 }
 /*** 24/11/2017 **/
 .caraousle .review_btn .Container50.pre_btn {
-    width: 24%;
+    width: auto;
+    position: relative;
+    padding: 0 10px;
 }
 .caraousle .review_btn .Container50.next_btn {
-    width: 33%;
+    width: auto;
+    padding: 0 5px;
 }
 .caraousle .review_btn .Container50.pre_btn:before {
-    right: 130px;
+    right: 0px;
 }
 
 .reviewHeader_title .fineTuneBtn {
@@ -5702,7 +5708,7 @@ div#leftpanel {
 .uobbtn .ui-fieldset-legend {
     background-color: #a4332f !important;}
 
-.ui-datatable .ui-datatable-header{background-color: #a4332f !important}
+.ui-datatable .ui-datatable-header{background-color: transparent !important}
 .InfoNewDash > button > span:nth-child(2){border: 2px solid #a4332f;padding: 8px 12px 7px 19px!important;}
 .customMenuButtonDashboard > button > span:nth-child(1){left: -3px;}
 .GreenButton .ui-button-text {
@@ -5882,10 +5888,21 @@ form#ceForm {
     padding: 5%;
 }
 .jqplot-xaxis-tick{transform:rotate(-30deg);}
-
-
-
-
+.BlueButton .ui-button-text {
+    background-color: #a4332f;
+}
+.AdvBtnTcmGrp > .ui-state-active > span, .AdvBtnTcmGrp > .ui-state-focus > span{ background-color: #a4332f !important;}
+.AdvBtnTcmGrp > div > span{border: solid 2px #a4332f;    background: #eee7db!important;font-size: 15px;}
+.customtabs input:checked + label.tabsui{background-color: #a4332f !important;}
+.AdvNormalBtn > span {
+    background: #a4332f!important;
+    color: white;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    border: solid 0px #b71c1c!important;
+    background-image: -webkit-linear-gradient(top,#a4332f,#b71c1c)!important;
+    border-radius: 30px!important;
+    font-size: 13px;
+}
 
 /*** responsive**/
 
