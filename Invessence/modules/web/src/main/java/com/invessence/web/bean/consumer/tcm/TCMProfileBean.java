@@ -904,6 +904,9 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
       try
       {
          super.saveProfile(riskCalculator);
+         if(beanAcctnum==null || beanAcctnum==0){
+            beanAcctnum=getAcctnum();
+         }
          formEdit = false;
       }
       catch (Exception ex)
@@ -1067,11 +1070,11 @@ public class TCMProfileBean extends TCMCustomer implements Serializable
       closeFTPanel();
       setRiskCalcMethod(WebConst.CONSUMER_RISK_FORMULA);
       pagemanager.setPage(0);
-      fetchClientData();
+//      fetchClientData();
       selectedThemeName = "";
       newLongDesc = "";
       setRiskCalcMethod(WebConst.CONSUMER_RISK_FORMULA);
-      // webutil.redirect("/start.xhtml", null);
+      // webutil.srdirect("/start.xhtml", null);
 
    }
 

@@ -703,7 +703,7 @@ public class CustomerData extends ProfileData
       // Manage Goal Data.
       if (getDoesUserHavaLogonID())
       {
-         resetPortfolio();
+         super.resetData();
       }
       else
       {
