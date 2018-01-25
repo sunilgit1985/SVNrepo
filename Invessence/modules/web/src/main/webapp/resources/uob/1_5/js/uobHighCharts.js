@@ -402,43 +402,6 @@ try{
                                                    dataLabels: {
                                                        enabled: false,
                                                        format: '{point.name}'
-                                                   },
-                                                   point: {
-                                                       events: {
-                                                           mouseOver: function (event)
-                                                           {
-
-                                                               weight_value = this.y.toFixed(0) + "%";
-                                                               name_value = this.name;
-                                                               amount_value ='';
-                                                                       //Highcharts.numberFormat(this.amount,
-                                                                       //                        0, ',', ',') ;
-
-                                                               //amount_value =
-                                                               //        Highcharts.numberFormat(this.amount,
-                                                               //                                0, ',', ',')+' '+currSymbol ;
-                                                               color_value = this.color;
-
-                                                               //draw2dDonut1lyrChart();
-                                                               draw2dDonut1lyrChartClassBase(vChrtId,chartValue);
-                                                           },
-                                                           legendItemClick: function ()
-                                                           {
-                                                               weight_value = this.y.toFixed(0) + "%";
-                                                               name_value = this.name;
-                                                               amount_value ='';
-                                                                       //Highcharts.numberFormat(this.amount,
-                                                                       //                        0, ',', ',');
-                                                               //amount_value = '$' +
-                                                               //        Highcharts.numberFormat(this.amount,
-                                                               //                                0, ',', ',');
-                                                               color_value = this.color;
-
-                                                               //draw2dDonut1lyrChart();
-                                                               draw2dDonut1lyrChartClassBase(vChrtId,chartValue);
-                                                               return false;
-                                                           }
-                                                       }
                                                    }
                                                }
                                            },

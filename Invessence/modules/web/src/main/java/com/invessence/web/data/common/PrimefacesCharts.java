@@ -561,7 +561,7 @@ public class PrimefacesCharts implements Serializable
          glidepath.addSeries(gain);
          glidepath.addSeries(withdrawl);
          glidepath.setStacked(true);
-         // glidepath.setExtender("glidepath_bar");
+          glidepath.setExtender("glidepathChart");
       }
       catch (Exception ex) {
 

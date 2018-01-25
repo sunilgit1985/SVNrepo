@@ -26,6 +26,7 @@ function meter_extensions()
 
 function bar_extensions()
 {
+    alert('hi');
     this.cfg.grid = {
         backgroundColor: 'transparent',
         drawBorder: false,
