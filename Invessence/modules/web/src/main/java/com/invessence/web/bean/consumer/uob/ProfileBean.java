@@ -119,11 +119,12 @@ public class ProfileBean extends PortfolioCreationUI
                }
             }
 
+            initUI();
+
 //            if (getCustomer() == null)
 //            {
                // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
 
-               initUI();
 
                /*  Don't redirect, let the cadd handle the appropriate page.
                if (webutil.isUserLoggedIn())
@@ -134,10 +135,15 @@ public class ProfileBean extends PortfolioCreationUI
 
                super.preRenderView();
                setDefault();
-               if (beanmode.equals(UIMode.ChangeStrategy))
-               {
-                  getCustomer().copyData(getSavedCustomer());
-               }
+
+            if(beanmode.equals(UIMode.Confirm)){
+               super.gotoReview();
+               return;
+            }
+//               if (beanmode.equals(UIMode.ChangeStrategy) || beanmode.equals(UIMode.Confirm)  )
+//               {
+//                  getCustomer().copyData(getSavedCustomer());
+//               }
 //            }
          }
       }

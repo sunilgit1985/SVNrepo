@@ -2051,7 +2051,7 @@ public void onChngRpDtls(String flag){
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.ctryOfBrth", "Country of birth is required!", null));
          }
 
-         if ((ownerDetails.getCountryOfBirth() != null || !ownerDetails.getCountryOfBirth().equalsIgnoreCase("select"))
+         if (ownerDetails.getCountryOfBirth() != null && !ownerDetails.getCountryOfBirth().equalsIgnoreCase("select")
             && ownerDetails.getCountryOfBirth().equalsIgnoreCase("United States"))
          {
             dataOK = false;
@@ -2392,7 +2392,7 @@ public void onChngRpDtls(String flag){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.phyCtry", "Residential country is required!", null));
       }
-      if(hasRequiredData(ownerDetails.getPhysicalAddressCountry()) &&ownerDetails.getPhysicalAddressCountry().equalsIgnoreCase("United States")){
+      if(hasRequiredData(ownerDetails.getPhysicalAddressCountry()) && ownerDetails.getPhysicalAddressCountry().equalsIgnoreCase("United States")){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryResPhy", "US Resident is not eligible to open Robo account.", null));
       }
@@ -2431,7 +2431,7 @@ public void onChngRpDtls(String flag){
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.malCtry", "Mailing country is required!", null));
          }
 
-         if(hasRequiredData(ownerDetails.getMailingAddressCountry()) &&ownerDetails.getMailingAddressCountry().equalsIgnoreCase("United States")){
+         if(hasRequiredData(ownerDetails.getMailingAddressCountry()) && ownerDetails.getMailingAddressCountry().equalsIgnoreCase("United States")){
             dataOK = false;
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryResMail", "US Resident is not eligible to open Robo account.", null));
          }

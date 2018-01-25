@@ -26,7 +26,10 @@
                 >
                     <ui:fragment rendered="#{uobProfile.displayFTPanel}">
                         <div class="fineTuneInrDiv">
-                            <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose"></span>
+                            <p:commandLink id="idUobCancelIcon" update=":ceForm:reviewArea"
+                                           actionListener="#{uobProfile.cancelFTPanel}">
+                                <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close panelClose" style="color:#a4332f"></span>
+                            </p:commandLink>
                             <div class="Container100 FTLabel">
                                 <span class="Fs30 mainHeaderUOB">Fine Tune Strategy</span>
                                 <!-- <div class="Wid10 closeFTBtn Fright">

@@ -53,8 +53,8 @@ public class PortfolioCreationUI extends UserInterface
       ChangeStrategy("C"),//Status 1
       Confirm("A"),//Status = 2
       Review("R"),//Status > 2
-      View("V"),//Status > 2
-      Advisor("D");//Status > 2
+      View("V") ; //Status > 2
+//      Advisor("1");//Status > 2;
 
       String codeValue;
 
@@ -634,7 +634,8 @@ public class PortfolioCreationUI extends UserInterface
          uiLayout.forwardURL(backURL);
          return;
       }
-      uiLayout.getDefaultDashBoard();
+//      uiLayout.getDefaultDashBoard();
+      uiLayout.forwardURL(uiLayout.getDefaultDashBoard());
    }
 
    public void gotoPortfolioConfirm()
@@ -662,12 +663,12 @@ public class PortfolioCreationUI extends UserInterface
       else
       {
          if (beanmode.equals(UIMode.ChangeStrategy)) {
-            alertAdvisor();
+//            alertAdvisor();
             uiLayout.doMenuAction("consumer", "portfolioCreate/finalCS.xhtml");
 
          }
          else if (beanmode.equals(UIMode.Confirm)) {
-            alertAdvisor();
+//            alertAdvisor();
             uiLayout.doMenuAction("consumer", "portfolioCreate/finalConfirm.xhtml");
 
          }
@@ -880,13 +881,14 @@ public class PortfolioCreationUI extends UserInterface
 
    public void alertAdvisor()
    {
-
       customer.tradeDAO.saveTradeProcessIdentifier(customer.getAcctnum(),
                                                    WebConst.TRADE_PROCESS_ALLOC,
                                                    WebConst.TRADE_PROCESS_STAT_NEW,
-                                                   "Changed Strategy");
+                                                   beanmode.toString());
       customer.setCanSaveData(true);
       formEdit = true;
+//      customer.saveProfileAudit(); Need to enhance for audit activity
+//      send not custodyService.mangeUserProfile(getBeanAcctNum(),beanmode.getCodeValue(),getBeanLogonId());
       customer.saveProfile();
    }
 
