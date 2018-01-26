@@ -21,7 +21,7 @@ public class PrimefacesCharts implements Serializable
 {
    JavaUtil jutil = new JavaUtil();
    public Integer year;
-   public Integer calendarYear, minYearPoint, maxYearPoint, minGrowth, maxGrowth,legendXrotation;
+   public Integer calendarYear, minYearPoint, maxYearPoint, minGrowth, maxGrowth, legendXrotation;
 
    public LineChartModel lineChart;
    public PieChartModel pieChart;
@@ -130,12 +130,16 @@ public class PrimefacesCharts implements Serializable
    public void setMeterGuage(Integer pointer)
    {
       if (meterGuage == null)
+      {
          createDefaultMeterGuage();
+      }
       this.meterGuage.setValue(pointer);
    }
 
-   public void createDefaultMeterGuage() {
-      List<Number> intervals = new ArrayList<Number>(){{
+   public void createDefaultMeterGuage()
+   {
+      List<Number> intervals = new ArrayList<Number>()
+      {{
          add(16);
          add(32);
          add(50);
@@ -163,10 +167,14 @@ public class PrimefacesCharts implements Serializable
       try
       {
          if (projectionData == null)
+         {
             return;
+         }
 
          if (projectionData.length < 2)
+         {
             return;
+         }
 
 
          LineChartSeries totalGrowth = new LineChartSeries();
@@ -208,7 +216,7 @@ public class PrimefacesCharts implements Serializable
          calendarYear = cal.get(cal.YEAR);
          minYearPoint = calendarYear;
          maxYearPoint = minYearPoint + totalYlabels;
-         Integer lowervalue =  (int) ((double) projectionData[0].getLowerBand2() * .10);
+         Integer lowervalue = (int) ((double) projectionData[0].getLowerBand2() * .10);
          minGrowth = ((int) projectionData[0].getLowerBand2() - lowervalue < 0) ? 0 : (int) projectionData[0].getLowerBand2() - lowervalue;
          maxGrowth = 0;
          while (y <= totalYlabels)
@@ -222,10 +230,10 @@ public class PrimefacesCharts implements Serializable
             // totalGrowth.set(year.toString(), moneyPnL);
             // totalInvested.set(year.toString(), moneyInvested);
             // Double lowerMoney = (portfolio[y].getLowerTotalMoney() < moneyInvested) ? moneyInvested : portfolio[y].getLowerTotalMoney();
-            lower1.set(year.toString(), projectionData[y].getLowerBand1()/dividingFactor);
-            lower2.set(year.toString(), projectionData[y].getLowerBand2()/dividingFactor);
-            upper1.set(year.toString(), projectionData[y].getUpperBand1()/dividingFactor);
-            upper2.set(year.toString(), projectionData[y].getUpperBand2()/dividingFactor);
+            lower1.set(year.toString(), projectionData[y].getLowerBand1() / dividingFactor);
+            lower2.set(year.toString(), projectionData[y].getLowerBand2() / dividingFactor);
+            upper1.set(year.toString(), projectionData[y].getUpperBand1() / dividingFactor);
+            upper2.set(year.toString(), projectionData[y].getUpperBand2() / dividingFactor);
             // If incrementing anything other then 1, then make sure that last year is displayed.
             if (y == totalYlabels)
             {
@@ -284,16 +292,20 @@ public class PrimefacesCharts implements Serializable
       Long moneyInvested;
       Long money;
       Double dividingFactor = 1.0;
-      Boolean isthereagoal = (goalData != null) ? true: false;
+      Boolean isthereagoal = (goalData != null) ? true : false;
 
       goalChart = new LineChartModel();
       try
       {
          if (projectionData == null)
+         {
             return;
+         }
 
          if (projectionData.length < 2)
+         {
             return;
+         }
 
 
          // LineChartSeries totalGrowth = new LineChartSeries();
@@ -338,7 +350,7 @@ public class PrimefacesCharts implements Serializable
          calendarYear = cal.get(cal.YEAR);
          minYearPoint = calendarYear;
          maxYearPoint = minYearPoint + totalYlabels;
-         Integer lowervalue =  (int) ((double) projectionData[0].getLowerBand2() * .10);
+         Integer lowervalue = (int) ((double) projectionData[0].getLowerBand2() * .10);
          minGrowth = ((int) projectionData[0].getLowerBand2() - lowervalue < 0) ? 0 : (int) projectionData[0].getLowerBand2() - lowervalue;
          maxGrowth = 0;
          while (y <= totalYlabels)
@@ -353,10 +365,11 @@ public class PrimefacesCharts implements Serializable
             // totalInvested.set(year.toString(), moneyInvested);
             // Double lowerMoney = (portfolio[y].getLowerTotalMoney() < moneyInvested) ? moneyInvested : portfolio[y].getLowerTotalMoney();
             //lower1.set(year.toString(),projectionData[y].getLowerBand1()/dividingFactor);
-            lower2.set(year.toString(), projectionData[y].getLowerBand2()/dividingFactor);
+            lower2.set(year.toString(), projectionData[y].getLowerBand2() / dividingFactor);
             //upper1.set(year.toString(),projectionData[y].getUpperBand1()/dividingFactor);
-            upper2.set(year.toString(), projectionData[y].getUpperBand2()/dividingFactor);
-            if (isthereagoal) {
+            upper2.set(year.toString(), projectionData[y].getUpperBand2() / dividingFactor);
+            if (isthereagoal)
+            {
                goalline.set(year.toString(), goalData.getGoalDesired());
             }
             // If incrementing anything other then 1, then make sure that last year is displayed.
@@ -381,12 +394,14 @@ public class PrimefacesCharts implements Serializable
          //lineChart.addSeries(lower1);
          //lineChart.addSeries(upper1);
          goalChart.addSeries(upper2);
-         if (isthereagoal) {
+         if (isthereagoal)
+         {
             goalChart.addSeries(goalline);
             //goalChart.setSeriesColors("00FF00,7C8686,0000FF,0000FF,7C8686,FF0000");
             goalChart.setSeriesColors("009ABB,009ABB,BB2100");
          }
-         else {
+         else
+         {
             //goalChart.setSeriesColors("00FF00,7C8686,0000FF,0000FF,7C8686");
             goalChart.setSeriesColors("009ABB,009ABB");
          }
@@ -419,11 +434,12 @@ public class PrimefacesCharts implements Serializable
    {
       Integer year;
 
-      if (goalData == null) {
+      if (goalData == null)
+      {
          goalChart = null;
       }
 
-      Boolean isthereagoal = (goalData != null) ? true: false;
+      Boolean isthereagoal = (goalData != null) ? true : false;
 
       goalChart = new LineChartModel();
       try
@@ -437,16 +453,16 @@ public class PrimefacesCharts implements Serializable
          calendarYear = cal.get(cal.YEAR);
          minYearPoint = calendarYear;
          maxYearPoint = minYearPoint + goalData.getTerm().intValue();
-         Integer lowervalue =  (int) (goalData.getLowerGrowth().get(0) * .10);
-         minGrowth =(int) ((goalData.getLowerGrowth().get(0) - lowervalue < 0.0) ? 0.0 : goalData.getLowerGrowth().get(0) - lowervalue);
+         Integer lowervalue = (int) (goalData.getLowerGrowth().get(0) * .10);
+         minGrowth = (int) ((goalData.getLowerGrowth().get(0) - lowervalue < 0.0) ? 0.0 : goalData.getLowerGrowth().get(0) - lowervalue);
          maxGrowth = 0;
          while (y < goalData.getTerm().intValue())
          {
             year = calendarYear + y;
-            lower.set(year.toString(),goalData.getLowerGrowth().get(y));
-            upper.set(year.toString(),goalData.getUpperGrowth().get(y));
+            lower.set(year.toString(), goalData.getLowerGrowth().get(y));
+            upper.set(year.toString(), goalData.getUpperGrowth().get(y));
             // If incrementing anything other then 1, then make sure that last year is displayed.
-            goalpotential.set(year.toString(),goalData.getGoalDesired());
+            goalpotential.set(year.toString(), goalData.getGoalDesired());
 
             y++;
          }
@@ -539,7 +555,8 @@ public class PrimefacesCharts implements Serializable
       }
    }
 
-   public void createGlidePath(ArrayList<ProjectionData> projectionDatas) {
+   public void createGlidePath(ArrayList<ProjectionData> projectionDatas)
+   {
       String color;
       Integer year;
       try
@@ -551,19 +568,25 @@ public class PrimefacesCharts implements Serializable
          calendarYear = cal.get(cal.YEAR);
          gain.setLabel("Growth");
          withdrawl.setLabel("Withdrawl");
-         for (ProjectionData pdata : projectionDatas) {
+         Integer count = 0;
+         for (ProjectionData pdata : projectionDatas)
+         {
             year = calendarYear + pdata.getYear();
             Double money = pdata.getTotalCapitalWithGains();
             gain.set(year, money);
             Double withdrawlmoney = pdata.getWithdrawlAmount();
             withdrawl.set(year, withdrawlmoney);
+            if (count++ >= 30) { // Do max 30 years of points.
+               break;
+            }
          }
          glidepath.addSeries(gain);
          glidepath.addSeries(withdrawl);
          glidepath.setStacked(true);
-          glidepath.setExtender("glidepathChart");
+         glidepath.setExtender("glidepathChart");
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
 
       }
    }
@@ -572,15 +595,21 @@ public class PrimefacesCharts implements Serializable
    {
       String color;
       if (assetclasses == null)
+      {
          return;
+      }
       if (assetclasses.length <= 0)
+      {
          return;
+      }
 
       barChart = new BarChartModel();
-      try {
+      try
+      {
          String pieseriesColors = "";
          Integer maxAllocated = 0;
-         if (assetclasses != null && assetclasses.length >= offset) {
+         if (assetclasses != null && assetclasses.length >= offset)
+         {
             AssetClass assetdata = assetclasses[offset];
             Calendar cal = Calendar.getInstance();
             calendarYear = cal.get(cal.YEAR);
@@ -626,7 +655,8 @@ public class PrimefacesCharts implements Serializable
          yAxis.setMin(0);
          yAxis.setTickFormat("$%'d");
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
          ex.printStackTrace();
       }
    }
@@ -716,7 +746,8 @@ public class PrimefacesCharts implements Serializable
    }
 
 
-   public void resetCharts() {
+   public void resetCharts()
+   {
       pieChart = null;
       lineChart = null;
       meterGuage = null;

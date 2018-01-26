@@ -193,7 +193,6 @@ public class InvModelSP extends StoredProcedure
       inputMap.put("p_settleNewValue", tData.getSettleNewValue());
       inputMap.put("p_tradeType", tData.getTradeType());
       inputMap.put("p_reason", tData.getReason());
-
       return super.execute(inputMap);
    }
 

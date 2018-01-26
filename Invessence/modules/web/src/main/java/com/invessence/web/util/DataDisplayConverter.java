@@ -122,6 +122,20 @@ public class DataDisplayConverter implements Serializable
       }
    }
 
+   public String displayWithComma(Long value)
+   {
+      if (value != null)
+      {
+         DecimalFormat df = new DecimalFormat("###,###,###,##0");
+         String strValue = df.format(value);
+         return strValue;
+      }
+      else
+      {
+         return "";
+      }
+   }
+
    public String displayWithFormatAppender(Double value, String format, String appender)
    {
       if (value != null)

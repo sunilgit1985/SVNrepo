@@ -7,24 +7,18 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 import com.invessence.web.constant.WebConst;
 import com.invessence.web.dao.common.*;
 import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
-import com.invessence.web.data.consumer.RiskCalculator;
-import com.invessence.web.data.consumer.tcm.TCMRiskCalculator;
-import com.invessence.web.data.consumer.uob.UOBRiskCalculator;
-import com.invessence.web.io.TradeWriter;
 import com.invessence.web.util.*;
 import com.invmodel.rebalance.RebalanceProcess;
 import com.invmodel.rebalance.data.*;
 import com.invmodel.risk.data.*;
-import org.primefaces.event.*;
-import org.primefaces.model.*;
+import org.primefaces.component.link.Link;
+import org.primefaces.context.RequestContext;
 
-import static javax.faces.context.FacesContext.getCurrentInstance;
 
 @ManagedBean(name = "tradeBean")
 @SessionScoped
@@ -49,6 +43,7 @@ public class TradeBean extends TradeClientData implements Serializable
 
    private List<UserTradePreprocess> rebalancetradedatalist;
    private Map<String, UserTradePreprocess> assetMap = new HashMap<String, UserTradePreprocess>();
+   private List<UserTradePreprocess> assetList = new ArrayList<UserTradePreprocess>();
 
    private Map<Long, UserRiskProfile> userriskprofileMap;
    private UserRiskProfile selectedRiskProfile;
@@ -317,7 +312,12 @@ public class TradeBean extends TradeClientData implements Serializable
 
    public List<UserTradePreprocess> getAssetList()
    {
-      List<UserTradePreprocess> assetList = new ArrayList<UserTradePreprocess>();
+      return assetList;
+   }
+
+   public void rollupAssets()
+   {
+      assetList.clear();
       sumHoldingValue= 0.0; sumCurValue = 0.0; sumNewValue = 0.0;
       if (! assetMap.isEmpty()) {
          for (UserTradePreprocess data : assetMap.values()) {
@@ -326,7 +326,6 @@ public class TradeBean extends TradeClientData implements Serializable
             sumNewValue += data.getNewValue();
          }
       }
-      return assetList;
    }
 
    public Integer getWhichScreen()
@@ -375,24 +374,26 @@ public class TradeBean extends TradeClientData implements Serializable
    {
       try
       {
+         FacesMessage message;
          if (msgType.startsWith("E"))
          {
-            FacesContext.getCurrentInstance().addMessage("growltrademsg", new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msgType, msg);
          }
          else if (msgType.startsWith("W"))
          {
-            FacesContext.getCurrentInstance().addMessage("growltrademsg", new FacesMessage(FacesMessage.SEVERITY_WARN, msg, msg));
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, msgType, msg);
          }
          else
          {
-            FacesContext.getCurrentInstance().addMessage("growltrademsg", new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, msgType, msg);
          }
+         RequestContext.getCurrentInstance().showMessageInDialog(message);
 
       }
       catch (Exception ex)
       {
-         FacesContext.getCurrentInstance().addMessage("growltrademsg",
-                                                      new FacesMessage(FacesMessage.SEVERITY_ERROR, "System Error", "Please contact support desk."));
+         RequestContext.getCurrentInstance().showMessageInDialog(
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, "System Error", "Please contact support desk."));
       }
    }
 
@@ -512,6 +513,7 @@ public class TradeBean extends TradeClientData implements Serializable
          for (UserTradePreprocess data : rebalancetradedatalist) {
             setAssetMap(data);
          }
+         rollupAssets();
       }
       catch (Exception ex)
       {
@@ -645,12 +647,6 @@ public class TradeBean extends TradeClientData implements Serializable
             {
                webutil.setProgressbar((loop / numClients) * 100);
                tData = getSelectedClientList().get(loop);
-
-               // Need to reaccess the client Risk based on duration and age.
-               Integer whichAdvisor = 0;
-               RiskCalculator riskCalc = new UOBRiskCalculator();
-
-               riskCalc.calculateRisk();
 
                tradedata = rebalProcess.process(logonid, tData.getAcctnum());
                if (tradedata != null)
@@ -847,60 +843,35 @@ public class TradeBean extends TradeClientData implements Serializable
       }
    }
 
-   public ArrayList<UserRiskData> getRiskData() {
-      ArrayList<UserRiskData> userRiskList = new ArrayList<>();
+   public ArrayList<UserRiskData> getRiskDataReport() {
       if (selectedRiskProfile != null) {
-         for (Integer riskq = 0; riskq < selectedRiskProfile.getRiskQuestion(); riskq++) {
-            String key = RiskConst.RISKQUESTIONKEY + riskq.toString();
-            UserRiskData data = selectedRiskProfile.getRiskData().get(key);
-            userRiskList.add(data);
-         }
-
-         if (selectedRiskProfile.getRiskScoreObj(0) != null) {
-            UserRiskData totaldata = new UserRiskData();
-            totaldata.setKey("Total");
-            if (selectedRiskProfile.getRiskScoreObj(0).getAllCashFlag()) {
-               totaldata.setRiskScore(0.0);
-            }
-            else
-            {
-               totaldata.setRiskScore(selectedRiskProfile.getRiskScoreObj(0).getScore());
-            }
-            userRiskList.add(totaldata);
-
-            UserRiskData formuladata = new UserRiskData();
-            formuladata.setKey("Formula");
-            formuladata.setAnswer(selectedRiskProfile.getRiskScoreObj(0).getCalcFormula(), "T");
-            userRiskList.add(formuladata);
-
-
-         }
-
+         return selectedRiskProfile.getRiskDataReport();
       }
-      return userRiskList;
+      return null;
    }
 
-   public ArrayList<UserRiskData> getRiskProfile() {
-      ArrayList<UserRiskData> userProfileList = new ArrayList<>();
+   public List<UserRiskData> getRiskProfile() {
+      List<UserRiskData> userProfileList = new ArrayList<>();
       if (selectedRiskProfile != null) {
-         for (UserRiskData udata : selectedRiskProfile.getRiskData().values()) {
-            String key = udata.getKey();
-            if (udata.getSortorder() >= RiskConst.RISKQSORTNUM)
-               continue;
-            userProfileList.add(udata);
+         Map<String, UserRiskData> profileMap = selectedRiskProfile.getRiskProfileReport();
+            for (String key : profileMap.keySet())
+            {
+               UserRiskData udata = profileMap.get(key);
+               if (key.equalsIgnoreCase(RiskConst.INITIALINVESTMENT)) {
+                  udata.setKey("INVESTMENT");
+                  udata.setAnswerDouble(selectedClient.getInvestment());
+               }
+               userProfileList.add(udata);
+            }
          }
-      }
       return userProfileList;
    }
 
    public ArrayList<AdvisorRiskMapping> getAdvisorMapping() {
-      ArrayList<AdvisorRiskMapping> advisorMappingList = new ArrayList<>();
       if (selectedRiskProfile != null) {
-         for (AdvisorRiskMapping advdata : selectedRiskProfile.getAdvisorRiskMaster().getAdvisorMappings().values()) {
-            advisorMappingList.add(advdata);
-         }
+         return selectedRiskProfile.getAdvisorMappingReport();
       }
-      return advisorMappingList;
+      return null;
    }
 
 

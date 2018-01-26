@@ -546,6 +546,10 @@ public class ProfileBean extends PortfolioCreationUI
       Boolean dataOK = true;
       Integer ans;
       pagemanager.clearErrorMessage(0);
+      if (!hasData(getCustomer().getAge()))
+      {
+         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required.", null));
+      }
       if (!hasData(getCustomer().getName()))
       {
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.name.required", "Name is required.", null));
@@ -554,7 +558,9 @@ public class ProfileBean extends PortfolioCreationUI
       {
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.email.required", "Email address is required.", null));
       }
-      if (beanmode.equals(UIMode.New))
+
+      // Don't register if there are error...  Because once registered, the user will be locked to continue.
+      if (beanmode.equals(UIMode.New) && ! hasData(pagemanager.getErrorMessage()))
       {
          if (!webutil.isUserLoggedIn() && hasData(getCustomer().getEmail()))
          {
@@ -564,10 +570,6 @@ public class ProfileBean extends PortfolioCreationUI
                pagemanager.setErrorMessage(msg);
             }
          }
-      }
-      if (!hasData(getCustomer().getAge()))
-      {
-         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required.", null));
       }
 
       if (hasData(pagemanager.getErrorMessage()))
@@ -832,6 +834,14 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setRiskAns8(String value)
    {
+      if (value.equalsIgnoreCase("1")) {
+         getCustomer().setTheme("8.UOB.Sing");
+         riskCalc.setTheme("8.UOB.Sing");
+      }
+      else {
+         getCustomer().setTheme("8.UOB");
+         riskCalc.setTheme("8.UOB");
+      }
       setRiskAns(8, value);
    }
 

@@ -108,7 +108,7 @@
                                                          styleClass="uob_button"
                                                          style="width: 100px;"
                                                          update=":ceForm:reviewArea"
-                                                         actionListener="#{uobProfile.closeFTPanel}">
+                                                         actionListener="#{uobProfile.saveFTPanel}">
                                         </p:commandButton>
                                     </div>
                                 </div>
@@ -162,16 +162,16 @@
                     </div>
                 </div>
                 <div class="Container100">
-                    Expected year funds needed: <span class="output_review">#{uobProfile.horizon} years</span>
+                    Expected year funds needed: <span class="output_review">#{uobProfile.getYear(uobProfile.horizon)}</span>
                 </div>
                 <div class="Container100">
-                    Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{uobProfile.initialInvestment}</span>
+                    Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{dataDisplayConverter.displayWithComma(uobProfile.initialInvestment)}</span>
                 </div>
                 <div class="Container100">
-                    Recurring Investment: <span class="output_review">S$ #{uobProfile.customer.recurringInvestment}</span>
+                    Recurring Investment: <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.recurringInvestment)}</span>
                 </div>
                 <div class="Container100">
-                    Current Net Worth: <span class="output_review">S$ #{uobProfile.customer.accountFinancials.networth}</span>
+                    Current Net Worth: <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.accountFinancials.networth)}</span>
                 </div>
             </div>
             <div class="Container100">

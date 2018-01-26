@@ -455,7 +455,7 @@ public class PortfolioCreationUI extends UserInterface
    {
       customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
       riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
-      riskCalc.calculate();
+      // Note: createAssetPortfolio has calculate method call.  We just need to reset the switch.
       createAssetPortfolio();
       customer.setSliderAllocationIndex(riskCalc.getRiskScore().intValue());
 
@@ -617,6 +617,7 @@ public class PortfolioCreationUI extends UserInterface
    public void gotoReview()
    {
       progressbar.nextProgress();
+      saveProfile();
       if (canOpenAccount)
       {
          uiLayout.doMenuAction("consumer", "portfolioCreate/review.xhtml");
@@ -718,7 +719,6 @@ public class PortfolioCreationUI extends UserInterface
       }
       return exchRate;
    }
-
 
    public Double getConvertMoneyToSettlementCurrency(Double money)
    {
@@ -824,26 +824,29 @@ public class PortfolioCreationUI extends UserInterface
       setDisplayFTPanel(true);
    }
 
-   public void saveFTPanel()
-   {
-      riskCalc.setScore(0, riskCalc.getRiskScore());
-   }
-
    public void closeFTPanel()
    {
-      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       setDisplayFTPanel(false);
-      getCustomer().getRiskProfile().setScore(0,riskCalc.getIntRiskScore().doubleValue());
+   }
+
+   public void saveFTPanel()
+   {
+      closeFTPanel();
+      riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
+      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
+      // This one will save the score in userRisk table as well
+      riskCalc.setScore(0, riskCalc.getRiskScore());
       createAssetPortfolio();
+      saveProfile();
    }
 
    public void cancelFTPanel()
    {
       closeFTPanel();
-      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
-      riskCalc.setRiskScore(riskCalc.getStandardScore(0));
+      // Just change the mode and let calculate function recalculate the new score.
       riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
-      riskCalc.setIntRiskScore(riskCalc.getStandardScore(0).intValue());
+      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
+      // Note: createAssetPortfolio has calculate call.
       createAssetPortfolio();
    }
 

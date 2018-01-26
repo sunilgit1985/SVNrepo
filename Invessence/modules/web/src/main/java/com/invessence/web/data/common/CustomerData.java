@@ -944,15 +944,20 @@ public class CustomerData extends ProfileData
 
    public Double getTotalMoneyAllocated()
    {
-      if (getDefaultInvestment() > totalMoneyAllocated) {
-         return getDefaultInvestment();
-      }
       return totalMoneyAllocated;
    }
 
    public void setTotalMoneyAllocated(Double totalMoneyAllocated)
    {
-      this.totalMoneyAllocated = totalMoneyAllocated;
+      Double lowerbound = getDefaultInvestment() - 0.05;
+      Double upperbound = getDefaultInvestment() + 0.05;
+      if (totalMoneyAllocated >= lowerbound && totalMoneyAllocated <= upperbound) {
+         this.totalMoneyAllocated = getDefaultInvestment();
+      }
+      else
+      {
+         this.totalMoneyAllocated = totalMoneyAllocated;
+      }
    }
 
    public Double getManagedassetAllocationTotal()

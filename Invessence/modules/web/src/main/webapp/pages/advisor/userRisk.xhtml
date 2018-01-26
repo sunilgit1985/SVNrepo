@@ -28,7 +28,9 @@
                                       resizable="true">
                                 <h:outputText
                                         styleClass="dashboardUsrColumnFloatRight"
-                                        value="#{riskVar.answer}"/>
+                                        value="#{riskVar.answer}">
+                                    <f:convertNumber pattern="##0"/>
+                                </h:outputText>
                             </p:column>
 
                             <p:column headerText="Score"

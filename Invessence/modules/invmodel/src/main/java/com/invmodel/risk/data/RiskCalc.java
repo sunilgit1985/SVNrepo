@@ -195,6 +195,9 @@ public class RiskCalc
    public void setRiskFormula(RiskConst.CALCFORMULAS riskFormula)
    {
       this.riskFormula = riskFormula;
+      if (userRiskProfile != null && userRiskProfile.getRiskScoreObj(0) != null) {
+         userRiskProfile.getRiskScoreObj(0).setCalcFormula(riskFormula.toString());
+      }
    }
 
    public Double getRiskScore()

@@ -10,6 +10,7 @@ import com.invmodel.position.data.*;
 import com.invmodel.portfolio.data.*;
 import com.invmodel.rebalance.data.*;
 import com.invmodel.inputData.*;
+import com.invmodel.risk.data.UserRiskProfile;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 
@@ -121,10 +122,17 @@ public class InvModelDAO extends JdbcDaoSupport
             {
                Map rs = (Map) rows.get(i);
                ProfileData data = new ProfileData();
-               data.setAcctnum(convert.getLongData(rs.get("acctnum")));
+               String advisor = convert.getStrData(rs.get("advisor"));
+               Long dbacctnum = convert.getLongData(rs.get("acctnum"));
+
+               // Get UserRisk Info first...
+               UserRiskProfile userRiskProfile = new UserRiskProfile(advisor, dbacctnum);
+               data.setRiskProfile(userRiskProfile);
+
+               data.setAcctnum(dbacctnum);
                data.setClientAccountID(convert.getStrData(rs.get("clientAccountID")));
 
-               data.setAdvisor(convert.getStrData(rs.get("advisor")));
+               data.setAdvisor(advisor);
                data.setTheme(convert.getStrData(rs.get("theme")));
                data.setAccountType(convert.getStrData(rs.get("accttype")));
                data.setActualInvestment(convert.getDoubleData(rs.get("investment")));

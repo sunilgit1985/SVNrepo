@@ -245,7 +245,9 @@ public class UserRiskProfile
       Double weight = 0.0;
 
       if (answer == null)
+      {
          return;
+      }
 
       if (getAdvisorRiskMaster() != null && getAdvisorRiskMaster().getAdvisorMappings() != null)
       {
@@ -270,13 +272,16 @@ public class UserRiskProfile
                {
                   weight = advisorRiskMaster.getAdvisorMappings().get(question).getWeight(answer);
                }
-               if (knockoutanswer > 0) {
+               if (knockoutanswer > 0)
+               {
                   if (prevanswer.equals(knockoutanswer))
                   {
                      removeKnockout();
                   }
-                  else {
-                     if (answer.equals(knockoutanswer)) {
+                  else
+                  {
+                     if (answer.equals(knockoutanswer))
+                     {
                         addKnockout();
                         weight = 0.0;
                      }
@@ -897,6 +902,74 @@ public class UserRiskProfile
          }
       }
       throw new IllegalArgumentException(term);
+   }
+
+   // Reports
+   public ArrayList<UserRiskData> getRiskDataReport()
+   {
+      Double maxScore = getDefaultDoubleValue(RiskConst.MAXSCORE, 100.0);
+      ArrayList<UserRiskData> userRiskList = new ArrayList<UserRiskData>();
+      for (Integer riskq = 0; riskq <= getRiskQuestion(); riskq++)
+      {
+         String key = RiskConst.RISKQUESTIONKEY + riskq.toString();
+         UserRiskData data = new UserRiskData();
+         data.setKey(riskq.toString());
+         data.setAnswer(riskData.get(key).getAnswer(), "T");
+         Double score = (maxScore - riskData.get(key).getRiskScore());
+         data.setRiskScore(score);
+         userRiskList.add(data);
+      }
+
+      if (getRiskScoreObj(0) != null)
+      {
+
+         UserRiskData formulascore = new UserRiskData();
+         formulascore.setKey("Standard Score");
+         formulascore.setAnswerDouble(getRiskScoreObj(0).getStandardScore());
+         userRiskList.add(formulascore);
+
+         UserRiskData formuladata = new UserRiskData();
+         UserRiskData totaldata = new UserRiskData();
+         formuladata.setKey("Formula");
+         totaldata.setKey("Actual Score");
+         if (getRiskScoreObj(0).getAllCashFlag())
+         {
+            formuladata.setAnswer("Knocked Out", "T");
+            totaldata.setRiskScore(0.0);
+         }
+         else
+         {
+            formuladata.setAnswer(getRiskScoreObj(0).getCalcFormula(), "T");
+            totaldata.setRiskScore(getRiskScoreObj(0).getScore());
+         }
+         userRiskList.add(formuladata);
+         userRiskList.add(totaldata);
+      }
+      return userRiskList;
+   }
+
+   public LinkedHashMap<String, UserRiskData> getRiskProfileReport()
+   {
+      LinkedHashMap<String, UserRiskData> userProfileMap = new LinkedHashMap<String, UserRiskData>();
+      for (String key : riskData.keySet())
+      {
+         UserRiskData udata = riskData.get(key);
+         if (udata.getSortorder() >= RiskConst.RISKQSORTNUM)
+         {
+            continue;
+         }
+         userProfileMap.put(key, udata);
+      }
+      return userProfileMap;
+   }
+
+   public ArrayList<AdvisorRiskMapping> getAdvisorMappingReport() {
+      ArrayList<AdvisorRiskMapping> advisorMappingList = new ArrayList<AdvisorRiskMapping>();
+         for (Integer key : getAdvisorRiskMaster().getAdvisorMappings().keySet()) {
+            AdvisorRiskMapping advdata = getAdvisorRiskMaster().getAdvisorMappings().get(key);
+            advisorMappingList.add(advdata);
+         }
+      return advisorMappingList;
    }
 
 }

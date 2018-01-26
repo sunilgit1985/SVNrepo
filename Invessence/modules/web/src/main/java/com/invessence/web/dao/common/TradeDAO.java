@@ -173,16 +173,16 @@ public class TradeDAO extends JdbcDaoSupport implements Serializable
                   convert.getDoubleData(rs.get("newPrice")),
                   convert.getDoubleData(rs.get("newValue")),
                   convert.getStrData(rs.get("settleCurrency")),
-                  convert.getDoubleData(rs.get("setleCurQty")),
-                  convert.getDoubleData(rs.get("settleCurPrice")),
-                  convert.getDoubleData(rs.get("settleCurValue")),
+                  convert.getDoubleData(rs.get("settleQty")),
+                  convert.getDoubleData(rs.get("settlePrice")),
+                  convert.getDoubleData(rs.get("settleValue")),
                   convert.getDoubleData(rs.get("exchangeRate")),
                   convert.getDoubleData(rs.get("settleNewQty")),
                   convert.getDoubleData(rs.get("settleNewPrice")),
                   convert.getDoubleData(rs.get("settleNewValue")),
                   convert.getStrData(rs.get("tradeType")),
                   convert.getStrData(rs.get("reason"))
-                  );
+               );
 
                userTradePreprocess.add(tradedata);
                 i++;

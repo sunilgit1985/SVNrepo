@@ -50,7 +50,7 @@
                                  id="uobCustomerName" placeholder="Enter your full name"
                                  maxlength="60">
                         <p:ajax listener="#{uobProfile.onChangeName}"
-                                update=":ceForm:introPanel"/>
+                                update=":ceForm:introPanel, :ceForm:agePanel"/>
                     </p:inputText>
                 </p>
                 <p>
@@ -61,7 +61,7 @@
                     </p:inputText>
                 </p>
             </p:outputPanel>
-            <p:outputPanel style="border: 0px; background: transparent">
+            <p:outputPanel id="agePanel" style="border: 0px; background: transparent">
                 <p class="wid55">
                     <span class="input_value">#{uobProfile.printName}</span> How old are you?
                     <p:inputNumber id="uobAge" class="input_no_type"

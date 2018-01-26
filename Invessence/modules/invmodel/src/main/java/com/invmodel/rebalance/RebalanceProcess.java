@@ -11,6 +11,8 @@ import com.invmodel.model.dynamic.PortfolioOptimizer;
 import com.invmodel.model.fixedmodel.FixedModelOptimizer;
 import com.invmodel.portfolio.data.*;
 import com.invmodel.rebalance.data.*;
+import com.invmodel.risk.data.RiskCalc;
+import com.invmodel.risk.data.client.UOBRiskCalc;
 
 /**
  * Created with IntelliJ IDEA.
@@ -144,52 +146,27 @@ public class RebalanceProcess
       return (data);
    }
 
-   public void loadAssetClass(ProfileData pdata, Integer years)
-   {
-      try
-      {
-         if (pdata.getAssetData() == null)
-         {
-            AssetClass[] aamc;
-            //if (years == null)
-            //years = pdata.getHorizon();
-            pdata.setNumOfAllocation(years);
-            aamc = modelUtil.buildAllocation(pdata);
-            if (aamc != null)
-            {
-               pdata.setAssetData(aamc);
-            }
-         }
-      }
-      catch (Exception ex)
-      {
-         ex.printStackTrace();
-      }
-   }
-
-   public void loadPortfolio(ProfileData pdata, Integer years)
+   public void createAssetandPortfolio(ProfileData pdata)
    {
       AssetClass[] aamc;
       Portfolio[] pfclass;
       try
       {
-         if (pdata.getPortfolioData() == null)
+         RiskCalc riskCalc = new UOBRiskCalc(pdata.getRiskProfile());
+         riskCalc.calculate();
+
+         aamc = new AssetClass[1];
+         aamc[0] = modelUtil.createAssetAllocation(riskCalc);
+         if (aamc != null)
          {
-            loadAssetClass(pdata, years);
-            pdata.setNumOfPortfolio(years);
-            Integer displayYear = 0;
-            aamc = pdata.getAssetData();
-            if (aamc != null)
+            pdata.setAssetData(aamc);
+            pfclass = new Portfolio[1];
+            pfclass[0] = modelUtil.createPortfolioAllocation(aamc[0], riskCalc);
+            if (pfclass != null)
             {
-               pfclass = modelUtil.buildPortfolio(aamc, pdata);
-               if (pfclass != null)
-               {
-                  pdata.setPortfolioData(pfclass);
-               }
+               pdata.setPortfolioData(pfclass);
             }
-
          }
-
       }
       catch (Exception ex)
       {
@@ -337,30 +314,10 @@ public class RebalanceProcess
          for (ProfileData pdata : profileList)
          {
             advisor = pdata.getAdvisor();
-            pdata.setNumOfAllocation(1);
 
-            // Not sure if I need to set this JAV
-            pdata.setLogonid(logonid);
-            /*
-            Questions1: loadCurrentAssetAllocation loads what is currently allocated from allocation table.
-            Do we want the allocation from our DB or should we look at the holding and get the allocation from holding?
-             */
-
-            // Map<String, Asset> asset = loadCurrentAssetAllocation(pdata.getAcctnum());
-            /*
-            Questions2: loadPortfolio recreates the Asset allocation and portfolio.  Should we get only one year or two years?
-            Currently this process get it for size as defined in horizon (Projection issue).
-            Question3: Also, the loadPortfolio saves the allocation and portfolio on pdata class.
-            Info: So,newHoldings is just getting that data.
-             */
-            // loadPortfolio(pdata, 1);
-
-            //Number of years is 1
-            // loadAssetClass(pdata, 1);
-            //AssetDBCollection assetDAO = AssetDBCollection.getInstance();
-            pdata.setNumOfPortfolio(1);
-
-            loadPortfolio(pdata, 1);
+            // We'll have to fix this process to determine the correct age and horiozon
+            // Also, we need to move correct amount invested from actual holding data.
+            createAssetandPortfolio(pdata);
             Portfolio[] newHoldings = pdata.getPortfolioData();
 
             // Now load Excluded subclass if defined by Advisor
