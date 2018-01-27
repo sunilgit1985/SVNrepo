@@ -655,6 +655,27 @@ public class ProfileBean extends PortfolioCreationUI
             {
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.initialInvestment.required", "Initial investment amount is required.", null));
             }
+            else {
+               Double minInitialRequired;
+               if (webutil.isUserLoggedIn()) {
+                  minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MIN2NDINTIALRQMT,1.0);
+               }
+               else {
+                  minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MININTITIALRQMT,1.0);
+               }
+               if (getInitialInvestment() < minInitialRequired) {
+                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
+               }
+            }
+            if (hasData(getRecurringInvestment()))
+            {
+               Double minInitialRequired;
+               minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MINRECCURRINGRQMT, 0.0);
+               if (getRecurringInvestment() > 0.0 && getRecurringInvestment() < minInitialRequired)
+               {
+                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
+               }
+            }
             break;
          case 3: // Asset/Liabilty/Networth
             if (!hasData(getCustomer().getAccountFinancials().getNetworth()))

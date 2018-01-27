@@ -122,4 +122,9 @@ public class RiskConst
    public static String FINETUNEAJUSTMENTS   = "FINETUNEAJUSTMENTS";
    public static Integer RISKQSORTNUM      = 900;
    public static Integer CUSTOMSORTNUM    = 999;
+
+   public static String MININTITIALRQMT = "MININTITIALRQMT";
+   public static String MIN2NDINTIALRQMT = "MIN2NDINTIALRQMT";
+   public static String MINRECCURRINGRQMT = "MINRECCURRINGRQMT";
+
 }

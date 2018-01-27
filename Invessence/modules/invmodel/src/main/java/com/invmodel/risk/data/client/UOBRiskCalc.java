@@ -105,7 +105,7 @@ public class UOBRiskCalc extends RiskCalc
       withDrwalPeriod = (withDrwalPeriod == null) ? 0 : withDrwalPeriod;
       if (investment > 0.0)
       {
-         goalDuration = Math.max(Math.min(Math.round((horizon + (presentvalue / investment) * (recurringPeriod / 2)) + withDrwalPeriod / 2), 30.0), 2.0);
+         goalDuration = Math.max(Math.min(Math.round((horizon + (presentvalue / investment) * (recurringPeriod / 2)) + withDrwalPeriod / 2), goalDuration), 2.0);
       }
       Double value = Math.min((goalDuration - 2) / 28 * maxScore, maxScore);
       value = maxScore - value;
