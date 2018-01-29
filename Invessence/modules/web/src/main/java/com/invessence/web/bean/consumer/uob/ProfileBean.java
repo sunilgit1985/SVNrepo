@@ -279,6 +279,7 @@ public class ProfileBean extends PortfolioCreationUI
    {
       try
       {
+         rollbackRiskQuestion(pagemanager.getPage());
          if (pagemanager.getPage() == 2)
          {
             reOrganizeGoalList();
@@ -730,6 +731,62 @@ public class ProfileBean extends PortfolioCreationUI
 
       this.dataOK = dataOK;
       return dataOK;
+   }
+
+   private void rollbackRiskQuestion(Integer pageno) {
+      Boolean isinEditMode = webutil.isUserLoggedIn();
+
+      if (webutil.isUserLoggedIn() && getSavedCustomer() != null) {
+         switch (pageno)
+         {
+            case 4:
+               setRiskAns2(getSavedCustomer().riskProfile.getDefaultBooleanValue("2", false));
+               setRiskAns3(getSavedCustomer().riskProfile.getDefaultBooleanValue("3", false));
+               break;
+            case 5:
+               setRiskAns4(getSavedCustomer().riskProfile.getDefaultIntValue("4", 0).toString());
+               break;
+            case 6:
+               setRiskAns5(getSavedCustomer().riskProfile.getDefaultIntValue("5", 0).toString());
+               break;
+            case 7:
+               setRiskAns6(getSavedCustomer().riskProfile.getDefaultIntValue("6", 0).toString());
+               break;
+            case 8:
+               setRiskAns7(getSavedCustomer().riskProfile.getDefaultIntValue("7", 0).toString());
+               break;
+            case 9:
+               setRiskAns8(getSavedCustomer().riskProfile.getDefaultIntValue("8", 0).toString());
+               break;
+            default:
+         }
+      }
+      else {
+         switch (pageno)
+         {
+            case 4:
+               setRiskAns2(false);
+               setRiskAns3(false);
+               break;
+            case 5:
+               setRiskAns4("0");
+               break;
+            case 6:
+               setRiskAns5("0");
+               break;
+            case 7:
+               setRiskAns6("0");
+               break;
+            case 8:
+               setRiskAns7("0");
+               break;
+            case 9:
+               setRiskAns8("0");
+               break;
+            default:
+         }
+
+      }
    }
 
    private void setRiskAns(Integer question, String value)
