@@ -71,6 +71,7 @@ public class WebProfile
       {
          if (webInfo.containsKey(key))
          {
+            if (webInfo.get(key) != null)
                return webInfo.get(key);
          }
       }
@@ -434,10 +435,7 @@ public class WebProfile
 
    public String getSslseal()
    {
-      if (webInfo.containsKey("WEB.SSLSEAL") && !webInfo.get("WEB.SSLSEAL").isEmpty())
-         return getInfo("WEB.SSLSEAL");
-      else
-         return "";
+      return getInfo("WEB.SSLSEAL");
    }
 
    public String getEmailTemplate (String key){
