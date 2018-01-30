@@ -925,7 +925,7 @@ public class UserRiskProfile
 
          UserRiskData formulascore = new UserRiskData();
          formulascore.setKey("Standard Score");
-         formulascore.setAnswerDouble(getRiskScoreObj(0).getStandardScore());
+         formulascore.setRiskScore(getRiskScoreObj(0).getStandardScore());
          userRiskList.add(formulascore);
 
          UserRiskData formuladata = new UserRiskData();
