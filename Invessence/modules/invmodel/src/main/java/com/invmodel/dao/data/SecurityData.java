@@ -91,6 +91,7 @@ public class SecurityData
                                          Double settlePrice)
    {
       this.advisor = advisor;
+      this.theme = theme;
       this.ticker = ticker;
       this.name = name;
       this.assetclass = assetclass;
