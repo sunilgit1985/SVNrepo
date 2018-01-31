@@ -165,6 +165,8 @@ public class PortfolioCreationUI extends UserInterface
       displayFTPanel=false;
       csCheck1=false;
       csCheck2=false;
+      selectedCSOption="";
+      disableApproveBtn=true;
 //      customer=resetData();
    }
 
@@ -959,5 +961,22 @@ public class PortfolioCreationUI extends UserInterface
       {
          setDisableApproveBtn(false);
       }
+   }
+   public void enableChangeStragegyButton(){
+      if(getSelectedCSOption()!=null && !getSelectedCSOption().trim().equalsIgnoreCase("")){
+         setDisableChangeStragegyButton(false);
+      }else{
+         setDisableChangeStragegyButton(true);
+      }
+   }
+
+   public Boolean getDisableChangeStragegyButton()
+   {
+      return disableChangeStragegyButton;
+   }
+
+   public void setDisableChangeStragegyButton(Boolean disableChangeStragegyButton)
+   {
+      this.disableChangeStragegyButton = disableChangeStragegyButton;
    }
 }

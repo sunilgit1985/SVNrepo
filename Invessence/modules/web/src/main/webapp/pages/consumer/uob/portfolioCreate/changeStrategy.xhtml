@@ -14,7 +14,7 @@
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoCSStrategy}"> Next </p:commandLink>
+                                       actionListener="#{uobProfile.gotoCSStrategy}" disabled="#{uobProfile.disableChangeStragegyButton}"> Next </p:commandLink>
                     </div>
                     <div class="Container50 pre_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
@@ -59,6 +59,7 @@
                 <p:selectOneRadio value="#{uobProfile.selectedCSOption}"
                                   layout="pageDirection"
                                   required="true" requiredMessage="Must choose one of the method to change profile.">
+                    <p:ajax listener='#{uobProfile.enableChangeStragegyButton}' update=":ceForm:changeStrategy"/>
                     <f:selectItem
                             itemLabel="I prefer to complete the risk tolerance questionnaire again to update factors that have changed."
                             itemValue="Question"/>
