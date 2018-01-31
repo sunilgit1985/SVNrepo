@@ -4292,6 +4292,8 @@ span.conservative_plus{
 .desktopModeButton, .mobileModeButton {
     margin: 0 auto !important;
 }
+.mobileModeButton {display:none;}
+.desktopModeButton{display:block;}
 /*** 10/06/2017/ dashboard high alert space **/
 .high_alert_dis {
     width: 95%;
@@ -5904,6 +5906,19 @@ form#ceForm {
     font-size: 13px;
 }
 
+/***31/01/2017 ***/
+.errorPage{width: auto;
+    background: #fff;box-shadow: none;}
+.ErrorHead{font-size: 40px;
+    color: #000;
+    font-style: italic;}
+    .red {
+    color: #a4332f;
+}
+.RedButton .ui-button-text {
+    background-color: #a4332f;
+}
+
 /*** responsive**/
 
 /** 16/10/2017***/
@@ -6254,6 +6269,8 @@ form#ceForm {
         top: 0px !important;
     }
     .caraousle .Container50.pre_btn:before{right:46px;}
+    .mobileModeButton {display:block;}
+	.desktopModeButton{display:none;}
 
 }
 
