@@ -34,6 +34,12 @@ public class ProfileBean extends PortfolioCreationUI
       progressbar = new ProgressBarImpl(0.0, (100.0 / pagemanager.getMaxNoofPages()));
    }
 
+   private void setDefaultSwitch()
+   {
+      setRiskAns2(true);
+      setRiskAns3(true);
+   }
+
    public void setDefault()
    {
       pagemanager.initPage();
@@ -43,8 +49,7 @@ public class ProfileBean extends PortfolioCreationUI
       if (beanmode.equals(UIMode.New) )
       {
 //         setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
-         setRiskAns2(true);
-         setRiskAns3(true);
+         setDefaultSwitch();
       }
       loadDropDownList();  // This process will reload all dropdown list.
 
@@ -70,6 +75,11 @@ public class ProfileBean extends PortfolioCreationUI
          }
       }
       createAssetPortfolio();
+      if(beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit)){
+         getCustomer().setCanSaveData(true);
+      }else {
+         getCustomer().setCanSaveData(false);
+      }
    }
 
    public void preRenderReview()
@@ -87,7 +97,7 @@ public class ProfileBean extends PortfolioCreationUI
             }
             super.preRenderView();
             setDefault();
-            getCustomer().copyData(getSavedCustomer());
+//            getCustomer().copyData(getSavedCustomer());
          }
 
          if (getCustomer() != null) {
@@ -740,23 +750,23 @@ public class ProfileBean extends PortfolioCreationUI
          switch (pageno)
          {
             case 4:
-               setRiskAns2(getSavedCustomer().riskProfile.getDefaultBooleanValue("2", false));
-               setRiskAns3(getSavedCustomer().riskProfile.getDefaultBooleanValue("3", false));
+               getCustomer().riskProfile.setRiskQuestionWeight(2,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "2", 0),0.0);
+               getCustomer().riskProfile.setRiskQuestionWeight(3,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "3", 0),0.0);
                break;
             case 5:
-               setRiskAns4(getSavedCustomer().riskProfile.getDefaultIntValue("4", 0).toString());
+               getCustomer().riskProfile.setRiskQuestionWeight(4,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "4", 0),0.0);
                break;
             case 6:
-               setRiskAns5(getSavedCustomer().riskProfile.getDefaultIntValue("5", 0).toString());
+               getCustomer().riskProfile.setRiskQuestionWeight(5,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "5", 0),0.0);
                break;
             case 7:
-               setRiskAns6(getSavedCustomer().riskProfile.getDefaultIntValue("6", 0).toString());
+               getCustomer().riskProfile.setRiskQuestionWeight(6,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "6", 0),0.0);
                break;
             case 8:
-               setRiskAns7(getSavedCustomer().riskProfile.getDefaultIntValue("7", 0).toString());
+               getCustomer().riskProfile.setRiskQuestionWeight(7,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "7", 0),0.0);
                break;
             case 9:
-               setRiskAns8(getSavedCustomer().riskProfile.getDefaultIntValue("8", 0).toString());
+               getCustomer().riskProfile.setRiskQuestionWeight(8,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "8", 0),0.0);
                break;
             default:
          }
@@ -765,23 +775,22 @@ public class ProfileBean extends PortfolioCreationUI
          switch (pageno)
          {
             case 4:
-               setRiskAns2(false);
-               setRiskAns3(false);
+               setDefaultSwitch();
                break;
             case 5:
-               setRiskAns4("0");
+               getCustomer().riskProfile.setRiskQuestionWeight(4,0,0.0);
                break;
             case 6:
-               setRiskAns5("0");
+               getCustomer().riskProfile.setRiskQuestionWeight(5,0,0.0);
                break;
             case 7:
-               setRiskAns6("0");
+               getCustomer().riskProfile.setRiskQuestionWeight(6,0,0.0);
                break;
             case 8:
-               setRiskAns7("0");
+               getCustomer().riskProfile.setRiskQuestionWeight(7,0,0.0);
                break;
             case 9:
-               setRiskAns8("0");
+               getCustomer().riskProfile.setRiskQuestionWeight(8,0,0.0);
                break;
             default:
          }

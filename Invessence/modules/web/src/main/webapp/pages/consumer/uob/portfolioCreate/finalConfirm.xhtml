@@ -19,7 +19,7 @@
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoPortfolioConfirm}"> Confirm </p:commandLink>
+                                               actionListener="#{uobProfile.gotoPortfolioConfirm}" disabled="#{uobProfile.disableApproveBtn}"> Confirm </p:commandLink>
                             </div>
                             <div class="Container50 pre_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
@@ -52,7 +52,8 @@
                                 <p:selectBooleanCheckbox value="#{uobProfile.csCheck1}"
                                                          styleClass="RegulatoryCheckBox textAlignLeft checkBoxOpt margin-left"
                                                          itemLabel="I approve!"
-                                                         update=":ceForm:cnfbuttonArea">
+                                                        >
+                                    <p:ajax listener="#{uobProfile.enableApproveBtn}" update=":ceForm:cnfbuttonArea"/>
                                 </p:selectBooleanCheckbox>
                             </div>
                         </div>

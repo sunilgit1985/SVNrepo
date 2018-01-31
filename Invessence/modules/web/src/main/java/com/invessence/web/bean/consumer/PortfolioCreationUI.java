@@ -129,7 +129,7 @@ public class PortfolioCreationUI extends UserInterface
 
    // Panel Controls
    public Boolean welcomeDialog;
-   public Boolean disablegraphtabs, disabledetailtabs;
+   public Boolean disablegraphtabs, disabledetailtabs,disableApproveBtn=true;
    public Boolean displayGoalGraph;
    public Boolean displayDataPanel;
    public Boolean displayConfirmPanel;
@@ -163,7 +163,9 @@ public class PortfolioCreationUI extends UserInterface
       displayConfirmPanel = false;
       backURL = null;
       displayFTPanel=false;
-      resetData();
+      csCheck1=false;
+      csCheck2=false;
+//      customer=resetData();
    }
 
    public void preRenderView()
@@ -173,9 +175,9 @@ public class PortfolioCreationUI extends UserInterface
       {
          if (!FacesContext.getCurrentInstance().isPostback())
          {
-            customer.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
             // For both new and existing client, this fetch is called.  It determines the default values.
             fetchClientData();
+            customer.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
          }
       }
       catch (Exception e)
@@ -184,9 +186,9 @@ public class PortfolioCreationUI extends UserInterface
       }
    }
 
-   public void resetData()
+   public CustomerData resetData()
    {
-      customer = new CustomerData();
+      CustomerData customer = new CustomerData();
       if(beanmode.equals(UIMode.New)){
          setBeanAcctnum(null);
       }
@@ -197,6 +199,7 @@ public class PortfolioCreationUI extends UserInterface
                        saveDAO, tradeDAO,
                        messageText);
       customer.setDefault();
+      return customer;
    }
 
    public void setModelUtil(ModelUtil modelUtil)
@@ -373,15 +376,15 @@ public class PortfolioCreationUI extends UserInterface
    {
       try
       {
-         resetData();
+         customer=resetData();
          if (beanAcctnum != null && beanAcctnum > 0L)
          {
-            loadProfileData(beanAcctnum);
+            loadProfileData(customer,beanAcctnum);
             customer.setSaveVisitor(false);
             if (beanmode != null && beanmode == UIMode.ChangeStrategy)
             {
-               savedCustomer = new CustomerData();
-               savedCustomer.copyData(customer);  // Need a way to do clean copy.
+               savedCustomer = resetData();
+               loadProfileData(savedCustomer,beanAcctnum);
             }
          }
          else
@@ -408,7 +411,7 @@ public class PortfolioCreationUI extends UserInterface
    }
 
 
-   public void loadProfileData(Long acctnum)
+   public void loadProfileData(CustomerData customer,Long acctnum)
    {
 
       try
@@ -641,6 +644,12 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoPortfolioConfirm()
    {
+      customer.setCanSaveData(true);
+      formEdit = true;
+//      customer.saveProfileAudit(); Need to enhance for audit activity
+//      send not custodyService.mangeUserProfile(getBeanAcctNum(),beanmode.getCodeValue(),getBeanLogonId());
+      customer.saveProfile();
+
       alertAdvisor();
       goBack();
    }
@@ -888,11 +897,7 @@ public class PortfolioCreationUI extends UserInterface
                                                    WebConst.TRADE_PROCESS_ALLOC,
                                                    WebConst.TRADE_PROCESS_STAT_NEW,
                                                    beanmode.toString());
-      customer.setCanSaveData(true);
-      formEdit = true;
-//      customer.saveProfileAudit(); Need to enhance for audit activity
-//      send not custodyService.mangeUserProfile(getBeanAcctNum(),beanmode.getCodeValue(),getBeanLogonId());
-      customer.saveProfile();
+
    }
 
    // Charting management
@@ -934,5 +939,25 @@ public class PortfolioCreationUI extends UserInterface
       return score;
    }
 
+   public Boolean getDisableApproveBtn()
+   {
+      return disableApproveBtn;
+   }
 
+   public void setDisableApproveBtn(Boolean disableApproveBtn)
+   {
+      this.disableApproveBtn = disableApproveBtn;
+   }
+   public void enableApproveBtn()
+   {
+      setDisableApproveBtn(true);
+      if (beanmode.equals(UIMode.ChangeStrategy) && getCsCheck1() && getCsCheck2())
+      {
+         setDisableApproveBtn(false);
+      }
+      else if (beanmode.equals(UIMode.Confirm) && getCsCheck1())
+      {
+         setDisableApproveBtn(false);
+      }
+   }
 }
