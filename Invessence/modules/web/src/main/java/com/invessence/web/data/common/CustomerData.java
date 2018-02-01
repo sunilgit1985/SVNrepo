@@ -55,6 +55,10 @@ public class CustomerData extends ProfileData
    @ManagedProperty("#{consumerSaveDataDAO}")
    public ConsumerSaveDataDAO saveDAO;
 
+
+   @ManagedProperty("#{consumerAuditDataDAO}")
+   public ConsumerAuditDataDAO auditDAO;
+
    @ManagedProperty("#{tradeDAO}")
    public TradeDAO tradeDAO;
 
@@ -125,7 +129,7 @@ public class CustomerData extends ProfileData
    public void initDao(WebUtil webutil, ModelUtil modelUtil, UILayout uiLayout,
                        ConsumerListDataDAO listDAO, UserInfoDAO userInfoDAO,
                        ConsumerSaveDataDAO saveDAO, TradeDAO tradeDAO,
-                       WebMessage messageText)
+                       WebMessage messageText,ConsumerAuditDataDAO auditDAO)
    {
       setWebutil(webutil);
       setModelUtil(modelUtil);
@@ -135,6 +139,7 @@ public class CustomerData extends ProfileData
       setSaveDAO(saveDAO);
       setTradeDAO(tradeDAO);
       setMessageText(messageText);
+      setAuditDAO(auditDAO);
    }
 
 
@@ -1706,6 +1711,22 @@ public class CustomerData extends ProfileData
 
    }
 
+   public void saveProfileAudit()
+   {
+      try
+      {
+         auditDAO.auditClientProfile(getInstance().getAcctnum());
+      }
+      catch (Exception ex)
+      {
+         String stackTrace = ex.getMessage();
+         webutil.alertSupport("CustomerData.saveProfileAudit", "Error:CustomerData.saveProfileAudit",
+                              "error.saveProfileAudit", stackTrace);
+         ex.printStackTrace();
+      }
+
+   }
+
    public void createAssetPortfolio()
    {
       AssetClass[] aamc;
@@ -1935,4 +1956,13 @@ public class CustomerData extends ProfileData
       this.customName = customName;
    }
 
+   public ConsumerAuditDataDAO getAuditDAO()
+   {
+      return auditDAO;
+   }
+
+   public void setAuditDAO(ConsumerAuditDataDAO auditDAO)
+   {
+      this.auditDAO = auditDAO;
+   }
 }

@@ -41,6 +41,9 @@ public class PortfolioCreationUI extends UserInterface
    @ManagedProperty("#{consumerSaveDataDAO}")
    public ConsumerSaveDataDAO saveDAO;
 
+   @ManagedProperty("#{consumerAuditDataDAO}")
+   public ConsumerAuditDataDAO auditDAO;
+
    @ManagedProperty("#{tradeDAO}")
    public TradeDAO tradeDAO;
 
@@ -199,7 +202,7 @@ public class PortfolioCreationUI extends UserInterface
       customer.initDao(webutil, modelUtil, uiLayout,
                        listDAO, userInfoDAO,
                        saveDAO, tradeDAO,
-                       messageText);
+                       messageText,auditDAO);
       customer.setDefault();
       return customer;
    }
@@ -222,6 +225,11 @@ public class PortfolioCreationUI extends UserInterface
    public void setSaveDAO(ConsumerSaveDataDAO saveDAO)
    {
       this.saveDAO = saveDAO;
+   }
+
+   public void setAuditDAO(ConsumerAuditDataDAO auditDAO)
+   {
+      this.auditDAO = auditDAO;
    }
 
    public void setTradeDAO(TradeDAO tradeDAO)
@@ -648,7 +656,7 @@ public class PortfolioCreationUI extends UserInterface
    {
       customer.setCanSaveData(true);
       formEdit = true;
-//      customer.saveProfileAudit(); Need to enhance for audit activity
+      customer.saveProfileAudit(); //Need to enhance for audit activity
 //      send not custodyService.mangeUserProfile(getBeanAcctNum(),beanmode.getCodeValue(),getBeanLogonId());
       customer.saveProfile();
 
@@ -979,4 +987,5 @@ public class PortfolioCreationUI extends UserInterface
    {
       this.disableChangeStragegyButton = disableChangeStragegyButton;
    }
+
 }
