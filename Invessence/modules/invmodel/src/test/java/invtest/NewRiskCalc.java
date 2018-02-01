@@ -68,8 +68,89 @@ public class NewRiskCalc
       profileData.setAdvisor(advisor);
       profileData.setTheme(userRiskProfile.getAnswer(RiskConst.THEME));
 
-      calculateRiskQuestionsGrid(true);
+      generateSampleRiskGrid();
+
+      //calculateSingleRisk();
+
       System.out.print("Done");
+   }
+
+   public static void generateSampleRiskGrid() throws Exception
+   {
+
+      int [][]possibleChoices = calculateRiskQuestionsGrid(false);
+      double[][] score = new double[possibleChoices.length][3];
+      riskCalc = new UOBRiskCalc(userRiskProfile);
+      for (Integer age = 30; age < 35; age += 5){
+         for (Integer horizon = 20; horizon < 25; horizon+=5){
+
+            for(int row=0; row<possibleChoices.length; row++){
+
+               for(int column =1; column<possibleChoices[row].length; column++){
+
+                  riskCalc.setAge(age);
+                  riskCalc.setHorizon(horizon);
+                  riskCalc.setRecurring(5000.00);
+                  riskCalc.setRecurringPeriod(10);
+                  riskCalc.setWithDrwalPeriod(5);
+                  riskCalc.setQuestionsRisk(column+1,possibleChoices[row][column],0.0);
+               }
+
+               riskCalc.calculate();
+               System.out.println(riskCalc.getRiskScore());
+               score[row][0]=age;
+               score[row][1]=horizon;
+               score[row][2]=riskCalc.getRiskScore();
+
+            }
+
+         }
+      }
+
+      try
+      {
+         createRiskParameters(profileData,possibleChoices,riskCalc,score);
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public static void createRiskParameters(ProfileData profileData, int[][] posChoice, RiskCalc rCalc, double[][]score) throws Exception
+   {
+
+      String fileName;
+      PrintWriter writer = null;
+
+      fileName = "RiskParameters";
+      fileName = fileName + profileData.getTheme() + ".csv";
+
+      writer = TestDistribution.getInstance().getFileHandle("No", fileName);
+
+
+      String theme = profileData.getTheme();
+
+      for (int row=0; row < posChoice.length; ++row)
+      {
+         if (row == 0)
+         {
+            writer.print("Age" + "," + "Horizon" + "," + "Q1" + "," + "Q2" + "," + "Q3" +  ","  + "," +
+                                  "Q4"  + "Q5" + "," + "Q6" + "," + "Q7" + "," + "Q8" + "," + "Risk Score");
+
+            writer.println();
+         }
+
+         writer.print(score[row][0] + "," + score[row][1] );
+         for (int col=0; col< posChoice[row].length; col++ )
+         {
+            writer.print("," + posChoice[row][col]);
+         }
+         writer.print("," + score[row][2] );
+
+         writer.println();
+      }
+      writer.close();
    }
 
    public static void calculateSingleRisk() {
@@ -80,9 +161,28 @@ public class NewRiskCalc
       assetClass = modelUtil.createAssetAllocation(riskCalc);
       portfolio = modelUtil.createPortfolioAllocation(assetClass, riskCalc);
 
+
+
       System.out.println("Score:" + userRiskProfile.getScore(0));
    }
 
+   public static void calculateAllRisk() throws Exception
+   {
+      AssetClass[] assetClass = new AssetClass[100];
+      Portfolio[] portfolio = new Portfolio[100];
+      riskCalc = new UOBRiskCalc(userRiskProfile);
+      for(Integer i = 0; i < 100; i++)
+      {
+         riskCalc.setRiskScore(i.doubleValue());
+         assetClass[i] = modelUtil.createAssetAllocation(riskCalc);
+         portfolio[i] = modelUtil.createPortfolioAllocation(assetClass[i], riskCalc);
+      }
+
+      createEfficientFrontier(assetClass,portfolio,modelUtil.getPoptimizer(),riskCalc);
+
+
+      System.out.println("Score:" + userRiskProfile.getScore(0));
+   }
 
    public static int[][] calculateRiskQuestionsGrid(Boolean skipKnockout)
    {
@@ -261,7 +361,7 @@ public class NewRiskCalc
    }
 
    public static void createEfficientFrontier(AssetClass[] aamc, Portfolio[] pfclass, PortfolioOptimizer portfolioOptimizer,
-                                              ProfileData profileData, Map <Integer,Portfolio> portList) throws Exception
+                                              RiskCalc riskCalc) throws Exception
    {
 
       String fileName;
