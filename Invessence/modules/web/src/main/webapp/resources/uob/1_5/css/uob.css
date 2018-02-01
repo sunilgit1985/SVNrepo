@@ -5828,7 +5828,7 @@ span.conservative_plus {
 .layout-portlets-box{box-shadow:none;}
 .acc_holder_dtl_block.acceptTerm {
     position: relative;
-    bottom: -35px;
+    
 }
 .OverlayPanelDisClo .ui-panel-content {
     padding-bottom: 100px !important;
@@ -5909,16 +5909,24 @@ form#ceForm {
 /***31/01/2017 ***/
 .errorPage{width: auto;
     background: #fff;box-shadow: none;}
-.ErrorHead{font-size: 40px;
+.ErrorHead{font-size: 45px;
     color: #000;
     font-style: italic;}
     .red {
-    color: #a4332f;
+    color: #a4332f;font-size:25px;
 }
 .RedButton .ui-button-text {
     background-color: #a4332f;
 }
-
+.faq_dtls li,
+.faq_dtls ol ul li{list-style: disc;    margin: 25px 0 0;}
+.faq_dtls ol li {
+    list-style: upper-alpha;
+}
+.faq_dtls p {
+    margin: 2px 0;
+    line-height: 1.38;
+}
 /*** responsive**/
 
 /** 16/10/2017***/
