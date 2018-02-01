@@ -25,7 +25,6 @@ public class ServiceDetails
    private ServiceDao wsCommonDao;
    private List<String> services;
 
-
    private static Map<String, Map<String, Map<String, Map<String,Map<String,ServiceConfigDetails>>>>> serviceConfigDetails;
 
    private static Map<String, Map<String, Map<String, ServiceConfigDetails>>> serviceConfigDetailsMap;
@@ -47,6 +46,7 @@ public class ServiceDetails
 
       initConfigDetails(service);
    }
+
    private void initConfigDetails(List<String> service){
       setGenericDetails();
       setServiceConfigDetails(service);

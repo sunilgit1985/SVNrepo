@@ -89,9 +89,9 @@ public class FileUploader
          {
             if (fileDetails.getRequired().equalsIgnoreCase("Y"))
             {
-               mailAlertMsg.append(fileDetails.getFileName() + " files are not available on server for download, for Advisor " + fileDetails.getVendor() + "\n");
+               mailAlertMsg.append(fileDetails.getFileName() + " files are not available on server for download, for Advisor " + fileDetails.getVendor() +" for File sequence "+fileDetails.getSeqNo()+ "\n");
             }
-            logger.info(fileDetails.getFileName() + " files are not available on server for download, for Advisor " + fileDetails.getVendor() + "\n");
+            logger.info(fileDetails.getFileName() + " files are not available on server for download, for Advisor " + fileDetails.getVendor() +" for File sequence "+fileDetails.getSeqNo()+ "\n");
          }
          else
          {
@@ -102,9 +102,9 @@ public class FileUploader
             {
                if (fileDetails.getRequired().equalsIgnoreCase("Y"))
                {
-                  mailAlertMsg.append(fileDetails.getFileName() + " files are not available on server to load\n");
+                  mailAlertMsg.append(fileDetails.getFileName() + " files are not available on server to load"+" for File sequence "+fileDetails.getSeqNo()+"\n");
                }
-               logger.info(fileDetails.getFileName() + " files are not available on server to load\n");
+               logger.info(fileDetails.getFileName() + " files are not available on server to load"+" for File sequence "+fileDetails.getSeqNo()+"\n");
             }
             else
             {
@@ -179,7 +179,7 @@ public class FileUploader
                            {
                               logger.error("While " + fileToDownload + " csv file processing\n" + e.getMessage());
                               //exceptionHandler(e, mailAlertMsg, "Issue " + fileToDownload + " csv file processing");
-                              mailAlertMsg.append("Issue " + fileToDownload + " csv file processing\n");
+                              mailAlertMsg.append("Issue " + fileToDownload + " csv file processing"+" for File sequence "+fileDetails.getSeqNo()+"\n");
                               e.printStackTrace();
                            }
                         }
@@ -213,7 +213,7 @@ public class FileUploader
                               {
                                  logger.error("While " + fileToDownload + " csv file processing \n" + e.getMessage());
                                  //exceptionHandler(e, mailAlertMsg, "Issue " + fileToDownload + " csv file processing");
-                                 mailAlertMsg.append("Issue " + fileToDownload + " csv file processing \n");
+                                 mailAlertMsg.append("Issue " + fileToDownload + " csv file processing "+ "for File sequence "+fileDetails.getSeqNo()+"\n");
                                  e.printStackTrace();
                               }
                            }
@@ -228,7 +228,7 @@ public class FileUploader
                      catch (Exception e)
                      {
                         logger.error("While " + fileToDownload + " file reading into local directory\n" + e.getMessage());
-                        mailAlertMsg.append("While " + fileToDownload + " file reading into local directory\n" + e.getMessage());
+                        mailAlertMsg.append("While " + fileToDownload + " file reading into local directory\n" + e.getMessage()+" for File sequence "+fileDetails.getSeqNo());
                         //exceptionHandler(e, mailAlertMsg, "While " + fileToDownload + " file coping into local directory");
                         e.printStackTrace();
                      }
@@ -237,7 +237,7 @@ public class FileUploader
                   catch (Exception e)
                   {
                      logger.error("While " + fileToDownload + " file coping from server\n" + e.getMessage());
-                     mailAlertMsg.append("While " + fileToDownload + " file coping from server\n" + e.getMessage());
+                     mailAlertMsg.append("While " + fileToDownload + " file coping from server\n" + e.getMessage()+" for File sequence "+fileDetails.getSeqNo());
                      //exceptionHandler(e, mailAlertMsg, "While " + fileToDownload + " file coping from server");
                      e.printStackTrace();
                   }

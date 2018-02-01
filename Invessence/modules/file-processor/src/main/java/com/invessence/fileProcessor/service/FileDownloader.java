@@ -43,8 +43,8 @@ public class FileDownloader
          ArrayList<LinkedHashMap<String, Object>> rows=(ArrayList<LinkedHashMap<String, Object>>)fileProcessorDao.dbCall(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(),
                                  Constant.ADDITIONAL_DETAILS.FILE_DETAILS.toString(), fileDetails.getPreDBProcess());
          if(rows==null || rows.size()==0){
-            System.out.println("Data not available in "+fileDetails.getPreDBProcess()+" for File Processor ");
-            mailAlertMsg.append("Data not available in "+fileDetails.getPreDBProcess()+" for File Processor \n");
+            System.out.println("Data not available in "+fileDetails.getPreDBProcess()+" for File Processor  for File sequence "+fileDetails.getSeqNo());
+            mailAlertMsg.append("Data not available in "+fileDetails.getPreDBProcess()+" for File Processor for File sequence"+fileDetails.getSeqNo()+"\n");
 
          }else{
             Iterator<LinkedHashMap<String, Object>> itr = rows.iterator();
@@ -90,7 +90,7 @@ public class FileDownloader
             }
          }
       }catch(Exception e){
-         mailAlertMsg.append("Issue while processing file " + fileDetails.getFileName() + " from processId "+fileDetails.getProcessId()+" \n");
+         mailAlertMsg.append("Issue while processing file " + fileDetails.getFileName() + " from processId "+fileDetails.getProcessId()+ " for File sequence "+fileDetails.getSeqNo()+" \n");
          e.printStackTrace();
       }
       return  returnValue;

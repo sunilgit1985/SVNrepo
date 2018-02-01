@@ -8,6 +8,8 @@ public class ServiceRequest
    private String product;
    private String mode;
    private String processId;
+   private int sequenceId;
+
 
    public ServiceRequest(String product, String mode)
    {
@@ -20,6 +22,14 @@ public class ServiceRequest
       this.product = product;
       this.mode = mode;
       this.processId = processId;
+   }
+
+   public ServiceRequest(String product, String mode, String processId, int sequenceId)
+   {
+      this.product = product;
+      this.mode = mode;
+      this.processId = processId;
+      this.sequenceId = sequenceId;
    }
 
    public String getProcessId()
@@ -51,6 +61,10 @@ public class ServiceRequest
    {
       this.mode = mode;
    }
+
+   public int getSequenceId() { return sequenceId; }
+
+   public void setSequenceId(int sequenceId) { this.sequenceId = sequenceId; }
 
    @Override
    public String toString()
