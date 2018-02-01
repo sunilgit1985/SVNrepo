@@ -45,6 +45,8 @@ public class FileProcessor
       FileDetails fileDetails=null;
       StringBuilder mailAlertMsg=new StringBuilder();
       StringBuilder isProcessMailRaised=null;
+      /* for failed FILE-PROCESSING parent pre-processing is already executed , so flagExecuteParentProcess set to false by default */
+      boolean flagExecuteParentProcess=false;
       try
       {
          Map<String, DBParameters> dbParamMap = fileProcessorDao.getDBParametres();
@@ -82,35 +84,44 @@ public class FileProcessor
 
                   int fileExecutionCounter=1;
                   System.out.println("File Processor execution Started");
+
+                  if(serviceRequest.getSequenceId()==1){flagExecuteParentProcess=true;}
+
                   while (itr.hasNext())
                   {
                      fileDetails = (FileDetails) itr.next();
-                     isProcessMailRaised=new StringBuilder();
-                     boolean fileProcessResult=false;
+                     if (fileDetails.getSeqNo() >= serviceRequest.getSequenceId()){
 
-                     logger.info("fileExecutionCounter = " + fileExecutionCounter+" : "+fileDetails.getFileName());
-
-                     if(!preInstructionExecuted){
                         isProcessMailRaised = new StringBuilder();
-                        fileProcessorUtil.executeInstruction(fileDetails,"PARENTPRE", isProcessMailRaised, serviceRequest);
-                        if(isProcessMailRaised.length()>0){ // Checking Parent Pre Instruction Process Result
+                     boolean fileProcessResult = false;
+
+                     logger.info("fileExecutionCounter = " + fileExecutionCounter + " : " + fileDetails.getFileName());
+
+                     if (!preInstructionExecuted && flagExecuteParentProcess)
+                     {
+                        isProcessMailRaised = new StringBuilder();
+                        fileProcessorUtil.executeInstruction(fileDetails, "PARENTPRE", isProcessMailRaised, serviceRequest);
+                        if (isProcessMailRaised.length() > 0)
+                        { // Checking Parent Pre Instruction Process Result
                            mailAlertMsg.append(isProcessMailRaised);
                            fileProcessorUtil.auditEntry(serviceRequest, fileDetails, "F", isProcessMailRaised.toString(), "PARENT PRE INSTRUCTION");
                            break;
                         }
                         isProcessMailRaised = new StringBuilder();
                         fileProcessorUtil.executeDBProcess(fileDetails, "PARENTPRE", isProcessMailRaised);
-                        if(isProcessMailRaised.length()>0){ // Checking Parent Pre DB Process Result
+                        if (isProcessMailRaised.length() > 0)
+                        { // Checking Parent Pre DB Process Result
                            mailAlertMsg.append(isProcessMailRaised);
                            fileProcessorUtil.auditEntry(serviceRequest, fileDetails, "F", isProcessMailRaised.toString(), "PARENT PRE DB PROCESS");
                            break;
                         }
-                        preInstructionExecuted=true;
+                        preInstructionExecuted = true;
                      }
 
                      isProcessMailRaised = new StringBuilder();
                      fileProcessorUtil.executeInstruction(fileDetails, "PRE", isProcessMailRaised, serviceRequest);
-                     if (isProcessMailRaised.length() == 0){ // Checking Pre Instruction Process Result
+                     if (isProcessMailRaised.length() == 0)
+                     { // Checking Pre Instruction Process Result
 
                         fileRules = (LinkedHashMap<String, FileRules>) fileRulesMap.get(fileDetails.getFileId());
                         isProcessMailRaised = new StringBuilder();
@@ -158,7 +169,8 @@ public class FileProcessor
                            mailAlertMsg.append(isProcessMailRaised);
                            fileProcessorUtil.auditEntry(serviceRequest, fileDetails, "F", isProcessMailRaised.toString(), null);
                         }
-                     }else
+                     }
+                     else
                      {
                         mailAlertMsg.append(isProcessMailRaised);
                         fileProcessorUtil.auditEntry(serviceRequest, fileDetails, "F", isProcessMailRaised.toString(), null);
@@ -168,6 +180,7 @@ public class FileProcessor
                                                                fileProcessorUtil.getFilePath(serviceRequest, fileDetails, fileDetails.getFileProcessType(),
                                                                                              dbParamMap.get("BUSINESS_DATE").getValue().toString())));
                      fileExecutionCounter++;
+                  }
                   }
 
                   if(mailAlertMsg.length()==0){ // Checking Process Execution Status
