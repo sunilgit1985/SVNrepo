@@ -22,7 +22,8 @@ public class MainFileProcessor
          {
             ServiceRequest serviceRequest = new ServiceRequest(args[0], args[1], args[2]);
             System.out.println("serviceRequest = " + serviceRequest);
-
+            /* FILE-Processing will start from seq 1 by default*/
+            serviceRequest.setSequenceId(1);
             WSCallResult wsCallResult=fp.process(serviceRequest);
             System.out.println("wsCallResult = " + wsCallResult);
          }else{
