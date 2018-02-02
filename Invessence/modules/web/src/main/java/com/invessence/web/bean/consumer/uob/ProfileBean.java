@@ -649,7 +649,6 @@ public class ProfileBean extends PortfolioCreationUI
                   {
                      pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.buildwealth.horizon.required", "Please enter how long you plan to invest.", null));
                   }
-
                }
                if (thisgoal.equals(RiskConst.GOALS.LEGACY))
                {
@@ -675,7 +674,9 @@ public class ProfileBean extends PortfolioCreationUI
                   minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MININTITIALRQMT,1.0);
                }
                if (getInitialInvestment() < minInitialRequired) {
-                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
+//                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
+                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of ",null)+""+minInitialRequired.toString()+webutil.getMessageText().getDisplayMessage("validator.uob.profile.isRequired", " is required.",null));
+
                }
             }
             if (hasData(getRecurringInvestment()))
@@ -684,7 +685,8 @@ public class ProfileBean extends PortfolioCreationUI
                minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MINRECCURRINGRQMT, 0.0);
                if (getRecurringInvestment() > 0.0 && getRecurringInvestment() < minInitialRequired)
                {
-                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
+//                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
+                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of ",null)+""+minInitialRequired.toString()+webutil.getMessageText().getDisplayMessage("validator.uob.profile.isRequired", " is required.",null));
                }
             }
             break;

@@ -137,4 +137,17 @@ public class ConsumerSaveDataDAO extends JdbcDaoSupport implements Serializable
          ex.printStackTrace();
       }
    }
+
+   public void manageUserProfile(Long acctnum, String flag, Long logonid)
+   {
+      try {
+         DataSource ds = getDataSource();
+         ConsumerSaveSP sp = new ConsumerSaveSP(ds, "sp_user_profile_manage", 15);
+         Map outMap = sp.manageUserProfile(acctnum, flag, logonid);
+      }
+      catch (Exception ex) {
+         ex.printStackTrace();
+      }
+   }
+
 }

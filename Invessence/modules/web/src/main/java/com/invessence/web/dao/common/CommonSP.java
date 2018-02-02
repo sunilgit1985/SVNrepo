@@ -74,6 +74,7 @@ public class CommonSP extends StoredProcedure
             declareParameter(new SqlParameter("p_tagid", Types.VARCHAR));
             declareParameter(new SqlParameter("p_alertdatetime", Types.VARCHAR));
             declareParameter(new SqlParameter("p_message", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_flag", Types.VARCHAR));
             declareParameter(new SqlParameter("p_link", Types.VARCHAR));
             break;
          case 11: // SP: sel_webpages_menu_items
@@ -212,6 +213,7 @@ public class CommonSP extends StoredProcedure
       inputMap.put("p_tagid", data.getTagid());
       inputMap.put("p_alertdatetime", data.getBusinessdate());
       inputMap.put("p_message", data.getMessage());
+      inputMap.put("p_flag", "E");
       inputMap.put("p_link", data.getLink());
 
       super.execute(inputMap);

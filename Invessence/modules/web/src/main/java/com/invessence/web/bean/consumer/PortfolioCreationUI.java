@@ -47,7 +47,6 @@ public class PortfolioCreationUI extends UserInterface
    @ManagedProperty("#{tradeDAO}")
    public TradeDAO tradeDAO;
 
-
    public enum UIMode
    {
       New("N"),//Status 0
@@ -607,6 +606,9 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoRiskQuestions()
    {
+      riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+      getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
+      createAssetPortfolio();
       progressbar.nextProgress();
       pagemanager.setPage(0);
       uiLayout.doMenuAction("consumer", "portfolioCreate/cEdit.xhtml");
@@ -657,9 +659,15 @@ public class PortfolioCreationUI extends UserInterface
       customer.setCanSaveData(true);
       formEdit = true;
       customer.saveProfileAudit(); //Need to enhance for audit activity
-//      send not custodyService.mangeUserProfile(getBeanAcctNum(),beanmode.getCodeValue(),getBeanLogonId());
+      if(beanmode.equals(UIMode.Confirm))
+      {
+         saveDAO.manageUserProfile(getCustomer().getAcctnum(), "E", getCustomer().getLogonid());
+      }
+      if(beanmode.equals(UIMode.ChangeStrategy))
+      {
+         saveDAO.manageUserProfile(getCustomer().getAcctnum(), "R", getCustomer().getLogonid());
+      }
       customer.saveProfile();
-
       alertAdvisor();
       goBack();
    }
@@ -779,8 +787,10 @@ public class PortfolioCreationUI extends UserInterface
    public String registerUser()
    {
       String msgheader, msg = "";
+
       try
       {
+         String defaultAdvsor= getWebutil().getWebprofile().getWebInfo().get("DEFAULT.ADVISOR");
          if (!userInfoDAO.validateEmail(getCustomer().getEmail()))
          {
             msgheader = "signup.U000";
@@ -802,7 +812,13 @@ public class PortfolioCreationUI extends UserInterface
          {
             logger.debug("LOG: Validate UserID failed: " + getCustomer().getEmail());
             msgheader = "signup.U100";
-            msg = webutil.getMessageText().getDisplayMessage(msgheader, "This email address is already registered!", null);
+
+            if(defaultAdvsor.equalsIgnoreCase("UOB"))
+            {
+               msg = webutil.getMessageText().getDisplayMessage("validator.uob.email.alreadyExist", "This email address is already registered.", null);
+            }else{
+               msg = webutil.getMessageText().getDisplayMessage(msgheader, "This email address is already registered!", null);
+            }
             return msg;
          }
 
@@ -818,6 +834,7 @@ public class PortfolioCreationUI extends UserInterface
             logger.debug("ERROR: Had issue with this userid (" + userdata.getEmail() + ") when attempting to save: " + loginID);
             msgheader = "signup.U106";
             msg = webutil.getMessageText().getDisplayMessage(msgheader, "There was some error when attempting to save this userid.  Please reach out to support desk.", null);
+
             // webutil.alertSupport("Userbean.saveUser", "Save -" + getCustomer().getEmail(), "Save Registration Error", null);
             return msg;
          }
@@ -829,7 +846,7 @@ public class PortfolioCreationUI extends UserInterface
       catch (Exception ex)
       {
          msgheader = "signup.EX.100";
-         msg = webutil.getMessageText().getDisplayMessage(msgheader, "Exception: Create UserID/Pwd, problem attempting to create simpleuser", null);
+         msg = webutil.getMessageText().getDisplayMessage(msgheader, "Exception: Create UserID/Pwd, problem attempting to create simple user", null);
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
          // ex.printStackTrace();
          return msg;

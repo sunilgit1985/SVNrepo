@@ -259,6 +259,11 @@ public class ConsumerSaveSP extends StoredProcedure
          case 14: // save_user_trade_profile_audit
             declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
             break;
+         case 15:
+            declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
+            declareParameter(new SqlParameter("p_managed", Types.VARCHAR));
+            declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
+            break;
       }
       compile();
    }
@@ -713,5 +718,14 @@ public class ConsumerSaveSP extends StoredProcedure
 
       inputMap.put("p_acctnum", acctnum);
       super.execute(inputMap);
+   }
+
+   public Map manageUserProfile(Long acctnum,String flag, Long logonid)
+   {
+      Map<String, Object> inputMap = new HashMap<String, Object>();
+      inputMap.put("p_acctnum", acctnum);
+      inputMap.put("p_managed", flag);
+      inputMap.put("p_logonid", logonid);
+      return super.execute(inputMap);
    }
 }
