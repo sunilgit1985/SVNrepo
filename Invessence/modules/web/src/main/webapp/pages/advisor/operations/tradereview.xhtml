@@ -188,10 +188,10 @@
                         <div class="Container100 Responsive">
                             <p:separator/>
                         </div>
-                        <div class="Container100 Responsive">
+                        <div class="Container100 Responsive scrollTable">
                             <p:fieldset legend="Overview" collapsed="false" toggleable="true" toggleSpeed="500" styleClass="uobbtn">
                                 <p:panel style="border: 0px">
-                                    <p:dataTable id="editAlloc" styleClass="invAllocTable"
+                                    <p:dataTable id="editAlloc" styleClass="invAllocTable" scrollable="true" 
                                                  value="#{tradeBean.assetList}"
                                                  var="assetList">
 
@@ -214,8 +214,9 @@
                                             </p:row>
                                         </p:columnGroup>
 
-                                        <p:column style="width: 2px; text-align: left;background-color: #{assetList.color};">
-                                            <h:outputText value=" "/>
+                                        <p:column class="bullet_td advisorBullet_td" style="width:20%; text-align: left;text-align: center;">
+                                           <!--  <h:outputText value=" "/> -->
+                                            <span style="background-color: #{assetList.color};">&#160;</span>
                                         </p:column>
                                         <p:column style="width: 10%; text-align: left;">
                                             <h:outputText value="#{assetList.assetclass}"/>
@@ -264,7 +265,7 @@
                             </p:fieldset>
                             <p:fieldset legend="Detail" collapsed="false" toggleable="true" toggleSpeed="500"
                                         style="margin-top: 20px;"  styleClass="uobbtn">
-                                <p:dataTable id="dataTable" var="tradedata"
+                                <p:dataTable id="dataTable" var="tradedata" scrollable="true" 
                                              value="#{tradeBean.rebalancetradedatalist}"
                                              styleClass="invDataTable Fs10">
 
@@ -293,8 +294,9 @@
                                             <p:column headerText="Value" style="width:12%;"/>
                                         </p:row>
                                     </p:columnGroup>
-                                    <p:column style="width:1px; text-align: left; background-color: #{tradedata.color}">
-                                        <h:outputText value=" "/>
+                                    <p:column class="bullet_td advisorBullet_td" style="width:20%; text-align: left;text-align: center;">
+                                       <!--  <h:outputText value=" "/> -->
+                                         <span style="background-color: #{tradedata.color};">&#160;</span>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:10%; text-align: left;">
                                         <h:outputText value="#{tradedata.subclass}"/>

@@ -132,13 +132,13 @@
 
 						</p:panel>
 					</div>
-					<div class="Container70 Responsive50 UserconfTable confirmation_donut_dtl margin-top">
+					<div class="Container70 Responsive50 UserconfTable confirmation_donut_dtl scrollTable margin-top">
 						<!-- ROHIT's CHANGE -->
 
 						<div class="ContainerIndent ">
 							<p:dataTable styleClass="uob_graphTable" var="ticker"
-								id="uobtabledetails2"
-								value="#{uobProfile.customer.displayPortfolioList}">
+								id="uobtabledetails2" scrollable="true"
+										 value="#{uobProfile.customer.displayPortfolioList}">
 								<!-- <p:column style="width:5%; background-color: #{ticker.color}">
                                                                 <h:outputText value=" "/>
                                                             </p:column> -->

@@ -1538,7 +1538,7 @@ input {
 
 .ui-panelgrid-content, .ui-fieldset-content, .ui-datatable table tbody tr td, .ui-panel .ui-panel-content, .ui-selectoneradio label {
     color: #000000 !important;
-    font-size: 17px;
+    font-size: 15px !important;
 }
 .tax_info td a {
     float: left;
@@ -5704,7 +5704,8 @@ div#leftpanel {
     height: auto;
     width: 99%;
     padding: 10px !important;
-    box-shadow: 1px 1px 2px 1px #ccc;
+    box-shadow: 3px -3px 7px 0px #888;
+    
 
 }
 .uobbtn .ui-fieldset-legend {
@@ -5926,6 +5927,12 @@ form#ceForm {
 .faq_dtls p {
     margin: 2px 0;
     line-height: 1.38;
+}
+.scrollTable .ui-datatable-scrollable-body{height: 180px;}
+td.advisorBullet_td span {
+    position: relative;
+    left: -8px;
+    padding: 0px 7px;
 }
 /*** responsive**/
 
