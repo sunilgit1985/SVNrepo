@@ -100,12 +100,14 @@ public class UOBRiskCalc extends RiskCalc
          */
 
       horizon = (horizon == null) ? getDefaultHorizon() : horizon;
-      Double presentvalue = presentValue(recurring, interestRate, horizon);
+      Double pValue = presentValue(recurring, interestRate, recurringPeriod);
+
+
       Double goalDuration = 30.0;
       withDrwalPeriod = (withDrwalPeriod == null) ? 0 : withDrwalPeriod;
       if (investment > 0.0)
       {
-         goalDuration = Math.max(Math.min(Math.round((horizon + (presentvalue / investment) * (recurringPeriod / 2)) + withDrwalPeriod / 2), goalDuration), 2.0);
+         goalDuration = Math.max(Math.min(Double.valueOf(Math.round((horizon + ((pValue / investment) * (recurringPeriod / 2)) + Double.valueOf(withDrwalPeriod/2.0)))),30.0),2.0);
       }
       Double value = Math.min((goalDuration - 2) / 28 * maxScore, maxScore);
       value = maxScore - value;
