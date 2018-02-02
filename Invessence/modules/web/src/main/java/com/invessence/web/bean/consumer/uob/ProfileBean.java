@@ -751,6 +751,9 @@ public class ProfileBean extends PortfolioCreationUI
       if (webutil.isUserLoggedIn() && getSavedCustomer() != null) {
          switch (pageno)
          {
+            case 1:
+               getCustomer().riskProfile.setRiskQuestionWeight(1,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "1", 0),0.0);
+               break;
             case 4:
                getCustomer().riskProfile.setRiskQuestionWeight(2,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "2", 0),0.0);
                getCustomer().riskProfile.setRiskQuestionWeight(3,getSavedCustomer().riskProfile.getDefaultIntValue(RiskConst.RISKQUESTIONKEY + "3", 0),0.0);
@@ -776,6 +779,9 @@ public class ProfileBean extends PortfolioCreationUI
       else {
          switch (pageno)
          {
+            case 1:
+               getCustomer().riskProfile.setRiskQuestionWeight(1,0,0.0);
+               break;
             case 4:
                setDefaultSwitch();
                break;
