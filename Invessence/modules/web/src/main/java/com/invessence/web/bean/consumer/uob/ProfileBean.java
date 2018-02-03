@@ -675,7 +675,7 @@ public class ProfileBean extends PortfolioCreationUI
                }
                if (getInitialInvestment() < minInitialRequired) {
 //                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
-                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of ",null)+""+minInitialRequired.toString()+webutil.getMessageText().getDisplayMessage("validator.uob.profile.isRequired", " is required.",null));
+                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of ",null)+" "+minInitialRequired.toString()+" "+webutil.getMessageText().getDisplayMessage("validator.uob.profile.isRequired", " is required.",null));
 
                }
             }
@@ -686,7 +686,7 @@ public class ProfileBean extends PortfolioCreationUI
                if (getRecurringInvestment() > 0.0 && getRecurringInvestment() < minInitialRequired)
                {
 //                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
-                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of ",null)+""+minInitialRequired.toString()+webutil.getMessageText().getDisplayMessage("validator.uob.profile.isRequired", " is required.",null));
+                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of ",null)+" "+minInitialRequired.toString()+" "+webutil.getMessageText().getDisplayMessage("validator.uob.profile.isRequired", " is required.",null));
                }
             }
             break;
