@@ -14,7 +14,7 @@ BEGIN
 		`user_risk_data`.`answer`,
         `user_risk_data`.`answerType`,
 		`user_risk_data`.`riskScore`
-	FROM `invdb`.`user_risk_data`
+	FROM `invdb`.`user_risk_profile`
     WHERE `user_risk_data`.`acctnum` = p_acctnum
     ;
 

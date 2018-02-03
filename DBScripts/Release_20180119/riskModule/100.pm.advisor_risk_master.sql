@@ -4,9 +4,11 @@ CREATE TABLE `invdb`.`advisor_risk_master` (
   `advisor` 		varchar(20) NOT NULL,
   `sortorder`		Integer DEFAULT 1,
   `key` 			varchar(30) DEFAULT NULL,
+  `displayName`		varchar(60) DEFAULT NULL,
   `defaultValue`    varchar(30) DEFAULT NULL,
   `dataType`		varchar(1)	DEFAULT "T",
   `displayOnStart`  varchar(30) DEFAULT 0,
+  `displayAdvisor`  Boolean DEFAULT false,
   `saveforUser`  	Boolean DEFAULT false,
   `created` 		date DEFAULT NULL,
   `lastUpdated` 	date DEFAULT NULL,
@@ -16,33 +18,38 @@ CREATE TABLE `invdb`.`advisor_risk_master` (
 
 DELETE FROM `invdb`.`advisor_risk_master` ;
 
-INSERT INTO `invdb`.`advisor_risk_master` (`advisor`, `sortorder`,`key`, `defaultValue`,`dataType`, `displayOnStart`,`saveforUser`) 
+INSERT INTO `invdb`.`advisor_risk_master` (`advisor`, `sortorder`,`key`, `displayName`, `defaultValue`,`dataType`
+, `displayOnStart`,`displayAdvisor`,`saveforUser`) 
 VALUES 
- ('UOB', 10, 'RISKQUESTIONS', '8','I','0',true)
-,('UOB', 15, 'THEME', '8.UOB','T','0',true)
-,('UOB', 20, 'CALCMETHOD', 'AGETIME','T','0',true)
-,('UOB', 30, 'CALFORMULA', 'C','T','0',false)
-,('UOB', 40, 'GOAL', 'RETIREMENT','T','0',true)
-,('UOB', 45, 'RETIRED', 'false','B','0',true)
-,('UOB', 50, 'KNOCKOUT','TRUE','B','0',false)
-,('UOB', 60, 'AGE', '35','I','0',true)
--- ,('UOB', 70, 'HORIZON', '35','I','0',true)
-,('UOB', 80, 'WITHDRAWALPERIOD', '0','I','0',true)
-,('UOB', 90, 'TRADECURRENCY', 'SGD','T','0',true)
-,('UOB', 90, 'INITIALINVESTMENT', '10000','D','0',true)
-,('UOB', 90, 'SETTLEMENTCURRENCY', 'SGD','T','0',true)
-,('UOB', 100, 'RECURRINGINVESTMENT', '1000','D','0',true)
-,('UOB', 110, 'RECURRINGTERM', 'YEARLY','T','0',true)
-,('UOB', 120, 'RECURRINGPERIOD', '10','I','0',true)
-,('UOB', 130, 'KEEPLIQUID', '0','D','0',true)
-,('UOB', 140, 'TAXABLE', 'FALSE','B','0',true)
-,('UOB', 150, 'TAXRATE', '0','D','0',true)
-,('UOB', 160, 'EXPERIENCE', '0','I','0',true)
-,('UOB', 200, 'AGEPOWERVALUE', '1.7','D','1.0',false)
-,('UOB', 210, 'AGEWEIGHT', '1.0','D','1.0',false)
-,('UOB', 230, 'MAXDURATION', '15.0','D','15.0',false)
-,('UOB', 230, 'MAXSCORE', '100','I','100',false)
-,('UOB', 240, 'WITHDRAWLRATE', '0.04','D','100',false)
-,('UOB', 250, 'RETIREMENTAGE', '65','I','100',true)
-,('UOB', 260, 'WITHDRAWLAGE', '95','I','100',true)
+ ('UOB', 10, 'RISKQUESTIONS', null, '8','I','0',false,true)
+,('UOB', 15, 'THEME', 'Investment Model','8.UOB','T','0',true,true)
+,('UOB', 20, 'CALCMETHOD', null,'AGETIME','T','0',false,true)
+,('UOB', 30, 'CALFORMULA', 'Calculation Process','C','T','0',true,true)
+,('UOB', 40, 'GOAL', 'Goal', 'RETIREMENT','T','0',true,true)
+,('UOB', 45, 'RETIRED', 'Retired', 'false','B','0',true,true)
+,('UOB', 60, 'AGE', 'Age', '35','I','0',true,true)
+,('UOB', 70, 'HORIZON', 'Horizon', '35','I','0',true,true)
+,('UOB', 80, 'WITHDRAWALPERIOD', 'Withdrawl Period', '0','I','0',true,true)
+,('UOB', 90, 'TRADECURRENCY', null, 'SGD','T','0',false,true)
+,('UOB', 95, 'SETTLEMENTCURRENCY', null,'SGD','T','0',false,true)
+,('UOB', 100, 'INITIALINVESTMENT', 'Investment', '10000','D','0',true,true)
+,('UOB', 110, 'RECURRINGINVESTMENT', 'Recurring Investment', '1000','D','0',true,true)
+,('UOB', 120, 'RECURRINGTERM', null, 'YEARLY','T','0',false,true)
+,('UOB', 130, 'RECURRINGPERIOD', 'Recurring Period', '10','I','0',true,true)
+,('UOB', 140, 'KEEPLIQUID', null, '0','D','0',false,true)
+,('UOB', 150, 'TAXABLE', null, 'FALSE','B','0',false,true)
+,('UOB', 160, 'TAXRATE', null, '0','D','0',false,true)
+,('UOB', 170, 'EXPERIENCE', null, '0','I','0',false,true)
+,('UOB', 180, 'RETIREMENTAGE', null, '65','I','100',false,true)
+,('UOB', 190, 'WITHDRAWLAGE', null, '95','I','100',false,true)
+
+,('UOB', 500, 'AGEPOWERVALUE', null,'1.7','D','1.0',false,false)
+,('UOB', 510, 'AGEWEIGHT', null,'1.0','D','1.0',false,false)
+,('UOB', 530, 'MAXDURATION', null,'15.0','D','15.0',false,false)
+,('UOB', 530, 'MAXSCORE', null,'100','I','100',false,false)
+,('UOB', 540, 'WITHDRAWLRATE', null,'0.04','D','100',false,false)
+,('UOB', 550, 'KNOCKOUT',null,'TRUE','B','0',false,false)
+,('UOB', 600, 'MININTITIALRQMT',null,'10000','I','0',false,false)
+,('UOB', 610, 'MIN2NDINTIALRQMT',null,'1000','I','0',false,false)
+,('UOB', 650, 'MINRECCURRINGRQMT',null,'1000','I','0',false,false)
 ;

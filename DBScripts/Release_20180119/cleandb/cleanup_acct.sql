@@ -160,14 +160,18 @@ BEGIN
     DELETE FROM invdb.`rebalance_info`
     where acctnum in (select distinct acctnum from cleanacct);
     
+	/*
     DELETE FROM invdb.`rebalance_trade`
     where acctnum in (select distinct acctnum from cleanacct);
+    */
 
     DELETE FROM invdb.`relAndunrel`
     where clientAccountID in (select distinct clientAccountID from cleanacct, invdb.ext_acct_info where cleanacct.acctnum = ext_acct_info.acctnum);
 
+	/*
     DELETE FROM invdb.`sav_acct_financial`
     where acctnum in (select distinct acctnum from cleanacct);
+    */
 
     DELETE FROM invdb.`position`
     where clientAccountID in (select distinct clientAccountID from cleanacct, invdb.ext_acct_info where cleanacct.acctnum = ext_acct_info.acctnum);
@@ -178,8 +182,10 @@ BEGIN
 	DELETE FROM invdb.`unbundld_commission`
     where clientAccountID in (select distinct clientAccountID from cleanacct, invdb.ext_acct_info where cleanacct.acctnum = ext_acct_info.acctnum);
 
+	/*
 	DELETE FROM invdb.`user_exclude_subclass`
     where acctnum in (select distinct acctnum from cleanacct);
+    */
 
     DELETE FROM invdb.`user_notification`
     where logonid in (select distinct logonid from cleanacct, invdb.user_access_role where cleanacct.acctnum = user_access_role.acctnum);
@@ -189,9 +195,10 @@ BEGIN
     
 	DELETE FROM invdb.`user_risk_questions`
     where acctnum in (select distinct acctnum from cleanacct);
-    
+    /*
 	DELETE FROM invdb.`user_risk_questions_audit`
     where acctnum in (select distinct acctnum from cleanacct);
+    */
 
 	DELETE FROM invdb.`virtual_portfolio`
     where acctnum in (select distinct acctnum from cleanacct);
@@ -205,8 +212,10 @@ BEGIN
     DELETE FROM invdb.`user_trade_log`
     where acctnum in (select distinct acctnum from cleanacct);
 
+	/*
     DELETE FROM invdb.`user_trade_profile_audit`
     where acctnum in (select distinct acctnum from cleanacct);
+    */
 
     DELETE FROM invdb.`user_risk_profile`
     where acctnum in (select distinct acctnum from cleanacct);

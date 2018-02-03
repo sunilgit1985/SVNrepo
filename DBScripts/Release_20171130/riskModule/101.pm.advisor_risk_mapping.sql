@@ -27,7 +27,7 @@ INSERT INTO `invdb`.`advisor_risk_mapping`
 VALUES
  ('UOB',1, 4, 4, 0, 30, 70, 0, 0, 0, 0, 0, 0, 0.0, current_date())
 ,('UOB',2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0, current_date())
-,('UOB',3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0, current_date())
+,('UOB',3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0, current_date())
 ,('UOB',4, 4, 4, 0, 30, 70, 0, 0, 0, 0, 0, 0, 0.0, current_date())
 ,('UOB',5, 4, 4, 0, 30, 70, 0, 0, 0, 0, 0, 0, 0.0, current_date())
 ,('UOB',6, 4, 0, 0, 20, 50, 75, 0, 0, 0, 0, 0, 0.0, current_date())

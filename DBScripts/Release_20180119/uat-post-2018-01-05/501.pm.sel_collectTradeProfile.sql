@@ -43,7 +43,7 @@ BEGIN
             IFNULL(`ext_nav`.`stock`,0) + IFNULL(`ext_nav`.`funds`,0) +
             IFNULL(`ext_nav`.`interestAccrual`,0) + IFNULL(`ext_nav`.`dividentAccrual`,0) as `investment`,
             `user_trade_profile`.`advisor`,
-            `user_trade_profile`.`theme`,
+            IFNULL(`user_basket_access`.`displayname`,`user_trade_profile`.`theme`) as `theme`,
             `user_trade_profile`.`acctType`,
             `ext_nav`.`total` as `totalInvestment`,
             `user_trade_profile`.`keepLiquid`,
@@ -68,8 +68,10 @@ BEGIN
         AND `ext_nav`.`reportDate` = `FUNCT_GET_SWITCH`('BROKER_BDATE'))
         LEFT JOIN `user_trade_log`
         ON (`user_trade_log`.`acctnum` = `trade_process_identifier`.`acctnum`)
+        LEFT JOIN `user_basket_access`
+        ON (`user_trade_profile`.`theme` = `user_basket_access`.`theme`)
         WHERE IFNULL(`trade_process_identifier`.`processStatus`,'N') like p_filter
-        AND   lower(IFNULL(`user_trade_profile`.`advisor`,'Invessence')) like tAdvisor
+        AND   lower(IFNULL(`user_trade_profile`.`advisor`,'Invessence')) like lower(tAdvisor)
         GROUP BY
 			`trade_process_identifier`.`acctnum`,
             `ext_acct_info`.`clientAccountID`,
@@ -83,7 +85,7 @@ BEGIN
             IFNULL(`ext_nav`.`stock`,0) + IFNULL(`ext_nav`.`funds`,0) +
             IFNULL(`ext_nav`.`interestAccrual`,0) + IFNULL(`ext_nav`.`dividentAccrual`,0),
             `user_trade_profile`.`advisor`,
-            `user_trade_profile`.`theme`,
+            IFNULL(`user_basket_access`.`displayname`,`user_trade_profile`.`theme`),
             `user_trade_profile`.`acctType`,
             `ext_nav`.`total`,
             `user_trade_profile`.`keepLiquid`,

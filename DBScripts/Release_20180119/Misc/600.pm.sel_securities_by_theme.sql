@@ -21,20 +21,19 @@ BEGIN
         `sec_master`.`type` AS `type`,
         `sec_master`.`style` AS `style`,
         `sec_master`.`status` AS `status`,
-		`sec_rbsa`.`base_currency`  AS `baseCurrency`,
+		`sec_rbsa`.`base_currency`  AS `tradeCurrency`,
         (CASE
             WHEN (UCASE(`sec_master`.`ticker`) = UCASE('Cash')) THEN 1.00
-            ELSE IFNULL(IFNULL(`sd`.`converted_adjusted_price`,`sd`.`adjusted_price`), 0.00)
+            ELSE IFNULL(`sd`.`converted_adjusted_price`, 0.00)
         END) AS `price`,
-        IFNULL(`sec_rbsa`.`dest_currency`, `user_basket_access`.`baseCurrency`) AS `destCurrency`,
+        IFNULL(`sec_rbsa`.`dest_currency`, `user_basket_access`.`tradeCurrency`) AS `settleCurrency`,
         (CASE
             WHEN (UCASE(`sec_master`.`ticker`) = UCASE('Cash')) THEN 1.00
             ELSE IFNULL(`sd`.`adjusted_price`, 0.00)
-        END) AS `localprice`,
+        END) AS `settlePrice`,
         (CASE
             WHEN (UCASE(`sec_master`.`ticker`) = UCASE('Cash')) THEN 1.00
-            -- ELSE IFNULL(`sd`.`adjusted_price`, 0.00)
-            ELSE 1.00
+            ELSE IFNULL(`sd`.`exchangeRate`, 1.00)
         END) AS `exchangeRate`,
         IFNULL(`sec_rbsa`.`weight`, 1.0) AS `rbsaweight`,
         ((`sec_asset_mapping`.`assetsortorder` * 10000) + `sec_asset_mapping`.`subclasssortorder`) AS `sortorder`,
@@ -54,7 +53,7 @@ BEGIN
             AND (`sec_asset_mapping`.`ticker` = `sec_rbsa`.`ticker`)
             )))
         LEFT JOIN `sec_daily_info` `sd` ON (((`sec_rbsa`.`ticker` = `sd`.`ticker`)
-			AND (`user_basket_access`.`baseCurrency` = `sd`.`dest_currency`)
+			AND (`user_basket_access`.`tradeCurrency` = `sd`.`dest_currency`)
             AND (DATE_FORMAT(`sd`.`businessdate`, '%Y%m%d') = FUNCT_GET_SWITCH('PRICE_DATE')))))
 	WHERE `user_basket_access`.`advisor` = p_advisor
     AND   `user_basket_access`.`theme` = p_theme

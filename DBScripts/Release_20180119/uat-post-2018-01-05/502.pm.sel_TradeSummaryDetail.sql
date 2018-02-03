@@ -40,10 +40,10 @@ BEGIN
 			`trade_process_identifier`.`tradeStatus`,
 			`trade_process_identifier`.`processStatus`,
             `ext_nav`.`total`  as `totalInvestment`,
-			SUM(`rebal`.`curQty`) sumCurQty,
-			SUM(`rebal`.`curValue`) as sumCurValue,
-			SUM(`rebal`.`holdingQty`) sumholdingQty,
-			SUM(`rebal`.`holdingValue`) as sumholdingValue,
+			-- SUM(`rebal`.`curQty`) sumCurQty,
+			-- SUM(`rebal`.`curValue`) as sumCurValue,
+			SUM(`rebal`.`curQty`) sumholdingQty,
+			SUM(`rebal`.`curValue`) as sumholdingValue,
 			SUM(`rebal`.`newQty`) sumNewQty,
 			SUM(`rebal`.`newValue`) as sumNewValue
 		FROM `trade_process_identifier`
@@ -57,7 +57,7 @@ BEGIN
         AND `ext_nav`.`reportDate` = `FUNCT_GET_SWITCH`('BROKER_BDATE'))
         LEFT JOIN `user_trade_log`
         ON (`user_trade_log`.`acctnum` = `trade_process_identifier`.`acctnum`)
-        LEFT JOIN `rebalance_trade` as `rebal`
+        LEFT JOIN `user_trade_preprocess` as `rebal`
         ON (`rebal`.`acctnum` = `trade_process_identifier`.`acctnum`)
         WHERE IFNULL(`trade_process_identifier`.`processStatus`,'N') like p_filter
         AND   lower(IFNULL(`user_trade_profile`.`advisor`,'Invessence')) like tAdvisor
