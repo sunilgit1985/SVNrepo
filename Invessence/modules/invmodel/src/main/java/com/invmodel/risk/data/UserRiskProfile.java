@@ -909,7 +909,7 @@ public class UserRiskProfile
    {
       Double maxScore = getDefaultDoubleValue(RiskConst.MAXSCORE, 100.0);
       ArrayList<UserRiskData> userRiskList = new ArrayList<UserRiskData>();
-      for (Integer riskq = 0; riskq <= getRiskQuestion(); riskq++)
+      for (Integer riskq = 1; riskq <= getRiskQuestion(); riskq++)
       {
          String key = RiskConst.RISKQUESTIONKEY + riskq.toString();
          UserRiskData data = new UserRiskData();
@@ -958,7 +958,18 @@ public class UserRiskProfile
          {
             continue;
          }
-         userProfileMap.put(key, udata);
+         if (advisorRiskMaster.getAdvisorMasterdata().get(key).getDisplayAdvisor()) {
+            String displayName = advisorRiskMaster.getAdvisorMasterdata().get(key).getDisplayName();
+            if (displayName == null) {
+               displayName = key;
+            }
+            UserRiskData userReportData = new UserRiskData(udata.getSortorder(),
+                                                           displayName,
+                                                           udata.getAnswer(),
+                                                           udata.getAnswerType(),
+                                                           udata.getRiskScore());
+            userProfileMap.put(key, userReportData);
+         }
       }
       return userProfileMap;
    }

@@ -48,9 +48,11 @@ public class RiskDAO extends JdbcDaoSupport implements Serializable
 
                   AdvisorRiskMasterData masterdata = new AdvisorRiskMasterData(convert.getIntData(rs.get("sortorder")),
                                                                                dbkey,
+                                                                               convert.getStrData(rs.get("displayName")),
                                                                                convert.getStrData(rs.get("defaultValue")),
                                                                                convert.getStrData(rs.get("dataType")),
                                                                                convert.getStrData(rs.get("displayOnStart")),
+                                                                               convert.getBooleanData(rs.get("displayAdvisor")),
                                                                                convert.getBooleanData(rs.get("saveforUser"))
                                                                               );
                   advisorMaster.addAdvisorMasterData(dbkey, masterdata);

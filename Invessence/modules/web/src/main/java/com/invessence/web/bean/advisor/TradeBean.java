@@ -858,12 +858,15 @@ public class TradeBean extends TradeClientData implements Serializable
             {
                UserRiskData udata = profileMap.get(key);
                if (key.equalsIgnoreCase(RiskConst.INITIALINVESTMENT)) {
-                  udata.setKey("INVESTMENT");
-                  udata.setAnswerDouble(selectedClient.getInvestment());
+                  udata.setAnswerInt(selectedClient.getInvestment().intValue());
+               }
+               if (key.equalsIgnoreCase(RiskConst.THEME)) {
+                  udata.setAnswerStr(selectedClient.getTheme());
                }
                userProfileList.add(udata);
             }
          }
+      Collections.sort(userProfileList);
       return userProfileList;
    }
 

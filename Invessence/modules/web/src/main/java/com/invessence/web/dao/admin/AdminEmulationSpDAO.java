@@ -29,7 +29,8 @@ public class AdminEmulationSpDAO
 
    private JdbcTemplate jdbcTemplate;
 
-   public String processAccountRequest(Long acctnum, Double amount, String procedure, int mode,Long logonid)
+   public String processAccountRequest(Long acctnum, Double amount, String procedure,
+                                       int mode,Long logonid, String currency)
    {
       SQLData convert = new SQLData();
       String response = null;
@@ -44,7 +45,7 @@ public class AdminEmulationSpDAO
          }
          else
          {
-            outMap = extInfoSP.execute(acctnum, amount,logonid);
+            outMap = extInfoSP.execute(acctnum, amount,logonid, currency);
          }
          System.out.println("dbResponse = [" + outMap.toString() + "]");
          if (outMap != null)

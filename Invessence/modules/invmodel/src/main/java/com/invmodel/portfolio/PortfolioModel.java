@@ -347,11 +347,18 @@ public class PortfolioModel
             primeAssetWeights = assetdata.getPrimeAssetweights();
             assetWgt = asset.getUserweight();
             int tickerNum = 0;
+            Double calcprimeassetWeight = 0.0;
             if (!assetname.equalsIgnoreCase("CASH"))
             {
                for (String primeassetclass : assetdata.getOrderedPrimeAssetList())
                {
-                  ticker_weight = assetWgt * primeAssetWeights[offset][tickerNum];
+                  if (primeAssetWeights.length >= offset) {
+                     calcprimeassetWeight = primeAssetWeights[offset][tickerNum];
+                  }
+                  else {
+                     calcprimeassetWeight = 0.0;
+                  }
+                  ticker_weight = assetWgt * calcprimeassetWeight;
                   if (secCollection.getOrderedSecurityList(advisor, theme, primeassetclass) != null)
                   {
                      for (SecurityData sd : secCollection.getOrderedSecurityList(advisor, theme, primeassetclass))

@@ -1,24 +1,28 @@
 package com.invessence.web.bean.admin;
 
 import java.io.IOException;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 
+import com.invessence.web.bean.common.UserInterface;
 import com.invessence.web.dao.admin.AdminEmulationSpDAO;
-import com.invessence.web.util.WebUtil;
+import com.invessence.web.util.*;
 
 /**
  * Created by sagar on 6/13/2017.
  */
 
 @ManagedBean(name = "acctEmulBean")
-public class AccountEmulation
+public class AccountEmulation extends UserInterface
 {
    private long accountNumber;
    private double amount;
+   private String tradeCurrency;
    private String errorMessage;
+   private Map<String, WebMenuItem> currencyMap = null;
    @ManagedProperty("#{adminEmulationSpDAO}")
    private AdminEmulationSpDAO adminEmulationSpDAO;
    @ManagedProperty("#{webutil}")
@@ -33,7 +37,7 @@ public class AccountEmulation
          {
             System.out.print("processAccount Account Number " + accountNumber);
             System.out.print("processAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step1_process_account", 0,webutil.getLogonid());
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step1_process_account", 0,webutil.getLogonid(), tradeCurrency);
          }
          else
          {
@@ -55,7 +59,7 @@ public class AccountEmulation
          {
             System.out.print("openAccount Account Number " + accountNumber);
             System.out.print("openAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step2_openaccount", 0,webutil.getLogonid());
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step2_openaccount", 0,webutil.getLogonid(), tradeCurrency);
          }
          else
          {
@@ -84,7 +88,7 @@ public class AccountEmulation
          {
             System.out.print("activeAccount Account Number " + accountNumber);
             System.out.print("activeAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step3_activateaccount", 1,webutil.getLogonid());
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step3_activateaccount", 1,webutil.getLogonid(), tradeCurrency);
          }
       }
       catch (Exception e)
@@ -110,7 +114,7 @@ public class AccountEmulation
          {
             System.out.print("fundAccount Account Number " + accountNumber);
             System.out.print("fundAccount Amount " + amount);
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step4_funding", 1,webutil.getLogonid());
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step4_funding", 1,webutil.getLogonid(), tradeCurrency);
          }
       }
       catch (Exception e)
@@ -132,7 +136,7 @@ public class AccountEmulation
          }
          else
          {
-            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step5_position", 0,webutil.getLogonid());
+            errorMessage = getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_emulate_step5_position", 0,webutil.getLogonid(), tradeCurrency);
          }
       }
       catch (Exception e)
@@ -147,7 +151,7 @@ public class AccountEmulation
       {
          System.out.print("emulateTrade Account Number " + accountNumber);
          System.out.print("emulateTrade Amount " + amount);
-         getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_test1", 0,webutil.getLogonid());
+         getAdminEmulationSpDAO().processAccountRequest(accountNumber, amount, "testing.sp_test1", 0,webutil.getLogonid(),tradeCurrency);
       }
       catch (Exception e)
       {
@@ -163,6 +167,16 @@ public class AccountEmulation
    public void setAccountNumber(long accountNumber)
    {
       this.accountNumber = accountNumber;
+   }
+
+   public String getTradeCurrency()
+   {
+      return tradeCurrency;
+   }
+
+   public void setTradeCurrency(String tradeCurrency)
+   {
+      this.tradeCurrency = tradeCurrency;
    }
 
    public double getAmount()

@@ -24,6 +24,7 @@ public class AdminEmulationSp extends  StoredProcedure
             declareParameter(new SqlParameter("p_acctnum", Types.BIGINT));
             declareParameter(new SqlParameter("p_amount", Types.DOUBLE));
             declareParameter(new SqlParameter("p_logonid", Types.BIGINT));
+            declareParameter(new SqlParameter("p_currency", Types.VARCHAR));
             break;
          default:  // All other (no arg)
             break;

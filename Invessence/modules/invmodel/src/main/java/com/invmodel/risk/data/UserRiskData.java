@@ -5,7 +5,7 @@ import com.invessence.converter.SQLData;
 /**
  * Created by prashant on 11/9/2017.
  */
-public class UserRiskData
+public class UserRiskData implements Comparable
 {
    private Integer sortorder;
    private String key;
@@ -137,5 +137,13 @@ public class UserRiskData
    public void setRiskScore(Double riskScore)
    {
       this.riskScore = riskScore;
+   }
+
+   @Override
+   public int compareTo(Object compareData)
+   {
+      Integer compareSortNum = ((UserRiskData)compareData).getSortorder();
+      /* For Ascending order*/
+      return this.sortorder-compareSortNum;
    }
 }

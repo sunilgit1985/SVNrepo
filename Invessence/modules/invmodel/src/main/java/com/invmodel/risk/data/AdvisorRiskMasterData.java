@@ -9,26 +9,30 @@ public class AdvisorRiskMasterData
 {
    private Integer sortorder;
    private String key;
+   private String displayName;
    private String defaultStrValue;
    private Double defaultDoubleValue;
    private Integer defaultIntValue;
    private Boolean defaultBooleanValue;
    private String dataType;
    private String displayOnStart;
+   private Boolean displayAdvisor;
    private Boolean saveforUser;
 
    public AdvisorRiskMasterData()
    {
    }
 
-   public AdvisorRiskMasterData(Integer sortorder, String key,
-                                String defaultValue, String dataType,
-                                 String displayOnStart, Boolean saveForUser)
+   public AdvisorRiskMasterData(Integer sortorder, String key, String displayName,
+                                String defaultValue, String dataType, String displayOnStart,
+                                Boolean displayAdvisor, Boolean saveForUser)
    {
       this.sortorder = sortorder;
       this.key = key;
+      this.displayName = displayName;
       setDefaultValue(defaultValue, dataType);
       this.displayOnStart = displayOnStart;
+      this.displayAdvisor = displayAdvisor;
       this.saveforUser = saveForUser;
    }
 
@@ -73,6 +77,19 @@ public class AdvisorRiskMasterData
       defaultStrValue = defaultValue;
       this.dataType = dataType;
 
+   }
+
+   public String getDisplayName()
+   {
+      if (displayName == null) {
+         return key;
+      }
+      return displayName;
+   }
+
+   public Boolean getDisplayAdvisor()
+   {
+      return displayAdvisor;
    }
 
    public String getDisplayOnStart()

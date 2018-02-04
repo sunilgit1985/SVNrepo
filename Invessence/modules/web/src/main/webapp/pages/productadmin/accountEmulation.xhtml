@@ -56,9 +56,10 @@
                     <br />
                     <p:inputNumber id="invtAmt" label="Investment Amount"
                                    value="#{acctEmulBean.amount}"
-                                   symbol="$"
                                    styleClass="Wid40" style="width: 40%;">
                     </p:inputNumber>
+                    <h:outputText value="Currency "/>
+                    <p:inputText id="tradeCurrency" value="#{acctEmulBean.tradeCurrency}"></p:inputText>
                     <div class="EmptyBox10"></div>
                     <p:commandButton value="Process Account" ajax="true" styleClass="add_account_button"
                                      actionListener="#{acctEmulBean.processAccount}" update="@form"
