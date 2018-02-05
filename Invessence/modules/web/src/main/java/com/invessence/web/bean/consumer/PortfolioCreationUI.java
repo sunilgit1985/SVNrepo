@@ -494,12 +494,12 @@ public class PortfolioCreationUI extends UserInterface
          getCustomer().setAssetData(null);
          aamc = new AssetClass[1];
          aamc[0] = modelUtil.createAssetAllocation(riskCalc);
-         if (aamc != null)
+         if (aamc[0] != null)
          {
             getCustomer().setAssetData(aamc);
             pfclass = new Portfolio[1];
             pfclass[0] = modelUtil.createPortfolioAllocation(aamc[0], riskCalc);
-            if (pfclass != null)
+            if (pfclass[0] != null)
             {
                getCustomer().setPortfolioData(pfclass);
                getCustomer().loadPortfolioList(0);

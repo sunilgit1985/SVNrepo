@@ -301,6 +301,7 @@ public class ConsumerSaveSP extends StoredProcedure
          inputMap.put("p_portfolioName", data.getPortfolioName());
          inputMap.put("p_advisor", data.getAdvisor());
          inputMap.put("p_rep", data.getRep());
+         inputMap.put("p_fullname", data.getName());
          inputMap.put("p_firstname", data.getFirstname());
          inputMap.put("p_lastname", data.getLastname());
          inputMap.put("p_theme", data.getTheme());

@@ -649,7 +649,7 @@ public class CustomerData extends ProfileData
    public String getName()
    {
       String name = super.getName();
-      if (name != null) {
+      if (name == null) {
          if (getFirstname() != null)
          {
             name = getFirstname();
