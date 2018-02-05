@@ -1615,6 +1615,7 @@ input {
 /************************/
 .backgroundAdvPortlets {
     /*background-color: #fbfcfd!important;*/
+    overflow: visible;
 }
 
 .uobBoldText {
@@ -5704,7 +5705,7 @@ div#leftpanel {
     height: auto;
     width: 99%;
     padding: 10px !important;
-    box-shadow: 3px -3px 7px 0px #888;
+    box-shadow: 3px 1px 7px 0px #888;
     
 
 }
