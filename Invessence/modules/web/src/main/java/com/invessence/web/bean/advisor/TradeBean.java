@@ -40,6 +40,7 @@ public class TradeBean extends TradeClientData implements Serializable
    private TradeSummary selectedSummary;
    private Integer whichScreen;
    private Boolean displayReviewPanel;
+   private Boolean displayTradePanel;
 
    private List<UserTradePreprocess> rebalancetradedatalist;
    private Map<String, UserTradePreprocess> assetMap = new HashMap<String, UserTradePreprocess>();
@@ -337,7 +338,10 @@ public class TradeBean extends TradeClientData implements Serializable
    {
       return displayReviewPanel;
    }
-
+   public Boolean getDisplayTradePanel()
+   {
+      return displayTradePanel;
+   }
    public void setDisplayReviewPanel(Boolean displayReviewPanel)
    {
       this.displayReviewPanel = displayReviewPanel;
@@ -581,10 +585,35 @@ public class TradeBean extends TradeClientData implements Serializable
 
    }
 
+   public void showRiskDetails(Long acctnum)
+   {
+      try
+      {
+         if (acctnum != null)
+         {
+            collectTradeDetails(acctnum);
+            // uiLayout.doMenuAction("advisor", "operations/tradesummary.xhtml");
+            displayTradePanel=true;
+         }
+      }
+      catch (Exception ex)
+      {
+         return;
+      }
+
+   }
+
+
    public void hideRebalDetails()
    {
 
       displayReviewPanel=false;
+
+   }
+   public void hideRiskDetails()
+   {
+
+      displayTradePanel=false;
 
    }
 

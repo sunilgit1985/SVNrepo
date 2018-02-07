@@ -1960,7 +1960,9 @@ span > input {
     z-index: 2;
     background: #fff;
     top: 40px;
-    right: 1px;
+    left: 28px;
+    box-shadow: 2px 2px 5px 2px #cac7c7;
+    width: 95%;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
 .fineTuneDetail {
@@ -5923,7 +5925,7 @@ form#ceForm {
 .faq_dtls li,
 .faq_dtls ol ul li{list-style: disc;    margin: 25px 0 0;}
 .faq_dtls ol li {
-    list-style: upper-alpha;
+    list-style: circle;
 }
 .faq_dtls p {
     margin: 2px 0;

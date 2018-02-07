@@ -331,11 +331,11 @@
 
 
                                 </div>
-                                <div class="Container70 Responsive50 UserconfTable"><!-- ROHIT's CHANGE -->
+                                <div class="Container70 Responsive50 UserconfTable scrollTable"><!-- ROHIT's CHANGE -->
 
                                     <div class="ContainerIndent ">
                                         <p:dataTable styleClass="uob_graphTable" var="ticker" id="uobtabledetails2"
-                                                     value="#{uobProfile.customer.displayPortfolioList}">
+                                                     scrollable="true"  scrollHeight="250" value="#{uobProfile.customer.displayPortfolioList}">
                                             <!-- <p:column style="width:5%; background-color: #{ticker.color}">
                                                 <h:outputText value=" "/>
                                             </p:column> -->
@@ -349,7 +349,7 @@
                                                 </f:facet>
                                                 <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
                                             </p:column>
-                                            <p:column style="width:10%;"
+                                            <p:column style="width:12%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
                                                 <!-- ROHIT's CHANGE -->
                                                 <f:facet name="header">
@@ -360,7 +360,7 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column style="width:10%;"
+                                            <p:column style="width:12%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
                                                 <!-- Prashant intro 2017-Sept -->
                                                 <f:facet name="header">
@@ -370,7 +370,7 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column style="width:19%;"
+                                            <p:column style="width:17%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
                                                 <!-- ROHIT's CHANGE -->
                                                 <f:facet name="header">
