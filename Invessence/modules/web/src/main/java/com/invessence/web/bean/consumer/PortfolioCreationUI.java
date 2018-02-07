@@ -658,17 +658,23 @@ public class PortfolioCreationUI extends UserInterface
    {
       customer.setCanSaveData(true);
       formEdit = true;
-      customer.saveProfileAudit(); //Need to enhance for audit activity
-      if(beanmode.equals(UIMode.Confirm))
+      if (customer.getManaged())
+      {
+         customer.saveProfileAudit(); //Need to enhance for audit activity
+      }
+      customer.saveProfile();
+      if (beanmode.equals(UIMode.Confirm) && customer.getManaged())
       {
          saveDAO.manageUserProfile(getCustomer().getAcctnum(), "E", getCustomer().getLogonid());
       }
-      if(beanmode.equals(UIMode.ChangeStrategy))
+      if (beanmode.equals(UIMode.ChangeStrategy) && customer.getManaged())
       {
          saveDAO.manageUserProfile(getCustomer().getAcctnum(), "R", getCustomer().getLogonid());
       }
-      customer.saveProfile();
-      alertAdvisor();
+      if (customer.getManaged())
+      {
+         alertAdvisor();
+      }
       goBack();
    }
 
