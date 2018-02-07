@@ -30,17 +30,11 @@ public class NewRebal
       RebalanceProcess rbal = RebalanceProcess.getInstance();
       TLHSecurityCollection tlhsecurityCollection =  TLHSecurityCollection.getInstance();
 
-      /*AssetDBCollection assetDAO = AssetDBCollection.getInstance();
-      DailyReturns dailyReturnDAO = DailyReturns.getInstance();*/
-
-      SecurityCollection secCollection = new SecurityCollection();
-      //secCollection.loadDataFromDB(InvConst.INVESSENCE_ADVISOR, "0.Wealth");
-      secCollection.loadDataFromDB("BB", "0.BB");
       rbal.setTlhSecurityCollection(tlhsecurityCollection);
 
       // Now we can do re-balancing on account(s).
-      ArrayList<UserTradePreprocess> UserTradePreprocess = rbal.process(2L, 1L);
-      printTradeFile(UserTradePreprocess);
+      ArrayList<UserTradePreprocess> userTradesList = rbal.process(1L, 3278L);
+      printTradeFile(userTradesList);
    }
 
    public static PrintWriter getFileHandle(String fileName)

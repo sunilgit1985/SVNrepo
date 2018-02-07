@@ -856,9 +856,9 @@ public class TradeBean extends TradeClientData implements Serializable
          Map<String, UserRiskData> profileMap = selectedRiskProfile.getRiskProfileReport();
             for (String key : profileMap.keySet())
             {
-               UserRiskData udata = profileMap.get(key);
+               UserRiskData udata = new UserRiskData(profileMap.get(key));
                if (key.equalsIgnoreCase(RiskConst.INITIALINVESTMENT)) {
-                  udata.setAnswerInt(selectedClient.getInvestment().intValue());
+                  udata.setAnswerDouble(selectedClient.getTotalInvestment());
                }
                if (key.equalsIgnoreCase(RiskConst.THEME)) {
                   udata.setAnswerStr(selectedClient.getTheme());

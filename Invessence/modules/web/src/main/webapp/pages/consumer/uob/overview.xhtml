@@ -220,7 +220,7 @@
                                                         <p:column priority="2" footerText="" style="text-align:left;"/>
                                                         <p:column priority="2" footerText="" style="text-align:left;"/>
                                                         <p:column priority="5" footerText="" style="text-align:left;"/>
-                                                        <p:column priority="2" footerText="#{dataDisplayConverter.displayWithComma(uobpos.currencyWiseTotal[entry1])}" style="text-align:right">
+                                                        <p:column priority="2" footerText="#{dataDisplayConverter.displayWithFormatAppender(uobpos.currencyWiseTotal[entry1],'###,###,##0.00', '')}" style="text-align:right">
                                                             <!--<f:convertNumber type="currency" currencySymbol=""/>-->
                                                         </p:column>
                                                         <p:column priority="2" footerText="#{entry1}" style="text-align:left;"/>

@@ -28,6 +28,14 @@ public class UserRiskData implements Comparable
       setAnswer(answer, answerType);
    }
 
+   public UserRiskData(UserRiskData origData)
+   {
+      this.sortorder = origData.getSortorder();
+      this.key = origData.getKey();
+      this.riskScore = origData.getRiskScore();
+      setAnswer(origData.getAnswerStr(), origData.getAnswerType());
+   }
+
    public Integer getSortorder()
    {
       return sortorder;
@@ -60,13 +68,23 @@ public class UserRiskData implements Comparable
          if (answerType.equalsIgnoreCase("D"))
          {
             answerDouble = converter.getDoubleData(answer);
+            answerInt = null;
+            answerBoolean = null;
          }
          else if (answerType.equalsIgnoreCase("I")) {
+            answerDouble = null;
             answerInt = converter.getIntData(answer);
+            answerBoolean = null;
          }
          else if (answerType.equalsIgnoreCase("B")) {
+            answerDouble = null;
+            answerInt = null;
             answerBoolean = converter.getBooleanData(answer);
-
+         }
+         else {
+            answerDouble = null;
+            answerInt = null;
+            answerBoolean = null;
          }
       }
       this.answerStr = answer;
@@ -80,7 +98,7 @@ public class UserRiskData implements Comparable
 
    public void setAnswerStr(String answerStr)
    {
-      this.answerStr = answerStr;
+      setAnswer(answerStr, "T");
    }
 
    public Integer getAnswerInt()
@@ -93,7 +111,7 @@ public class UserRiskData implements Comparable
 
    public void setAnswerInt(Integer answerInt)
    {
-      this.answerInt = answerInt;
+      setAnswer(answerInt.toString(), "I");
    }
 
    public Double getAnswerDouble()
@@ -106,7 +124,8 @@ public class UserRiskData implements Comparable
 
    public void setAnswerDouble(Double answerDouble)
    {
-      this.answerDouble = answerDouble;
+      setAnswer(answerDouble.toString(), "D");
+
    }
 
    public Boolean getAnswerBoolean()
@@ -116,7 +135,8 @@ public class UserRiskData implements Comparable
 
    public void setAnswerBoolean(Boolean answerBoolean)
    {
-      this.answerBoolean = answerBoolean;
+      setAnswer(answerBoolean.toString(), "B");
+
    }
 
    public String getAnswerType()

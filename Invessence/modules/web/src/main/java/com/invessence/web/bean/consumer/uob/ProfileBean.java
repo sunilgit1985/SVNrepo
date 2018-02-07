@@ -74,6 +74,8 @@ public class ProfileBean extends PortfolioCreationUI
             }
          }
       }
+
+      setRiskTotalInvestment(getCustomer().getDefaultInvestment());
       createAssetPortfolio();
       if(beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit)){
          getCustomer().setCanSaveData(true);
@@ -433,9 +435,15 @@ public class ProfileBean extends PortfolioCreationUI
    {
       getCustomer().setInitialInvestment(investment);
       getCustomer().setExchangeRate(getExchangeRate());
+      setRiskTotalInvestment(investment.doubleValue());
+   }
+
+   public void setRiskTotalInvestment(Double investment) {
       Double exRate = getExchangeRate();
       Double calcInvestment = investment * ((exRate == null || exRate == 0.0) ? 1.0 : exRate);
+      getCustomer().getRiskProfile().setTotalInvestment(calcInvestment);
       riskCalc.setInvestment(calcInvestment);
+
    }
 
    public Integer getRecurringInvestment()

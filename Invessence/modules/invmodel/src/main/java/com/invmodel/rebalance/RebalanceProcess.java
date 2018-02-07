@@ -153,6 +153,7 @@ public class RebalanceProcess
       try
       {
          RiskCalc riskCalc = new UOBRiskCalc(pdata.getRiskProfile());
+         riskCalc.setInvestment(pdata.getActualInvestment());
          riskCalc.calculate();
 
          aamc = new AssetClass[1];

@@ -100,6 +100,7 @@ public class RiskConst
    public static String TRADECURRENCY     = "SGD";
    public static String SETTLECURRENCY    = "SGD";
    public static String INITIALINVESTMENT = "INITIALINVESTMENT";
+   public static String TOTALINVESTMENT   = "TOTALINVESTMENT";
    public static String RECURRINGINVESTMENT = "RECURRINGINVESTMENT";
    public static String RECURRINGTERM     = "RECURRINGTERM";
    public static String RECURRINGPERIOD   = "RECURRINGPERIOD";

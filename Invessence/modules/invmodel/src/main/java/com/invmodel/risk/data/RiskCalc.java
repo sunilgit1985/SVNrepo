@@ -52,7 +52,7 @@ public class RiskCalc
          horizon = null;
          recurringPeriod = userRiskProfile.getDefaultIntValue(RiskConst.RECURRINGPERIOD, 0);
          withDrwalPeriod = userRiskProfile.getDefaultIntValue(RiskConst.WITHDRAWALPERIOD, 0);
-         investment = userRiskProfile.getDefaultInitialInvestment();
+         investment = userRiskProfile.getTotalInvestment();
          recurring = userRiskProfile.getDefaultRecurringInvestment();
          withdrawlamount = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWALPERIOD, 0.0);
          scoreDeviation = userRiskProfile.getDefaultDoubleValue(RiskConst.FINETUNEAJUSTMENTS, 15.0);

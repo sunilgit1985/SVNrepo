@@ -179,4 +179,14 @@ public class TradeClientData
    {
       this.investment = investment;
    }
+
+   public Double getTotalInvestment() {
+      if (investment == null) {
+         return cash;
+      }
+      if (cash == null) {
+         return investment;
+      }
+      return (investment+cash);
+   }
 }

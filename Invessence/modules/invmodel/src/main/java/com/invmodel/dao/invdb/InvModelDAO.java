@@ -10,7 +10,7 @@ import com.invmodel.position.data.*;
 import com.invmodel.portfolio.data.*;
 import com.invmodel.rebalance.data.*;
 import com.invmodel.inputData.*;
-import com.invmodel.risk.data.UserRiskProfile;
+import com.invmodel.risk.data.*;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 
@@ -57,8 +57,6 @@ public class InvModelDAO extends JdbcDaoSupport
                currentHolding.setTotalFees(convert.getDoubleData(rs.get("ytdinvoiceFee")));
                currentHolding.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
                currentHolding.setSettleCurrency(convert.getStrData(rs.get("settleCurrency")));
-               currentHolding.setExchangeRate(convert.getDoubleData(rs.get("exchangeRate")));
-
             }
             data.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
             data.setTicker(ticker);
@@ -129,29 +127,19 @@ public class InvModelDAO extends JdbcDaoSupport
                UserRiskProfile userRiskProfile = new UserRiskProfile(advisor, dbacctnum);
                data.setRiskProfile(userRiskProfile);
 
+               data.setLogonid(convert.getLongData(rs.get("logonid")));
                data.setAcctnum(dbacctnum);
                data.setClientAccountID(convert.getStrData(rs.get("clientAccountID")));
 
                data.setAdvisor(advisor);
                data.setTheme(convert.getStrData(rs.get("theme")));
                data.setAccountType(convert.getStrData(rs.get("accttype")));
-               data.setActualInvestment(convert.getDoubleData(rs.get("investment")));
-               data.setKeepLiquid(convert.getIntData(rs.get("keepLiquid")));
                data.setAge(convert.getIntData(rs.get("age")));
                data.setHorizon(convert.getIntData(rs.get("horizon")));
-               data.setObjective(convert.getIntData(rs.get("longTermGoal")));
-               data.setStayInvested(convert.getIntData(rs.get("stayInvested")));
-               data.setRiskCalcMethod(convert.getStrData(rs.get("calcModel")));
-               data.setRiskIndex(convert.getDoubleData(rs.get("riskIndex")));
-               data.setAllocationIndex(convert.getIntData(rs.get("assetIndex")));
-               data.setPortfolioIndex(convert.getIntData(rs.get("portfolioIndex")));
-               String taxable = convert.getStrData(rs.get("taxable"));
-               if (taxable == null)
-                  data.setAccountTaxable(false);
-               else if (taxable.startsWith("N"))
-                  data.setAccountTaxable(false);
-               else
-                  data.setAccountTaxable(true);
+               Double investment = convert.getDoubleData(rs.get("investment"));
+               data.setActualInvestment(investment);
+               userRiskProfile.setTotalInvestment(investment);
+               data.setAccountTaxable(userRiskProfile.getDefaultBooleanValue(RiskConst.TAXABLE,false));
                profileList.add(i, data);
                i++;
             }

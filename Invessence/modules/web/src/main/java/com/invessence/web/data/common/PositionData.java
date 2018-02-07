@@ -297,7 +297,7 @@ public class PositionData
                   currencyWiseTotal.put(position.getSettleCurrency(),position.getSettleMoney());
                }
             }
-            dbSettlmentTotal=dbSettlmentTotal+position.getSettleMoney();
+            dbSettlmentTotal=dbSettlmentTotal+position.getPositionValue();
          }
 
          for (Asset asset: managedAssetsList) {

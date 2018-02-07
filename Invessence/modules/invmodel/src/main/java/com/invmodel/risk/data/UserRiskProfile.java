@@ -816,6 +816,20 @@ public class UserRiskProfile
       setNewAnswer(RiskConst.INITIALINVESTMENT, investment.toString(), "D", 0.0);
    }
 
+   public Double getTotalInvestment() {
+      if (riskData.containsKey(RiskConst.TOTALINVESTMENT)) {
+         return riskData.get(RiskConst.TOTALINVESTMENT).getAnswerDouble();
+      }
+      else {
+         return getDefaultInitialInvestment();
+      }
+   }
+
+   public void setTotalInvestment(Double investment)
+   {
+      setNewAnswer(RiskConst.TOTALINVESTMENT, investment.toString(), "D", 0.0);
+   }
+
    public void setRecurringInvestment(Double investment)
    {
       setNewAnswer(RiskConst.RECURRINGINVESTMENT, investment.toString(), "D", 0.0);
