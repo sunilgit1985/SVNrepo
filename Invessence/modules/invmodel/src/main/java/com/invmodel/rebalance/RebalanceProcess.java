@@ -191,17 +191,18 @@ public class RebalanceProcess
       {
          Map<String, HoldingData> processedMap = new HashMap<String, HoldingData>();
          Double holdingValue, settleHoldingValue, newValue, settleNewValue;
-         Double holdingQty, settleHoldingQty, newQty, settleNewQty;
+         Double holdingPrice, holdingQty, settleHoldingQty, newQty, settleNewQty;
          if (tradeData != null)
          {  // Process the trade File, note: we are deleting positions records as balance < 0.0
             for (TradeData td : tradeData)
             {
                String ticker = td.getTicker();
-
+               HoldingData hData = new HoldingData(); //JAV 2/7/2018
                if (holdingMasterDataMap.containsKey(ticker))
                {
                   HoldingData thisHolding = holdingMasterDataMap.get(ticker);
                   holdingQty = thisHolding.getQty();
+                  holdingPrice = thisHolding.getCostBasisPrice();
                   holdingValue = thisHolding.getPositionValue();
                   settleHoldingQty = thisHolding.getSettleQty();
                   settleHoldingValue = thisHolding.getSettleLongTimeShares();
@@ -214,7 +215,9 @@ public class RebalanceProcess
                }
                else
                {
-                  HoldingData hData = new HoldingData();
+                  //JAV 2/7/2018
+                  //HoldingData hData = new HoldingData();
+
                   hData.setProcessed(true);
                   hData.setTicker(ticker);
                   hData.setTradeCurrency(td.getTradeCurrency());
@@ -226,6 +229,7 @@ public class RebalanceProcess
                   hData.setSettlePosition(0.0);
                   holdingMasterDataMap.put(ticker, hData);
                   holdingQty = 0.0;
+                  holdingPrice = 0.0; //JAV 2/7
                   holdingValue = 0.0;
                   settleHoldingQty = 0.0;
                   settleHoldingValue = 0.0;
@@ -250,7 +254,12 @@ public class RebalanceProcess
                   profileData.getAdvisor(), profileData.getClientAccountID(), profileData.getAcctnum(),
                   "P", null, td.getTradeCurrency(),
                   td.getAssetclass(), td.getSubclass(), td.getColor(),
-                  td.getTicker(), td.getQty(), td.getCurPrice(), td.getMoney(),
+
+                  //JAV 2/7/2018 -
+                  //td.getTicker(), td.getQty(), td.getCurPrice(), td.getMoney(),
+                  hData.getTicker(), holdingQty, holdingPrice, holdingValue,
+                  ////
+
                   ticker, newQty, td.getCurPrice(), newValue,
                   td.getSettleCurrency(), td.getSettleCurQty(), td.getSettleCurPrice(), td.getSettleCurMoney(),
                   td.getExchangeRate(),settleNewQty, td.getSettleCurPrice(), settleNewValue,
