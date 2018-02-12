@@ -283,7 +283,7 @@ public class ConsumerDashBean extends CustomerData implements Serializable
       {
          uiLayout.doMenuAction("custody", "funding.xhtml?app=E&acct=" +selAcctNum);
 
-         uiLayout.doMenuAction("custody", "editfunding.xhtml?app=E&acct=" + selectedAccount.getAcctnum().toString());
+//         uiLayout.doMenuAction("custody", "editfunding.xhtml?app=E&acct=" + selAcctNum);
       }
       catch (Exception ex)
       {

@@ -113,7 +113,7 @@ public class UOBFund implements Serializable
          return retValue;
       }
       if (selAccountList != null
-         && (selAccountList.get(0).getCanIEditAccount()  || selAccountList.get(0).getHasClientID()))
+         && (selAccountList.get(0).getCanIEditAccount()  || !selAccountList.get(0).getHasClientID()))
       {
          retValue = "success";
          return retValue;
