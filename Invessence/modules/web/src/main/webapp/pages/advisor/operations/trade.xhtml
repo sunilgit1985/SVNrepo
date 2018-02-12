@@ -118,7 +118,8 @@
                                                      styleClass="editAdvButtonIcon"
                                                      process="@this" immediate="true"
                                                      icon="fa fa-search"
-                                                     action="#{tradeBean.doManagedAction}">
+                                                     update="@form"
+                                                     actionListener="#{tradeBean.showRiskDetails(filteredClientData.acctnum)}">
                                         <f:setPropertyActionListener value="#{filteredClientData}"
                                                                      target="#{tradeBean.selectedClient}"/>
                                     </p:commandButton>
@@ -185,6 +186,79 @@
                         </div>
                     </p:panel>
 
+                    <p:panel id="Tradesummarypanel" style="border: 0px; margin: 0px;" rendered="#{tradeBean.displayTradePanel}" class="slideDwnpanel">
+                        <div class="Container100 Fright TexAlRight">
+                            <p:commandButton value="Close"
+                                             update="@form"
+                                             actionListener="#{tradeBean.hideRiskDetails}" styleClass="uobsagbutton"/>
+                        </div>
+                        <div class="Container50 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:dataTable id="riskInfo"
+                                                 var="riskVar"
+                                                 styleClass="ListOfAccountsTable"
+                                                 widgetVar="riskTable"
+                                                 value="#{tradeBean.riskDataReport}" reflow="true">
+
+                                        <p:column headerText="Question"
+                                                  styleClass="ListOfAccntsColWidth"
+                                                  resizable="true">
+                                            <h:outputText styleClass="dashboardUsrColumnFloatLeft"
+                                                          value="#{riskVar.key}"/>
+                                        </p:column>
+                                        <p:column headerText="Answer"
+                                                  styleClass="ListOfAccntsColWidth"
+                                                  resizable="true">
+                                            <h:outputText
+                                                    styleClass="dashboardUsrColumnFloatRight"
+                                                    value="#{riskVar.answer}">
+                                                <f:convertNumber pattern="##0"/>
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Score"
+                                                  styleClass="ListOfAccntsColWidth"
+                                                  resizable="true">
+                                            <h:outputText
+                                                    styleClass="dashboardUsrColumnFloatRight"
+                                                    value="#{riskVar.riskScore}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container50 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100">
+                                    <p:dataTable id="riskProfile"
+                                                 var="riskProfileVar"
+                                                 styleClass="ListOfAccountsTable"
+                                                 value="#{tradeBean.riskProfile}" reflow="true">
+
+                                        <p:column headerText="Profile"
+                                                  styleClass="ListOfAccntsColWidth"
+                                                  resizable="true">
+                                            <h:outputText styleClass="dashboardUsrColumnFloatLeft"
+                                                          value="#{riskProfileVar.key}"/>
+                                        </p:column>
+                                        <p:column headerText="Answer"
+                                                  styleClass="ListOfAccntsColWidth"
+                                                  resizable="true">
+                                            <h:outputText styleClass="dashboardUsrColumnFloatLeft"
+                                                          value="#{riskProfileVar.answer}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container100 Fright TexAlLeft">
+                            <p:commandButton value="Close"
+                                             update="@form"
+                                             actionListener="#{tradeBean.hideRiskDetails}" styleClass="uobsagbutton"/>
+                        </div>
+                     </p:panel>
                 </h:form>
             </div>
         </div>

@@ -589,12 +589,13 @@ public class TradeBean extends TradeClientData implements Serializable
    {
       try
       {
-         if (acctnum != null)
-         {
-            collectTradeDetails(acctnum);
+//         if (acctnum != null)
+//         {
+//            collectTradeDetails(acctnum);
             // uiLayout.doMenuAction("advisor", "operations/tradesummary.xhtml");
+         selectedRiskProfile = new UserRiskProfile(getSelectedClient().getAdvisor(), acctnum);
             displayTradePanel=true;
-         }
+//         }
       }
       catch (Exception ex)
       {

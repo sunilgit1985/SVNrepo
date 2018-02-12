@@ -1958,10 +1958,10 @@ span > input {
 .fineTuneOtrDiv {
     position: absolute !important;
     z-index: 2;
-    background: #fff;
+    background: transparent;
     top: 40px;
     left: 28px;
-    box-shadow: 2px 2px 5px 2px #cac7c7;
+
     width: 95%;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
@@ -5431,7 +5431,7 @@ span.output_review {
     width: 12px;
 }
 .review_dtl .ui-panel-content {
-   /* margin-bottom: -120px;*/
+    /* margin-bottom: -120px;*/
     float: left;
 }
 .donutChartGraph.review_graph text {
@@ -5708,7 +5708,7 @@ div#leftpanel {
     width: 99%;
     padding: 10px !important;
     box-shadow: 3px 1px 7px 0px #888;
-    
+
 
 }
 .uobbtn .ui-fieldset-legend {
@@ -5832,7 +5832,7 @@ span.conservative_plus {
 .layout-portlets-box{box-shadow:none;}
 .acc_holder_dtl_block.acceptTerm {
     position: relative;
-    
+
 }
 .OverlayPanelDisClo .ui-panel-content {
     padding-bottom: 100px !important;
@@ -5916,7 +5916,7 @@ form#ceForm {
 .ErrorHead{font-size: 45px;
     color: #000;
     font-style: italic;}
-    .red {
+.red {
     color: #a4332f;font-size:25px;
 }
 .RedButton .ui-button-text {
@@ -5937,6 +5937,20 @@ td.advisorBullet_td span {
     left: -8px;
     padding: 0px 7px;
 }
+/*** 08/02/2018 **/
+.h3_discPanel{margin: 28px 10px !important; padding: 0 10px; text-align: left;}
+/*** 09/02/2018 **/
+.fineTuneOtrDiv .ui-panel-content .fineTuneInrDiv {
+    box-shadow: 2px 1px 6px 1px #565656;
+    float: left;
+    width: 98%;
+    margin: 10px;
+    background: #fff;
+    position: relative;
+    top: 0;
+}
+
+
 /*** responsive**/
 
 /** 16/10/2017***/
@@ -6006,6 +6020,12 @@ td.advisorBullet_td span {
     /** 12/01/2018 **/
     .review-donut{right:23%;}
     .portfolio_selection .sapn_review{z-index:2;left: -50px;}
+
+    /** 08/02/2018 **/
+    .header_link.prenext_btn.Container70{width:35%;}
+    .ring_widget {
+        margin-bottom: 8%;
+    }
 
 }
 
@@ -6288,7 +6308,7 @@ td.advisorBullet_td span {
     }
     .caraousle .Container50.pre_btn:before{right:46px;}
     .mobileModeButton {display:block;}
-	.desktopModeButton{display:none;}
+    .desktopModeButton{display:none;}
 
 }
 
