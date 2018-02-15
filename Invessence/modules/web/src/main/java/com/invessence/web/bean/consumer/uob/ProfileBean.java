@@ -439,10 +439,16 @@ public class ProfileBean extends PortfolioCreationUI
    }
 
    public void setRiskTotalInvestment(Double investment) {
-      Double exRate = getExchangeRate();
-      Double calcInvestment = investment * ((exRate == null || exRate == 0.0) ? 1.0 : exRate);
-      getCustomer().getRiskProfile().setTotalInvestment(calcInvestment);
-      riskCalc.setInvestment(calcInvestment);
+      if (! getCustomer().getTradeCurrency().equalsIgnoreCase(webutil.getWebprofile().getDefaultCurrency()))
+      {
+         Double exRate = getExchangeRate();
+         Double calcInvestment = investment * ((exRate == null || exRate == 0.0) ? 1.0 : exRate);
+         getCustomer().getRiskProfile().setTotalInvestment(calcInvestment);
+         riskCalc.setInvestment(calcInvestment);
+      }
+      else {
+         riskCalc.setInvestment(investment);
+      }
 
    }
 
