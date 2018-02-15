@@ -34,7 +34,7 @@
 
                     <p:panel styleClass="invNBgrid tabborderbottom">
                         <ui:fragment rendered="#{tradeBean.isTradeActive}">
-                            <div class="Fs30 Fleft summaryHeader mainHeaderUOB inactivetabtrade"
+                            <div class="Fs30 Fleft summary	mainHeaderUOB inactivetabtrade"
                                  style="cursor: pointer;">Trade</div>
                         </ui:fragment>
                         <ui:fragment rendered="#{! tradeBean.isTradeActive}">
@@ -195,9 +195,9 @@
                                                  value="#{tradeBean.assetList}"
                                                  var="assetList">
 
-                                        <f:facet name="header">
+                                        <!-- <f:facet name="header">
                                             Asset Allocation
-                                        </f:facet>
+                                        </f:facet> -->
 
                                         <p:columnGroup type="header">
                                             <p:row>
@@ -250,14 +250,15 @@
 
                                         <p:columnGroup type="footer">
                                             <p:row>
-                                                <p:column colspan="2" footerText="Total" style="text-align:left"/>
-                                                <p:column colspan="2" style="text-align:right"
+                                           		<p:column colspan="4" footerText="Total" style="text-align:left" class="fourColspan"/>
+                                                <p:column colspan="4" style="text-align:right"
                                                           footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumCurValue)}">
                                                 </p:column>
-                                                <p:column colspan="2" style="text-align:right"
+                                                <p:column colspan="4" style="text-align:right"
                                                           footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumNewValue)}">
                                                 </p:column>
-                                            </p:row>
+                                             </p:row>
+                                                                                        
                                         </p:columnGroup>
                                     </p:dataTable>
 
@@ -265,13 +266,13 @@
                             </p:fieldset>
                             <p:fieldset legend="Detail" collapsed="false" toggleable="true" toggleSpeed="500"
                                         style="margin-top: 20px;"  styleClass="uobbtn">
-                                <p:dataTable id="dataTable" var="tradedata" scrollable="true" 
+                                <p:dataTable id="dataTable" var="tradedata" scrollable="true"  scrollHeight="200"
                                              value="#{tradeBean.rebalancetradedatalist}"
                                              styleClass="invDataTable Fs10">
 
-                                    <f:facet name="header">
+                                    <!-- <f:facet name="header">
                                         Trade Details
-                                    </f:facet>
+                                    </f:facet> -->
 
                                     <p:columnGroup type="header">
                                         <p:row>
@@ -291,7 +292,7 @@
                                             <p:column headerText="Shares" style="width:3%;"/>
                                             <p:column headerText="Value" style="width:12%;"/>
                                             <p:column headerText="Shares" style="width:3%;"/>
-                                            <p:column headerText="Value" style="width:12%;"/>
+                                            <p:column headerText="Value" style="width:12%;" />
                                         </p:row>
                                     </p:columnGroup>
                                     <p:column class="bullet_td advisorBullet_td" style="width:20%; text-align: left;text-align: center;">
@@ -356,18 +357,22 @@
 
                                     <p:columnGroup type="footer">
                                         <p:row>
-                                            <p:column colspan="5" footerText="Total" style="text-align:left"/>
+                                            <p:column  footerText="Total" style="text-align:left" class="W86" />
 
-                                            <p:column colspan="2"
+                                            <p:column  class="W30"
                                                       footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumHoldingValue)}"
                                                       style="text-align:right"/>
-                                            <p:column colspan="2"
+                                            <p:column class="W30"
                                                       footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumNewValue)}"
                                                       style="text-align:right"/>
-                                            <p:column colspan="2"
+                                            <p:column class="W30"
                                                       footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumCurValue)}"
                                                       style="text-align:right"/>
-                                            <p:column colspan="1" footerText="" style="text-align:left"/>
+                                            <p:column  footerText="" style="text-align:left" class="W13"/>
+                                            
+                                            
+                                           
+                                            
                                         </p:row>
                                     </p:columnGroup>
 

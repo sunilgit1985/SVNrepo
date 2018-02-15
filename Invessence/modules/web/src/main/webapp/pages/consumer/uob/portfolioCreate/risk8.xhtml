@@ -14,13 +14,15 @@
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoReview}"> Next </p:commandLink>
+                                       actionListener="#{uobProfile.gotoReview}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span></p:commandLink>
                     </div>
                     <div class="Container50 pre_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
                                        process="@this"
-                                       actionListener="#{uobProfile.gotoPrevPage}"> Previous </p:commandLink>
+                                       actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span> Previous </p:commandLink>
                     </div>
                 </p:outputPanel>
             </div>

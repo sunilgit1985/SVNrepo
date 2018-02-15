@@ -1961,7 +1961,7 @@ span > input {
     background: transparent;
     top: 40px;
     left: 28px;
-
+    
     width: 95%;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
@@ -4557,7 +4557,8 @@ th.del_edit_col span {
 .tax_info tr.ui-widget-content.ui-datatable-even td,
 .user_table tr.ui-widget-content.ui-datatable-even td
 {
-    background: #f7f7f7;
+   /*  background: #f7f7f7; */
+   background:#fff;
 }
 .tax_info .ui-datatable,
 .user_table .ui-datatable
@@ -5044,6 +5045,7 @@ span.input_value {
     font-weight: bold;
     padding: 0 10px;
     width: 60%;
+  	line-height: 24px;
 }
 
 .header_tab {
@@ -5051,12 +5053,16 @@ span.input_value {
     float: left;
     width: 100%;
     padding: 8px 0;
+    line-height:0;
 }
 .next_btn .next_pg_link,
 .pre_btn .next_pg_link {
-    color: #27aae1;
+        color: #04709F;
     text-align: right;
-    font-size: 18px;
+    font-size: 17px;
+    font-weight: bold;
+    top: -7px;
+    position: relative;
 }
 .header_link.prenext_btn.Container70 {
     text-align: right;
@@ -5147,7 +5153,7 @@ span.change_goal {
 .caraousle .Container50.next_btn {
     width: auto;
     float: right;
-    padding: 0 5px;
+    padding: 0 10px;
 }
 .caraousle .Container50.pre_btn {
     width: auto;
@@ -5351,6 +5357,7 @@ span.change_goal {
     border: none;
     color: #000;
     text-align: left;
+    
 }
 .go-bottom input:focus::-webkit-input-placeholder,
 .go-bottom input:focus:-moz-placeholder,
@@ -5647,10 +5654,10 @@ div#leftpanel {
     border: none;
 }
 .AdvisorGridtcmLayout > .ui-datatable-tablewrapper > table > tbody > tr:nth-child(even) td {
-    background: #F5C8BF !important;
+    background: #ececec !important;
 }
 .AdvisorGridtcmLayout > .ui-datatable-tablewrapper > table > tbody > tr:nth-child(odd) td {
-    background: #EEE7DB !important;
+    background: #ffffff !important;
 }
 
 .AdvisorGridtcmLayout > .ui-datatable-tablewrapper > table > thead > tr th {
@@ -5707,7 +5714,7 @@ div#leftpanel {
     height: auto;
     width: 99%;
     padding: 10px !important;
-    box-shadow: 3px 1px 7px 0px #888;
+    box-shadow: 3px 0px 6px 2px #666;
 
 
 }
@@ -5929,9 +5936,10 @@ form#ceForm {
 }
 .faq_dtls p {
     margin: 2px 0;
-    line-height: 1.38;
+    line-height: 1.4;
+    font-size: 16px;
 }
-.scrollTable .ui-datatable-scrollable-body{height: 180px;}
+/* .scrollTable .ui-datatable-scrollable-body{height: 180px;} */
 td.advisorBullet_td span {
     position: relative;
     left: -8px;
@@ -5949,8 +5957,68 @@ td.advisorBullet_td span {
     position: relative;
     top: 0;
 }
+/*** 12/02/2018 **/
 
-
+.fourColspan {
+    width: 10.5% !important;
+}
+.lastColWidth{width: 129px !important;}
+.W86{width:86px !important;}
+.W30{width:30px !important;}
+.W13{width:13px !important;}
+.ui-datatable.invDataTable  table  tfoot tr td ,
+.invAllocTable .ui-datatable-scrollable-footer-box table tfoot tr td
+{color: #fff;background-color: #556873;}
+.user_table .ui-datatable.invDataTable thead tr th{background: #556873 !important;color: #fff;
+    text-align: left;
+    font-size: 15px !important;
+    font-weight: normal;}
+    .ui-accordion .ui-tabs-outline{color:#fff;}
+    
+.slideDwnpanel .ui-datatable table thead tr th{    color: #3C4E58;}  
+.ui-datatable.invDataTable .ui-datatable-odd,
+.ui-datatable.invAllocTable .ui-datatable-odd {
+    background: #ececec !important;
+}  
+.ui-datatable .ui-datatable-even td {
+    background-color: #ffffff !important;
+}
+.ui-datatable.invAllocTable .ui-datatable-odd td,
+.ui-datatable.ListOfAccountsTable .ui-datatable-odd
+ {
+    background: #ececec !important;
+}
+ .faq_dtls .ui-accordion {
+    background: #fff;
+    border: none !important;
+}
+.faq_dtls .ui-accordion-header {
+    background-color: #ececec !important;
+    text-transform: uppercase !important;
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    color: #000 !important;
+}  
+.faq_dtls .ui-accordion-content {
+    margin-bottom: 15px !important;
+    border-bottom: none !important;
+    color: #000;
+}
+.Container36{width: 36%;
+    float: right;
+    padding: 0 5px;} 
+ .textLeft h4 {
+    text-align: left;
+}
+.prenext_btn a span {
+	position:relative;
+	top:6px;
+}
+.prenext_btn a span {
+    position: relative;
+    top: 6px;
+}
+    
 /*** responsive**/
 
 /** 16/10/2017***/

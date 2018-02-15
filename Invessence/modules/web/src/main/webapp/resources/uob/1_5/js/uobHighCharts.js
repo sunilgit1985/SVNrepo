@@ -105,7 +105,7 @@ function draw2dDonut1lyrChart()
 
                                            tooltip: {
                                                headerFormat: '{point.name}',
-                                               pointFormat: '<span style="color:{point.color}"></span><b>$</b><b>{point.amount} - </b> <b>{point.y:.2f}%</b><br/>'
+                                               pointFormat: '<span style="color:{point.color}"></span><b>{point.name} - </b> <b>{point.y:.2f}%</b><br/>'
                                            },
                                            series: [{
                                                name: '',
@@ -271,7 +271,7 @@ function draw2dDonut1lyrChartDyna(vForm)
 
                                            tooltip: {
                                                headerFormat: '{point.name}',
-                                               pointFormat: '<span style="color:{point.color}"></span><b>$</b><b>{point.amount} - </b> <b>{point.y:.2f}%</b><br/>'
+                                               pointFormat: '<span style="color:{point.color}"></span><b>{point.name} - </b> <b>{point.y:.2f}%</b><br/>'
                                            },
                                            series: [{
                                                name: '',
@@ -408,7 +408,7 @@ try{
 
                                            tooltip: {
                                                headerFormat: '{point.name}',
-                                               pointFormat: '<span style="color:{point.color}"></span><b>$</b><b>{point.amount} - </b> <b>{point.y:.2f}%</b><br/>'
+                                               pointFormat: '<span style="color:{point.color}"></span><b>{point.name} - </b> <b>{point.y:.2f}%</b><br/>'
                                            },
                                            series: [{
                                                name: '',

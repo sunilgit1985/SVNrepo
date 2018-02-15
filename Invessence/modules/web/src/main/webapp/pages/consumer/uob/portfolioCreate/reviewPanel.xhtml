@@ -119,17 +119,19 @@
 
 
             </div>
-            <div class="header_link prenext_btn Container70 review_btn" >
+            <div class="header_link prenext_btn Container36 review_btn" >
                 <div class="Container50 next_btn">
                     <ui:fragment rendered="#{uobProfile.interfaceIntMode > 0}">
                         <p:commandLink rendered="true" class="next_pg_link"
-                                       actionListener="#{uobProfile.gotoFinalConfim}"> Next
+                                       actionListener="#{uobProfile.gotoFinalConfim}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span>
                         </p:commandLink>
 
                     </ui:fragment>
                     <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
                         <p:commandLink rendered="true" class="next_pg_link"
-                                       actionListener="#{uobProfile.gotoCustody}"> Open Account
+                                       actionListener="#{uobProfile.gotoCustody}"> Open Account <span><p:graphicImage name="images/portfolio/open_acc.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span>
                         </p:commandLink>
 
                     </ui:fragment>
@@ -137,7 +139,8 @@
                 <div class="Container50 pre_btn">
                     <p:commandLink rendered="true" class="next_pg_link"
                                    process="@this"
-                                   actionListener="#{uobProfile.gotoRiskQuestions}"> Start Over </p:commandLink>
+                                   actionListener="#{uobProfile.gotoRiskQuestions}"><span><p:graphicImage name="images/portfolio/restart_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span> Start Over </p:commandLink>
                 </div>
 
             </div>

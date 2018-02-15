@@ -9,17 +9,19 @@
 
         <div class="header_tab">
             <div class="header_title Container30">Change Strategy</div>
-            <div class="header_link prenext_btn Container70">
+            <div class="header_link prenext_btn Container36">
                 <p:outputPanel id="changeStrategy" style="border: 0px; background: transparent">
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoCSStrategy}" disabled="#{uobProfile.disableChangeStragegyButton}"> Next </p:commandLink>
+                                       actionListener="#{uobProfile.gotoCSStrategy}" disabled="#{uobProfile.disableChangeStragegyButton}"> Next <span class="icon_span"><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span></p:commandLink>
                     </div>
                     <div class="Container50 pre_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.cancelCS}"> Cancel </p:commandLink>
+                                       actionListener="#{uobProfile.cancelCS}"><span><p:graphicImage name="images/portfolio/cancel_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span> Cancel </p:commandLink>
                     </div>
                 </p:outputPanel>
             </div>
