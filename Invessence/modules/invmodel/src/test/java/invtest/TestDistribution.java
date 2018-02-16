@@ -103,9 +103,10 @@ public class TestDistribution
       //profileData.setAdvisor("PrimeAsset");
       //profileData.setTheme("0.Income");
       profileData.setAdvisor("UOB");
-      profileData.setTheme("8.UOB");
+      //profileData.setTheme("8.UOB");
       //profileData.setTheme("8.UOB.UnCons");
-      //profileData.setTheme("0.SGWealthSGD");
+      profileData.setTheme("KayHian.With.Sing");
+      //profileData.setTheme("KayHian.Without.Sing");
       //profileData.setTheme("0.SGWealthSGD.Un");
       profileData.setAccountTaxable(false);
 
@@ -176,6 +177,7 @@ public class TestDistribution
       {
          // Use this for calculating slider
          profileData.setRiskIndex((double) i);
+         profileData.setAllCashonZeroRisk(false);
          aamc = modelUtil.buildAllocation(profileData);
          pfclass = modelUtil.buildPortfolio(aamc, profileData);
          profileData.setAssetData(aamc);
@@ -189,7 +191,7 @@ public class TestDistribution
          }
       }
 
-      createPortfolioArray(modelUtil.getPoptimizer(), profileData, portList);
+      createPortfolioArray(modelUtil.getPoptimizer(), profileData, portList,expReturnsArray,totalRiskArray);
 
       createPrimeAssetArry(modelUtil.getPoptimizer(), profileData, portList);
 
@@ -218,7 +220,8 @@ public class TestDistribution
    }
 
    public static void createPortfolioArray(PortfolioOptimizer portfolioOptimizer, ProfileData profileData,
-                                           Map <Integer,Portfolio> portList) throws Exception
+                                           Map <Integer,Portfolio> portList, double[] expReturnsArray,
+                                           double[] totalRiskArray) throws Exception
    {
 
       String fileName;
@@ -270,6 +273,7 @@ public class TestDistribution
 
             }
 
+            writer.print("," + "Total Risk" + "," + "Exp Ret");
             //for (int L=0; L < portInfoLabel.getPortfolio().size(); ++L)
             //{
             //   writer.print("," + portInfoLabel.getPortfolio().get(L).getTicker());
@@ -297,7 +301,7 @@ public class TestDistribution
             writer.print("," + weight[L]);
          }
 
-
+         writer.print("," + totalRiskArray[i] + "," + expReturnsArray[i] );
 
          //}
          writer.println();
