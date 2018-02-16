@@ -508,6 +508,33 @@ public class PortfolioOptimizer
                   //double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
                   double[][] weights = instanceOfCapitalMarket.getEfficientFrontierAssetWeights();
 
+                  //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
+                  double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+                  double[] return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
+
+                  int minRiskOffset = getMin(risk1);
+                  double minRiskUtil = risk1[minRiskOffset];
+                  minReturn1 = return1[minRiskOffset];
+
+                  int maxReturnOffset = getMax(return1);
+                  double maxRiskUtil = risk1[maxReturnOffset];
+                  maxReturn1 = return1[maxReturnOffset];
+
+                  instanceOfCapitalMarket.calculateEfficientFrontier(
+                     //InvConst.MIN_CAPM_RETURNS,   // Minimum CAPM returns
+                     //InvConst.MAX_CAPM_RETURNS,  // Maximum CAPM returns
+                     minReturn1,   // Minimum CAPM returns
+                     maxReturn1,  // Maximum CAPM returns
+                     covarianceOfFunds,//Covariance matrix
+                     expectedReturns, // expectedReturns
+                     InvConst.PORTFOLIO_INTERPOLATION, // numberInterpolationPoints
+                     InvConst.PORTFOLIO_PRECISION // precision
+                  );
+
+                  //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
+                  risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+                  return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
+
                   if (weights.length > 0)
                   {
                      int count = 0;
@@ -891,6 +918,8 @@ public class PortfolioOptimizer
          }
 
          CapitalMarket instanceOfCapitalMarket = new CapitalMarket();
+         EasyOptimal   instanceOfEasyOptimal = new EasyOptimal();
+
          AssetParameters assetParameters = new AssetParameters();
 
          if (tickers.length > 1)
@@ -919,12 +948,42 @@ public class PortfolioOptimizer
                InvConst.PORTFOLIO_PRECISION // precision
             );
 
-            risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
+            //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
+            double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+            double[] return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
+
+            int minRiskOffset = getMin(risk1);
+            double minRiskUtil = risk1[minRiskOffset];
+            double minReturnUtil = return1[minRiskOffset];
+
+            int maxReturnOffset = getMax(return1);
+            double maxRiskUtil = risk1[maxReturnOffset];
+            double maxReturnUtil = return1[maxReturnOffset];
+
+            //double[] returnUtil = new double[] {minReturnUtil,maxReturnUtil};
+            //double[] riskUtil = new double[] {minRiskUtil,maxReturnUtil};
+
+            //double[] markUtility1 = instanceOfEasyOptimal.markowitzUtility(
+            //   returnUtil,riskUtil, lbConstraints, ubConstraints,mrData,100,0.000000000001);
+
+            instanceOfCapitalMarket.calculateEfficientFrontier(
+               //InvConst.MIN_CAPM_RETURNS,   // Minimum CAPM returns
+               //InvConst.MAX_CAPM_RETURNS,  // Maximum CAPM returns
+               minReturnUtil,   // Minimum CAPM returns
+               maxReturnUtil,  // Maximum CAPM returns
+               covarianceOfFunds,//Covariance matrix
+               expectedReturnsOfFunds, // expectedReturns
+               InvConst.PORTFOLIO_INTERPOLATION, // numberInterpolationPoints
+               InvConst.PORTFOLIO_PRECISION // precision
+            );
+
+            //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
+            risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+            return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
+
+            int j = 0;
          }
-
          return instanceOfCapitalMarket;
-
-
       }
       catch (Exception e)
       {
@@ -933,8 +992,37 @@ public class PortfolioOptimizer
          weights[0][0] = 1.0;
          return null;
       }
+   }
 
+   public int getMax(double[] inputArray){
+      Double maxValue = inputArray[0];
+      int offset = 0;
+      for(int i=0;i < inputArray.length;i++){
+         if(inputArray[i] > maxValue){
+            maxValue = inputArray[i];
+            offset = i;
+         }
+      }
+      //return maxValue;
+      if (offset > 99)
+         offset = 99;
+      return offset;
+   }
 
+   // Method for getting the minimum value
+   public int getMin(double[] inputArray){
+      double minValue = inputArray[0];
+      int offset = 0;
+      for(int i=0;i<inputArray.length;i++){
+         if(inputArray[i] < minValue){
+            minValue = inputArray[i];
+            offset = i;
+         }
+      }
+      //return minValue;
+      if (offset > 99)
+         offset = 99;
+      return offset;
    }
 
    private double[][] getPortfolioWeights(CapitalMarket capMarketData, Integer numTickers)
