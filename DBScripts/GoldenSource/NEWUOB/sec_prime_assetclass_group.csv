@@ -1,0 +1,46 @@
+theme,assetclass,primeassetclass,ticker,status,sortorder,color,lowerBound,upperBound,expectedReturn,risk,yield,created,lastUpdated
+8.UOB,Cash,Cash,Cash,A,99999,NULL,0,1,0.001,0,0,"2017-07-30 13:49:13",NULL
+8.UOB,Commodity,"Precious Metals",IAU.N,A,900,NULL,0,1,0.0225,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,Equity,"Emerging Mkt. Equities",EIMI.L,A,120,NULL,0.25,0.5,0.069,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,Equity,"U.S. Equities",VUSD.L,A,150,NULL,0.5,0.75,0.0617,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,"Fixed Income","Corporate Bonds ",LQDE.L,A,610,NULL,0.05,1,0.0206,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,"Fixed Income","E.U. High Yield Bonds",IHYG.L,A,500,NULL,0,0.2,0.0264,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,"Fixed Income","Emerging Market Bonds",IEMB.L,A,420,NULL,0.05,0.5,0.0334,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,"Fixed Income","Emerging Market Local Bonds",IEML.L,A,420,NULL,0,0.3,0.011,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,"Fixed Income","U.S. Bonds",IUAG.L,A,600,NULL,0.05,1,0.0134,0,0,"2017-07-30 13:49:12",NULL
+8.UOB,"Fixed Income","U.S. High Yield Bonds",IHYU.L,A,610,NULL,0.05,0.5,0.0334,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,Cash,Cash,Cash,A,99999,NULL,0,1,0.001,0,0,"2017-07-30 13:49:13",NULL
+8.UOB.Sing,Commodity,"Precious Metals",IAU.N,A,900,NULL,0,1,0.0225,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,Equity,"Emerging Mkt. Equities",EIMI.L,A,120,NULL,0.25,0.5,0.069,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,Equity,"Singapore Equities",EWS.N,A,100,NULL,0.05,0.1,0.0722,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,Equity,"U.S. Equities",VUSD.L,A,150,NULL,0.5,0.75,0.0617,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","Corporate Bonds ",LQDE.L,A,610,NULL,0.05,1,0.0206,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","E.U. High Yield Bonds",IHYG.L,A,500,NULL,0,0.2,0.0264,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","Emerging Market Bonds",IEMB.L,A,420,NULL,0.05,0.5,0.0334,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","Emerging Market Local Bonds",IEML.L,A,420,NULL,0,0.3,0.011,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","Singapore Bonds",F00000MQNO.MSTA,A,420,NULL,0.25,0.5,0.0145,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","U.S. Bonds",IUAG.L,A,600,NULL,0.05,1,0.0134,0,0,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,"Fixed Income","U.S. High Yield Bonds",IHYU.L,A,610,NULL,0.05,0.5,0.0334,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Commodity,"Precious Metals",GLD.N,A,900,NULL,0,1,0.04,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Equity,"Dev Asia X Japan Equities",IPXJ.L,N,110,NULL,0.03,0.07,0.065,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Equity,"Emerging Mkt. Equities",EIMI.L,A,120,NULL,0.22,0.25,0.08,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Equity,"Europe Equities",IMEU.L,A,140,NULL,0.2,0.25,0.07,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Equity,"Japan Equities",SJPA.L,N,130,NULL,0.05,0.07,0.05,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Equity,"Singapore Equities",ES3.SI,A,100,NULL,0.04,0.07,0.065,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,Equity,"U.S. Equities",VUSD.L,A,150,NULL,0.32,1,0.07,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,"Fixed Income","E.U. High Yield Bonds",IHYG.L,A,500,NULL,0.14,0.16,0.05,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,"Fixed Income","Pan Asia Bonds",2821.HK,A,400,NULL,0.25,0.3,0.03,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,"Fixed Income","Singapore Bonds",KV4.SI,A,420,NULL,0.25,0.6,0.022,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,"Fixed Income","U.S. Bonds",IUAG.L,N,600,NULL,0.14,0.16,0.022,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB,"Fixed Income","U.S. High Yield Bonds",IHYU.L,A,610,NULL,0.11,0.13,0.05,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Commodity,"Precious Metals",GLD.N,A,900,NULL,0,1,0.04,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Equity,"Dev Asia X Japan Equities",IPXJ.L,N,110,NULL,0.03,0.07,0.065,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Equity,"Emerging Mkt. Equities",EIMI.L,A,120,NULL,0.22,0.25,0.08,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Equity,"Europe Equities",IMEU.L,A,140,NULL,0.2,0.25,0.07,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Equity,"Japan Equities",SJPA.L,N,130,NULL,0.05,0.07,0.05,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Equity,"Singapore Equities",ES3.SI,A,100,NULL,0.04,0.07,0.065,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,Equity,"U.S. Equities",VUSD.L,A,150,NULL,0.32,1,0.07,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,"Fixed Income","E.U. High Yield Bonds",IHYG.L,A,500,NULL,0.14,0.3,0.05,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,"Fixed Income","Singapore Bonds",F0HKG062UI.MSTA,A,420,NULL,0.25,0.6,0.022,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,"Fixed Income","U.S. Bonds",IUAG.L,N,600,NULL,0.14,0.2,0.022,0,0,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,"Fixed Income","U.S. High Yield Bonds",IHYU.L,A,610,NULL,0.11,0.2,0.05,0,0,"2017-07-30 13:49:12",NULL

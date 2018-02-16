@@ -1,0 +1,76 @@
+theme,ticker,assetclass,assetName,assetcolor,assetsortorder,subclass,subclassName,subclasscolor,subclasssortorder,sec_type,created,lastUpdated
+8.UOB,1306.T,Equity,"Equity Securities",#333F50,10,"Japan Equities","Japan Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,Cash,Cash,Cash,#8E8E8E,40,Cash,Cash,NULL,99999,FX,"2017-10-10 17:17:39",NULL
+8.UOB,EIMI.L,Equity,"Equity Securities",#333F50,10,"Emerging Mkt. Equities","Emerging Mkt. Equities",NULL,120,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,EWJ.N,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,EWS.N,Equity,"Equity Securities",#333F50,10,"Singapore Equities","Singapore Equities",NULL,100,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,F00000MQNO.MSTA,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-10-10 17:17:39",NULL
+8.UOB,F0HKG062UI.MSTA,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-10-10 17:17:39",NULL
+8.UOB,GLD.N,Commodity,Commodities,#5E5E5E,30,"Precious Metals","Precious Metals",NULL,900,CM,"2017-10-10 17:17:39",NULL
+8.UOB,IAU.N,Commodity,Commodities,#5E5E5E,30,"Precious Metals","Precious Metals",NULL,900,FX,"2017-10-10 17:17:39",NULL
+8.UOB,IEMB.L,"Fixed Income","Fixed Income Securities",#333F50,10,"Emerging Market Bonds","Energing Market Bonds",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,IEML.L,"Fixed Income","Fixed Income Securities",#333F50,10,"Emerging Market Bonds","Energing Market Local Bonds",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,IHYG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"E.U. High Yield Bonds","E.U. High Yield Bonds",NULL,500,FX,"2017-10-10 17:17:39",NULL
+8.UOB,IHYU.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. High Yield Bonds","U.S. High Yield Bonds",NULL,610,FX,"2017-10-10 17:17:39",NULL
+8.UOB,IMEU.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,IPXJ.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,IUAG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. Bonds","U.S. Bonds",NULL,600,FX,"2017-10-10 17:17:39",NULL
+8.UOB,IVV.N,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,JNK.N,"Fixed Income","Fixed Income Securities",#47566D,20,"SPDR Barclays High Yield Bond ","SPDR Barclays High Yield Bond ",NULL,610,FX,"2017-10-10 17:17:39",NULL
+8.UOB,KV4.SI,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-07-30 22:54:47",NULL
+8.UOB,LQDE.L,"Fixed Income","Fixed Income Securities",#333F50,10,"Corpoarate Bonds","Corporate Bonds",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,SPY.N,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,VAS.AX,Equity,"Equity Securities",#333F50,10,"Australian Equity","Australian Equities",NULL,145,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,VEUR.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,VUSD.L,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-10-10 17:17:39",NULL
+8.UOB,XIC.TO,Equity,"Equity Securities",#333F50,10,"Canadian Equities","Canadian Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,1306.T,Equity,"Equity Securities",#333F50,10,"Japan Equities","Japan Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,Cash,Cash,Cash,#8E8E8E,40,Cash,Cash,NULL,99999,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,EIMI.L,Equity,"Equity Securities",#333F50,10,"Emerging Mkt. Equities","Emerging Mkt. Equities",NULL,120,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,EWJ.N,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,EWS.N,Equity,"Equity Securities",#333F50,10,"Singapore Equities","Singapore Equities",NULL,100,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,F00000MQNO.MSTA,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,F0HKG062UI.MSTA,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,GLD.N,Commodity,Commodities,#5E5E5E,30,"Precious Metals","Precious Metals",NULL,900,CM,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IAU.N,Commodity,Commodities,#5E5E5E,30,"Precious Metals","Precious Metals",NULL,900,CM,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IEMB.L,"Fixed Income","Fixed Income Securities",#333F50,10,"Emerging Market Bonds","Energing Market Bonds",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IEML.L,"Fixed Income","Fixed Income Securities",#333F50,10,"Emerging Market Bonds","Energing Market Local Bonds",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IHYG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"E.U. High Yield Bonds","E.U. High Yield Bonds",NULL,500,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IHYU.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. High Yield Bonds","U.S. High Yield Bonds",NULL,610,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IMEU.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IPXJ.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IUAG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. Bonds","U.S. Bonds",NULL,600,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,IVV.N,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,JNK.N,"Fixed Income","Fixed Income Securities",#47566D,20,"SPDR Barclays High Yield Bond ","SPDR Barclays High Yield Bond ",NULL,610,FX,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,KV4.SI,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-07-30 22:54:47",NULL
+8.UOB.Sing,LQDE.L,"Fixed Income","Fixed Income Securities",#333F50,10,"Corpoarate Bonds","Corporate Bonds",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,SPY.N,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,VAS.AX,Equity,"Equity Securities",#333F50,10,"Australian Equity","Australian Equities",NULL,145,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,VEUR.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,VUSD.L,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-10-10 17:17:39",NULL
+8.UOB.Sing,XIC.TO,Equity,"Equity Securities",#333F50,10,"Canadian Equities","Canadian Equities",NULL,140,EQ,"2017-10-10 17:17:39",NULL
+T.8.UOB,2821.HK,"Fixed Income","Fixed Income Securities",#47566D,20,"Pan Asia Bonds","Pan Asia Bonds",NULL,400,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,Cash,Cash,Cash,#8E8E8E,40,Cash,Cash,NULL,99999,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,EIMI.L,Equity,"Equity Securities",#333F50,10,"Emerging Mkt. Equities","Emerging Mkt. Equities",NULL,120,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB,ES3.SI,Equity,"Equity Securities",#333F50,10,"Singapore Equities","Singapore Equities",NULL,100,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB,GLD.N,Commodity,Commodities,#5E5E5E,30,"Precious Metals","Precious Metals",NULL,900,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,IHYG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"E.U. High Yield Bonds","E.U. High Yield Bonds",NULL,500,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,IHYU.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. High Yield Bonds","U.S. High Yield Bonds",NULL,610,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,IMEU.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB,IPXJ.L,Equity,"Equity Securities",#333F50,10,"Dev Asia X Japan Equities","Dev Asia X Japan Equities",NULL,110,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB,IUAG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. Bonds","U.S. Bonds",NULL,600,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,KV4.SI,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","Singapore Bonds",NULL,420,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB,SJPA.L,Equity,"Equity Securities",#333F50,10,"Japan Equities","Japan Equities",NULL,130,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB,VUSD.L,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,Cash,Cash,Cash,#8E8E8E,40,Cash,Cash,NULL,99999,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,EIMI.L,Equity,"Equity Securities",#333F50,10,"Emerging Mkt. Equities","Emerging Mkt. Equities",NULL,120,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,ES3.SI,Equity,"Equity Securities",#333F50,10,"Singapore Equities","Singapore Equities",NULL,100,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,F0HKG062UI.MSTA,"Fixed Income","Fixed Income Securities",#47566D,20,"Singapore Bonds","United Singapore Bond Funds",NULL,420,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,GLD.N,Commodity,Commodities,#5E5E5E,30,"Precious Metals","Precious Metals",NULL,900,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,IHYG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"E.U. High Yield Bonds","E.U. High Yield Bonds",NULL,500,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,IHYU.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. High Yield Bonds","U.S. High Yield Bonds",NULL,610,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,IMEU.L,Equity,"Equity Securities",#333F50,10,"Europe Equities","Europe Equities",NULL,140,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,IPXJ.L,Equity,"Equity Securities",#333F50,10,"Dev Asia X Japan Equities","Dev Asia X Japan Equities",NULL,110,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,IUAG.L,"Fixed Income","Fixed Income Securities",#47566D,20,"U.S. Bonds","U.S. Bonds",NULL,600,FX,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,SJPA.L,Equity,"Equity Securities",#333F50,10,"Japan Equities","Japan Equities",NULL,130,EQ,"2017-07-30 22:54:47",NULL
+T.8.UOB.Sing,VUSD.L,Equity,"Equity Securities",#333F50,10,"U.S. Equities","U.S. Equities",NULL,150,EQ,"2017-07-30 22:54:47",NULL

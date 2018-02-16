@@ -1,0 +1,29 @@
+instrumentid,status,securityStatus,ticker,cusip,isin,ric,name,assetclass,subclass,type,style,expenseRatio,inception,issuer,securityRiskSTD,rbsaFlag,exchange,base_currency
+1,A,A,Cash,NULL,NULL,Cash,Cash,Cash,Cash,NULL,NULL,0,NULL,NULL,0,,USD,USD
+13,A,A,IAU.N,NULL,NULL,IAU.N,"iShares Gold Trust",Commodity,Gold,NULL,NULL,0,NULL,NULL,0,,NYSE,USD
+17,A,A,IVV.N,NULL,NULL,IVV.N,"iShares Core S&P 500",Equity,"Large Cap",NULL,NULL,0.0007,NULL,NULL,0.10901,,NYSE,USD
+23,A,A,JNK.N,NULL,NULL,JNK.N,"SPDR Barclays High Yield Bond ETF",HighYield,"Corporate Junk",NULL,NULL,0.004,NULL,NULL,0.041494,,NYSE,USD
+35,A,A,SPY.N,NULL,NULL,SPY.N,"SPDR S&P 500",Equity,"Large Cap",NULL,NULL,0.0009,NULL,NULL,0.104227,,NYSE,USD
+100,A,A,2821.HK,NULL,NULL,2821.HK,"ABF Pan Asia Bond Index Fund","Fixed Income","Pan Asia Bonds",NULL,NULL,0,NULL,NULL,0,NULL,SGX,USD
+101,A,A,IPXJ.L,NULL,NULL,IPXJ.L,"iShares MSCI Pacific ex Japan",Equity,"Dev Asia X Japan Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+102,A,A,EIMI.L,NULL,NULL,EIMI.L,"iShares Core MSCI Emerging Markets IMI",Equity,"Emerging Mkt. Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+103,A,A,IHYG.L,NULL,NULL,IHYG.L,"iShares Euro High Yield Corporate Bond UCITS ETF","Fixed Income","E.U. High Yield Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,EUR
+104,A,A,IHYU.L,NULL,NULL,IHYU.L,"iShares $ High Yield Corporate Bond UCITS ETF","Fixed Income","U.S. High Yield Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+105,A,A,SJPA.L,NULL,NULL,SJPA.L,"iShares Core MSCI Japan IMI UCITS ETF",Equity,"Japan Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,GBX
+106,A,A,IMEU.L,NULL,NULL,IMEU.L,"iShares MSCI Europe UCITS ETF (Dist)",Equity,"Europe Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,GBX
+107,A,A,IUAG.L,NULL,NULL,IUAG.L,"iShares US Aggregate Bond UCITS ETF","Fixed Income","U.S. Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+111,A,A,EWS.N,NULL,NULL,EWS.N,"iShares MSCI Singapore Capped",Equity,"Singapore Equities",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NYSE,USD
+114,A,A,EWJ.N,NULL,NULL,EWJ.N,"ISHARES CORE MSCI JAP IMI UCITS",Equity,"Japan Equities",NULL,NULL,0,NULL,NULL,0,NULL,NYSE,USD
+117,A,A,VUSD.L,NULL,NULL,VUSD.L,"Vanguard S&P 500 UCITS ETF",Equity,"U.S. Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+118,A,A,ES3.SI,NULL,NULL,ES3.SI,"SPDR Straits Times Index ETF",Equity,"Singapore Equities",NULL,NULL,NULL,NULL,NULL,NULL,NULL,SGX,SGD
+119,A,A,KV4.SI,NULL,NULL,KV4.SI,"Markit iBoxx ABF Singapore Government UCITS ETF 1C (KV4)","Fixed Income","Singapore Bonds",NULL,NULL,0.2,NULL,NULL,NULL,NULL,SGX,SGD
+132,A,A,GLD.N,NULL,NULL,GLD.N,"SPDR® Gold Shares",Commodity,"Precious Metals",NULL,NULL,0.004,NULL,NULL,0.134075,,NYSE,USD
+600,A,A,VEUR.L,NULL,NULL,VEUR.L,"VANGUARD FTSE DEV EU UCITS ETF",Equity,"Europe Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,GBP
+601,A,A,1306.T,NULL,NULL,1306.T,"TOPIX EXCHANGE TRADED",Equity,"Japan Equities",NULL,NULL,0,NULL,NULL,0,NULL,TSE,JPY
+602,A,A,XIC.TO,NULL,NULL,XIC.TO,"iShares Core SP TSX CA",Equity,"Australian Equities",NULL,NULL,0,NULL,NULL,0,NULL,TSE,CAD
+603,A,A,VAS.AX,NULL,NULL,VAS.AX,"iShares Core MSCI Emerging Markets IMI",Equity,"Emerging Mkt. Equities",NULL,NULL,0,NULL,NULL,0,NULL,ASX,AUD
+610,A,A,LQDE.L,NULL,NULL,LQDE.L,"iShares $ Corp Bond UCITS ETF USD (Dist)","Fixed Income","Corporate Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+611,A,A,IEMB.L,NULL,NULL,IEMB.L,"iShares J P Morgan $EM Bond ETF","Fixed Income","Emerging Market Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+612,A,A,IEML.L,NULL,NULL,IEML.L,"iShares J P Morgan $EM Local Bond ETF","Fixed Income","Emerging Market Local Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
+1004,A,A,F0HKG062UI.MSTA,NULL,SG9999003412,F0HKG062UI.MSTA,"United Singapore Bond Fund","Fixed Income","Singapore Bonds",NULL,NULL,NULL,NULL,NULL,NULL,NULL,MSTA,SGD
+1005,A,A,F00000MQNO.MSTA,NULL,SG9999007454,F00000MQNO.MSTA,"Eastspring Investments Unit Trusts","Fixed Income","Singapore Bonds",NULL,NULL,NULL,NULL,NULL,NULL,NULL,MSTA,SGD

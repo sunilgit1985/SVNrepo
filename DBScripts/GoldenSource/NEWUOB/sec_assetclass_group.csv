@@ -1,0 +1,17 @@
+theme,status,assetclass,displayName,ticker,sortorder,lowerBound,upperBound,color,averageReturn,riskAdjustment,endAllocation,created,lastupdated
+8.UOB,A,Cash,Cash,BIL.N,40,0,0.05,#8E8E8E,0,0.75,0.8,"2017-07-30 13:49:12",NULL
+8.UOB,A,Commodity,Commodities,IAU.N,30,0,0.05,#5E5E5E,0.0225,0.75,0.01,"2017-07-30 13:49:12",NULL
+8.UOB,A,Equity,"Equity Securities",VUSD.L,10,0,0.9,#333F50,0.0617,0.75,0.9,"2017-07-30 13:49:12",NULL
+8.UOB,A,"Fixed Income","Fixed Income Securities",IUAG.L,20,0.1,1,#47566D,0.0134,0.75,0.8,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,A,Cash,Cash,BIL.N,40,0,0.05,#8E8E8E,0,0.75,0.8,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,A,Commodity,Commodities,IAU.N,30,0,0.05,#5E5E5E,0.0225,0.75,0.01,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,A,Equity,"Equity Securities",VUSD.L,0,0,0.9,#333F50,0.0617,0.75,0.9,"2017-07-30 13:49:12",NULL
+8.UOB.Sing,A,"Fixed Income","Fixed Income Securities",IUAG.L,20,0.1,1,#47566D,0.0134,0.75,0.8,"2017-07-30 13:49:12",NULL
+T.8.UOB,A,Cash,Cash,BIL.N,40,0,0.01,#8E8E8E,0,0.75,0.8,"2017-07-30 13:49:12",NULL
+T.8.UOB,A,Commodity,Commodities,GLD.N,30,0.02,0.05,#5E5E5E,0.06,0.75,0.01,"2017-07-30 13:49:12",NULL
+T.8.UOB,A,Equity,"Equity Securities",VUSD.L,10,0.1,0.9,#333F50,0.09,0.75,0.9,"2017-07-30 13:49:12",NULL
+T.8.UOB,A,"Fixed Income","Fixed Income Securities",IUAG.L,20,0,1,#47566D,0.0424,0.75,0.8,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,A,Cash,Cash,BIL.N,40,0,1,#8E8E8E,0,0.75,0.8,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,A,Commodity,Commodities,GLD.N,30,0.02,1,#5E5E5E,0.04,0.75,0.01,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,A,Equity,"Equity Securities",VUSD.L,10,0.1,1,#333F50,0.07,0.75,0.9,"2017-07-30 13:49:12",NULL
+T.8.UOB.Sing,A,"Fixed Income","Fixed Income Securities",IUAG.L,20,0,1,#47566D,0.022,0.75,0.8,"2017-07-30 13:49:12",NULL
