@@ -868,7 +868,14 @@ public class
 
    public Boolean getAllCashonZeroRisk()
    {
-      return ((allCashonZeroRisk == null) ? false : true);
+     Boolean a;
+      a = allCashonZeroRisk;
+      if (a == null)
+         return true;
+      else
+      return a;
+
+      //return ((allCashonZeroRisk == null) ? false : true);
    }
 
    public void setAllCashonZeroRisk(Boolean allCashonZeroRisk)
