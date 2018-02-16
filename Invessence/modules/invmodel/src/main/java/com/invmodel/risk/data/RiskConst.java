@@ -120,6 +120,8 @@ public class RiskConst
    public static String WITHDRAWLAGE      = "WITHDRAWLAGE";
    public static String RISKADUSTMENT      = "RISKADJUSTMENT";
 
+   public static String ALTTHEME        = "THEME-";
+
    public static String FINETUNEAJUSTMENTS   = "FINETUNEAJUSTMENTS";
    public static Integer RISKQSORTNUM      = 900;
    public static Integer CUSTOMSORTNUM    = 999;

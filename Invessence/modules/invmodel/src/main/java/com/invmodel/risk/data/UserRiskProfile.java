@@ -151,7 +151,7 @@ public class UserRiskProfile
       {
          if (getAdvisorRiskMaster().getAdvisorMasterdata().containsKey(key))
          {
-            value = getAdvisorRiskMaster().getAdvisorMasterdata().get(key).getDefaultDoubleValue().toString();
+            value = getAdvisorRiskMaster().getAdvisorMasterdata().get(key).getDefaultStrValue();
          }
       }
       return value;

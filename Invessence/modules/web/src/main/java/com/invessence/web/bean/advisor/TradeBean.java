@@ -727,15 +727,19 @@ public class TradeBean extends TradeClientData implements Serializable
    {
       //tradeDAO.deletePendingTrades();
       collectTradeSummary();
+
+      /*
       String msg="";
       if(getFilteredSummaryList().size()==0)
       {
          msg = "No account(s) information to load.";
       }else if(getFilteredSummaryList().size()>0)
       {
-         msg = getFilteredSummaryList().size() + " Account(s) were loaded.";
+         msg = getFilteredSum
+         maryList().size() + " Account(s) were loaded.";
       }
       showGrowl(msg, "Info");
+      */
 
    }
 

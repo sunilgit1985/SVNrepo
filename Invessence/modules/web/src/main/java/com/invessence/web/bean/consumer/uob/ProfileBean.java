@@ -943,13 +943,17 @@ public class ProfileBean extends PortfolioCreationUI
 
    public void setRiskAns8(String value)
    {
+      String newTheme = null;
       if (value.equalsIgnoreCase("1")) {
-         getCustomer().setTheme("8.UOB.Sing");
-         riskCalc.setTheme("8.UOB.Sing");
+         newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.ALTTHEME+value,null);
       }
       else {
-         getCustomer().setTheme("8.UOB");
-         riskCalc.setTheme("8.UOB");
+         newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.THEME,null);
+      }
+      if (newTheme != null)
+      {
+         getCustomer().setTheme(newTheme);
+         riskCalc.setTheme(newTheme);
       }
       setRiskAns(8, value);
    }
