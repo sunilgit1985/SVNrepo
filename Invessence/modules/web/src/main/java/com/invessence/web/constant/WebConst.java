@@ -43,6 +43,7 @@ public class WebConst
 
    public final static String ROLE_OWNER = "OWNER";
    public final static String ROLE_USER = "USER";
+   public final static String ROLE_TEST = "TEST";
    public final static String ACCESS_USER_FULL = "F";
    // public final static String ACCESS_USER_VIEW = "V"; By default you have view privileges if data is entered in DB user_access_role
 

@@ -15,108 +15,140 @@ import java.util.regex.*;
 public class JavaUtil implements Serializable
 {
 
-   public String displayFormat(Integer value, String format) {
-      if (value == null) {
+   public String displayFormat(Integer value, String format)
+   {
+      if (value == null)
+      {
          return ("");
       }
-      else {
-         DecimalFormat df = new DecimalFormat(format);
-         return df.format(value);
-     }
-   }
-
-   public String displayFormat(Double value, String format) {
-      if (value == null) {
-         return ("");
-      }
-      else {
+      else
+      {
          DecimalFormat df = new DecimalFormat(format);
          return df.format(value);
       }
    }
 
-   public String displayFormat(String value, String format) {
-      if (value == null || value.isEmpty()) {
+   public String displayFormat(Double value, String format)
+   {
+      if (value == null)
+      {
          return ("");
       }
-      else {
+      else
+      {
+         DecimalFormat df = new DecimalFormat(format);
+         return df.format(value);
+      }
+   }
+
+   public String displayFormat(String value, String format)
+   {
+      if (value == null || value.isEmpty())
+      {
+         return ("");
+      }
+      else
+      {
          DecimalFormat df = new DecimalFormat(format);
          return df.format(Double.parseDouble(value));
 
       }
    }
 
-   public String displayDateFormat(String input) {
+   public String displayDateFormat(String input)
+   {
       String year, month, date;
-      try {
-         if (input == null || input.isEmpty()) {
+      try
+      {
+         if (input == null || input.isEmpty())
+         {
             return ("");
          }
-         else {
-            if (input.contains("/") || input.contains("-")) {
+         else
+         {
+            if (input.contains("/") || input.contains("-"))
+            {
                return input;
             }
-            else {
-               date =  input.substring(6,8);
-               month = input.substring(4,6);
-               year = input.substring(0,4);
-               return  month + "/" + date + "/" + year ;
+            else
+            {
+               date = input.substring(6, 8);
+               month = input.substring(4, 6);
+               year = input.substring(0, 4);
+               return month + "/" + date + "/" + year;
             }
          }
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
          return input;
       }
    }
 
    public static String UppercaseFirstLetters(String str)
    {
-      if (str != null) {
+      if (str != null)
+      {
          boolean prevWasWhiteSp = true;
          char[] chars = str.toCharArray();
-         for (int i = 0; i < chars.length; i++) {
-            if (Character.isLetter(chars[i])) {
-               if (prevWasWhiteSp) {
+         for (int i = 0; i < chars.length; i++)
+         {
+            if (Character.isLetter(chars[i]))
+            {
+               if (prevWasWhiteSp)
+               {
                   chars[i] = Character.toUpperCase(chars[i]);
                }
                prevWasWhiteSp = false;
-            } else {
+            }
+            else
+            {
                prevWasWhiteSp = Character.isWhitespace(chars[i]);
             }
          }
          return new String(chars);
       }
       else
+      {
          return null;
+      }
    }
 
 
-
-   public static void main(String[] args) {
+   public static void main(String[] args)
+   {
       //System.out.println(isValidDate("11/31/2016", "MM/dd/yyyy"));
       //System.out.println(isValidZipCode("98989"));
       //System.out.println(isValidSSN("343-22-4444"));
-      String s="98";
-      System.out.println(s==null || s.trim().equals("")?"":s.substring(0,s.length()>5?5:s.length()));
+      String s = "98";
+      System.out.println(s == null || s.trim().equals("") ? "" : s.substring(0, s.length() > 5 ? 5 : s.length()));
    }
 
    public static String compareDate(String enterDate)
    {
-      String flag="";
-      try{
+      String flag = "";
+      try
+      {
          DateFormat userDateFormat = new SimpleDateFormat("MM/dd/yyyy");
          Date entryDate = userDateFormat.parse(enterDate);
-         Date todayDate= new Date();
+         Date todayDate = new Date();
          todayDate = userDateFormat.parse(userDateFormat.format(todayDate));
-         if(entryDate.compareTo(todayDate)>0){
-            flag="A";
-         }else if(entryDate.compareTo(todayDate)<0){
-            flag="B";
-         }else if(entryDate.compareTo(todayDate)==0){
-            flag="E";
+         if (entryDate.compareTo(todayDate) > 0)
+         {
+            flag = "A";
+         }
+         else if (entryDate.compareTo(todayDate) < 0)
+         {
+            flag = "B";
+         }
+         else if (entryDate.compareTo(todayDate) == 0)
+         {
+            flag = "E";
          }
 
-      }catch(Exception ex){
+      }
+      catch (Exception ex)
+      {
          ex.printStackTrace();
       }
       return flag;
@@ -124,20 +156,26 @@ public class JavaUtil implements Serializable
 
    public static String checkYear(String enterDate)
    {
-      String flag="";
-      try{
+      String flag = "";
+      try
+      {
          DateFormat userDateFormat = new SimpleDateFormat("MM/dd/yyyy");
          Date entryDate = userDateFormat.parse(enterDate);
-         Date todayDate= new Date();
+         Date todayDate = new Date();
          todayDate = userDateFormat.parse(userDateFormat.format(todayDate));
-         Long year=(todayDate.getTime()-entryDate.getTime())/(24 * 60 * 60 * 1000)/365;
-         if(year>130){
-            flag="F";
-         }else {
-            flag="S";
+         Long year = (todayDate.getTime() - entryDate.getTime()) / (24 * 60 * 60 * 1000) / 365;
+         if (year > 130)
+         {
+            flag = "F";
+         }
+         else
+         {
+            flag = "S";
          }
 
-      }catch(Exception ex){
+      }
+      catch (Exception ex)
+      {
          ex.printStackTrace();
       }
       return flag;
@@ -145,32 +183,40 @@ public class JavaUtil implements Serializable
 
    public static boolean checkdate(String enterDate)
    {
-      Boolean flag=false;
-      try{
+      Boolean flag = false;
+      try
+      {
          DateFormat userDateFormat = new SimpleDateFormat("MM/dd/yyyy");
          Date entryDate = userDateFormat.parse(enterDate);
-         Date todayDate= new Date();
-         if(entryDate.after(todayDate))
+         Date todayDate = new Date();
+         if (entryDate.after(todayDate))
          {
-            flag=true;
+            flag = true;
             System.out.println("entryDate is after todayDate");
          }
 
-      }catch(Exception ex){
+      }
+      catch (Exception ex)
+      {
          ex.printStackTrace();
       }
       return flag;
    }
 
-   public static boolean isValidDate(String value, String format) {
+   public static boolean isValidDate(String value, String format)
+   {
       Date date = null;
-      try {
+      try
+      {
          SimpleDateFormat sdf = new SimpleDateFormat(format);
          date = sdf.parse(value);
-         if (!value.equals(sdf.format(date))) {
+         if (!value.equals(sdf.format(date)))
+         {
             date = null;
          }
-      } catch (ParseException ex) {
+      }
+      catch (ParseException ex)
+      {
          ex.printStackTrace();
       }
       return date != null;
@@ -191,4 +237,24 @@ public class JavaUtil implements Serializable
       Matcher matcher = pattern.matcher(value);
       return matcher.matches();
    }
+
+   //
+   public static Boolean isInRange(Integer data,Integer minRange,Integer maxRange)
+   {
+//      return data != null && (minRange!=null )?  data>= minRange : true && data >= minRange && (maxRange!=null )?  data<= maxRange : true  ;
+      if(data == null ){
+         return false;
+      }
+      if(minRange!=null && maxRange!=null){
+         return  data>= minRange &&  data<= maxRange;
+      }
+      if(minRange!=null){
+         return  data>= minRange;
+      }
+      if(maxRange!=null){
+         return  data<= maxRange;
+      }
+      return true;
+   }
+
 }

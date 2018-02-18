@@ -64,6 +64,7 @@ public class UserInfoDAO extends JdbcDaoSupport
                data.setCurrentPassword(convert.getStrData(rs.get("pwd")));
                data.setLastName(convert.getStrData(rs.get("lastname")));
                data.setFirstName(convert.getStrData(rs.get("firstname")));
+               data.setFullName(convert.getStrData(rs.get("fullname")));
                data.setEmailalt(convert.getStrData(rs.get("emailalt")));
                data.setQ1(convert.getStrData(rs.get("question1")));
                data.setAns1(convert.getStrData(rs.get("answer1")));

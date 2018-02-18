@@ -28,12 +28,12 @@ public class ConsumerDashBean extends CustomerData implements Serializable
 {
    private static final long serialVersionUID = 1001L;
 
-   @ManagedProperty("#{webutil}")
-   private WebUtil webutil;
-   public void setWebutil(WebUtil webutil)
-   {
-      this.webutil = webutil;
-   }
+//   @ManagedProperty("#{webutil}")
+//   private WebUtil webutil;
+//   public void setWebutil(WebUtil webutil)
+//   {
+//      this.webutil = webutil;
+//   }
 
    @ManagedProperty("#{uiLayout}")
    private UILayout uiLayout;
@@ -346,7 +346,7 @@ public class ConsumerDashBean extends CustomerData implements Serializable
       System.out.println("selectedAccount.getAcctnum().toString()");
       try
       {
-         selAccountList = listDAO.getClientProfileList(webutil.getLogonid(),selAcctNum, null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
+         selAccountList = listDAO.getClientProfileList(webutil.getLogonid(),selAcctNum, null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep(),getInstance());
          if (selAccountList.get(0).getCustomName().isEmpty())
          {
             setGoalcstmnm("Goal-" + selAccountList.get(0).getGoal());

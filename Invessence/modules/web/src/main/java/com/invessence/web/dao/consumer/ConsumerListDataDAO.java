@@ -66,6 +66,9 @@ public class ConsumerListDataDAO extends JdbcDaoSupport implements Serializable
                data.setTradePreference(convert.getStrData(rs.get("tradePreference")));
                data.setGoal(convert.getStrData(rs.get("goal")));
                data.setAccountType(convert.getStrData(rs.get("accttype")));
+               if(data.getAccountType()==null){
+                  data.setAccountType("-");
+               }
                data.setAge(convert.getIntData(rs.get("age")));
                data.setHorizon(convert.getIntData(rs.get("horizon")));
                data.setCalendarYear(convert.getIntData(rs.get("yearnum")));
@@ -239,7 +242,7 @@ public class ConsumerListDataDAO extends JdbcDaoSupport implements Serializable
       }
    }
 
-   public ArrayList<CustomerData> getClientProfileList(Long logonid, Long acctnum, Integer days, String advisor, String rep)
+   public ArrayList<CustomerData> getClientProfileList(Long logonid, Long acctnum, Integer days, String advisor, String rep,CustomerData data)
    {
       DataSource ds = getDataSource();
       ConsumerListSP sp = new ConsumerListSP(ds, "sel_ClientProfileData", 0);
@@ -253,7 +256,7 @@ public class ConsumerListDataDAO extends JdbcDaoSupport implements Serializable
          for (Map<String, Object> map : rows)
          {
             Map rs = (Map) rows.get(i);
-            CustomerData data = new CustomerData();
+//            CustomerData data = new CustomerData();
 
             data.setLogonid(convert.getLongData(rs.get("logonid")));
             data.setAcctnum(convert.getLongData(rs.get("acctnum")));
@@ -315,6 +318,9 @@ public class ConsumerListDataDAO extends JdbcDaoSupport implements Serializable
 
 
             data.setDateOpened(convert.getStrData(rs.get("dateOpened")));
+
+            data.setRole(convert.getStrData(rs.get("role")));
+            data.setPrivileges(convert.getStrData(rs.get("privileges")));
 
             //data.setNetWorth(convert.getIntData(rs.get("networth")));
             data.setDependent(convert.getIntData(rs.get("dependent")));
@@ -869,5 +875,171 @@ public class ConsumerListDataDAO extends JdbcDaoSupport implements Serializable
       }
       return null;
    }
+//
+public ArrayList<CustomerData> getClientProfileList(Long logonid, Long acctnum, Integer days, String advisor, String rep)
+{
+   DataSource ds = getDataSource();
+   ConsumerListSP sp = new ConsumerListSP(ds, "sel_ClientProfileData", 0);
+   ArrayList<CustomerData> listProfiles = new ArrayList<CustomerData>();
+   Map outMap = sp.loadClientProfileData(logonid, acctnum, days, advisor, rep);
+   String managed, currentstatus;
+   if (outMap != null)
+   {
+      ArrayList<Map<String, Object>> rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
+      int i = 0;
+      for (Map<String, Object> map : rows)
+      {
+         Map rs = (Map) rows.get(i);
+         CustomerData data = new CustomerData();
 
+         data.setLogonid(convert.getLongData(rs.get("logonid")));
+         data.setAcctnum(convert.getLongData(rs.get("acctnum")));
+         data.setPortfolioName(convert.getStrData(rs.get("portfolioName")));
+         data.setEmail(convert.getStrData(rs.get("email")));
+         data.setUserid(convert.getStrData(rs.get("userid")));
+         data.setAdvisor(convert.getStrData(rs.get("advisor")));
+         data.setRep(convert.getStrData(rs.get("rep")));
+         data.setBasket(convert.getStrData(rs.get("theme")));
+         data.setTheme(convert.getStrData(rs.get("theme")));
+         data.setLastname(convert.getStrData(rs.get("lastname")));
+         data.setFirstname(convert.getStrData(rs.get("firstname")));
+         data.setName(convert.getStrData(rs.get("firstname")) + " " + convert.getStrData(rs.get("lastname")));
+         data.setRegisteredState(convert.getStrData(rs.get("state")));
+         data.setClientAccountID(convert.getStrData(rs.get("clientAccountID")));
+
+         managed = (convert.getStrData(rs.get("acctstatus")));
+         data.setManagedFlag(managed);
+         data.setManaged(getManaged(managed));
+
+         currentstatus = convert.getStrData(rs.get("status"));
+         data.setCurrentStatus(currentstatus);
+         data.setEditable(getEditable(currentstatus));
+         data.setUnopened(getUnopened(currentstatus));
+
+         data.setTradePreference(convert.getStrData(rs.get("tradePreference")));
+         data.setPortfolioName(convert.getStrData(rs.get("portfolioName")));
+         data.setGoal(convert.getStrData(rs.get("goal")));
+         data.setAccountType(convert.getStrData(rs.get("accttype")));
+         data.setAge(convert.getIntData(rs.get("age")));
+         data.setHorizon(convert.getIntData(rs.get("horizon")));
+         data.setCalendarYear(convert.getIntData(rs.get("yearnum")));
+         data.setRiskIndex(convert.getDoubleData(rs.get("riskIndex")));
+         data.setInitialInvestment(convert.getIntData(rs.get("initialInvestment")));
+         data.setKeepLiquid(convert.getIntData(rs.get("keepLiquid")));
+         data.setActualInvestment(convert.getDoubleData(rs.get("actualCapital")));
+         data.setRecurringInvestment(convert.getIntData(rs.get("recurringInvestment")));
+         data.setObjective(convert.getIntData(rs.get("longTermGoal")));
+         data.setStayInvested(convert.getIntData(rs.get("stayInvested")));
+
+         data.setRiskCalcMethod(convert.getStrData(rs.get("calcModel")));
+         data.setAllocationIndex(convert.getIntData(rs.get("assetIndex")));
+         data.setPortfolioIndex(convert.getIntData(rs.get("portfolioIndex")));
+
+         String taxable = convert.getStrData(rs.get("taxable"));
+
+         if (taxable == null)
+         {
+            data.setAccountTaxable(false);
+         }
+         else if (taxable.startsWith("N"))
+         {
+            data.setAccountTaxable(false);
+         }
+         else
+         {
+            data.setAccountTaxable(true);
+         }
+
+
+         data.setDateOpened(convert.getStrData(rs.get("dateOpened")));
+         data.setRole(convert.getStrData(rs.get("role")));
+         data.setPrivileges(convert.getStrData(rs.get("privileges")));
+
+         //data.setNetWorth(convert.getIntData(rs.get("networth")));
+         data.setDependent(convert.getIntData(rs.get("dependent")));
+         data.getAccountFinancials().setDependent(convert.getIntData(rs.get("dependent")));
+         data.getAccountFinancials().setEstdDependentExpense(convert.getLongData(rs.get("estdDependentExpense")));
+         data.getAccountFinancials().setHouseholdwages(convert.getLongData(rs.get("householdwages")));
+         data.getAccountFinancials().setOtherincome(convert.getLongData(rs.get("otherincome")));
+         data.getAccountFinancials().setBonusincome(convert.getLongData(rs.get("bonusincome")));
+         data.getAccountFinancials().setInterestincome(convert.getLongData(rs.get("interestincome")));
+         data.getAccountFinancials().setDividentincome(convert.getLongData(rs.get("dividentincome")));
+         data.getAccountFinancials().setRentalIncome(convert.getLongData(rs.get("rentalIncome")));
+         data.getAccountFinancials().setTotalIncome(convert.getLongData(rs.get("totalIncome")));
+         data.getAccountFinancials().setTotalIncomeAnnulized(convert.getLongData(rs.get("totalIncomeAnnulized")));
+
+         data.getAccountFinancials().setTotalIncomeAnnulized(convert.getLongData(rs.get("householdPayment")));
+         data.getAccountFinancials().setOtherPropertiesPayment(convert.getLongData(rs.get("otherPropertiesPayment")));
+         data.getAccountFinancials().setAutomobilePayment(convert.getLongData(rs.get("automobilePayment")));
+         data.getAccountFinancials().setMedicalPayment(convert.getLongData(rs.get("medicalPayment")));
+
+         data.getAccountFinancials().setFederaltaxes(convert.getLongData(rs.get("federaltaxes")));
+         data.getAccountFinancials().setStateTaxes(convert.getLongData(rs.get("stateTaxes")));
+         data.getAccountFinancials().setPropertyTax(convert.getLongData(rs.get("propertyTax")));
+         data.getAccountFinancials().setOtherPropertyTax(convert.getLongData(rs.get("otherPropertyTax")));
+
+         data.getAccountFinancials().setHomeInsurance(convert.getLongData(rs.get("homeInsurance")));
+         data.getAccountFinancials().setLifeInsurance(convert.getLongData(rs.get("lifeInsurance")));
+         data.getAccountFinancials().setAutoInsurance(convert.getLongData(rs.get("autoInsurance")));
+
+         data.getAccountFinancials().setEducationPayment(convert.getLongData(rs.get("educationPayment")));
+         data.getAccountFinancials().setCreditCardPayment(convert.getLongData(rs.get("creditCardPayment")));
+         data.getAccountFinancials().setMiscExpenses(convert.getLongData(rs.get("miscExpenses")));
+         data.getAccountFinancials().setTotalExpense(convert.getLongData(rs.get("totalExpense")));
+         data.getAccountFinancials().setTotalExpenseAnnulized(convert.getLongData(rs.get("totalExpenseAnnulized")));
+
+         data.getAccountFinancials().setHomeEquity(convert.getLongData(rs.get("homeEquity")));
+         data.getAccountFinancials().setAutoValue(convert.getLongData(rs.get("autoValue")));
+         data.getAccountFinancials().setMoneyMarket(convert.getLongData(rs.get("moneyMarket")));
+         data.getAccountFinancials().setCheckingAcct(convert.getLongData(rs.get("checkingAcct")));
+         data.getAccountFinancials().setSavingAcct(convert.getLongData(rs.get("savingAcct")));
+         data.getAccountFinancials().setInvestment(convert.getLongData(rs.get("investment")));
+         data.getAccountFinancials().setEquityOtherProperties(convert.getLongData(rs.get("equityOtherProperties")));
+         data.getAccountFinancials().setRetirementInvestement(convert.getLongData(rs.get("retirementInvestement")));
+         data.getAccountFinancials().setMiscInvestment(convert.getLongData(rs.get("miscInvestment")));
+         data.getAccountFinancials().setTotalAsset(convert.getLongData(rs.get("totalAsset")));
+
+         data.getAccountFinancials().setMortgageLoan(convert.getLongData(rs.get("mortgageLoan")));
+         data.getAccountFinancials().setAutoLoan(convert.getLongData(rs.get("autoLoan")));
+         data.getAccountFinancials().setEducationLoan(convert.getLongData(rs.get("educationLoan")));
+         data.getAccountFinancials().setCreditCardDebt(convert.getLongData(rs.get("creditCardDebt")));
+         data.getAccountFinancials().setOtherPropertiesLoan(convert.getLongData(rs.get("otherPropertiesLoan")));
+         data.getAccountFinancials().setMedicalDebt(convert.getLongData(rs.get("medicalDebt")));
+         data.getAccountFinancials().setOtherDebt(convert.getLongData(rs.get("otherDebt")));
+         data.getAccountFinancials().setTotalDebt(convert.getLongData(rs.get("totalDebt")));
+
+         data.getAccountFinancials().setLiquidnetworth(convert.getLongData(rs.get("liquidnetworth")));
+         data.getAccountFinancials().setNetworth(convert.getLongData(rs.get("networth")));
+         data.setCustomName(convert.getStrData(rs.get("customName")));
+
+         if(data.getCustomName().isEmpty() && acctnum==null){
+            data.setCustomName(data.getGoal());
+         }
+         if(acctnum!=null && data.getAccountType()==null){
+            data.setAccountType("-");
+         }
+
+         if (data.getGoalData() == null)
+         {
+            data.setGoalData(new GoalsData());
+         }
+
+         data.getGoalData().setGoalDesired(convert.getDoubleData(rs.get("goalDesired")));
+         if(data.getManaged()){
+            data.setCstmAccountLabel(data.getCustomName()+"-"+data.getDisplayActiveAcctNum());
+         }else{
+            data.setCstmAccountLabel(data.getCustomName()+"-"+data.getCurrentStatus());
+         }
+
+         data.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
+         data.setSettleCurrency(convert.getStrData(rs.get("settleCurrency")));
+         data.setExchangeRate(convert.getDoubleData(rs.get("exchangeRate")));
+
+         listProfiles.add(i, data);
+         i++;
+      }
+      return listProfiles;
+   }
+   return null;
+}
 }

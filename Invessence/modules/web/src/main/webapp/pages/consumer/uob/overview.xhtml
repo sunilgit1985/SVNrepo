@@ -202,13 +202,6 @@
                                                     <h:outputText value="#{position.settleCurrency}">
                                                     </h:outputText>
                                                 </p:column>
-                                                <p:column headerText="Gain/Loss" priority="0"
-                                                          style="text-align: right" styleClass="Fs12"
-                                                          resizable="true"><!-- ROHIT's CHANGE -->
-                                                    <h:outputText value="#{position.settlePnL}">
-                                                        <!--<f:convertNumber type="currency" currencySymbol=""/>-->
-                                                    </h:outputText>
-                                                </p:column>
 
                                                 <p:columnGroup type="footer">
                                                     <p:row>
@@ -224,7 +217,6 @@
                                                             <!--<f:convertNumber type="currency" currencySymbol=""/>-->
                                                         </p:column>
                                                         <p:column priority="2" footerText="#{entry1}" style="text-align:left;"/>
-                                                        <p:column priority="5" footerText="" style="text-align:left;"/>
                                                     </p:row>
                                                     </ui:repeat>
                                                     <p:row>
@@ -238,7 +230,6 @@
                                                         <p:column priority="2"
                                                                   footerText="#{uobpos.dfltCrncy}"
                                                                   style="text-align:left"/>
-                                                        <p:column priority="2" footerText="" style="text-align:left"/>
                                                         <!--<p:column-->
                                                                 <!--footerText="#{dataDisplayConverter.displayAsMoney(uobpos.totalvalue)}"-->
                                                                 <!--style="text-align:right"/>-->

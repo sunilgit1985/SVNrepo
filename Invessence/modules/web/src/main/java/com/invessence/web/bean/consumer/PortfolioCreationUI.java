@@ -139,7 +139,7 @@ public class PortfolioCreationUI extends UserInterface
    public Boolean dataOK = true;
 
    // Buttons
-   public Boolean disableChangeStragegyButton;
+   public Boolean disableChangeStragegyButton ,recurInvstPrdFlag,recurInvstAmtFlg;
    public Boolean csCheck1 = false, csCheck2 = false;
 
 
@@ -169,6 +169,8 @@ public class PortfolioCreationUI extends UserInterface
       csCheck2=false;
       selectedCSOption="";
       disableApproveBtn=true;
+      recurInvstPrdFlag=false;
+      recurInvstAmtFlg=false;
 //      customer=resetData();
    }
 
@@ -1011,4 +1013,27 @@ public class PortfolioCreationUI extends UserInterface
       this.disableChangeStragegyButton = disableChangeStragegyButton;
    }
 
+   public void enableRecurInvstPnl(){
+      recurInvstPrdFlag=getCustomer().getRecurringInvestment()!=null && getCustomer().getRecurringInvestment()>0;
+   }
+
+   public Boolean getRecurInvstPrdFlag()
+   {
+      return recurInvstPrdFlag;
+   }
+
+   public void setRecurInvstPrdFlag(Boolean recurInvstPrdFlag)
+   {
+      this.recurInvstPrdFlag = recurInvstPrdFlag;
+   }
+
+   public Boolean getRecurInvstAmtFlg()
+   {
+      return recurInvstAmtFlg;
+   }
+
+   public void setRecurInvstAmtFlg(Boolean recurInvstAmtFlg)
+   {
+      this.recurInvstAmtFlg = recurInvstAmtFlg;
+   }
 }

@@ -129,7 +129,7 @@ public class CustomerData extends ProfileData
    public void initDao(WebUtil webutil, ModelUtil modelUtil, UILayout uiLayout,
                        ConsumerListDataDAO listDAO, UserInfoDAO userInfoDAO,
                        ConsumerSaveDataDAO saveDAO, TradeDAO tradeDAO,
-                       WebMessage messageText,ConsumerAuditDataDAO auditDAO)
+                       WebMessage messageText, ConsumerAuditDataDAO auditDAO)
    {
       setWebutil(webutil);
       setModelUtil(modelUtil);
@@ -294,7 +294,7 @@ public class CustomerData extends ProfileData
       {
          if (webutil.isUserLoggedIn())
          {
-            if (getRole().equalsIgnoreCase(WebConst.ROLE_OWNER) ||
+            if (getWebutil().getUserInfoData().getAuthorities().contains(WebConst.ROLE_TEST) || getRole().equalsIgnoreCase(WebConst.ROLE_OWNER) ||
                (getRole().equalsIgnoreCase(WebConst.ROLE_USER) && getPrivileges().equalsIgnoreCase(WebConst.ACCESS_USER_FULL)))
             {
                return true;
@@ -649,7 +649,8 @@ public class CustomerData extends ProfileData
    public String getName()
    {
       String name = super.getName();
-      if (name == null) {
+      if (name == null)
+      {
          if (getFirstname() != null)
          {
             name = getFirstname();
@@ -665,8 +666,8 @@ public class CustomerData extends ProfileData
             {
                name = getLastname();
             }
+         }
       }
-   }
 
       return name;
    }
@@ -956,7 +957,8 @@ public class CustomerData extends ProfileData
    {
       Double lowerbound = getDefaultInvestment() - 0.05;
       Double upperbound = getDefaultInvestment() + 0.05;
-      if (totalMoneyAllocated >= lowerbound && totalMoneyAllocated <= upperbound) {
+      if (totalMoneyAllocated >= lowerbound && totalMoneyAllocated <= upperbound)
+      {
          this.totalMoneyAllocated = getDefaultInvestment();
       }
       else
@@ -1330,7 +1332,8 @@ public class CustomerData extends ProfileData
                allocwght = origData.getAllocweight();
                color = origData.getColor();
             }
-            else {
+            else
+            {
                displayName = seclist.getAssetclass();
                allocwght = seclist.getWeight();
                color = seclist.getColor();
@@ -1382,11 +1385,14 @@ public class CustomerData extends ProfileData
 
          // Final adjustements to Cash
          String cash = "Cash";
-         if (remainMoney > 0) {
-            if (tallyAssetclass.containsKey(cash)) {
+         if (remainMoney > 0)
+         {
+            if (tallyAssetclass.containsKey(cash))
+            {
                tallyAssetclass.get(cash).setValue(tallyAssetclass.get(cash).getValue() + remainMoney);
             }
-            else {
+            else
+            {
                // For some reason, no cash was allocated on Portfolio.  So create a cash bucket.
                Asset asset = tallyAssetclass.get(cash);
                Double newwght = remainMoney / totalMoneyAllocated;
@@ -1580,8 +1586,10 @@ public class CustomerData extends ProfileData
       {
          listDAO.getNewClientProfileData((CustomerData) this.getInstance());
          riskProfile.fetchUserRiskData(getAdvisor(), null);
-         if (! webutil.isUserLoggedIn())
+         if (!webutil.isUserLoggedIn())
+         {
             setSaveVisitor(true); // If it is new client, then save Visitor's info.
+         }
          setDefaults();
       }
       catch (Exception ex)
@@ -1688,7 +1696,8 @@ public class CustomerData extends ProfileData
          {
             saveVisitor(null);
             setAcctnum(acctnum);
-            if (riskProfile != null && riskProfile.getALLRiskScores().size()!=0) {
+            if (riskProfile != null && riskProfile.getALLRiskScores().size() != 0)
+            {
                riskProfile.saveAllData();
             }
             else

@@ -183,11 +183,7 @@
                               <div class="rowBlock">
                                  <div class="Wid50 cellBlock">Account Type</div>
                                  <div class="Wid50 cellBlock">
-
-                                    <h:outputText value="#{uobdash.selAccountList.get(0).accountType}"
-                                                  rendered="#{uobdash.selAccountList.get(0).managed}"/>
-                                    <h:outputText value="-"
-                                                  rendered="#{!uobdash.selAccountList.get(0).managed}"/>
+                                    <h:outputText value="#{uobdash.selAccountList.get(0).accountType}"/>
                                  </div>
                               </div>
                               <div class="rowBlock">
@@ -213,7 +209,7 @@
 
                               <ui:fragment rendered="#{!uobdash.selAccountList.get(0).reqPrflCnf}">
                               <div class="Container30 centerRelCenter Fleft">
-                                 <p:commandLink action="#{uobdash.doPortfolioSelectedActionNew}" process="@this" disabled="#{uobdash.selAccountList.get(0).canIEditAccount}">
+                                 <p:commandLink action="#{uobdash.doPortfolioSelectedActionNew}" process="@this" >
                                     <div class="boxBtn">
                                        <i class="fa fa-pie-chart" aria-hidden="true"></i> <label>
                                        <h:outputText value="Change Strategy"
@@ -237,7 +233,7 @@
                               </ui:fragment>
                               <div class="Container30 centerRelRight Fleft">
                                  <p:commandLink action="#{uobdash.doFundingActionNew}" process="@this"
-                                                disabled="#{uobdash.selAccountList.get(0).canIEditAccount or !uobdash.selAccountList.get(0).hasClientID}">
+                                                disabled="#{!uobdash.selAccountList.get(0).hasClientID}">
                                     <div class="boxBtn">
                                        <i class="fa fa-university" aria-hidden="true"></i> <label>Funding</label>
                                     </div>

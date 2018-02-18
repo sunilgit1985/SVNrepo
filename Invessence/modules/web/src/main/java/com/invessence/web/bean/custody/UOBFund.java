@@ -104,7 +104,7 @@ public class UOBFund implements Serializable
       else
       {
          beanLogonId = getWebutil().getUserInfoData().getLogonID();
-         selAccountList = listDAO.getClientProfileList(getBeanLogonId(), getBeanAcctNum(), null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
+         selAccountList = listDAO.getClientProfileList(getBeanLogonId(),Long.parseLong(getBeanacctnum()), null, webutil.getUserInfoData().getAdvisor(), webutil.getUserInfoData().getRep());
       }
       if (selAccountList == null || selAccountList.size() == 0)
       {
@@ -113,7 +113,7 @@ public class UOBFund implements Serializable
          return retValue;
       }
       if (selAccountList != null
-         && (selAccountList.get(0).getCanIEditAccount()  || !selAccountList.get(0).getHasClientID()))
+         && selAccountList.get(0).getHasClientID())
       {
          retValue = "success";
          return retValue;

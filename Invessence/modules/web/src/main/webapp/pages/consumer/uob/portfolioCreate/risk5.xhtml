@@ -46,7 +46,7 @@
                 <p:selectOneRadio id="riskQ5" value="#{uobProfile.riskAns5}" styleClass=""
                                   layout="pageDirection">
                     <p:ajax listener="#{uobProfile.onChangeValue}"
-                            update=""/>
+                            update=":ceForm:workArea"/>
                     <f:selectItem id="r5a1"
                                   itemLabel="My primary focus is the growth of my investment. I am prepared to accept a high level of short-term volatility and possible capital losses in order to generate potentially higher levels of capital growth over the long term."
                                   itemValue="1"></f:selectItem>

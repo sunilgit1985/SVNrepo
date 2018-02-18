@@ -82,8 +82,7 @@
                 </p:panel>
                 
                 
-                
-            </p:outputPanel>
+
 
 
 			<!--    slider from top with review details -->
@@ -137,7 +136,7 @@
 
 						<div class="ContainerIndent ">
 							<p:dataTable styleClass="uob_graphTable" var="ticker"
-								id="uobtabledetails2" scrollable="true"
+								id="uobtabledetails2" scrollable="true"  scrollHeight="250"
 										 value="#{uobProfile.customer.displayPortfolioList}">
 								<!-- <p:column style="width:5%; background-color: #{ticker.color}">
                                                                 <h:outputText value=" "/>
@@ -172,7 +171,7 @@
 										<h:outputText value="Currency" />
 									</f:facet>
 									<h:outputText id="uobbasecurrency"
-										value="#{ticker.tradeCurrency}">
+										value="#{ticker.settleCurrency}">
 									</h:outputText>
 								</p:column>
 
@@ -204,6 +203,7 @@
 				</div>
 				
 			</div>
+			</p:outputPanel>
 			<!--    slider from top with review details -->
 
 		</h:form>
