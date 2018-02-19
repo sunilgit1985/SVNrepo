@@ -1051,7 +1051,7 @@ public class ProfileBean extends PortfolioCreationUI
          newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.ALTTHEME+value,null);
       }
       else {
-         newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.THEME,null);
+         newTheme = webutil.getWebprofile().getModel();
       }
       if (newTheme != null)
       {
