@@ -223,8 +223,7 @@
                               </ui:fragment>
                               <ui:fragment rendered="#{uobdash.selAccountList.get(0).reqPrflCnf}">
                                  <div class="Container30 centerRelCenter Fleft">
-                                    <p:commandLink action="#{uobdash.doPrflCnfActionNew}" process="@this"
-                                                   disabled="#{uobdash.selAccountList.get(0).canIEditAccount or !uobdash.selAccountList.get(0).hasClientID}">
+                                    <p:commandLink action="#{uobdash.doPrflCnfActionNew}" process="@this">
                                        <div class="boxBtn">
                                           <i class="fa fa-pie-chart" aria-hidden="true"></i> <label>Portfolio Confirmation</label>
                                        </div>

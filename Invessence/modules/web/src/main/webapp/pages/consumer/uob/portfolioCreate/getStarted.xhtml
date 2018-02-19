@@ -70,7 +70,8 @@
                     <span class="input_value">#{uobProfile.printName}</span> How old are you?
                     <p:inputNumber id="uobAge" class="input_no_type"
                                    value="#{uobProfile.age}"
-                                   decimalPlaces="0">
+                                   minValue="0" maxValue="110"
+                                   maxlength="3" decimalPlaces="0" placeholder="Age">
                     </p:inputNumber>
                 </p>
             </p:outputPanel>
