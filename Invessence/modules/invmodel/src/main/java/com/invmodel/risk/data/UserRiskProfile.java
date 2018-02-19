@@ -977,9 +977,23 @@ public class UserRiskProfile
             if (displayName == null) {
                displayName = key;
             }
+            String answer = udata.getAnswer();
+            if (key.equalsIgnoreCase(RiskConst.CALCFORMULA)) {
+               if (udata.getAnswer() != null)
+               {
+                  answer = RiskConst.CALCFORMULAS.valueOf(udata.getAnswer()).getDisplayValue();
+                  UserRiskData userReportData = new UserRiskData(udata.getSortorder(),
+                                                                 displayName,
+                                                                 answer,
+                                                                 "T",
+                                                                 udata.getRiskScore());
+
+               }
+            }
+
             UserRiskData userReportData = new UserRiskData(udata.getSortorder(),
                                                            displayName,
-                                                           udata.getAnswer(),
+                                                           answer,
                                                            udata.getAnswerType(),
                                                            udata.getRiskScore());
             userProfileMap.put(key, userReportData);

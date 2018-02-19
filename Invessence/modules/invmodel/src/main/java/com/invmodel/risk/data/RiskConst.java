@@ -72,10 +72,22 @@ public class RiskConst
    }
 
    public enum CALCFORMULAS {
-      C,
-      D,
-      A
-   }
+      C("Calculated"),
+      D("Direct"),
+      A("Advisor");
+
+      String displayValue;
+      CALCFORMULAS(String displayValue)
+      {
+         this.displayValue = displayValue;
+      }
+
+      public String getDisplayValue()
+      {
+         return displayValue;
+      }
+
+      }
 
    public enum CALCMETHODS {
       STANDARD,
