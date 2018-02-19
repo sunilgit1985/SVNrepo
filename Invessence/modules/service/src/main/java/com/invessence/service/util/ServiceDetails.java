@@ -857,7 +857,7 @@ public class ServiceDetails
                      }
                      else
                      {
-                        System.out.println("Property "+property+" : " +tmp.get(mode).get(property).getValue());
+                        //logger.debug("Property "+property+" : " +tmp.get(mode).get(property).getValue());
                         return tmp.get(mode).get(property).getValue();
                      }
                   }

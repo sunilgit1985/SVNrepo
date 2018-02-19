@@ -5,6 +5,7 @@ import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.invessence.converter.DateUtil;
 import com.invessence.fileProcessor.bean.DBParameters;
 import com.invessence.fileProcessor.dao.FileProcessorDao;
 import com.invessence.fileProcessor.util.*;
@@ -48,7 +49,6 @@ public class FileUploader
 
          logger.info("Established the connection with host server");
 
-
          channel = (ChannelSftp) session.openChannel("sftp");
          channel.connect();
 
@@ -58,7 +58,7 @@ public class FileUploader
 
          String fileName = p.getFileName().toString();
          String directory = p.getParent().toString().replaceAll("\\\\","/");
-         System.out.println("directory = " + directory+ " fileName = " + fileName);
+         logger.info("directory = " + directory+ " fileName = " + fileName);
 
          channel.cd(directory);
 //         String filePath=a1+"/"+fileDetails.getFileName()+"_"+sdfFileParsing.parse("" + dbParamMap.get("BUSINESS_DATE").getValue())+"."+fileDetails.getFileExtension();
@@ -74,17 +74,17 @@ public class FileUploader
          }else{
             searchString.append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
          }
-         System.out.println("SearchString = " + searchString +" to fetch files from Server.");
+         logger.debug("SearchString = " + searchString +" to fetch files from Server.");
          Vector v = channel.ls(searchString.toString());
 
-         logger.info("Fetching list of " + searchString.toString() + " files from server" + v.size());
+         logger.debug("Fetching list of " + searchString.toString() + " files from server" + v.size());
          ChannelSftp.LsEntry entry = null;
          for (int i = 0; i < v.size(); i++)
          {
             entry = (ChannelSftp.LsEntry) v.get(i);
             fileNameLst.add(entry.getFilename());
          }
-         logger.info("Fetching list of " + fileDetails.getFileName() + " files from server" + v.size());
+         logger.debug("Fetching list of " + fileDetails.getFileName() + " files from server" + v.size());
          if (fileNameLst == null || fileNameLst.size() == 0)
          {
             if (fileDetails.getRequired().equalsIgnoreCase("Y"))
@@ -97,7 +97,7 @@ public class FileUploader
          {
             Collections.sort(fileNameLst);
             List<String> filesToLoad = fileProcessorUtil.getFilesToLoad(fileNameLst, businessDate, fileDetails);
-            System.out.print("File Size ["+filesToLoad.size()+"]");
+            logger.debug("File Size ["+filesToLoad.size()+"]");
             if (filesToLoad == null || filesToLoad.size() == 0)
             {
                if (fileDetails.getRequired().equalsIgnoreCase("Y"))
@@ -122,9 +122,9 @@ public class FileUploader
 
                      String fileName1 = p1.getFileName().toString();
                      String directory1 = p1.getParent().toString().replaceAll("\\\\","/");
-                     System.out.println("directory = " + directory1+ " fileName = " + fileName1);
+                     logger.debug("directory = " + directory1+ " fileName = " + fileName1);
 
-                     logger.info("Local directory path to stored the files :" + directory1);
+                     logger.debug("Local directory path to stored the files :" + directory1);
                      // if the directory does not exist, create it
 //                     if (!directory1.exists())
 //                     {
@@ -253,14 +253,34 @@ public class FileUploader
       }finally {
 
          channel.disconnect();
-         System.out.println("Channel disconnected.");
+         logger.debug("Channel disconnected.");
          session.disconnect();
-         System.out.println("Host Session disconnected.");
+         logger.debug("Host Session disconnected.");
       }
       return returnValue;
    }
 
+   public String getValueUpload(String val, FileRules fileRules){
+      if(val==null|| val.trim().equals("")){
+         return val;
+      }
+      if(fileRules.getType().equalsIgnoreCase("TEXT")){
+            return val;
+      }else if(fileRules.getType().equalsIgnoreCase("NUMERIC")){
+         return  val;
+      }else if(fileRules.getType().equalsIgnoreCase("DATE")){
+         if(fileRules.getFormat()==null || fileRules.getFormat().trim().equals(""))
+         {
+            return val;
+         }else{
+            return DateUtil.parseDate(val,fileRules.getFormat(),"yyyyMMdd");
+         }
 
+      }else{
+         System.out.println("Condition not mapped for format "+ fileRules.getType());
+      }
+      return val;
+   }
 
    private void processFile(StringBuilder mailAlertMsg, String csvFile, FileDetails fileDetails,
                             String key, LinkedHashMap<String,FileRules> fileRules, ServiceRequest serviceRequest)
@@ -278,13 +298,13 @@ public class FileUploader
          {
             if (!line.equals(""))
             {
-               logger.info("line = " + line);
+               logger.debug("line = " + line);
                Iterator<Map.Entry<String, FileRules>> entries = fileRules.entrySet().iterator();
                entries = fileRules.entrySet().iterator();
                List<String> lineLst = new ArrayList<String>();
                String[] lineArr=null;
                if(fileDetails.getLoadFormat().equalsIgnoreCase("DELIMITED")){
-                  lineArr = line.split(splitByDelimiter, -1);
+                  lineArr = line.replaceAll("\"","").split(splitByDelimiter, -1);
                }
                int arrCounter=0;
 
@@ -323,18 +343,18 @@ public class FileUploader
                                  {
                                     if(fileRules1.getNeedToEncrypt().equalsIgnoreCase("Y"))
                                     {
-                                       lineLst.add(EncryDecryAES.decrypt(value,ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "ENCRY_DECRY_KEY")));
+                                       lineLst.add(EncryDecryAES.decrypt(getValueUpload(value,fileRules1),ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "ENCRY_DECRY_KEY")));
                                     }else{
-                                       lineLst.add(value);
+                                       lineLst.add(getValueUpload(value,fileRules1));
                                     }
                                  }
                               }else
                               {
                                  if(fileRules1.getNeedToEncrypt().equalsIgnoreCase("Y"))
                                  {
-                                    lineLst.add(EncryDecryAES.decrypt(value,ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "ENCRY_DECRY_KEY")));
+                                    lineLst.add(EncryDecryAES.decrypt(getValueUpload(value,fileRules1),ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "ENCRY_DECRY_KEY")));
                                  }else{
-                                    lineLst.add(value);
+                                    lineLst.add(getValueUpload(value,fileRules1));
                                  }
                               }
                            }
@@ -354,7 +374,7 @@ public class FileUploader
                   inLst.add(lineLst);
                }
                }else{
-                  System.out.println("Line is empty");
+                  logger.info("File is empty");
                }
          }
          if(inLst.size()>0)

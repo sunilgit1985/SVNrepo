@@ -212,7 +212,7 @@ public class Constant
 
    public enum EMAIL_SERVICE
    {
-      INVESSENCE_GMAIL("INVESSENCE-GMAIL"), SYMBIL_MAILGUN("SYMBIL-MAILGUN"), BB_GMAL("BB-GMAIL");
+      INVESSENCE_GMAIL("INVESSENCE-GMAIL"), SYMBIL_MAILGUN("SYMBIL-MAILGUN"), BB_GMAIL("BB-GMAIL"), UOB_MAIL("UOB-MAIL");
       private String value;
 
       private EMAIL_SERVICE(String value)

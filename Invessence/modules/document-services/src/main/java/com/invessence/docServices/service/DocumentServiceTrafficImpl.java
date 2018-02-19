@@ -108,7 +108,7 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
             String zipDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "ZIP_FILES_DIRECTORY");
             String zipFileName=uobDataMaster.getAccountDetails().getAcctnum().toString();
             ZipFiles.createZipFile(zipFileName, zipDirectory, filesForZip);
-            emailCreator.createEmail(serviceRequest, uobDataMaster.getIndividualOwnersDetails().getEmailAddress(), "Account Opening Files", "Files related Account Opening Process.", zipDirectory+"/"+zipFileName+".zip");
+            emailCreator.createEmail(serviceRequest, ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "OPERATIONS_EMAIL"), "Account Opening Files", "Files related Account Opening Process.", zipDirectory+"/"+zipFileName+".zip");
 
          }
 

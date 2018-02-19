@@ -12,6 +12,7 @@ public class FileRules
    private Integer startPos;
    private Integer endPos;
    private Integer length;
+   private String type;
    private String format;
    private Integer decimals;
    private String isDelimited;
@@ -21,7 +22,7 @@ public class FileRules
    private String isRequired;
    private String needToEncrypt;
 
-   public FileRules(String fileId, String dataField, String description, Integer seqNo, Integer startPos, Integer endPos, Integer length, String format, Integer decimals, String isDelimited, String delimiter, String justified, String dbColumn, String isRequired, String needToEncrypt)
+   public FileRules(String fileId, String dataField, String description, Integer seqNo, Integer startPos, Integer endPos, Integer length, String type, String format, Integer decimals, String isDelimited, String delimiter, String justified, String dbColumn, String isRequired, String needToEncrypt)
    {
       this.fileId = fileId;
       this.dataField = dataField;
@@ -30,6 +31,7 @@ public class FileRules
       this.startPos = startPos;
       this.endPos = endPos;
       this.length = length;
+      this.type = type;
       this.format = format;
       this.decimals = decimals;
       this.isDelimited = isDelimited;
@@ -51,6 +53,7 @@ public class FileRules
          ", startPos=" + startPos +
          ", endPos=" + endPos +
          ", length=" + length +
+         ", type='" + type + '\'' +
          ", format='" + format + '\'' +
          ", decimals=" + decimals +
          ", isDelimited='" + isDelimited + '\'' +
@@ -60,6 +63,16 @@ public class FileRules
          ", isRequired='" + isRequired + '\'' +
          ", needToEncrypt='" + needToEncrypt + '\'' +
          '}';
+   }
+
+   public String getFormat()
+   {
+      return format;
+   }
+
+   public void setFormat(String format)
+   {
+      this.format = format;
    }
 
    public String getIsRequired()
@@ -152,14 +165,14 @@ public class FileRules
       this.length = length;
    }
 
-   public String getFormat()
+   public String getType()
    {
-      return format;
+      return type;
    }
 
-   public void setFormat(String format)
+   public void setType(String type)
    {
-      this.format = format;
+      this.type = type;
    }
 
    public Integer getDecimals()

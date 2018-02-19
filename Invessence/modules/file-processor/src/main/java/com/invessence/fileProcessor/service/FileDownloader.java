@@ -5,7 +5,7 @@ import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.invessence.converter.SQLData;
+import com.invessence.converter.*;
 import com.invessence.fileProcessor.bean.DBParameters;
 import com.invessence.fileProcessor.dao.FileProcessorDao;
 import com.invessence.fileProcessor.util.FileProcessorUtil;
@@ -63,7 +63,17 @@ public class FileDownloader
 //                     return val+fileRules1.getDelimiter();
 //                  }
                }
-               fileData.add(fileHeader.toString());
+               if(fileDetails.getLoadFormat().equalsIgnoreCase("DELIMITED")){
+                  if((fileHeader.lastIndexOf(fileDetails.getDelimiter())+1)==fileHeader.length()){
+                     fileData.add(fileHeader.substring(0,fileHeader.length()-1));
+                  }else
+                  {
+                     fileData.add(fileHeader.toString());
+                  }
+               }else
+               {
+                  fileData.add(fileHeader.toString());
+               }
             }
             while (itr.hasNext())
             {
@@ -75,10 +85,22 @@ public class FileDownloader
                   Map.Entry<String,FileRules> entry6 = entries.next();
                   FileRules fileRules1=(FileRules) entry6.getValue();
 //                  System.out.println(fileRules1.getSeqNo()+" : "+fileRules1.getDataField()+" : "+fileRules1.getDbColumn()+" : "+convert.getIntData(map.get(fileRules1.getDbColumn())));
-                  fileRow.append(getValue(""+map.get(fileRules1.getDbColumn()), fileRules1));
+                  fileRow.append(getValue(map.get(fileRules1.getDbColumn())==null?"":""+map.get(fileRules1.getDbColumn()), fileRules1));
                }
                if(fileRow.length()>0){
-                  fileData.add(fileRow.toString());
+                  System.out.println(fileRow.lastIndexOf(fileDetails.getDelimiter()));
+                  System.out.println(fileRow.length());
+                  if(fileDetails.getLoadFormat().equalsIgnoreCase("DELIMITED")){
+                     if((fileRow.lastIndexOf(fileDetails.getDelimiter())+1)==fileRow.length()){
+                        fileData.add(fileRow.substring(0,fileRow.length()-1));
+                     }else
+                     {
+                        fileData.add(fileRow.toString());
+                     }
+                  }else
+                  {
+                     fileData.add(fileRow.toString());
+                  }
                }
 //               System.out.println("-------------------------------------------------");
             }
@@ -97,20 +119,36 @@ public class FileDownloader
    }
 
    public String getValue(String val, FileRules fileRules){
-      if(fileRules.getFormat().equalsIgnoreCase("TEXT")){
+      if(fileRules.getType().equalsIgnoreCase("TEXT")){
          if(fileRules.getIsDelimited().equalsIgnoreCase("N")){
             return appendSpace(val, fileRules.getLength(), fileRules.getJustified());
          }else if(fileRules.getIsDelimited().equalsIgnoreCase("Y")){
             return val+fileRules.getDelimiter();
          }
-      }else if(fileRules.getFormat().equalsIgnoreCase("NUMERIC")){
+      }else if(fileRules.getType().equalsIgnoreCase("NUMERIC")){
          if(fileRules.getIsDelimited().equalsIgnoreCase("N")){
             return appendSpace(val, fileRules.getLength(), fileRules.getJustified());
          }else if(fileRules.getIsDelimited().equalsIgnoreCase("Y")){
             return val+fileRules.getDelimiter();
+         }
+      }else if(fileRules.getType().equalsIgnoreCase("DATE")){
+         if(fileRules.getIsDelimited().equalsIgnoreCase("N")){
+            if(fileRules.getFormat()==null || fileRules.getFormat().trim().equals(""))
+            {
+               return appendSpace(val, fileRules.getLength(), fileRules.getJustified());
+            }else{
+               return appendSpace(DateUtil.parseDate(val, "yyyyMMdd", fileRules.getFormat()), fileRules.getLength(), fileRules.getJustified());
+            }
+         }else if(fileRules.getIsDelimited().equalsIgnoreCase("Y")){
+            if(fileRules.getFormat()==null || fileRules.getFormat().trim().equals(""))
+            {
+               return val+fileRules.getDelimiter();
+            }else{
+               return DateUtil.parseDate(val, "yyyyMMdd", fileRules.getFormat())+fileRules.getDelimiter();
+            }
          }
       }else{
-         System.out.println("Condition not mapped for format "+ fileRules.getFormat());
+         System.out.println("Condition not mapped for format "+ fileRules.getType());
       }
       return val;
    }
@@ -218,7 +256,7 @@ public class FileDownloader
 
          String fileName = p.getFileName().toString();
          String directory = p.getParent().toString().replaceAll("\\\\","/");
-         System.out.println("directory = " + directory+ " fileName = " + fileName);
+         logger.debug("directory = " + directory+ " fileName = " + fileName);
 
          //channel.mkdir(directory);
          channel.cd(directory);
@@ -233,17 +271,17 @@ public class FileDownloader
          }else{
             searchString.append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
          }
-         System.out.println("SearchString = " + searchString +" to fetch files from Server.");
+         logger.debug("SearchString = " + searchString +" to fetch files from Server.");
          Vector v = channel.ls(searchString.toString());
 
-         logger.info("Fetching list of " + searchString.toString() + " files from server" + v.size());
+         logger.debug("Fetching list of " + searchString.toString() + " files from server" + v.size());
          ChannelSftp.LsEntry entry = null;
          for (int i = 0; i < v.size(); i++)
          {
             entry = (ChannelSftp.LsEntry) v.get(i);
             fileNameLst.add(entry.getFilename());
          }
-         logger.info("Fetching list of " + fileDetails.getFileName() + " files from server" + v.size());
+         logger.debug("Fetching list of " + fileDetails.getFileName() + " files from server" + v.size());
          if (fileNameLst == null || fileNameLst.size() == 0)
          {
             logger.info(fileDetails.getFileName() + " files are not available on server for delete, for Advisor " + fileDetails.getVendor() + "\n");

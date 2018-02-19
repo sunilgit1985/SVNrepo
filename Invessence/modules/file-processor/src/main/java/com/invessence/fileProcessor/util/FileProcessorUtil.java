@@ -5,6 +5,7 @@ package com.invessence.fileProcessor.util;
  */
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,7 +31,7 @@ public class FileProcessorUtil
 
    public String getFilePath(ServiceRequest serviceRequest, FileDetails fileDetails,
                                     String pathLocation, String date){
-      logger.info("FileProcessor.getFilePath");
+      logger.debug("FileProcessor.getFilePath");
       StringBuilder filePath= new StringBuilder();
       try
       {
@@ -54,12 +55,19 @@ public class FileProcessorUtil
             }
             else if (fileDetails.getProcess().equalsIgnoreCase("DOWNLOAD"))
             {
-               if (pathLocation.equalsIgnoreCase("SFTP") && fileDetails.getFileProcessType().equalsIgnoreCase("SFTP"))
+               List<String> fileProcessTypes=null;
+               if(fileDetails.getFileProcessType()==null || fileDetails.getFileProcessType().equals("")){
+                  fileProcessTypes=new ArrayList<String>();
+               }else
+               {
+                  fileProcessTypes = new ArrayList<String>(Arrays.asList(fileDetails.getFileProcessType().split(",")));
+               }
+               if (pathLocation.equalsIgnoreCase("SFTP") && fileProcessTypes.contains("SFTP"))
                {
                   filePath.append(ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "DOWNLOAD_SFTP_SRC_DIRECTORY"));
                   filePath.append(fileDetails.getUploadDir() + "/");
                }
-               else if (pathLocation.equalsIgnoreCase("LOCAL") && fileDetails.getFileProcessType().equalsIgnoreCase("SFTP"))
+               else if (pathLocation.equalsIgnoreCase("LOCAL") && fileProcessTypes.contains("SFTP"))
                {
                   filePath.append(ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "DOWNLOAD_LOCAL_SRC_DIRECTORY"));
                   filePath.append(fileDetails.getUploadDir() + "/");
@@ -76,7 +84,7 @@ public class FileProcessorUtil
          e.printStackTrace();
          logger.error(e.getMessage());
       }
-      System.out.println("filePath = " + filePath.toString());
+      logger.debug("filePath = " + filePath.toString());
       return filePath.toString();
    }
    public String getFileName(FileDetails fileDetails, String date){
@@ -139,11 +147,11 @@ public class FileProcessorUtil
          }
          if (instruction == null || instruction.trim().equals(""))
          {
-            logger.info("No "+event+" Instruction Script for execution.\n");
+            logger.info("No "+event+" Instruction Script for execution.");
          }
          else
          {
-            logger.info("Calling "+event+" Instruction Script :" + instruction + "\n");
+            logger.info("Calling "+event+" Instruction Script :" + instruction );
             executeCommand(instruction);
 //          executeCommandOnServer(fileDetails.getParentPreInstruction(), serviceRequest);
          }

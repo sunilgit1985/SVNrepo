@@ -25,7 +25,7 @@ public class MainFileProcessor
             /* FILE-Processing will start from seq 1 by default*/
             serviceRequest.setSequenceId(1);
             WSCallResult wsCallResult=fp.process(serviceRequest);
-            System.out.println("wsCallResult = " + wsCallResult);
+//            System.out.println("wsCallResult = " + wsCallResult);
          }else{
             System.out.println("Required parameters are not entered!");
          }

@@ -964,6 +964,7 @@ try{
                                   convert.getIntData(map.get("startPos")),
                                   convert.getIntData(map.get("endPos")),
                                   convert.getIntData(map.get("length")),
+                                  convert.getStrData(map.get("type")),
                                   convert.getStrData(map.get("format")),
                                   convert.getIntData(map.get("decimals")),
                                   convert.getStrData(map.get("isDelimited")),
