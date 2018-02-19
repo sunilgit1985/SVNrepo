@@ -188,9 +188,11 @@
 
                     <p:panel id="Tradesummarypanel" style="border: 0px; margin: 0px;" rendered="#{tradeBean.displayTradePanel}" class="slideDwnpanel">
                         <div class="Container100 Fright TexAlRight">
-                            <p:commandButton value="Close"
+                            <p:commandLink value="Close"
                                              update="@form"
-                                             actionListener="#{tradeBean.hideRiskDetails}" styleClass="uobsagbutton"/>
+                                             actionListener="#{tradeBean.hideRiskDetails}" styleClass="uobsagbutton">
+                                <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close float-right" style="color:#a4332f"></span>
+                                    </p:commandLink>
                         </div>
                         <div class="Container50 Responsive">
                             <div class="ContainerIndent">

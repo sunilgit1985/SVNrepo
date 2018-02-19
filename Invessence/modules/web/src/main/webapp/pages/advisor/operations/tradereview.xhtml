@@ -180,9 +180,11 @@
                             </div>
                         </div>
                         <div class="Container50 Fright TexAlRight">
-                            <p:commandButton value="Close"
+                            <p:commandLink value="Close"
                                              update="@form"
-                                             actionListener="#{tradeBean.hideRebalDetails}" styleClass="uobsagbutton"/>
+                                             actionListener="#{tradeBean.hideRebalDetails}" styleClass="uobsagbutton">
+                                <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close float-right" style="color:#a4332f"></span>
+                                    </p:commandLink>
                         </div>
 
                         <div class="Container100 Responsive">

@@ -1961,7 +1961,7 @@ span > input {
     background: transparent;
     top: 40px;
     left: 28px;
-    
+
     width: 95%;
 }
 .UserconfTable .ContainerIndent{margin:45px auto;}
@@ -4557,8 +4557,8 @@ th.del_edit_col span {
 .tax_info tr.ui-widget-content.ui-datatable-even td,
 .user_table tr.ui-widget-content.ui-datatable-even td
 {
-   /*  background: #f7f7f7; */
-   background:#fff;
+    /*  background: #f7f7f7; */
+    background:#fff;
 }
 .tax_info .ui-datatable,
 .user_table .ui-datatable
@@ -4822,7 +4822,8 @@ th.del_edit_col span {
     margin: 2% ;
 
 }
-.float-right button {
+.float-right button,
+.float-right{
     float: right;
 }
 .acc_holder_dtl_block .save_btn span {
@@ -4962,13 +4963,13 @@ td.bullet_td span {
     width:100%;
     float:left;
 }
-.portfolio_selection{text-align:center;}
-.portfolio_selection .Container30{width:33%;position: relative;}
+.portfolio_selection{text-align:center;    width: 75%;margin: 0 12%;}
+.portfolio_selection .Container30{width:33%;position: relative;text-align:left;}
 .portfolio_progress_bar,.caraousle {
-    margin: 1% 12% 0 ;
-    width:78%;
+    margin: 1% 12%  ;
+    width:75%;
 }
-.portfolio_progress_bar{margin:1% 12% 2px;width:78%;}
+.portfolio_progress_bar{margin:1% 12%;width:75%;}
 .portfolio_progress_bar .ui-progressbar {
     height: 0.6em;
 }
@@ -4989,9 +4990,12 @@ td.bullet_td span {
     height: 100%;
 }
 .portfolio_selection .sapn_review {
+
+    /*  left: -34px; */
     position: relative;
-    left: -34px;
-    z-index:2;
+    left: 0;
+    z-index: 2;
+    float: right;
 }
 .ui-carousel-page-links {
     display: none!important;
@@ -5045,7 +5049,7 @@ span.input_value {
     font-weight: bold;
     padding: 0 10px;
     width: 60%;
-  	line-height: 24px;
+    line-height: 24px;
 }
 
 .header_tab {
@@ -5057,7 +5061,7 @@ span.input_value {
 }
 .next_btn .next_pg_link,
 .pre_btn .next_pg_link {
-        color: #04709F;
+    color: #04709F;
     text-align: right;
     font-size: 17px;
     font-weight: bold;
@@ -5068,6 +5072,7 @@ span.input_value {
     text-align: right;
     width:37%;
     position:relative;
+    z-index:2;
 }
 .Container100.tab_dtl {
     padding: 12px 0;
@@ -5268,7 +5273,7 @@ span.change_goal {
     width: 120px !important;
 }
 .title_p{text-align:left; padding:0 5px;}
-.portfolio_layout{padding:0; margin:8px auto 0;}
+.portfolio_layout{padding:0; margin:8px auto 0;width:100%;}
 .ring_widget .ui-ring {
     margin: -18px auto 1em;
 }
@@ -5357,16 +5362,16 @@ span.change_goal {
     border: none;
     color: #000;
     text-align: left;
-    
+
 }
 .go-bottom input:focus::-webkit-input-placeholder,
 .go-bottom input:focus:-moz-placeholder,
 .go-bottom textarea:focus::-webkit-input-placeholder,.go-bottom textarea:focus:-moz-placeholder{
     opacity: 0;
 }
-.review-donut .highcharts-container {
+/* .review-donut .highcharts-container {
     width: 100% !important;
-    height:200px !important;}
+    height:200px !important;} */
 .ui-ring {
     list-style: none;
     width: 78%;}
@@ -5384,8 +5389,8 @@ span.change_goal {
     width: 100px;
     height: 87px;
     top: -127px;
-    position: absolute;
-    right: 120px;
+    position: relative;
+    right: 0px;
     z-index: 1;}
 .reviewHeader_title .Container30 span {
     float: left;
@@ -5871,7 +5876,7 @@ form#ceForm {
     height: 300px !important;
 }
 .reviewDonutDts g.highcharts-drilldown-point {
-    stroke-width: 10px;
+    stroke-width: 15px;
 }
 .reviewDonutDts .panelClose {
     position: absolute;
@@ -5973,22 +5978,22 @@ td.advisorBullet_td span {
     text-align: left;
     font-size: 15px !important;
     font-weight: normal;}
-    .ui-accordion .ui-tabs-outline{color:#fff;}
-    
-.slideDwnpanel .ui-datatable table thead tr th{    color: #3C4E58;}  
+.ui-accordion .ui-tabs-outline{color:#fff;}
+
+.slideDwnpanel .ui-datatable table thead tr th{    color: #3C4E58;}
 .ui-datatable.invDataTable .ui-datatable-odd,
 .ui-datatable.invAllocTable .ui-datatable-odd {
     background: #ececec !important;
-}  
+}
 .ui-datatable .ui-datatable-even td {
     background-color: #ffffff !important;
 }
 .ui-datatable.invAllocTable .ui-datatable-odd td,
 .ui-datatable.ListOfAccountsTable .ui-datatable-odd
- {
+{
     background: #ececec !important;
 }
- .faq_dtls .ui-accordion {
+.faq_dtls .ui-accordion {
     background: #fff;
     border: none !important;
 }
@@ -5998,7 +6003,7 @@ td.advisorBullet_td span {
     border: 1px solid #ececec;
     border-radius: 4px;
     color: #000 !important;
-}  
+}
 .faq_dtls .ui-accordion-content {
     margin-bottom: 15px !important;
     border-bottom: none !important;
@@ -6006,19 +6011,41 @@ td.advisorBullet_td span {
 }
 .Container36{width: 36%;
     float: right;
-    padding: 0 5px;} 
- .textLeft h4 {
+    padding: 0 5px;}
+.textLeft h4 {
     text-align: left;
 }
 .prenext_btn a span {
-	position:relative;
-	top:6px;
+    position:relative;
+    top:6px;
 }
 .prenext_btn a span {
     position: relative;
     top: 6px;
 }
-    
+
+/*** 19/02/2018 **/
+/* .review_graph .highcharts-3d-chart {
+    height: auto !important;
+    width: auto !important;
+} */
+
+.review-donut .ui-panel {
+    background: transparent !important;
+}
+span.icon_span {
+    position: relative;
+    top: 6px;
+}
+rect.highcharts-background {
+    fill: none;
+}
+.portfolio_selection .Container30.donutReview {
+    float: right;
+    text-align: center;
+}
+.boldText{font-weight:bold;color:#000;font-size:14px}
+
 /*** responsive**/
 
 /** 16/10/2017***/
@@ -6098,7 +6125,8 @@ td.advisorBullet_td span {
 }
 
 /* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 320px)and (max-device-width : 640px)
+/* @media only screen and (min-device-width : 320px)and (max-device-width : 640px) */
+@media (max-width:760px)
 {
 
     /*** for dashboard UOB**/
@@ -6113,7 +6141,7 @@ td.advisorBullet_td span {
         background: #fff;
         top: 66px;
         left: 0;
-        z-index: 1;
+        z-index: 3;
         box-shadow: 0px 1px 4px 0px #666;
     }
     ul#menuMainNavigation li {
@@ -6337,7 +6365,7 @@ td.advisorBullet_td span {
         width: 60% !important;
     }
     .review-donut{right:0;}
-    .portfolio_selection .sapn_review{left:0;}
+    .portfolio_selection .sapn_review{left:0;top:0;}
     .caraousle .Container45 {    width: 100%;}
     .caraousle .ui-panel .Container70 {
         width: 70%;
@@ -6377,6 +6405,14 @@ td.advisorBullet_td span {
     .caraousle .Container50.pre_btn:before{right:46px;}
     .mobileModeButton {display:block;}
     .desktopModeButton{display:none;}
+    /*** 19/02/2018 **/
+    .portfolio_selection .Container30{text-align:center;}
+    .Container36 { width: 40%;}
+    .portfolio_selection {
+        text-align: center;
+        width: 100%;
+        margin: 0;
+    }
 
 }
 
