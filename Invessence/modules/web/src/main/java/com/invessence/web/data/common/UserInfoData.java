@@ -154,6 +154,9 @@ public class UserInfoData extends org.springframework.security.core.userdetails.
    }
 
    public String getFullName() {
+      if(regFullName!=null && !regFullName.isEmpty()){
+         return regFullName;
+      }
       if (firstname == null && lastname == null)
          return "";
       if (firstname == null)

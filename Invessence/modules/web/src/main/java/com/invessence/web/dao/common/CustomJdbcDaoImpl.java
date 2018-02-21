@@ -296,6 +296,8 @@ public class CustomJdbcDaoImpl extends JdbcDaoImpl
                userdata.setEmail(savedemail);
                userdata.setLogonID(logonID);
                userdata.setResetID(resetID);
+               userdata.setFullName(fullname);
+               userdata.setRegfullname(fullname);
                webutl.sendConfirmation(userdata,"L");
                exception="Too many attemps.  Account Locked!";
 //               auditDAO.loginAuditEntry(new LoginAudit(null,logonID,sessionId,req.getRemoteAddr(),"F",exception,null));

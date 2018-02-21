@@ -77,6 +77,7 @@ public class UserInfoDAO extends JdbcDaoSupport
                data.setAdvisor(convert.getStrData(rs.get("advisor")));
                data.setRep(convert.getStrData(rs.get("rep")));
                data.setResetID(convert.getStrData(rs.get("resetID")));
+               data.setRegfullname(convert.getStrData(rs.get("fullname")));
                return true;
             }
          }

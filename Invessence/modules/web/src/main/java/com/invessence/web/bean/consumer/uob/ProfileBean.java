@@ -64,8 +64,7 @@ public class ProfileBean extends PortfolioCreationUI
                // Upload the data from DB and set selection as if user selected it.
                selectedGoal = goalMap.get(getCustomer().getGoal().toUpperCase());
                reOrganizeGoalList();  // Reorg the list so that last selected one shows up
-
-               Boolean retiredflag = getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.GOALS.RETIRED.toString());
+               selectedRetirementGoal =!getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.GOALS.RETIRED.toString());
             }
 
             // Now load the Currency info.
@@ -529,7 +528,7 @@ public class ProfileBean extends PortfolioCreationUI
          // reOrganizeGoalList(selectedItem.getDisplayName());
          // Reset Rest of data.
          getCustomer().horizon = null;  // Only reset profiledata
-         setWithdrawlPeriod(null);
+//         setWithdrawlPeriod(null);
          if (goal.equalsIgnoreCase(RiskConst.GOALS.BUILDWEALTH.toString()))
          {
             getCustomer().setCustomName(null);
@@ -538,11 +537,11 @@ public class ProfileBean extends PortfolioCreationUI
          {
             getCustomer().setCustomName(selectedItem.getDisplayName());
          }
-         if (goal.equalsIgnoreCase(RiskConst.GOALS.RETIREMENT.toString())){
-            setWithdrawlPeriod(30);
-         }else{
-            setWithdrawlPeriod(null);
-         }
+//         if (goal.equalsIgnoreCase(RiskConst.GOALS.RETIREMENT.toString())){
+//            setWithdrawlPeriod(30);
+//         }else{
+            setWithdrawlPeriod(getCustomer().getRiskProfile().getDefaultIntValue(RiskConst.WITHDRAWALPERIOD,null));
+//         }
       }
    }
 
@@ -745,7 +744,7 @@ public class ProfileBean extends PortfolioCreationUI
 
                }
             }
-            if (!thisgoal.equals(RiskConst.GOALS.RETIREMENT) && !thisgoal.equals(RiskConst.GOALS.LEGACY))
+            if (!selectedRetirementGoal && !thisgoal.equals(RiskConst.GOALS.LEGACY))
             {
                if (!JavaUtil.isInRange(getRecurringInvestment(), 0, null))
                {
@@ -1084,7 +1083,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void setSelectedRetirementGoal(Boolean flag)
    {
       selectedRetirementGoal = flag;
-      getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(), ! flag);
+      getCustomer().getRiskProfile().setAnswer(RiskConst.GOALS.RETIRED.toString(),  !flag);
       if (flag) {
          getCustomer().setCustomName(RiskConst.GOALS.RETIREMENT.getDisplayValue());
       }
@@ -1118,7 +1117,7 @@ public class ProfileBean extends PortfolioCreationUI
             break;
          case 2:
             RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
-            if (thisgoal.equals(RiskConst.GOALS.RETIREMENT) || thisgoal.equals(RiskConst.GOALS.LEGACY)){
+            if (!selectedRetirementGoal  || thisgoal.equals(RiskConst.GOALS.LEGACY)){
                setRecurInvstAmtFlg(false);
                setRecurringInvestment(0);
                setRecurringPeriod(0);
