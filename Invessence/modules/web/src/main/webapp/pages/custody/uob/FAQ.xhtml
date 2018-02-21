@@ -1,12 +1,13 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
-                template="/template/common/template.xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
 
-   <ui:define name="content">
+</h:head>
+<h:body>
 	 <div class="layout-portlets-box faq_dtls" >
       	<p:accordionPanel multiple="true" styleClass="marginZero" id="FaqAcco">
             <p:tab title="Who owns UTRADE Robo?">
@@ -198,15 +199,10 @@
          		<p>Significant market movements may cause portfolio assets to deviate from their original intended allocation weight. For example, Brexit caused Europe Stocks to decline materially and International Government Bonds to rise materially, causing an underweight in Europe Stocks and an overweight in International Government Bonds.UTRADE Robo rebalances clients’ investment portfolios timely to realign the allocation weight of portfolio assets for robust risk management and to maintain a consistent risk profile for all our clients.Our rebalancing is supported by well-established research, including those documented in “Pioneering Portfolio Management [David F. Swensen, CIO of Yale Endowment Fund]”. The research concluded that rebalancing statistically generates extra investment returns by exploiting excessive price volatility.</p>
          	</p:tab>
          </p:accordionPanel>
-      	 <p:commandButton id="uobForwardBtn"
-                             value="Back"
-                             styleClass="uob_button"
-                             actionListener="#{uobpb.goBack}">
-            </p:commandButton>
+
 
          
 
       </div>
-   </ui:define>
-
-</ui:composition>
+</h:body>
+</html>

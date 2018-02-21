@@ -190,6 +190,7 @@ input[type="text"], input[type="password"], textarea{ -webkit-appearance: none; 
 /* Paddings */
 .NoPadding{padding:0px !important;}
 .PaddingTopPercent10{ padding-top: 10%;}
+.PaddingTopPercent2{ padding-top: 2%;}
 
 /* Containers */
 .Container100{ width:100%; float:left;}

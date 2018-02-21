@@ -164,7 +164,7 @@
     </script>
 
 
-    <div class="Wid70 Fright" >
+    <div class="Wid60 Fright" >
 
 
         <a class="toggleMenu" href="#">Menu</a>
@@ -313,18 +313,18 @@
                 <li class="test" id="dashboardMenuHighlight">
                     <h:form class="alert_menu alert_menu_1" id="frmNtfvtnPnl">
                         <p:outputPanel id="NtfvtnOutPnl">
-                        <ui:fragment rendered='#{cmnBn.getMessage("Message") > 0}'>
-                        <div class="shake shake-constant">
-                            <p:graphicImage name="images/alert-bell.png" library="#{uiLayout.webProfile.cssdir}"/>
-                        </div>
-                        <span class="alert_count">#{cmnBn.getMessage("Message")}</span>
-                        <p:commandButton id="imageBtn" value="Alert" type="button"/>
-                        <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade" class="alert_overlay_panel">
-                            <div class="outer_panel_block">
-                                <p:repeat value="#{cmnBn.notificationDataList}" var="notfBn">
-                                    <div class="panel_block">
-                                        <h:outputText value="#{notfBn.message}" escape="false" class="first_div"/>
-                                        <ui:fragment rendered='#{!notfBn.linkAvailable}'>
+                            <ui:fragment rendered='#{cmnBn.getMessage("Message") > 0}'>
+                                <div class="shake shake-constant">
+                                    <p:graphicImage name="images/alert-bell.png" library="#{uiLayout.webProfile.cssdir}"/>
+                                </div>
+                                <span class="alert_count">#{cmnBn.getMessage("Message")}</span>
+                                <p:commandButton id="imageBtn" value="Alert" type="button"/>R
+                                <p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade" class="alert_overlay_panel">
+                                    <div class="outer_panel_block">
+                                        <p:repeat value="#{cmnBn.notificationDataList}" var="notfBn">
+                                            <div class="panel_block">
+                                                <h:outputText value="#{notfBn.message}" escape="false" class="first_div"/>
+                                                <ui:fragment rendered='#{!notfBn.linkAvailable}'>
 
                                                 <span>
                                                     <p:commandLink rendered="true" id="rmvNotfctn"
@@ -332,26 +332,26 @@
                                                         X
                                                     </p:commandLink>
                                                     </span>
-                                            <span class="alert_date"><h:outputText value="#{notfBn.businessdate}"/></span>
-                                        </ui:fragment>
-                                        <ui:fragment rendered='#{notfBn.linkAvailable}'>
-                                            <a href="#{notfBn.link}">
+                                                    <span class="alert_date"><h:outputText value="#{notfBn.businessdate}"/></span>
+                                                </ui:fragment>
+                                                <ui:fragment rendered='#{notfBn.linkAvailable}'>
+                                                    <a href="#{notfBn.link}">
                                                 <span class="external_link_click">
                                                     <h:outputText value="Click"/>
                                                     <span class="ui-button-icon-center ui-icon ui-c fa fa-external-link click_icon" ></span>
                                                 </span>
-                                        </a>
-                                        </ui:fragment>
+                                                    </a>
+                                                </ui:fragment>
+                                            </div>
+                                        </p:repeat>
                                     </div>
-                                </p:repeat>
-                            </div>
-                            <p:commandLink rendered="true" id="menureportsbtn"
-                                           actionListener="#{uiLayout.doMenuAction('consumer', 'alert_notification.xhtml')}">
-                                <div class="bottom_block"><h:outputText value="View all alerts"/>
-                                </div>
-                            </p:commandLink>
-                        </p:overlayPanel>
-                        </ui:fragment>
+                                    <p:commandLink rendered="true" id="menureportsbtn"
+                                                   actionListener="#{uiLayout.doMenuAction('consumer', 'alert_notification.xhtml')}">
+                                        <div class="bottom_block"><h:outputText value="View all alerts"/>
+                                        </div>
+                                    </p:commandLink>
+                                </p:overlayPanel>
+                            </ui:fragment>
                             <ui:fragment rendered='#{cmnBn.getMessage("Message") == 0}'>
                                 <div class="shake shake-constant grey_alert" style="animation-duration: 0ms;right: 0;">
                                     <i class="fa fa-bell Fs20 animated swing infinite gray"></i>

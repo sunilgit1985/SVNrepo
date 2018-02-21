@@ -330,9 +330,9 @@
 
 
                             </script>
-                            <div class="Container100" style="padding-top: 4px;">
-                                <div class="Wid40 Fright IRERBlock">
-                                    <div class="Fright ReturnValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
+                            <div class="Container30 PaddingTopPercent2">
+                                <div class="Conatiner100 IRERBlock">
+                                    <div class="Fleft ReturnValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
                                         <div class="Wid100 ERLabel">Expected Return</div>
                                         <div class="Wid100 ERCount">
                                             <h:outputText id="uober" value="#{uobProfile.customer.totalExpectedReturns}">
@@ -340,7 +340,7 @@
                                             </h:outputText>
                                         </div>
                                     </div>
-                                    <div class="Fright RiskValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
+                                    <div class="Fleft RiskValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
                                         <div class="Wid100 IRLabel">
                                             Investment Risk
                                         </div>
@@ -357,6 +357,7 @@
                             <div class="Container100">
 
                                 <div class="Container30 donutChartGraph">
+
                                     <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
 
                                     <input type="hidden"
@@ -432,7 +433,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="Container100 ">
+                            <div class="Container100 barChartGraph">
                                 <p:chart type="bar" model="#{uobProfile.glidePath}" style="height:300px"/>
                             </div>
 

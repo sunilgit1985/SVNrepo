@@ -16,7 +16,7 @@ function glidepathChart()
 //        gridLineColor: '#cccccc'    // *Color of the grid lines.
         background: '#fff',      // CSS color spec for background color of grid.
 //        borderColor: '#999999',     // CSS color spec for border around grid.
-//        borderWidth: 2.0,           // pixel width of border around grid.
+        borderWidth: 0,           // pixel width of border around grid.
 //        shadow: true,               // draw a shadow for grid.
 //        shadowAngle: 45,            // angle of the shadow.  Clockwise from x axis.
 //        shadowOffset: 1.5,          // offset from the line of the shadow.
