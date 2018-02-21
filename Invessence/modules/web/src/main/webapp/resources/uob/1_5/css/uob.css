@@ -6060,6 +6060,7 @@ td.advisorBullet_td span {
 span.icon_span {
     position: relative;
     top: 6px;
+    left:-3px;
 }
 rect.highcharts-background {
     fill: none;
@@ -6103,6 +6104,11 @@ rect.highcharts-background {
     overflow: auto;
     background: #fff;
 }
+.ui-button.ui-state-active .ui-button-text, .ui-buttonset .ui-state-active .ui-button-text {
+    background-color: #a4332f;
+}
+.ui-slider-handle{border: solid 1px #a4332f !important;
+    background-color: #a4332f;background-image: none !important;}
 
 /*** responsive**/
 

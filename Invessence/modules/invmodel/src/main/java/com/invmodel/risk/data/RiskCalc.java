@@ -51,7 +51,7 @@ public class RiskCalc
          age = userRiskProfile.getDefaultAge();
          horizon = null;
          recurringPeriod = userRiskProfile.getDefaultIntValue(RiskConst.RECURRINGPERIOD, 0);
-         withDrwalPeriod = userRiskProfile.getDefaultIntValue(RiskConst.WITHDRAWALPERIOD, 0);
+         withDrwalPeriod = userRiskProfile.getDefaultIntValue(RiskConst.WITHDRAWALPERIOD, null);
          investment = userRiskProfile.getTotalInvestment();
          recurring = userRiskProfile.getDefaultRecurringInvestment();
          withdrawlamount = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWALPERIOD, 0.0);
@@ -64,7 +64,7 @@ public class RiskCalc
          age = 30;
          horizon = null;
          recurringPeriod = 0;
-         withDrwalPeriod = 0;
+         withDrwalPeriod = null;
          investment = 100000.0;
          recurring = 0.0;
          withdrawlamount = 0.0;

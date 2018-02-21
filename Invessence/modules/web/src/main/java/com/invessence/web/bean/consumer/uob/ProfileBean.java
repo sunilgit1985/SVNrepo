@@ -746,7 +746,7 @@ public class ProfileBean extends PortfolioCreationUI
 
                }
             }
-            if (!selectedRetirementGoal && !thisgoal.equals(RiskConst.GOALS.LEGACY))
+            if (selectedRetirementGoal && !thisgoal.equals(RiskConst.GOALS.LEGACY))
             {
                if (!JavaUtil.isInRange(getRecurringInvestment(), 0, null))
                {
@@ -1123,10 +1123,10 @@ public class ProfileBean extends PortfolioCreationUI
                setRecurInvstAmtFlg(false);
                setRecurringInvestment(0);
                setRecurringPeriod(0);
-               revwPnlExpYrFndLbl="NA";
+//               revwPnlExpYrFndLbl="NA";
             }else{
                setRecurInvstAmtFlg(true);
-               revwPnlExpYrFndLbl= ""+getYear(getHorizon());
+//               revwPnlExpYrFndLbl= ""+getYear(getHorizon());
             }
             enableRecurInvstPnl();
             break;
@@ -1150,6 +1150,11 @@ public class ProfileBean extends PortfolioCreationUI
 
    public String getRevwPnlExpYrFndLbl()
    {
+      if(!selectedRetirementGoal  || RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.LEGACY)){
+         revwPnlExpYrFndLbl="NA";
+      }else{
+         revwPnlExpYrFndLbl= ""+getYear(getHorizon());
+      }
       return revwPnlExpYrFndLbl;
    }
 

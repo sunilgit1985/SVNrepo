@@ -67,19 +67,34 @@ public class UserRiskData implements Comparable
       if (answerType != null) {
          if (answerType.equalsIgnoreCase("D"))
          {
-            answerDouble = converter.getDoubleData(answer);
+            if(answer ==null)
+            {
+               answerDouble = null;
+            }else{
+               answerDouble = converter.getDoubleData(answer);
+            }
             answerInt = null;
             answerBoolean = null;
          }
          else if (answerType.equalsIgnoreCase("I")) {
+            if(answer ==null)
+            {
+               answerInt = null;
+            }else{
+               answerInt = converter.getIntData(answer);
+            }
             answerDouble = null;
-            answerInt = converter.getIntData(answer);
             answerBoolean = null;
          }
          else if (answerType.equalsIgnoreCase("B")) {
             answerDouble = null;
             answerInt = null;
-            answerBoolean = converter.getBooleanData(answer);
+            if(answer ==null)
+            {
+               answerBoolean = null;
+            }else{
+               answerBoolean = converter.getBooleanData(answer);
+            }
          }
          else {
             answerDouble = null;
