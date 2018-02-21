@@ -170,12 +170,19 @@
                 <div class="Container100">
                     Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{dataDisplayConverter.displayWithComma(uobProfile.initialInvestment)}</span>
                 </div>
+                <div class="Container100" style="display:#{uobProfile.selectedCurrency.shortname == '$' ? 'block' : 'none' };" >
+                    Exchange Rate: <span class="output_review"> #{dataDisplayConverter.displayWithComma(uobProfile.customer.getExchangeRate())}</span>
+                </div>
+                <div class="Container100" style="display:#{uobProfile.selectedCurrency.shortname == '$' ? 'block' : 'none' };" >
+                    Invested Amount in SGD : <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}</span>
+                </div>
                 <div class="Container100">
                     Recurring Investment: <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.recurringInvestment)}</span>
                 </div>
                 <div class="Container100">
                     Current Net Worth: <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.accountFinancials.networth)}</span>
                 </div>
+
             </div>
             <div class="Container100">
                 <div class="Container100  tp20 confirmation_donut_dtl">
@@ -322,7 +329,32 @@
 
 
                             </script>
+                            <div class="Container100" style="padding-top: 4px;">
+                                <div class="Wid40 Fright IRERBlock">
+                                    <div class="Fright ReturnValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
+                                        <div class="Wid100 ERLabel">Expected Return</div>
+                                        <div class="Wid100 ERCount">
+                                            <h:outputText id="uober" value="#{uobProfile.customer.totalExpectedReturns}">
+                                                <f:convertNumber pattern="##0.00%"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                    <div class="Fright RiskValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
+                                        <div class="Wid100 IRLabel">
+                                            Investment Risk
+                                        </div>
+                                        <div class="Wid100 IRCount">
+                                            <h:outputText id="uobir" value="#{uobProfile.customer.totalRisk}">
+                                                <f:convertNumber pattern="##0.00%"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                             <div class="Container100">
+
                                 <div class="Container30 donutChartGraph">
                                     <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
 
