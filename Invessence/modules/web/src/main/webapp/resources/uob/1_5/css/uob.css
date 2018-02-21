@@ -5081,8 +5081,9 @@ span.input_value {
     text-align: right;
     width:37%;
     position:relative;
-    z-index:2;
+
 }
+.header_link.prenext_btn{ z-index:2;}
 .Container100.tab_dtl {
     padding: 12px 0;
     font-size:17px;
@@ -5091,6 +5092,7 @@ span.input_value {
     border: 1px solid #c1c1c1;
     text-align: center;
     border-radius: 4px;
+    z-index:2;
 }
 .ui-ring-item span {
     text-align: center;
