@@ -181,7 +181,7 @@ CREATE TABLE `tmp_sales_rep` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`192.168.100.92` PROCEDURE `parentDBProcedure`()
+CREATE PROCEDURE `parentDBProcedure`()
 BEGIN
 
     delete from temp.tmp_nav;
@@ -222,7 +222,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_td_eod_process`(
+CREATE PROCEDURE `sp_td_eod_process`(
 )
 BEGIN
 	DECLARE tDate	varchar(10);
@@ -266,7 +266,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_trade_process_isin_wise`()
+CREATE PROCEDURE `sp_trade_process_isin_wise`()
 BEGIN
 
 declare v_tradeDate varchar(10);
@@ -328,7 +328,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_upload_exchange_rate`(
+CREATE PROCEDURE `sp_upload_exchange_rate`(
 )
 BEGIN 
 
@@ -378,7 +378,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_upload_ext_acct_info`(
+CREATE PROCEDURE `sp_upload_ext_acct_info`(
 )
 BEGIN
     set sql_safe_updates=0;
@@ -513,7 +513,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_upload_investment`(
+CREATE PROCEDURE `sp_upload_investment`(
 )
 BEGIN 
 
@@ -574,7 +574,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_upload_nav`(
+CREATE PROCEDURE `sp_upload_nav`(
 )
 BEGIN 
 
@@ -786,7 +786,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`192.168.100.92` PROCEDURE `sp_upload_position`(
+CREATE PROCEDURE `sp_upload_position`(
 )
 BEGIN 
 
@@ -938,7 +938,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_upload_sales_rep`()
+CREATE PROCEDURE `sp_upload_sales_rep`()
 BEGIN 
 
 DECLARE tReportDate	VARCHAR(10);
@@ -1029,7 +1029,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_trade_process_both`()
+CREATE PROCEDURE `sp_trade_process_both`()
 BEGIN
 
 declare v_tradeDate varchar(10);
@@ -1104,7 +1104,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`admin`@`192.168.100.92` PROCEDURE `sp_trade_process_both_update`()
+CREATE PROCEDURE `sp_trade_process_both_update`()
 BEGIN
 
 update invdb.user_trade_log utl
@@ -1326,7 +1326,7 @@ DROP procedure IF EXISTS `sp_updt_ext_acct_flag`;
 
 DELIMITER $$
 USE `temp`$$
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `sp_updt_ext_acct_flag`()
+CREATE PROCEDURE `sp_updt_ext_acct_flag`()
 BEGIN
 
   DECLARE done INT DEFAULT FALSE;
