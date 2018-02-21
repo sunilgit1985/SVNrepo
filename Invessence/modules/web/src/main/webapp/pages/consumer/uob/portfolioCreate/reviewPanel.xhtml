@@ -164,8 +164,9 @@
                         <span style="float:left;width:100%;">#{uobProfile.selectedGoal.displayName}</span>
                     </div>
                 </div>
+
                 <div class="Container100">
-                    Expected year funds needed: <span class="output_review">#{uobProfile.getYear(uobProfile.horizon)}</span>
+                    Expected year funds needed: <span class="output_review">#{uobProfile.revwPnlExpYrFndLbl}</span>
                 </div>
                 <div class="Container100">
                     Initial Investment: <span class="output_review">#{uobProfile.selectedCurrency.shortname} #{dataDisplayConverter.displayWithComma(uobProfile.initialInvestment)}</span>
@@ -174,7 +175,7 @@
                     Exchange Rate: <span class="output_review"> #{dataDisplayConverter.displayWithComma(uobProfile.customer.getExchangeRate())}</span>
                 </div>
                 <div class="Container100" style="display:#{uobProfile.selectedCurrency.shortname == '$' ? 'block' : 'none' };" >
-                    Invested Amount in SGD : <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}</span>
+                    Invested Amount in #{webutil.getWebprofile().getDefaultCurrency()} : <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}</span>
                 </div>
                 <div class="Container100">
                     Recurring Investment: <span class="output_review">S$ #{dataDisplayConverter.displayWithComma(uobProfile.customer.recurringInvestment)}</span>

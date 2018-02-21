@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 
 import com.invessence.converter.JavaUtil;
 import com.invessence.web.bean.consumer.PortfolioCreationUI;
+import com.invessence.web.constant.WebConst;
 import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.*;
 import com.invmodel.risk.data.RiskConst;
@@ -25,6 +26,7 @@ public class ProfileBean extends PortfolioCreationUI
    public WebMenuItem selectedGoal;
    public WebMenuItem selectedCurrency;
    public Boolean selectedRetirementGoal = true;
+   private String revwPnlExpYrFndLbl;
 
    @Override
    public void initUI()
@@ -1121,8 +1123,10 @@ public class ProfileBean extends PortfolioCreationUI
                setRecurInvstAmtFlg(false);
                setRecurringInvestment(0);
                setRecurringPeriod(0);
+               revwPnlExpYrFndLbl="NA";
             }else{
                setRecurInvstAmtFlg(true);
+               revwPnlExpYrFndLbl= ""+getYear(getHorizon());
             }
             enableRecurInvstPnl();
             break;
@@ -1144,4 +1148,13 @@ public class ProfileBean extends PortfolioCreationUI
       }
    }
 
+   public String getRevwPnlExpYrFndLbl()
+   {
+      return revwPnlExpYrFndLbl;
+   }
+
+   public void setRevwPnlExpYrFndLbl(String revwPnlExpYrFndLbl)
+   {
+      this.revwPnlExpYrFndLbl = revwPnlExpYrFndLbl;
+   }
 }
