@@ -1083,10 +1083,14 @@
                                             <ui:fragment rendered="#{uobCustodyBean.dsplNwPriUnEmpRsnPnl}">
                                                 <div class="acc_holder_dtl_block">
                                                     <div class="Container100 width99">
-                                                        <p:inputText id="nwPriHldrUnEmpRsn" placeholder="Please Specify The Reason Of Unemployment"
-                                                        value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.reasonForUnemployment}"
-                                                                     maxlength="45"/>
-                                                        <label for="nwPriHldrUnEmpRsn">The Reason Of Unemployment</label>
+                                                        <span class="title_line">The Reason Of Unemployment</span>
+                                                        <p:selectOneMenu id="nwPriHldrUnEmpRsn"
+                                                                         value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.reasonForUnemployment}">
+                                                            <f:selectItem itemLabel="Select Reason Of Unemployment" itemValue="Select"></f:selectItem>
+                                                            <f:selectItem itemLabel="Homemaker" itemValue="Homemaker"></f:selectItem>
+                                                            <f:selectItem itemLabel="Retired" itemValue="Retired"></f:selectItem>
+                                                            <f:selectItem itemLabel="Student" itemValue="Student"></f:selectItem>
+                                                        </p:selectOneMenu>
                                                     </div>
                                                 </div>
                                             </ui:fragment>

@@ -1443,7 +1443,7 @@ public void onChngRpDtls(String flag){
                dataOK = validateTaxMnPnl(OwnDtls);
                break;
             case 4:// New Account EMPLOYMENT
-               dataOK = validateEmpDtls(OwnDtls);
+               dataOK = validateEmpDtls(OwnDtls,dtPriHldrDob);
                break;
             case 5:// New Account SECURITY QUESTION
                dataOK = validateSecDtls(OwnDtls);
@@ -2157,6 +2157,11 @@ public void onChngRpDtls(String flag){
                pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.psprtNum", "Passport number is required is required!", null));
             }
          }
+         if(validateCstmCond( ownerDetails,  dob)){
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.crtErr1",
+                                                                                   "You are not permitted to open an account at this time, due to age is over 62 and retired and only has primary school as education.", null));
+         }
       }
       else
       {
@@ -2296,7 +2301,7 @@ public void onChngRpDtls(String flag){
       return dataOK;
    }
 
-   public boolean validateEmpDtls(OwnerDetails ownerDetails)
+   public boolean validateEmpDtls(OwnerDetails ownerDetails,Date dob)
    {
       Boolean dataOK = true;
       if (!hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()))
@@ -2307,7 +2312,7 @@ public void onChngRpDtls(String flag){
 
       if (hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()) && hasRequiredData(ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()) &&
          ownerDetails.getOwnerEmploymentDetails().getEmplTypeId().equalsIgnoreCase("UnEmployed") &&
-         !hasRequiredData(ownerDetails.getOwnerMiscDetails().getReasonForUnemployment()))
+         (ownerDetails.getOwnerMiscDetails().getReasonForUnemployment() == null || ownerDetails.getOwnerMiscDetails().getReasonForUnemployment().equalsIgnoreCase("select")))
       {
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.unEmpRsn", "Reason for Unemployment is required!", null));
@@ -2362,6 +2367,16 @@ public void onChngRpDtls(String flag){
          {
             dataOK = false;
             pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.offNum", "Office tel number is required!", null));
+         }
+      }
+
+      if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
+      {
+         if (validateCstmCond(ownerDetails, dob))
+         {
+            dataOK = false;
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.crtErr1",
+                                                                                   "You are not permitted to open an account at this time, due to age is over 62 and retired and only has primary school as education.", null));
          }
       }
 
@@ -3386,6 +3401,16 @@ public void onChngRpDtls(String flag){
          }
       }
       return years;
+   }
+
+   public boolean validateCstmCond(OwnerDetails ownerDetails, Date dob){
+      if(dob !=null && calculateAge(dob)>62 &&
+         ownerDetails.getOwnerMiscDetails().getQualifications()!=null && ownerDetails.getOwnerMiscDetails().getQualifications().equalsIgnoreCase("Primary") &&
+         ownerDetails.getOwnerEmploymentDetails().getEmplTypeId()!=null && ownerDetails.getOwnerEmploymentDetails().getEmplTypeId().equalsIgnoreCase("Unemployed") &&
+         ownerDetails.getOwnerMiscDetails().getReasonForUnemployment()!=null && ownerDetails.getOwnerMiscDetails().getReasonForUnemployment().equalsIgnoreCase("Retired") ){
+         return true;
+      }
+      return false;
    }
 
    public WebUtil getWebutil()
