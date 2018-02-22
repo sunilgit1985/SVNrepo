@@ -40,21 +40,19 @@
 
 
         <div class="Container100 tab_dtl RTQ">
-            <p>For your investment portfolio outside of this investment account, you may choose to include
-                Singapore-based assets, including equities, stock and cash. The implication of the inclusion is that your
-                overall investment portfolio, including your assets outside this investment account, will be less diversified due
-                to its increased exposure to Singaporean assets.
-                <br/>Please choose if you wish to include Singapore-based assets in your portfolio.</p>
+            <p>Do you want Singapore-based assets to be included as a significant part of the portfolio allocated to you?</p>
+            <br/>
+            <span>You may already own Singapore-based assets, including equities, bonds, properties, businesses and cash,  or derive a significant part of your savings from income sources within Singapore. You have the option of an investment account that does not include Singapore assets as significant part of its portfolio.    Please choose if you wish to include Singapore-based assets in your portfolio.</span>
             <div class="selectRadio">
                 <p:selectOneRadio id="riskQ8" value="#{uobProfile.riskAns8}" styleClass=""
                                   layout="pageDirection">
                     <p:ajax listener="#{uobProfile.onChangeValue}"
                             update=":ceForm:workArea"/>
                     <f:selectItem id="r8a1"
-                                  itemLabel="I have sufficient exposure to Singapore-based assets. I do not want Singapore-based assets to be included as a significant part of the portfolio allocated to me."
+                                  itemLabel="No, I do not want Singapore-based assets to be included as a significant part (in the range of 5%-50%) of the portfolio allocated to me. I have sufficient exposure to Singapore-based assets."
                                   itemValue="1"></f:selectItem>
                     <f:selectItem id="r8a2"
-                                  itemLabel="I want Singapore-based assets to be included as a significant part (in the range 5% - 50%) of the global portfolio allocated to me. "
+                                  itemLabel="Yes, I want Singapore-based assets to be included as a significant part (in the range of 5%-50%) of the global portfolio allocated to me. "
                                   itemValue="2"></f:selectItem>
                 </p:selectOneRadio>
 

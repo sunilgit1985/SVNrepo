@@ -6109,7 +6109,8 @@ rect.highcharts-background {
 }
 .ui-slider-handle{border: solid 1px #a4332f !important;
     background-color: #a4332f;background-image: none !important;}
-
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-list-item label{color: #000;}
+.ui-chkbox-box .ui-icon-check{  background-color: #a4332f;}
 /*** responsive**/
 
 /** 16/10/2017***/
@@ -6491,7 +6492,7 @@ rect.highcharts-background {
 /**** Login Screen ****/
 .login_bg{
 	width:100%;
-	max-width:730px;
+	max-width:600px;
 }
 
 	.acc_block_left{
