@@ -6125,6 +6125,13 @@ rect.highcharts-background {
     background-size: 110% !important;
 }
 .marginTopPercent5{margin-top:5%;}
+.PaddingTopPercent2 {
+    padding-top: 2%;
+}
+
+
+
+
 /*** responsive**/
 
 /** 16/10/2017***/
