@@ -19,14 +19,14 @@
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoPortfolioConfirm}" disabled="#{uobProfile.disableApproveBtn}"> I Approve <span><p:graphicImage name="images/portfolio/approve_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.gotoPortfolioConfirm}" disabled="#{uobProfile.disableApproveBtn}"> I Approve <span class="icon_span"><p:graphicImage name="images/portfolio/approve_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span></p:commandLink>
                             </div>
                             <div class="Container50 pre_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
                                                process="@this"
-                                               actionListener="#{uobProfile.cancelCS}"> <span><p:graphicImage name="images/portfolio/cancel_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.cancelCS}"> <span class="icon_span"><p:graphicImage name="images/portfolio/cancel_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span>Cancel </p:commandLink>
                             </div>
                         </p:outputPanel>
