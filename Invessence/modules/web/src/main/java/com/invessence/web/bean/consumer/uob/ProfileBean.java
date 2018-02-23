@@ -1114,6 +1114,10 @@ public class ProfileBean extends PortfolioCreationUI
       switch (pageno)
       {
          case 0:
+            if ((selectedGoal != null) && (pagemanager.getLastPageVisited() == 1))
+            {
+               reOrganizeGoalList();
+            }
             break;
          case 1:
             break;
