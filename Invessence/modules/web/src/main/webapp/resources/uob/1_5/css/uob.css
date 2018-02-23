@@ -4,6 +4,8 @@
 * Supported Browsers > Google Chrome 3+ , Mozilla Firefox 3+ , Safari 3+ , Opera 3+ , Yandex Browser , Inernet Explorer 9+
 * Copyright 2016 - Invessence */
 
+
+:-ms-input-placeholder{color:#ccc;}
 /* Logo*/
 #logo2 {
     height: 48px;
@@ -849,6 +851,7 @@ Panel-UI > div {
     background: url("/javax.faces.resource/images/upaccordion.png.xhtml?ln=tcm") !important;
     background-size: 110% !important;
 }
+
 
 .ui-accordion-header {
     margin-top: 20px !important;
@@ -6111,6 +6114,16 @@ rect.highcharts-background {
     background-color: #a4332f;background-image: none !important;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-list-item label{color: #000;}
 .ui-chkbox-box .ui-icon-check{  background-color: #a4332f;}
+.fontWightNormal{ font-weight:normal;}
+.faq_dtls .ui-icon-triangle-1-e {
+    background: url("/javax.faces.resource/images/plusIcon.png.xhtml?ln=uob") !important;
+    background-size: 100% !important;
+}
+
+.faq_dtls .ui-accordion-header > .ui-icon-triangle-1-s {
+    background: url("/javax.faces.resource/images/minusIcon.png.xhtml?ln=uob") !important;
+    background-size: 110% !important;
+}
 /*** responsive**/
 
 /** 16/10/2017***/
