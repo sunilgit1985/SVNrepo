@@ -392,7 +392,7 @@ public class PortfolioCreationUI extends UserInterface
          {
             loadProfileData(customer,beanAcctnum);
             customer.setSaveVisitor(false);
-            if (beanmode != null && beanmode == UIMode.ChangeStrategy)
+            if (beanmode != null && (beanmode == UIMode.ChangeStrategy || beanmode == UIMode.Confirm ||beanmode == UIMode.Edit))
             {
                savedCustomer = resetData();
                loadProfileData(savedCustomer,beanAcctnum);
