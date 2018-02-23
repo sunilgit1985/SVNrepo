@@ -22,4 +22,7 @@ public interface FileProcessorDao
 
    public void truncateTable(String tableName) throws SQLException;
    public void callProcedure(String proc) throws SQLException;
+
+//Added to skip file procesing if Processing File is not available because of previous day holiday.
+   public boolean isBussdtHoliday(String country ,String businessdt) throws SQLException;
 }

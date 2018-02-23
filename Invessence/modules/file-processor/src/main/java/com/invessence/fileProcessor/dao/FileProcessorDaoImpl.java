@@ -200,4 +200,13 @@ public class FileProcessorDaoImpl implements FileProcessorDao
       }
    }
 
+   @Override
+   public boolean isBussdtHoliday(String country,String businessdt) throws SQLException
+   {
+      logger.info("Checking if is business date holiday");
+      String sql="SELECT count(0) FROM temp.vw_holiday_list WHERE hdate=? and country=?";
+      int res=invJdbcTemplate.queryForInt(sql,new Object[]{businessdt,country});
+      return res>0?true:false;
+   }
+
 }
