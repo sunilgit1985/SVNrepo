@@ -84,13 +84,14 @@ public class FileProcessor
                   List<FileDetails> fileProcessStatusList=new ArrayList<FileDetails>();
                   List<ZipFile> filesForZip= new LinkedList<>();
                   Boolean preInstructionExecuted=false;
-
+                  Boolean isBussdtHoliday=fileProcessorDao.isBussdtHoliday(dbParamMap.get("SETT_CURRUNCY").getValue().toString(), dbParamMap.get("BUSINESS_DATE").getValue().toString());
                   int fileExecutionCounter=1;
                   System.out.println("****************************************************");
                   System.out.println("File Processor execution Started");
 
                   if(serviceRequest.getSequenceId()==1){flagExecuteParentProcess=true;}
-
+                  //below line test if Business date is not holiday then only process file-procesing , if holiday then Post Parent Processing logic executed for Business Date updation
+                  if (!isBussdtHoliday){
                   while (itr.hasNext())
                   {
                      fileDetails = (FileDetails) itr.next();
@@ -198,12 +199,12 @@ public class FileProcessor
 
                      fileExecutionCounter++;
                   }
-                  }
-
+                  }}
+                  //Post parent processing
                   if(mailAlertMsg.length()==0){ // Checking Process Execution Status
                      isProcessMailRaised=new StringBuilder();
 
-
+                     if(isBussdtHoliday){ fileDetails =fileList.get(0);}
 
 //                     Iterator<FileDetails> itr1=fileProcessStatusList.iterator();
 //                     while(itr1.hasNext()){
