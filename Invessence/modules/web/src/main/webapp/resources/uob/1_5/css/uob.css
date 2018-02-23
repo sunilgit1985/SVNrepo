@@ -6124,6 +6124,7 @@ rect.highcharts-background {
     background: url("/javax.faces.resource/images/minusIcon.png.xhtml?ln=uob") !important;
     background-size: 110% !important;
 }
+.marginTopPercent5{margin-top:5%;}
 /*** responsive**/
 
 /** 16/10/2017***/
