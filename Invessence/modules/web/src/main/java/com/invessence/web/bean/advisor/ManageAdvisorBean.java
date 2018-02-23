@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 
 import com.invessence.web.constant.*;
 import com.invessence.web.dao.advisor.*;
+import com.invessence.web.dao.common.PositionDAO;
 import com.invessence.web.dao.consumer.ConsumerListDataDAO;
 import com.invessence.web.data.advisor.AdvisorDashData;
 import com.invessence.web.data.common.*;
@@ -33,6 +34,8 @@ public class ManageAdvisorBean implements Serializable
       this.uiLayout = uiLayout;
    }
 
+   @ManagedProperty("#{positionDAO}")
+   private PositionDAO positionDAO;
 /*
    @ManagedProperty("#{advisorBean}")
    private AdvisorBean abean;
@@ -212,6 +215,16 @@ public class ManageAdvisorBean implements Serializable
    public AdvisorSaveDataDAO getAdvisorSaveDataDAO()
    {
       return advisorSaveDataDAO;
+   }
+
+   public PositionDAO getPositionDAO()
+   {
+      return positionDAO;
+   }
+
+   public void setPositionDAO(PositionDAO positionDAO)
+   {
+      this.positionDAO = positionDAO;
    }
 
    public ArrayList<AccountData> getAccountDataList()
@@ -414,7 +427,12 @@ public class ManageAdvisorBean implements Serializable
 
          if (getSelectedAccount().getAcctStatus().equals("Active"))
          {
-            uiLayout.doMenuAction("consumer", "overview.xhtml?acct=" + selectedAccount.getAcctnum().toString());
+            List<Position> positionList = positionDAO.loadDBPosition(webutil, getSelectedAccount().getAcctnum());
+
+            if(positionList==null || positionList.isEmpty())
+               uiLayout.doMenuAction("consumer", "AccNotFunded.xhtml");
+            else
+               uiLayout.doMenuAction("consumer", "overview.xhtml?acct=" + selectedAccount.getAcctnum().toString());
          }
          else {
             if (getSelectedAccount().getAdvisor_priviledge().equalsIgnoreCase("V")) {
@@ -518,6 +536,10 @@ public boolean isSelectionListEmpty(){
    public int rowKey(){
 
       return this.hashCode();
+   }
+
+   public void cancelNonFunded(){
+      uiLayout.doMenuAction("advisor", "activeAdv.xhtml?action=A");
    }
 
 
