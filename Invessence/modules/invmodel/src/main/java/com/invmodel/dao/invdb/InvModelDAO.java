@@ -60,6 +60,8 @@ public class InvModelDAO extends JdbcDaoSupport
             }
             data.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
             data.setTicker(ticker);
+            data.setAssetclass(convert.getStrData(rs.get("assetclass")));
+            data.setSubclass(convert.getStrData(rs.get("subclass")));
             data.setDescription(convert.getStrData(rs.get("description")));
             data.setSide(convert.getStrData(rs.get("side")));
             data.setQty(convert.getDoubleData(rs.get("quantity")));
@@ -69,21 +71,19 @@ public class InvModelDAO extends JdbcDaoSupport
             data.setPositionValue(convert.getDoubleData(rs.get("positionValue")));
             data.setFifoPnlUnrealized(convert.getDoubleData(rs.get("fifoPnlUnrealized")));
             data.setLevelOfDetail(convert.getStrData(rs.get("levelOfDetail")));
-            data.setAssetclass(convert.getStrData(rs.get("assetclass")));
             data.setColor(convert.getStrData(rs.get("color")));
-            data.setSubclass(convert.getStrData(rs.get("subclass")));
             data.setWeight(convert.getDoubleData(rs.get("weight")));
             data.setYield(convert.getDoubleData(rs.get("yield")));
             data.setExpenseRatio(convert.getDoubleData(rs.get("expenseRatio")));
             data.setRisk(convert.getDoubleData(rs.get("risk")));
+            data.setExchangeRate(convert.getDoubleData(rs.get("exchangeRate")));
+            data.setSettleQty(convert.getDoubleData(rs.get("settleQty")));
+            data.setSettlePosition(convert.getDoubleData(rs.get("settleMoney")));
 
-            /*
             longGain = longGain + convert.getDoubleData(rs.get("longGain"));
             longLoss = longLoss + convert.getDoubleData(rs.get("longLoss"));
             shortGain = shortGain + convert.getDoubleData(rs.get("shortGain"));
             shortLoss = shortLoss + convert.getDoubleData(rs.get("shortLoss"));
-            */
-
 
             if(ticker.equalsIgnoreCase("cash")) {
                cashAvailable = cashAvailable + convert.getDoubleData(rs.get("positionValue"));

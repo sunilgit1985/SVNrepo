@@ -33,6 +33,7 @@ public class SecurityData
    private String tradeCurrency;
    private Double exchangeRate;
    private Double settlePrice;
+   private Double volatility;
 
    public SecurityData()
    {
@@ -58,6 +59,7 @@ public class SecurityData
       settleCurrency = InvConst.MASTER_CURRENCY;
       tradeCurrency = InvConst.MASTER_CURRENCY;
       exchangeRate = 1.0;
+      volatility=0.0;
 
    }
 
@@ -112,6 +114,7 @@ public class SecurityData
       this.settleCurrency = settleCurrency;
       this.exchangeRate = exchangeRate;
       this.settlePrice = settlePrice;
+      this.volatility = 0.0;
       return this;
    }
 
@@ -225,6 +228,16 @@ public class SecurityData
       return settlePrice;
    }
 
+   public Double getVolatility()
+   {
+      return volatility;
+   }
+
+   public void setVolatility(Double volatility)
+   {
+      this.volatility = volatility;
+   }
+
    public String getHeader()
    {
       String str = Joiner.on(",").join(Arrays.asList("Ticker", "Name",
@@ -274,5 +287,6 @@ public class SecurityData
       }
       return (buildElement("SecurityInfo", toString()));
    }
+
 
 }

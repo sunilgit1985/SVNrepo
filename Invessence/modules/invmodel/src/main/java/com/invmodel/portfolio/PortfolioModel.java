@@ -407,7 +407,11 @@ public class PortfolioModel
                               remaining2Invest = remaining2Invest - money;
                            }
                            pclass.setCashMoney(remaining2Invest);
-                           portfolioRisk = portfolioRisk + assetdata.getPrimeAssetrisk()[offset] * totalPortfolioWeight;
+                           Double volatiity;
+                           SecurityData secdata = portfolioOptimizer.getSecurityData(sd.getTicker(), sd.getTradeCurrency());
+                           volatiity = (secdata != null) ? secdata.getVolatility() : assetdata.getPrimeAssetrisk()[offset];
+
+                           portfolioRisk = portfolioRisk + volatiity * totalPortfolioWeight;
                            double pAssetreturns = assetdata.getPrimeAssetreturns()[offset];
                            portfolioReturns = portfolioReturns + assetdata.getPrimeAssetreturns()[offset] * totalPortfolioWeight;
 
@@ -887,7 +891,11 @@ public class PortfolioModel
                               amount2Allocate = amount2Allocate - money;
                            }
                            pclass.setCashMoney(amount2Allocate);
-                           portfolioRisk = portfolioRisk + assetdata.getPrimeAssetrisk()[offset] * totalPortfolioWeight;
+                           Double volatiity;
+                           SecurityData secdata = portfolioOptimizer.getSecurityData(sd.getTicker(), sd.getTradeCurrency());
+                           volatiity = (secdata != null) ? secdata.getVolatility() : assetdata.getPrimeAssetrisk()[offset];
+
+                           portfolioRisk = portfolioRisk + volatiity * totalPortfolioWeight;
                            double pAssetreturns = assetdata.getPrimeAssetreturns()[offset];
                            portfolioReturns = portfolioReturns + assetdata.getPrimeAssetreturns()[offset] * totalPortfolioWeight;
 

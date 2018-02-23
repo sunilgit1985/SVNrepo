@@ -38,7 +38,18 @@ public class PortfolioOptimizer
    private Map<String, AssetData> assetDataMap;
    private HolisticModelOptimizer hoptimizer;
    private HistoricalDailyReturns historicaldailyreturns;
+   private Map<String, SecurityData> securityDataMap;
 
+   private PortfolioOptimizer()
+   {
+      super();
+      themeAssetMap = new LinkedHashMap<String, ArrayList<String>>();
+      assetDataMap = new HashMap<String, AssetData>();
+      hoptimizer = HolisticModelOptimizer.getInstance();
+      historicaldailyreturns = new HistoricalDailyReturns();
+      securityDataMap = new HashMap<String, SecurityData>();
+
+   }
 
    public static synchronized PortfolioOptimizer getInstance()
    {
@@ -50,13 +61,20 @@ public class PortfolioOptimizer
       return instance;
    }
 
-   private PortfolioOptimizer()
+   private String checkKey(String keyname)
    {
-      super();
-      themeAssetMap = new LinkedHashMap<String, ArrayList<String>>();
-      assetDataMap = new HashMap<String, AssetData>();
-      hoptimizer = HolisticModelOptimizer.getInstance();
-      historicaldailyreturns = new HistoricalDailyReturns();
+      if (keyname == null || keyname.length() == 0)
+      {
+         keyname = "DISCARD";
+      }
+
+      return keyname.toUpperCase();
+   }
+
+   private String buildSecurityKey(String ticker, String basecurrency)
+   {
+
+      return checkKey(ticker) + "." + checkKey(basecurrency);
    }
 
    // If Theme is null, then reload all model.
@@ -78,7 +96,10 @@ public class PortfolioOptimizer
          saveAssetWeights();
          logger.info("Optimize Prime Asset Class");
          savePrimeAssetWeights();
-
+         logger.info("Load Security for volatality");
+         loadSecurityData();
+         logger.info("Calculate Volatality");
+         calcSecurityVolatality();
       }
       catch (Exception ex)
       {
@@ -176,12 +197,14 @@ public class PortfolioOptimizer
       return assetDataList;
    }
 
-   public String getCashColor(String theme) {
+   public String getCashColor(String theme)
+   {
       read.lock();
       try
       {
          String key = buildAssetKey(checkThemeName(theme), "Cash");
-         if (assetDataMap.containsKey(key)) {
+         if (assetDataMap.containsKey(key))
+         {
             return assetDataMap.get(key).getColor();
          }
          return "#f5f5f5";
@@ -368,15 +391,15 @@ public class PortfolioOptimizer
             }
          }
       }
-         catch(Exception e)
-         {
-            e.printStackTrace();
-         }
-         finally
-         {
-            read.unlock();
-         }
+      catch (Exception e)
+      {
+         e.printStackTrace();
       }
+      finally
+      {
+         read.unlock();
+      }
+   }
 
    private void setSecurityData(String theme, String ticker,
                                 String assetname,
@@ -450,7 +473,7 @@ public class PortfolioOptimizer
             }
          }
       }
-      catch(Exception e)
+      catch (Exception e)
       {
          e.printStackTrace();
       }
@@ -509,7 +532,7 @@ public class PortfolioOptimizer
                   double[][] weights = instanceOfCapitalMarket.getEfficientFrontierAssetWeights();
 
                   //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
-                  double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+                  double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
                   double[] return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
 
                   int minRiskOffset = getMin(risk1);
@@ -532,7 +555,7 @@ public class PortfolioOptimizer
                   );
 
                   //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
-                  risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+                  risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
                   return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
 
                   if (weights.length > 0)
@@ -705,7 +728,7 @@ public class PortfolioOptimizer
          {
             for (String assetName : themeAssetMap.get(theme))
             {
-               logger.info("Primeasset Class Optimizer for theme: " + theme +" assetclass: " + assetName);
+               logger.info("Primeasset Class Optimizer for theme: " + theme + " assetclass: " + assetName);
                String key = buildAssetKey(theme, assetName);
                String destCurrency = getAssetCurrency(theme);
                ArrayList<PrimeAssetClassData> pacd = assetDataMap.get(key).getOrderedPrimeAssetData();
@@ -918,7 +941,7 @@ public class PortfolioOptimizer
          }
 
          CapitalMarket instanceOfCapitalMarket = new CapitalMarket();
-         EasyOptimal   instanceOfEasyOptimal = new EasyOptimal();
+         EasyOptimal instanceOfEasyOptimal = new EasyOptimal();
 
          AssetParameters assetParameters = new AssetParameters();
 
@@ -949,7 +972,7 @@ public class PortfolioOptimizer
             );
 
             //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
-            double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+            double[] risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
             double[] return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
 
             int minRiskOffset = getMin(risk1);
@@ -978,7 +1001,7 @@ public class PortfolioOptimizer
             );
 
             //risk = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
-            risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks( covarianceOfFunds);
+            risk1 = instanceOfCapitalMarket.getEfficientFrontierPortfolioRisks(covarianceOfFunds);
             return1 = instanceOfCapitalMarket.getEfficientFrontierExpectedReturns();
 
             int j = 0;
@@ -994,34 +1017,44 @@ public class PortfolioOptimizer
       }
    }
 
-   public int getMax(double[] inputArray){
+   public int getMax(double[] inputArray)
+   {
       Double maxValue = inputArray[0];
       int offset = 0;
-      for(int i=0;i < inputArray.length;i++){
-         if(inputArray[i] > maxValue){
+      for (int i = 0; i < inputArray.length; i++)
+      {
+         if (inputArray[i] > maxValue)
+         {
             maxValue = inputArray[i];
             offset = i;
          }
       }
       //return maxValue;
       if (offset > 99)
+      {
          offset = 99;
+      }
       return offset;
    }
 
    // Method for getting the minimum value
-   public int getMin(double[] inputArray){
+   public int getMin(double[] inputArray)
+   {
       double minValue = inputArray[0];
       int offset = 0;
-      for(int i=0;i<inputArray.length;i++){
-         if(inputArray[i] < minValue){
+      for (int i = 0; i < inputArray.length; i++)
+      {
+         if (inputArray[i] < minValue)
+         {
             minValue = inputArray[i];
             offset = i;
          }
       }
       //return minValue;
       if (offset > 99)
+      {
          offset = 99;
+      }
       return offset;
    }
 
@@ -1230,4 +1263,134 @@ public class PortfolioOptimizer
    {
       return InvConst.PORTFOLIO_INTERPOLATION - 1;
    }
+
+
+   private void loadSecurityData()
+   {
+      DBConnectionProvider dbconnection = DBConnectionProvider.getInstance();
+      SQLData convert = new com.invessence.converter.SQLData();
+      DataSource ds = dbconnection.getMySQLDataSource();
+      try
+      {
+         read.lock();
+         String storedProcName = "invdb.sel_sec_volatility";
+         InvModelSP sp = new InvModelSP(ds, storedProcName, 0, 1);
+
+         Map outMap = sp.assetDataFromDB(null);
+         if (outMap != null)
+         {
+            ArrayList<Map<String, Object>> rows;
+            rows = (ArrayList<Map<String, Object>>) outMap.get("#result-set-1");
+            if (rows != null)
+            {
+               int i = 0;
+               for (Map<String, Object> map : rows)
+               {
+                  Map rs = (Map) rows.get(i);
+                  SecurityData secdata = new
+                     SecurityData(null // advisor
+                     , convert.getStrData(rs.get("theme"))
+                     , convert.getStrData(rs.get("ticker"))
+                     , convert.getStrData(rs.get("name"))
+                     , convert.getStrData(rs.get("assetclass"))
+                     , convert.getStrData(rs.get("primeassetclass")) // String primeassetclass
+                     , convert.getStrData(rs.get("type")) // String type
+                     , convert.getStrData(rs.get("style")) // String style,
+                     , 0.0 // double dailyprice
+                     , 0 // int sortorder
+                     , 0.0 // double rbsaWeight,
+                     , convert.getStrData(rs.get("assetcolor")) // String assetcolor
+                     , convert.getStrData(rs.get("primeassetcolor")) // String primeassetcolor
+                     , convert.getStrData(rs.get("assetclass")) // String securityAssetClass
+                     , convert.getStrData(rs.get("subassetName")) // String securitySubAssetClass
+                     , convert.getStrData(rs.get("isin")) // String isin
+                     , convert.getStrData(rs.get("cusip")) // String cusip
+                     , convert.getStrData(rs.get("ric")) // String ric,
+                     , convert.getStrData(rs.get("tradeCurrency")) // String tradeCurrency
+                     , convert.getStrData(rs.get("settleCurrency")) // String settleCurrency
+                     , null// Double exchangeRate
+                     , null // Double settlePrice
+                  );
+
+                  String key = buildSecurityKey(secdata.getTicker(), secdata.getSettleCurrency());
+                  securityDataMap.put(key, secdata);
+
+                  i++;
+               }
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      finally
+      {
+         read.unlock();
+      }
+
+   }
+
+   private Double calculateStdDev(double numArray[])
+   {
+      Double sum = 0.0, standardDeviation = 0.0;
+
+      if (numArray != null && numArray.length > 0)
+      {
+
+         for (Double num : numArray)
+         {
+            sum += num;
+         }
+
+         Double mean = sum / numArray.length;
+
+         for (Double num : numArray)
+         {
+            standardDeviation += Math.pow(num - mean, 2);
+         }
+
+         return Math.sqrt(standardDeviation / numArray.length);
+      }
+      else
+      {
+         return 0.0;
+      }
+   }
+
+
+   public void calcSecurityVolatality()
+   {
+      Double vol = 0.0;
+
+      try
+      {
+         if (securityDataMap.size() > 0)
+         {
+            for (SecurityData secdata : securityDataMap.values())
+            {
+               double[] histdata = historicaldailyreturns.getDailyReturnsArraybyTicker(secdata.getTicker(), secdata.getSettleCurrency());
+               if (histdata != null)
+               {
+                  secdata.setVolatility(calculateStdDev(histdata));
+               }
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   public SecurityData getSecurityData(String ticker, String currency)
+   {
+      String key = buildSecurityKey(ticker, currency);
+      if (securityDataMap.containsKey(key))
+      {
+         return securityDataMap.get(key);
+      }
+      return null;
+   }
+
 }

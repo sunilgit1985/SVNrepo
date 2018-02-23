@@ -68,9 +68,10 @@ public class NewRiskCalc
       profileData.setAdvisor(advisor);
       profileData.setTheme(userRiskProfile.getAnswer(RiskConst.THEME));
 
-      generateSampleRiskGrid();
+      // generateSampleRiskGrid();
 
       //calculateSingleRisk();
+      calculateAllRisk();
 
       System.out.print("Done");
    }
@@ -168,14 +169,15 @@ public class NewRiskCalc
 
    public static void calculateAllRisk() throws Exception
    {
-      AssetClass[] assetClass = new AssetClass[100];
-      Portfolio[] portfolio = new Portfolio[100];
+      Integer maxScore = userRiskProfile.getMaxScore().intValue();
+      AssetClass[] assetClass = new AssetClass[maxScore + 1];
+      Portfolio[] portfolio = new Portfolio[maxScore + 1];
       riskCalc = new UOBRiskCalc(userRiskProfile);
-      for(Integer i = 0; i < 100; i++)
+      for (Integer score = 0; score < maxScore; score++)
       {
-         riskCalc.setRiskScore(i.doubleValue());
-         assetClass[i] = modelUtil.createAssetAllocation(riskCalc);
-         portfolio[i] = modelUtil.createPortfolioAllocation(assetClass[i], riskCalc);
+         riskCalc.setRiskScore(score.doubleValue());
+         assetClass[score] = modelUtil.createAssetAllocation(riskCalc);
+         portfolio[score] = modelUtil.createPortfolioAllocation(assetClass[score], riskCalc);
       }
 
       createEfficientFrontier(assetClass,portfolio,modelUtil.getPoptimizer(),riskCalc);

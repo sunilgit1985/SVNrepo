@@ -205,7 +205,7 @@ public class RebalanceProcess
                   holdingPrice = thisHolding.getCostBasisPrice();
                   holdingValue = thisHolding.getPositionValue();
                   settleHoldingQty = thisHolding.getSettleQty();
-                  settleHoldingValue = thisHolding.getSettleLongTimeShares();
+                  settleHoldingValue = thisHolding.getSettlePosition();
                   thisHolding.setPositionValue(holdingValue + td.getMoney());
                   thisHolding.setQty(holdingQty + td.getQty());
                   thisHolding.setExchangeRate(td.getExchangeRate());
@@ -342,15 +342,18 @@ public class RebalanceProcess
                for (HoldingData hdata : curHolding.getHoldingDataMap().values())
                {
                   String key = hdata.getTicker();
-                  Double holdingQty = hdata.getQty();
-                  Double holdingValue = hdata.getPositionValue();
                   if (!holdingMasterDataMap.containsKey(key))
                   {
                      HoldingData hMasterData = new HoldingData();
                      hMasterData.setProcessed(false);
                      hMasterData.setTicker(key);
-                     hMasterData.setQty(holdingQty);
-                     hMasterData.setPositionValue(holdingValue);
+                     hMasterData.setQty(hdata.getQty());
+                     hMasterData.setPositionValue(hdata.getPositionValue());
+                     hMasterData.setTradeCurrency(hdata.getTradeCurrency());
+                     hMasterData.setSettleCurrency(hdata.getSettleCurrency());
+                     hMasterData.setSettleQty(hdata.getSettleQty());
+                     hMasterData.setSettlePosition(hdata.getSettlePosition());
+                     hMasterData.setExchangeRate(hdata.getExchangeRate());
                      holdingMasterDataMap.put(key, hMasterData);
                   }
                }

@@ -348,13 +348,13 @@ public class UserTradePreprocess
    public Double getDiffQty() {
       Double curvalue = (this.curQty == null) ? 0.0 : this.curQty;
       Double newvalue = (this.newQty == null) ? 0.0 : this.newQty;
-      return curvalue - newvalue;
+      return newvalue - curvalue;
    }
 
    public Double getDiffValue() {
       Double curvalue = (this.curValue == null) ? 0.0 : this.curValue;
       Double newvalue = (this.newValue == null) ? 0.0 :  this.newValue;
-      return curvalue - newvalue;
+      return newvalue - curvalue;
    }
 
 }
