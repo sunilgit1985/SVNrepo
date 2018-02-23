@@ -6505,11 +6505,24 @@ rect.highcharts-background {
 /**** Login Screen ****/
 .login_bg{
 	width:100%;
-	max-width:600px;
+	max-width:495px;
 }
+.header_link.prenext_btn.Container70{
+	float:right;
+	min-width:208px;
+	float:right;
+	width:28%;
+	}
+	.header_link.prenext_btn.Container70 .ui-outputpanel{
+	position:relative;
+	float:right;
+	 }
 
+	 .header_tab .header_title.Container30{
+
+	 }
 	.acc_block_left{
-	/*margin-left:0px !important;*/
+	margin-left:10px !important;
 	margin-bottom:10px;
 	}
 	.Wid100{
@@ -6523,36 +6536,83 @@ rect.highcharts-background {
 	}
 	.edit_portfolio{
 	margin:0px 0px 0px 5px;}
+	.caraousle .Container50.pre_btn:before{right:0px;}
+	.ring_widget{margin-bottom:15px;}
+	td.bullet_td span{
+	    padding: 2px 8px;
+	}
+	.prenext_btn a span{
+	top:7px;}
  .rowBlock{width:100%;position:relative;float:left;}
- /*.dashboard_right_panel{padding:0px;}*/
-@media only screen and (min-width: 500px)  {
-/*#layout-portlets-cover {
-    width: 90%;
+ .dashboard_right_panel{padding:10px;}
+ .alert_count{right:-12px;
+     position: absolute;
+    top: -15px;
+    background: green;
+    color: #fff;
+    padding: 0;
+    border-radius: 30px;
+    font-weight: bold;
+
+    z-index: 0;
+    font-size: 10px;
+    line-height: 18px;
+    width: 19px;
+    height: 19px;
+    text-align: center;}
+
+#layout-portlets-cover {
+
     margin: 0px auto;
     display: block;
-}*/
+}
+@media only screen and (max-width: 1160px)  {
+	.Container50.donutChartGraph{
+	width:100%;
 	}
-	@media only screen and (max-width: 500px)  {
-	.acc_block_left,.dashboard_right_panel{
-	margin-left:2% !important;
+	.dashboard_right_panel{
+	width:65%;
+	float:left;
+	}
+	.Container50.donutChartTable.user_table{
+	width:100%;
+	}
+	.ui-datatable table{
+	margin-left:1%;
+	}
 	}
 
-	}
 	@media only screen and (max-width: 942px)  {.edit_input,.dbdTxtBox{
 	max-width:145px;}}
 	@media only screen and (max-width: 862px)  {
-	.acc_block_left
+	.acc_block_left,.dashboard_right_panel
 	{
 	width:96% !important;
+	min-height:auto !important;
+	margin-left:2% !important;
+
+	}
+	.dashboard_right_panel{
+	padding:0px;
+	}
+	.dashboard_right_panel .userHeadingUobDash{
+	padding:10px !important;
+	margin:10px !important;
 	}
 		.dbdTxtBox{
 	width:85% !important;
 	max-width:inherit !important;}
-
-	.dashboard_right_panel{
-	width:96%;
-	margin:0px;
 	}
+	.donutChartTable {
+	padding-bottom:10px !important;
+	}
+	.dashboard_right_panel .ui-panel .ui-panel-content .tabpanel1 .user_table .ui-datatable  {
+	width:98%;
+	margin-left:1%;
+	}
+	.dashboard_right_panel .ui-panel .ui-panel-content .tabpanel1 .user_table .ui-datatable .ui-datatable-tablewrapper table{
+	width:100%;
+	margin-left:0 !important;
 	}
 
 	.alert_menu.alert_menu_1 > .ui-outputpanel.ui-widget{
@@ -6599,19 +6659,13 @@ text-align: left;
 	.alert_menu button:hover > span{
 	text-decoration: underline;
 	}
-	@media only screen and (max-width: 1160px)  {
-	.Container50.donutChartGraph{
-	width:100%;
-	}
-	.Container50.donutChartTable.user_table{
-	width:100%;
-	}
-	.ui-datatable table{
-	margin-left:1%;
-	}
-	}
-	@media only screen and (max-width: 767px)  {
 
+	@media only screen and (max-width: 767px)  {
+	.left_side_title .ui-selectonemenu{
+	min-width:110px !important;
+	width:100% !important;
+
+}
 	 a.toggleMenu{
 	 display:inline-block;
 	 }
@@ -6629,13 +6683,14 @@ text-align: left;
         z-index: 1;
         box-shadow: 0px 1px 4px 0px #666;
     }
-    .menuHeader > .Wid30{
+    .menuHeader .Wid30{
     width:30%;
     }
-    .menuHeader > .Wid70{
-    position:relative;
+        .menuHeader > .Wid70{
+    position:relative !important;
     float:right;
     }
+
     ul#menuMainNavigation li {
         width: 100%;
         /* float: left; */
@@ -6653,11 +6708,15 @@ text-align: left;
     }
     .shake.shake-constant{
 
-        right: 20px;
+       right: 6px;
     }
+
     .alert_count{
-        top: 0px;
-        right: 15px;
+         top: -8px;
+    right: -5px;
+    font-size: 9px;
+          width: 17px;
+    height: 17px;
     }
     .nav{
     padding-top:0;
@@ -6673,6 +6732,20 @@ text-align: left;
         width: 100%;
     }
 
+	}
+	@media only screen and (max-width: 500px)  {
+	.acc_block_left,.dashboard_right_panel{
+	margin-left:2% !important;
+	}
+	.v3dMainTitle > .Wid70 {
+	width:60%;
+	}
+	}
+
+	@media only screen and (max-width: 480px)  {
+	.dashboard_right_panel .ui-panel .ui-panel-content .tabpanel1 .user_table .ui-datatable .ui-datatable-tablewrapper table thead tr th:nth-child(1){
+	width:11% !important;
+	}
 	}
 /** 16/10/2017***/
 
