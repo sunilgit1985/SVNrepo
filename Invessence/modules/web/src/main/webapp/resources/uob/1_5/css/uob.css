@@ -5,7 +5,7 @@
 * Copyright 2016 - Invessence */
 
 
-:-ms-input-placeholder{color:#ccc;}
+.caraousle input:-ms-input-placeholder{color:#ccc !important;}
 /* Logo*/
 #logo2 {
     height: 48px;
