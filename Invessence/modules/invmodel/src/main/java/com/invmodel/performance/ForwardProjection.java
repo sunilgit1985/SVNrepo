@@ -98,9 +98,13 @@ public class ForwardProjection
       Boolean canWithdraw = (withDrwalPeriod > 0 || withdrawlamount >= 0.0);
       Double invCapital = investment;
       Double thisscore;
-
+      withdrawlamount=0.0;
       for (Integer thisyear = 0; thisyear < years; thisyear++)
       {
+//         withdrawlamount=0.0;
+//         if(thisyear>horizon){
+//            withdrawlamount= (0.95 * investment)/ ;
+//         }
          ProjectionData pdata = new ProjectionData();
          Double score = riskCalc.calculateRisk(age, horizon, invCapital,
                                                recurring, recurringPeriod,
@@ -146,13 +150,13 @@ public class ForwardProjection
          pdata.setTheme(theme);
          pdata.setInvestmentReturns(portfolioReturns);
          pdata.setInvestmentRisk(portfolioRisk);
-         pdata.setInvestedCapital(investment);
-         pdata.setTotalCapitalWithGains(invCapital);
+//         pdata.setInvestedCapital(investment);
+//         pdata.setTotalCapitalWithGains(invCapital);
          pdata.setWithdrawlAmount(0.0);
          pdata.setRecurInvestments(recurring);
-         age++;
-         horizon--;
-         recurringPeriod--;
+//         age++;
+//         horizon--;
+//         recurringPeriod--;
          if (recurringPeriod <= 0) {
             recurring = 0.0;
             recurringPeriod = 0;
@@ -171,19 +175,43 @@ public class ForwardProjection
             }
          }
 
-         if (horizon <= 0)
+         if (horizon <= 0 )
          {
-            invCapital -= withdrawlamount;
+//            invCapital -= withdrawlamount;
+            withdrawlamount= (0.95 * invCapital)/(withDrwalPeriod) ;
             pdata.setWithdrawlAmount(withdrawlamount);
             if ((withDrwalPeriod <= 0)) {
                break;
             }
             withDrwalPeriod--;
          }
-         invCapital = invCapital * (1 + portfolioReturns);
+         System.out.println("###################END####################");
+         System.out.println("Year "+thisyear);
+         System.out.println("invCapital "+invCapital);
+         System.out.println("withdrawlamount "+withdrawlamount);
+         System.out.println("portfolioReturns "+portfolioReturns);
+         if(withdrawlamount<=0)
+         {
+            invCapital = invCapital * (1 + portfolioReturns);//need to add condition for subtracting th withdrawal amount
+         }else if(invCapital>withdrawlamount){
+            invCapital=invCapital-withdrawlamount;
+            invCapital = invCapital * (1 + portfolioReturns);
+         }else if(invCapital<withdrawlamount){
+            invCapital=withdrawlamount-invCapital;
+            invCapital = invCapital * (1 + portfolioReturns);
+         }
+         System.out.println("invCapital "+invCapital);
+         System.out.println("withdrawlamount "+withdrawlamount);
+         System.out.println("portfolioReturns "+portfolioReturns);
+         System.out.println("###################END####################");
+         pdata.setTotalCapitalWithGains(invCapital);
+         pdata.setInvestedCapital(investment);
          invCapital += recurring;
          investment += recurring;
          projectiondatas.add(thisyear,pdata);
+         age++;
+         horizon--;
+         recurringPeriod--;
       }
       return projectiondatas;
    }
