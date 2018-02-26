@@ -6128,7 +6128,9 @@ rect.highcharts-background {
 .PaddingTopPercent2 {
     padding-top: 2%;
 }
-
+.dashboard_right_panel .user_table .ui-datatable table thead tr th {
+    background: #a4332f !important;
+}
 
 
 
