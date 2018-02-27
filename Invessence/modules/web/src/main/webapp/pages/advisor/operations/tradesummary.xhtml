@@ -163,7 +163,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.holdingValue}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber pattern="###,###,###"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -174,7 +174,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.newValue}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber pattern="###,###,###"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -185,7 +185,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.money}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber pattern="###,###,###"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:10%; text-align: left;">
