@@ -6517,11 +6517,25 @@ rect.highcharts-background {
 	width:100%;
 	max-width:495px;
 }
+.assets_liabilityTab .Container50{
+	height:auto !important;
+	width:47.7%;
+}
+.next_pg_link .btntxt{
+    color: #04709F;
+    text-align: right;
+    font-size: 17px;
+    font-weight: bold;
+    top: 0px;
+    position: relative;}
 .header_link.prenext_btn.Container70{
 	float:right;
 	min-width:208px;
 	float:right;
 	width:28%;
+	}
+	.header_link.prenext_btn.Container70.review_btn{
+	min-width:295px;
 	}
 	.header_link.prenext_btn.Container70 .ui-outputpanel{
 	position:relative;
@@ -6534,6 +6548,10 @@ rect.highcharts-background {
 	.acc_block_left{
 	margin-left:10px !important;
 	margin-bottom:10px;
+	}
+	.Container100.next_btn a{
+	padding-right:5px;
+	float:right;
 	}
 	.Wid100{
 	position:relative;
@@ -6669,7 +6687,18 @@ text-align: left;
 	.alert_menu button:hover > span{
 	text-decoration: underline;
 	}
+	@media only screen and (max-width: 776px)  {
 
+	.header_title.Container30{
+	    width: 54%;
+	}
+	.header_link.prenext_btn.Container70{
+	min-width:232px;
+	}
+	.caraousle .Container50.next_btn{
+	margin:0px;padding:0 5px;
+	}
+	}
 	@media only screen and (max-width: 767px)  {
 	.left_side_title .ui-selectonemenu{
 	min-width:110px !important;
@@ -6741,6 +6770,98 @@ text-align: left;
     {
         width: 100%;
     }
+
+	}
+	@media only screen and (max-width: 760px)  {
+	.portfolio_layout .tab_dtl{
+	font-size:17px !important;
+	}
+	.ui-panel-content .Container100 .tab_dtl p input.ui-inputtext{
+	width:190px ;
+	}
+	/*** Start Form ***/
+	.getStartcaraousle .Container100 .ui-outputpanel .wid55 .input_no_type input {
+    width:70px !important;
+        border-width: 0 0 2px 0;
+    border-color: #a4332f;
+    padding: 5px !important;
+    color: #a4332f !important;
+    font-size: 16px !important;
+    width: 100px;
+    text-align: center;
+    font-weight: bold !important;
+    position: relative;
+    top: -4px;
+    box-shadow: none;
+    font-family: 'helvetica' !important;
+	}
+	.getStartcaraousle .Container100 .ui-outputpanel .wid55 .input_no_type{
+	width:70px !important;
+	float:none;
+	}
+	/***** Selection of Investment ***/
+		.caraousle .Container100 p .input_no_type input {
+    width:70px !important;
+        border-width: 0 0 2px 0;
+    border-color: #a4332f;
+    padding: 5px !important;
+    color: #a4332f !important;
+    font-size: 16px !important;
+    width: 100px;
+    text-align: center;
+    font-weight: bold !important;
+    position: relative;
+    top: -4px;
+    box-shadow: none;
+    font-family: 'helvetica' !important;
+	}
+	.caraousle .Container100 p .input_no_type{
+	width:70px !important;
+	float:none;
+	}
+	.assets_liabilityTab .assets .Conatiner100 span.input_no_type{
+	float:none;
+	width:auto;
+	}
+	.assets_liabilityTab .liability .Conatiner100 span.input_no_type{
+	float:none;
+	width:auto;
+	}
+	div.slidePanelleft.GoalClickEvent{
+	width:150px;
+	}
+	}
+
+	@media only screen and (max-width: 640px)  {
+	.btntxt{
+	display: none;
+	}
+	.assets_liabilityTab .assets,.assets_liabilityTab .liability{
+	width:98%;
+	}
+	.assets_liabilityTab .assets .Conatiner100 br{
+	display:none;
+	}
+	.financialamount{
+	position:relative;
+	display:inline-block;
+	}
+	.financialamount span.input_no_type input{
+	width:120px !important;
+	}
+	.header_link.prenext_btn.Container70{
+	max-width:150px;
+	min-width:0px;
+	width:auto;
+	}
+	.header_title.Container30{
+	width:70%;
+	padding:0 5px;
+	}
+	.caraousle .Container50.next_btn{
+	margin:0;
+	padding:0 4px;
+	}
 
 	}
 	@media only screen and (max-width: 500px)  {

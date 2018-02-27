@@ -10,13 +10,14 @@
             <div class="header_title Container30">Your contribution toward your goal for <span
                     class="change_goal">#{uobProfile.selectedGoal.displayName}</span>
             </div>
-            <div class="header_link prenext_btn Container70">
-                <div class="Container100">
+
+
                     <p:outputPanel id="ibuttonArea" style="border: 0px; background: transparent">
+                    <div class="header_link prenext_btn Container70">
                         <div class="Container50 next_btn">
                             <p:commandLink rendered="true" class="next_pg_link"
                                            update=":ceForm:workArea"
-                                           actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage
+                                           actionListener="#{uobProfile.gotoNextPage}"><span class="btntxt">Next</span>  <span><p:graphicImage
                                     name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                     width="25px"/></span></p:commandLink>
                         </div>
@@ -26,12 +27,12 @@
                                            process="@this"
                                            actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png"
                                                                                                              library="#{uiLayout.webProfile.cssdir}"
-                                                                                                             width="25px"/></span> Previous
+                                                                                                             width="25px"/></span> <span class="btntxt">Previous</span>
                             </p:commandLink>
                         </div>
-                    </p:outputPanel>
-                </div>
-            </div>
+
+                        </div> </p:outputPanel>
+
 
         </div>
 

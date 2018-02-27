@@ -21,12 +21,12 @@
         <div class="header_tab">
             <div class="header_title Container30">Personal Information</div>
 
-            <p:outputPanel id="p1buttonArea" style="border: 0px; background: transparent" class="Container36 ">
-                <div class="header_link prenext_btn  ">
-                    <div class="Container50 next_btn">
+            <p:outputPanel id="p1buttonArea" style="border: 0px; background: transparent" class=""><!--  Container36 class was there -->
+                <div class="header_link prenext_btn Container70"><!-- Container70 class has been added -->
+                    <div class="Container100 next_btn"><!-- Container50 class changed to Container100 -->
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoNextPage}"> Next
+                                       actionListener="#{uobProfile.gotoNextPage}"><span class="btntxt">Next </span>
                             <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                                   width="25px"/></span>
                         </p:commandLink>
@@ -49,7 +49,7 @@
             <p:outputPanel id="introPanel" style="border: 0px; background: transparent">
                 <p class="wid55">
                     <span class="input_value">#{uobProfile.printName}</span> How old are you?
-                    <p:inputNumber value="#{uobProfile.age}"
+                    <p:inputNumber value="#{uobProfile.age}" class="input_no_type"
                                    minValue="0" maxValue="110"
                                    id="uobAge"
                                    maxlength="3" decimalPlaces="0" placeholder="Age" >

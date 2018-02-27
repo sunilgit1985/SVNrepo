@@ -9,12 +9,13 @@
 
         <div class="header_tab">
             <div class="header_title Container30">Risk Tolerance</div>
-            <div class="header_link prenext_btn Container70">
+
                 <p:outputPanel id="p7buttonArea" style="border: 0px; background: transparent">
+                <div class="header_link prenext_btn Container70">
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                       actionListener="#{uobProfile.gotoNextPage}"> <span class="btntxt">Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span></p:commandLink>
                     </div>
                     <div class="Container50 pre_btn">
@@ -22,10 +23,12 @@
                                        update=":ceForm:workArea"
                                        process="@this"
                                        actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span> Previous </p:commandLink>
+                                width="25px"/></span> <span class="btntxt">Previous</span> </p:commandLink>
+                    </div>
+
                     </div>
                 </p:outputPanel>
-            </div>
+
 
         </div>
 

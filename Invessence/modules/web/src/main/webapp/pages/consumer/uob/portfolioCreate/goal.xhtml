@@ -53,12 +53,13 @@
 
                 <div class="header_tab">
                     <div class="header_title Container30">Retirement</div>
-                    <div class="header_link prenext_btn Container36">
+
                         <p:outputPanel id="p2g1buttonArea" style="border: 0px; background: transparent">
+                         <div class="header_link prenext_btn Container70"><!-- Container70 class has been added -->
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.gotoNextPage}"> <span class="btntxt">Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span>
                                                </p:commandLink>
                                 
@@ -69,11 +70,13 @@
                                                update=":ceForm:workArea"
                                                process="@this"
                                                actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span> Previous </p:commandLink>
+                                width="25px"/></span> <span class="btntxt">Previous </span></p:commandLink>
                                  
                             </div>
+
+                            </div>
                         </p:outputPanel>
-                    </div>
+
 
                 </div>
                 <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
@@ -142,12 +145,13 @@
 
                 <div class="header_tab">
                     <div class="header_title Container30">Saving to purchase a property</div>
-                    <div class="header_link prenext_btn Container70">
+
                         <p:outputPanel id="p2g2buttonArea" style="border: 0px; background: transparent">
+                        <div class="header_link prenext_btn Container70">
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.gotoNextPage}"><span class="btntxt"> Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span></p:commandLink>
                                                
                             </div>
@@ -156,10 +160,12 @@
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
                                                actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span> Previous </p:commandLink>
+                                width="25px"/></span><span class="btntxt"> Previous</span> </p:commandLink>
                             </div>
+
+                             </div>
                         </p:outputPanel>
-                    </div>
+
 
                 </div>
                 <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
@@ -190,12 +196,13 @@
 
                 <div class="header_tab">
                     <div class="header_title Container30">Saving for a child's university/college education</div>
-                    <div class="header_link prenext_btn Container70">
+
                         <p:outputPanel id="p2p3buttonArea" style="border: 0px; background: transparent">
+                         <div class="header_link prenext_btn Container70">
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.gotoNextPage}"> <span class="btntxt">Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span></p:commandLink>
                             
                             </div>
@@ -204,10 +211,12 @@
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
                                                actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span> Previous </p:commandLink>
+                                width="25px"/></span><span class="btntxt"> Previous</span> </p:commandLink>
+                            </div>
+
                             </div>
                         </p:outputPanel>
-                    </div>
+
 
                 </div>
                 <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
@@ -253,12 +262,13 @@
 
                 <div class="header_tab">
                     <div class="header_title Container30">Legacy planning</div>
-                    <div class="header_link prenext_btn Container70">
+
                         <p:outputPanel id="p2g4buttonArea" style="border: 0px; background: transparent">
+                         <div class="header_link prenext_btn Container70">
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.gotoNextPage}"> <span class="btntxt">Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span></p:commandLink>
                                                
                             </div>
@@ -267,10 +277,11 @@
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
                                                actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span> Previous </p:commandLink>
+                                width="25px"/></span> <span class="btntxt">Previous</span> </p:commandLink>
+                            </div>
+
                             </div>
                         </p:outputPanel>
-                    </div>
 
                 </div>
                 <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
@@ -311,13 +322,13 @@
 
                 <div class="header_tab">
                     <div class="header_title Container30">General investing and build wealth</div>
-                    <div class="header_link prenext_btn Container70">
 
                         <p:outputPanel id="p2g5buttonArea" style="border: 0px; background: transparent">
+                        <div class="header_link prenext_btn Container70">
                             <div class="Container50 next_btn">
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
-                                               actionListener="#{uobProfile.gotoNextPage}"> Next <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                               actionListener="#{uobProfile.gotoNextPage}"><span class="btntxt"> Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span></p:commandLink>
                             
                             </div>
@@ -326,11 +337,12 @@
                                 <p:commandLink rendered="true" class="next_pg_link"
                                                update=":ceForm:workArea"
                                                actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span> Previous </p:commandLink>
+                                width="25px"/></span> <span class="btntxt">Previous</span> </p:commandLink>
+                            </div>
                             </div>
                         </p:outputPanel>
 
-                    </div>
+
 
                 </div>
                 <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"

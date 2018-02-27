@@ -21,12 +21,12 @@
         <div class="header_tab">
             <div class="header_title Container30">Personal Information</div>
 
-            <p:outputPanel id="getStartedButton" style="border: 0px; background: transparent" class="Container36">
-                <div class="header_link prenext_btn">
-                    <div class="Container50 next_btn">
+            <p:outputPanel id="getStartedButton" style="border: 0px; background: transparent" class="">
+                <div class="header_link prenext_btn Container70">
+                    <div class="Container100 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoPortfolioCreation}"> Next 
+                                       actionListener="#{uobProfile.gotoPortfolioCreation}"> <span class="btntxt">Next</span>
                                        <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span>
                                        </p:commandLink>
