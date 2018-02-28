@@ -60,7 +60,7 @@
                                     <label class="sigupLabel">Email Id</label>
                                     <p:inputText id="email"
                                                  readonly="#{! userBean.newRegistration}"
-                                                 styleClass="Wid100 Fleft MarAuto Fs14"
+                                                 styleClass="Wid100 Fleft MarAuto Fs14 txtBlack"
                                                  value="#{userBean.beanEmail}" placeholder="Email">
                                         <f:validator validatorId="EmailValidator"/>
                                     </p:inputText>
@@ -68,7 +68,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Container100">
                                     <label class="sigupLabel">User Id</label>
-                                    <p:inputText id="userid" styleClass="Wid100 Fleft MarAuto Fs14"
+                                    <p:inputText id="userid" styleClass="Wid100 Fleft MarAuto Fs14 txtBlack"
                                                  value="#{userBean.beanUserID}" placeholder="User ID"
                                                  required="true" requiredMessage="Please create your User ID.">
                                         <f:validator validatorId="UserIDValidator"/>
@@ -78,7 +78,7 @@
                                                      icon="fa fa-question Fs14 Black" process="@none"/>
 
                                     <p:overlayPanel id="uidHP" for="uidHelp" hideEffect="fade"
-                                                    dynamic="false" showCloseIcon="true"
+                                                    dynamic="false" showCloseIcon="true" styleClass="InfoPannel"
                                                     style="width:350px; margin-left: 5px">
                                         UserID must contain a minimum of 6 alpha characters and
                                         may contain one of these special characters: '.' or '-'
@@ -89,7 +89,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Container100">
                                     <label class="sigupLabel">Password</label>
-                                    <p:password id="pwd1" styleClass="Wid100 Fleft MarAuto Fs14"
+                                    <p:password id="pwd1" styleClass="Wid100 Fleft MarAuto Fs14 txtBlack"
                                                 value="#{userBean.pwd1}" placeholder="Password"
                                                 required="true" requiredMessage="Password must be entered.">
 
@@ -99,7 +99,7 @@
                                                      icon="fa fa-question Fs14 Black" process="@none"/>
 
                                     <p:overlayPanel id="helpPanel" for="pwdHelp" hideEffect="fade"
-                                                    dynamic="false" showCloseIcon="true"
+                                                    dynamic="false" showCloseIcon="true" styleClass="InfoPannel"
                                                     style="width:350px; margin-left: 5px">
                                         Password must contain a minimum of 8 characters including at least:
                                         <ul>
@@ -112,7 +112,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Container100">
                                     <label class="sigupLabel">Confirm Password</label>
-                                    <p:password id="pwd2" styleClass="Wid100 Fleft MarAuto Fs14"
+                                    <p:password id="pwd2" styleClass="Wid100 Fleft MarAuto Fs14 txtBlack"
                                                 value="#{userBean.pwd2}" placeholder="Confirm Password">
                                     </p:password>
                                 </div>
