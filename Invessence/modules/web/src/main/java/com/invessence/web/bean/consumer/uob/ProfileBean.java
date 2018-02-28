@@ -1166,4 +1166,10 @@ public class ProfileBean extends PortfolioCreationUI
    {
       this.revwPnlExpYrFndLbl = revwPnlExpYrFndLbl;
    }
+
+   @Override
+   public void cancelCS()
+   {
+      goBack();
+   }
 }
