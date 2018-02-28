@@ -122,17 +122,14 @@
 									styleClass="multipleSelectionChkList"
 									style="width:50px;text-align:center" resizable="true" />
 
-								<p:column styleClass="AdvtcmLayoutColumn" resizable="true">
-									<p:commandButton id="editButton" styleClass="editAdvButtonIcon"
-										process="@this" immediate="true" icon="fa fa-search"
-										update="@form"
-										actionListener="#{tradeBean.showRiskDetails(filteredClientData.acctnum)}">
-										<f:setPropertyActionListener value="#{filteredClientData}"
-											target="#{tradeBean.selectedClient}" />
-									</p:commandButton>
-								</p:column>
-
-								<!-- <p:column headerText="InvAcc#" styleClass="AdvtcmLayoutColumn" resizable="true"
+                                <p:column styleClass="AdvtcmLayoutColumn" resizable="true">
+                                    <p:commandButton id="editButton" styleClass="editAdvButtonIcon"
+                                                     process="@this" immediate="true" icon="fa fa-search"
+                                                     update="@form"
+                                                     actionListener="#{tradeBean.showRiskDetails(filteredClientData.acctnum, filteredClientData)}">
+                                    </p:commandButton>
+                                </p:column>
+                                 <!-- <p:column headerText="InvAcc#" styleClass="AdvtcmLayoutColumn" resizable="true"
                                            sortBy="#{filteredClientData.acctnum}">
                                      #{filteredClientData.acctnum}
                                  </p:column>-->
