@@ -18,7 +18,7 @@ public class TestClass
       ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("custodyConfig.xml");
       DCWebLayerClass dcWebLayer= (DCWebLayerClassImpl) context.getBean("dcWebLayerClass");
       WSCallResult wsCallResult= dcWebLayer.processDCRequest(new ServiceRequest("BUILDINGBENJAMINS", "UAT"),
-                                                             new Long(3157), 1);
+                                                             new Long(3397), 1);
       System.out.println("wsCallResult = " + wsCallResult);
 //      wsCallResult= dcWebLayer.processDCRequest(new ServiceRequest("TCM", "PROD"),
 //                                                             new Long(2959), 2);//BUILDINGBENJAMINS //ACTUL.PROD

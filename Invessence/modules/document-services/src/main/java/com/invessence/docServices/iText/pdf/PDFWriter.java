@@ -20,7 +20,7 @@ public class PDFWriter
 {
    public void  writPDF(PdfStamper stamper, List<PDFFileRules> pdfRules, Object[] dataObjects){
 
-      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObjects + "]");
+//      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObjects + "]");
 try
 {
 
@@ -56,7 +56,7 @@ try
 //            }
          }
 
-         System.out.println("allfv = " + allfv);
+//         System.out.println("allfv = " + allfv);
 
          while (entries7.hasNext())
          {
@@ -64,7 +64,7 @@ try
 //            Object obj=abhang(dataObject, pdfFileRules.getDbColumn());
             if(allfv.containsKey(pdfFileRules.getDbColumn()))
             {
-            System.out.println(pdfFileRules.getPageNo()+" : "+pdfFileRules.getXcord()+" : "+ pdfFileRules.getYcord());
+//            System.out.println(pdfFileRules.getPageNo()+" : "+pdfFileRules.getXcord()+" : "+ pdfFileRules.getYcord());
 
 //            System.out.println(pdfFileRules);
 //            System.out.println("Its Client");

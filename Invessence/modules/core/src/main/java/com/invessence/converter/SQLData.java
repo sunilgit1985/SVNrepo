@@ -218,7 +218,7 @@ public class SQLData implements Serializable
       {
          StringBuilder fileRow=new StringBuilder();
          LinkedHashMap<String, Object> map = itr.next();
-         System.out.println(map.get("name")+":"+map.get("value"));
+         //System.out.println(map.get("name")+":"+map.get("value"));
 //         for (Map.Entry<String, Object> entry : map.entrySet()) {
 //            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
          try
@@ -256,7 +256,7 @@ public class SQLData implements Serializable
 
          for (Map.Entry<String, Object> entry : map.entrySet())
          {
-            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            //System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
             try
             {
 //               reflection.setInstanceValue(object, entry.getKey(), entry.getValue());
@@ -298,7 +298,7 @@ public class SQLData implements Serializable
 
          for (Map.Entry<String, Object> entry : map.entrySet())
          {
-            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            //System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
             try
             {
                reflection.setInstanceValue(object, entry.getKey(), entry.getValue());
@@ -327,7 +327,7 @@ public class SQLData implements Serializable
 
 
       for (Map.Entry<String, Object> entry : dbRow.entrySet()) {
-         System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+         //System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
          try
          {
             reflection.setInstanceValue(object,entry.getKey(),entry.getValue());

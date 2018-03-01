@@ -252,7 +252,7 @@ public class FileUploader
          e.printStackTrace();
       }finally {
 
-         channel.disconnect();
+         if(channel.isConnected()){ channel.disconnect();};
          logger.debug("Channel disconnected.");
          session.disconnect();
          logger.debug("Host Session disconnected.");
