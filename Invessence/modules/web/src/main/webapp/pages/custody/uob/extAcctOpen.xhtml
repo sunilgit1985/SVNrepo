@@ -29,17 +29,19 @@
                                         <div class="acc_holder_dtl_block">
 
                                             <div class="Container100 Responsive100">
+                                            	<span class="title_line">Full Name as per UOBKH Securities Trading Account Record</span>
                                                 <p:inputText id="nwPriHldrNm" maxlength="60"
                                                              placeholder="Full Name as per UOBKH Securities Trading Account Record"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.fullName}"/>
-                                                <label for="nwPriHldrNm">Full Name as per UOBKH Securities Trading Account Record</label>
+                                                <!-- <label for="nwPriHldrNm">Full Name as per UOBKH Securities Trading Account Record</label> -->
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block ">
                                             <div class="Container50 Responsive100 margin-top width99">
+                                            	<span class="title_line">NRIC /Passport Number</span>
                                                 <p:inputText id="nwPriHldrNric" placeholder="NRIC /Passport Number"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}" maxlength="9"/>
-                                                <label for="nwPriHldrNric">NRIC /Passport Number</label>
+                                                <!-- <label for="nwPriHldrNric">NRIC /Passport Number</label> -->
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block contact_dtl_block">
@@ -55,7 +57,7 @@
                                                     <div class="Container100">
                                                         <p:inputText id="nwPriHldrMobNo" placeholder="Mobile No" maxlength="16"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.mobNumber}"/>
-                                                        <label for="nwPriHldrMobNo">Mobile No</label>
+                                                       <!--  <label for="nwPriHldrMobNo">Mobile No</label> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,9 +65,10 @@
 
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
+                                            	<span class="title_line">Email Address</span>
                                                 <p:inputText id="nwPriHldrEmailId" placeholder="Email Address"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.emailAddress}" styleClass="vrfyEmail" maxlength="45"/>
-                                                <label for="nwPriHldrEmailId">Email Address</label>
+                                               <!--  <label for="nwPriHldrEmailId">Email Address</label> -->
                                             </div>
                                         </div>
                                         <script>
@@ -78,10 +81,11 @@
                                         </script>
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
+                                            <span class="title_line">Verify Email Address</span>
                                                 <p:inputText id="extPriHldrVrfEmailId" placeholder="Verify Email Address"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.confirmEmail}"
                                                              styleClass="vrfyEmail" maxlength="45"/>
-                                                <label for="extPriHldrVrfEmailId">Verify Email Address</label>
+                                               <!--  <label for="extPriHldrVrfEmailId">Verify Email Address</label> -->
                                             </div>
                                         </div>
 
@@ -94,9 +98,10 @@
                                         <div class="acc_holder_dtl_block">
 
                                             <div class="Container80 Responsive100">
+                                            	<span class="title_line">Name as in your existing securities trading account</span>
                                                 <input id="jointname" name="name" type="text"
                                                        placeholder="Name as in your existing securities trading account"/>
-                                                <label for="name">Name as in your existing securities trading account</label>
+                                                <!-- <label for="name">Name as in your existing securities trading account</label> -->
                                             </div>
                                         </div>
 
@@ -104,8 +109,9 @@
                                         <div class="acc_holder_dtl_block ">
 
                                             <div class="Container50 Responsive100 margin-top width99">
+                                            	<span class="title_line">NRIC /Passport Number</span>
                                                 <input id="jointnric" name="nric" type="text" placeholder="NRIC /Passport Number"/>
-                                                <label for="nric">NRIC /Passport Number</label>
+                                                <!-- <label for="nric">NRIC /Passport Number</label> -->
                                             </div>
 
 
@@ -130,8 +136,9 @@
 
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100 width99">
+                                            	<span class="title_line">Email Address</span>
                                                 <input id="jointemailadd" name="emailadd" type="text" placeholder="Email Address"/>
-                                                <label for="emailadd">Email Address</label>
+                                                <!-- <label for="emailadd">Email Address</label> -->
                                             </div>
                                         </div>
 
@@ -170,25 +177,28 @@
                                             <div class="Container100  width99">
                                                <!-- <div class="Container100"><span class="title_line">Account Holder Name</span></div>-->
                                                 <div class="Container100">
+                                                	<span class="title_line">Bank Account Holder Name</span>
                                                     <p:inputText id="nwPriHldrRemBnkAcctHldrNm" placeholder="Bank Account Holder Name"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountHolderName}" maxlength="60"/>
-                                                    <label for="nwPriHldrRemBnkAcctHldrNm">Bank Account Holder Name</label>
+                                                    <!-- <label for="nwPriHldrRemBnkAcctHldrNm">Bank Account Holder Name</label> -->
                                                 </div>
                                             </div>
                                             <div class="Container50 margin-top">
                                                <!-- <div class="Container100"><span class="title_line">Bank Name</span></div>-->
                                                 <div class="Container100">
+                                                	<span class="title_line">Bank Name</span>
                                                     <p:inputText id="nwPriHldrRemBnkNm" placeholder="Bank Name"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankName}" maxlength="60"/>
-                                                    <label for="nwPriHldrRemBnkNm">Bank Name</label>
+                                                    <!-- <label for="nwPriHldrRemBnkNm">Bank Name</label> -->
                                                 </div>
                                             </div>
                                             <div class="Container50 Responsive50 margin-top margin-left">
                                                 <!--<div class="Container100"><span class="title_line">Bank Account No</span></div>-->
                                                 <div class="Container100">
+                                                	<span class="title_line">Bank Account Number</span>
                                                     <p:inputText id="nwPriHldrRemBnkAcctNum" placeholder="Bank Account Number"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAccountNo}" maxlength="20"/>
-                                                    <label for="nwPriHldrRemBnkAcctNum">Bank Account Number</label>
+                                                    <!-- <label for="nwPriHldrRemBnkAcctNum">Bank Account Number</label> -->
                                                 </div>
                                             </div>
                                             <div class="Container50 Responsive100">
@@ -196,10 +206,11 @@
                                         </div>
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container100">
+                                            	<span class="title_line">Bank Address</span>
                                                 <p:inputTextarea id="nwPriHldrRemBnkAddr"
                                                                  placeholder="Bank Address"
                                                                  value="#{uobCustodyBean.priHldrBnkAddr}" maxlength="90"/>
-                                                <label for="nwPriHldrRemBnkAddr">Bank Address</label>
+                                               <!--  <label for="nwPriHldrRemBnkAddr">Bank Address</label> -->
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
@@ -229,24 +240,27 @@
                                         <div class="acc_holder_dtl_block">
                                             <div class="Container30 Responsive100 ">
                                                <!-- <div class="Container100"><span class="title_line">Swift Bic</span></div>-->
+                                               <span class="title_line">Swift Bic</span>
                                                 <p:inputText id="nwPriHldrRemSwBic" placeholder="Swift Bic"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.swiftBic}"
                                                              maxlength="25"/>
-                                                <label for="nwPriHldrRemSwBic">Swift Bic</label>
+                                                <!-- <label for="nwPriHldrRemSwBic">Swift Bic</label> -->
                                             </div>
                                             <div class="Container30 Responsive100 ">
                                                <!-- <div class="Container100"><span class="title_line">Correspondent Bank</span></div>-->
+                                                <span class="title_line">Correspondent Bank</span>
                                                 <p:inputText id="nwPriHldrRemCorrBnk" placeholder="Correspondent Bank"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBank}"
                                                              maxlength="45"/>
-                                                <label for="nwPriHldrRemCorrBnk">Correspondent Bank</label>
+                                                <!-- <label for="nwPriHldrRemCorrBnk">Correspondent Bank</label> -->
                                             </div>
                                             <div class="Container30 Responsive100">
                                               <!--  <div class="Container100"><span class="title_line">Correspondent Bank Swift Bic</span></div>-->
+                                                 <span class="title_line">Correspondent Bank Swift Bic</span>
                                                 <p:inputText id="nwPriHldrRemCorrBnkSwBic" placeholder="Correspondent Bank Swift Bic"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBankSwiftBic}"
                                                              maxlength="45"/>
-                                                <label for="nwPriHldrRemCorrBnkSwBic">Correspondent Bank Swift Bic</label>
+                                                <!-- <label for="nwPriHldrRemCorrBnkSwBic">Correspondent Bank Swift Bic</label> -->
                                             </div>
                                         </div>
                                     </div>
@@ -372,9 +386,10 @@
                                                             <p:panel id="nwPriHldTaxTin" style="border-color: transparent;" class="Container50">
                                                                 <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxTin}">
                                                                     <div class="Container100 ">
+                                                                    	<span class="title_line">Tax Identification Number</span>
                                                                         <p:inputText id="priHldrTaxPnlTin" placeholder="Tax Identification Number"
                                                                                      value="#{uobCustodyBean.owTaxDtls.taxIdentificationNumber}" maxlength="45"/>
-                                                                        <label for="priHldrTaxPnlTin">Tax Identification Number</label>
+                                                                        <!-- <label for="priHldrTaxPnlTin">Tax Identification Number</label> -->
                                                                     </div>
                                                                 </ui:fragment>
                                                             </p:panel>
@@ -405,9 +420,10 @@
                                                                          class="Container100 width99">
                                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxRsn}">
                                                                         <div class="Container100 Responsive100">
+                                                                        <span class="title_line">Explain</span>
                                                                             <p:inputText id="priHldrTaxPnlReasExpl" placeholder="Please Explain"
                                                                                          value="#{uobCustodyBean.owTaxDtls.tinUnavailableValue}" maxlength="45"/>
-                                                                            <label for="priHldrTaxPnlReasExpl">Explain</label>
+                                                                            <!-- <label for="priHldrTaxPnlReasExpl">Explain</label> -->
                                                                         </div>
                                                                     </ui:fragment>
                                                                 </p:panel>
@@ -506,8 +522,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="Container50 Responsive100">
+                                                    	<span class="title_line">Tax Identification Number</span>
                                                         <input id="jointtaxId" name="taxId" type="text" placeholder="Tax Identification Number"/>
-                                                        <label for="taxId">Tax Identification Number</label>
+                                                        <!-- <label for="taxId">Tax Identification Number</label> -->
                                                     </div>
                                                 </div>
                                                 <!-- <div class="Container100 select_item">
@@ -602,6 +619,7 @@
                                                  <h3>What is Mother's Maiden Name ?</h3>
                                              </div> -->
                                             <div class="Container60 Responsive100">
+                                            	<span class="title_line">Mother's Maiden Name</span>
                                                 <p:inputText id="nwPriHldMomNm"
                                                              placeholder="What is your Mother's Maiden Name ?"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.motherMaidenName}" maxlength="45"/>
@@ -613,9 +631,10 @@
                                                 <h3>What is Father's Name ?</h3>
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
+                                                <span class="title_line">Father's Name</span>
                                                 <p:inputText id="nwPriHldDadNm" placeholder="What is your Father's Name ?"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.fatherName}" maxlength="45"/>
-                                                <label for="nwPriHldDadNm">Father's Name</label>
+                                                <!-- <label for="nwPriHldDadNm">Father's Name</label> -->
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
@@ -623,9 +642,10 @@
                                                 <h3>Name of Primary School Attend ?</h3>
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
+                                                <span class="title_line">Name of Primary School Attended</span>
                                                 <p:inputText id="nwPriHldSclNm" placeholder="What is the name of Primary School Attended ?"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.nameOfPrimarySchool}" maxlength="45"/>
-                                                <label for="nwPriHldSclNm">Name of Primary School Attended</label>
+                                                <!-- <label for="nwPriHldSclNm">Name of Primary School Attended</label> -->
                                             </div>
                                         </div>
                                     </div>
@@ -639,9 +659,10 @@
                                                  <h3>What is Mother's Maiden Name ?</h3>
                                              </div> -->
                                             <div class="Container60 Responsive100">
+                                            	<span class="title_line">Mother's Maiden Name</span>
                                                 <input id="jointmotherName" name="motherName" type="text"
                                                        placeholder="What is your Mother's Maiden Name ?"/>
-                                                <label for="motherName">Mother's Maiden Name</label>
+                                                <!-- <label for="motherName">Mother's Maiden Name</label> -->
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
@@ -649,8 +670,9 @@
                                                 <h3>What is Father's Name ?</h3>
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
+                                            	<span class="title_line">Father's Name</span>
                                                 <input id="jointfatherName" name="fatherName" type="text" placeholder="What is your Father's Name ?"/>
-                                                <label for="fatherName">Father's Name</label>
+                                                <!-- <label for="fatherName">Father's Name</label> -->
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
@@ -658,9 +680,10 @@
                                                 <h3>Name of Primary School Attend ?</h3>
                                             </div>	 -->
                                             <div class="Container60 Responsive100">
+                                                <span class="title_line">Name of Primary School Attended</span>
                                                 <input id="jointschoolName" name="schoolName" type="text"
                                                        placeholder="What is the name of Primary School Attended ?"/>
-                                                <label for="schoolName">Name of Primary School Attended</label>
+                                                <!-- <label for="schoolName">Name of Primary School Attended</label> -->
                                             </div>
                                         </div>
 

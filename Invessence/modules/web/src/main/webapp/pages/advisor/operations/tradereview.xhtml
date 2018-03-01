@@ -136,7 +136,7 @@
                                 <p:column headerText="Holding" styleClass="AdvtcmLayoutColumn" resizable="true" style=""
                                           sortBy="#{filteredSummaryData.sumholdingValue}">
                                     <h:outputText value="#{filteredSummaryData.sumholdingValue}">
-                                        <f:convertNumber pattern="###,###,###"/>
+                                        <f:convertNumber type="currency" currencySymbol="$"/>
                                     </h:outputText>
                                 </p:column>
 
@@ -151,7 +151,7 @@
                                 <p:column headerText="New Investment" styleClass="AdvtcmLayoutColumn" resizable="true" style=""
                                           sortBy="#{filteredSummaryData.sumnewValue}">
                                     <h:outputText value="#{filteredSummaryData.sumnewValue}">
-                                        <f:convertNumber pattern="###,###,###"/>
+                                        <f:convertNumber type="currency" currencySymbol="$"/>
                                     </h:outputText>
                                 </p:column>
                                 <f:facet name="footer">
@@ -256,10 +256,10 @@
                                             <p:row>
                                            		<p:column colspan="4" footerText="Total" style="text-align:left" class="fourColspan"/>
                                                 <p:column colspan="4" style="text-align:right"
-                                                          footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumCurValue)}">
+                                                          footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumCurValue)}">
                                                 </p:column>
                                                 <p:column colspan="4" style="text-align:right"
-                                                          footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumNewValue)}">
+                                                          footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumNewValue)}">
                                                 </p:column>
                                              </p:row>
                                                                                         
@@ -311,13 +311,13 @@
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: right;">
                                         <h:outputText value="#{tradedata.curPrice}">
-                                            <f:convertNumber pattern="###,###,###"/>
+                                            <f:convertNumber type="currency" currencySymbol="$"/>
                                         </h:outputText>
                                     </p:column>
 
                                     <p:column styleClass="Fs10" style="width:6%; text-align: left;">
                                         <h:outputText value="#{tradedata.holdingTicker}">
-                                            <f:convertNumber pattern="###,###,###"/>
+                                            <f:convertNumber type="currency" currencySymbol="$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -328,7 +328,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.curValue}">
-                                            <f:convertNumber pattern="###,###,###"/>
+                                            <f:convertNumber type="currency" currencySymbol="$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -339,7 +339,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.newValue}">
-                                            <f:convertNumber pattern="###,###,###"/>
+                                            <f:convertNumber type="currency" currencySymbol="$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -350,7 +350,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.diffValue}">
-                                            <f:convertNumber pattern="###,###,###"/>
+                                            <f:convertNumber type="currency" currencySymbol="$"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:10%; text-align: left;">
@@ -364,13 +364,13 @@
                                             <p:column  colspan="5" footerText="Total" style="text-align:left" class="W36" />
 											
                                             <p:column  class="Wauto" colspan="2"
-                                                      footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumHoldingValue)}"
+                                                      footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumHoldingValue)}"
                                                       style="text-align:right"/>
                                             <p:column class="Wauto" colspan="2"
-                                                      footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumNewValue)}"
+                                                      footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumNewValue)}"
                                                       style="text-align:right"/>
                                             <p:column class="Wauto" colspan="2"
-                                                      footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumCurValue)}"
+                                                      footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumCurValue)}"
                                                       style="text-align:right"/>
                                             <p:column  colspan="1" footerText="" style="text-align:left" class="W125"/>
                                             

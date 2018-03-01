@@ -5991,12 +5991,15 @@ td.advisorBullet_td span {
 /*** 12/02/2018 **/
 
 .fourColspan {
-    width: 10.5% !important;
+    width: 114px !important;
 }
 .lastColWidth{width: 129px !important;}
 .W86{width:86px !important;}
 .W30{width:30px !important;}
 .W13{width:13px !important;}
+.Wauto{width:auto !important;}
+.W125{width:124px !important;}
+.W36{width:36.5% !important;}
 .ui-datatable.invDataTable  table  tfoot tr td ,
 .invAllocTable .ui-datatable-scrollable-footer-box table tfoot tr td
 {color: #fff;background-color: #556873;}
