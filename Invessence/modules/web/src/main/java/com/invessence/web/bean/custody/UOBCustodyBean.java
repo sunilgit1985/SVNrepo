@@ -2498,7 +2498,7 @@ public void onChngRpDtls(String flag){
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtryBnkAddr","US Citizen is not eligible to open Robo account", null));
       }
-      if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getSwiftBic()) )
+      /*if (!hasRequiredData(ownerDetails.getOwnerBankDetails().getSwiftBic()) )
       {
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.swiftBic", "Swift Bic is required!", null));
@@ -2512,7 +2512,7 @@ public void onChngRpDtls(String flag){
       {
          dataOK = false;
          pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.corrBnkSwiftBic", "Correspondent Bank Swift Bic is required!", null));
-      }
+      }*/
       return dataOK;
    }
 
