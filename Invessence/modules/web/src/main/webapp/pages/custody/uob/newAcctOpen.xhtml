@@ -27,14 +27,14 @@ $('.form-control').on('focus blur', function (e) {
 
 </script>
     <div class="layout-portlets-box">
-        <div class="Container100 Responsive100 acc_holder_form">
+        <div class="Container100 acc_holder_form">
             <div class="ContainerIndent">
                 <p:accordionPanel widgetVar="accordionPanel" styleClass="marginZero" activeIndex="#{uobCustodyBean.activeTab}" dynamic="false"
                                   id="newAccordian">
                     <p:ajax event="tabChange" listener="#{uobCustodyBean.onTabChange}" update=":cstdyFrm:newAccordian"
                             immediate="true"/>
                     <p:tab id="tab0" title="Account Holder">
-                        <div class="Container100 Responsive100 acc_holder_form">
+                        <div class="Container100 acc_holder_form">
                             <p:tabView id="accHolderNTab">
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(0) != null}"
@@ -45,7 +45,7 @@ $('.form-control').on('focus blur', function (e) {
                                     </p:panel>
                                     <div class="go-bottom">
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container20 Responsive100 select_item">
+                                            <div class="Container20 select_item">
                                             <span class="title_line">Title</span>
                                                 <p:selectOneMenu id="nwPriHldrTtl"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.title}" name="title">
@@ -58,7 +58,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="Mdm" itemValue="Mdm"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container80 Responsive100">
+                                            <div class="Container80 ">
                                             <span class="title_line">Full Name as in Identity Card or Passport</span>
                                                 <p:inputText id="nwPriHldrNm"   placeholder="Full Name as in Identity Card or Passport" maxlength="60"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.fullName}" class="form"/>
@@ -66,7 +66,7 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block Container100">
-                                            <div class="Container20 Responsive100 select_item">
+                                            <div class="Container20 select_item">
                                                 <span class="title_line">Gender</span>
                                                 <p:selectOneMenu id="nwPriHldrGndr"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.gender}">
@@ -75,14 +75,14 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="Female" itemValue="Female"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container50 Responsive100 date_birth">
+                                            <div class="Container50 date_birth">
                                                 <div class="Container100"><span class="title_line">Date Of Birth</span></div>
                                                 <p:calendar yearRange="c-100:c" id="nwPriHldrDob" navigator="true"
-                                                            showOn="button" placeholder="Date Of Birth (DD/MM/YYYY)" pattern="dd/MM/yyyy"
+                                                            showOn="button" placeholder="Date Of Birth (dd mm yyyy)" pattern="d MMM yyyy"
                                                             value="#{uobCustodyBean.dtPriHldrDob}"/>
                                                <!--  <label for="nwPriHldrDob">Date Of Birth</label> -->
                                             </div>
-                                            <div class="Container25 Responsive100 select_item width35">
+                                            <div class="Container25 select_item width35">
                                                 <div class="Container100"><span class="title_line">Country Of Birth</span></div>
                                                 <div class="Container100">
                                                     <p:autoComplete id="nwPriHldrBrtCtry" dropdown="true"
@@ -95,11 +95,11 @@ $('.form-control').on('focus blur', function (e) {
                                         </div>
                                         <p:panel id="nwPriHldNtnPnl" style="border-color: transparent;" class="Container100">
                                             <div class="acc_holder_dtl_block ">
-                                                <div class="Container100 Responsive100 label_opacity per_res">
-                                                    <div class="Container10 Responsive100">
+                                                <div class="Container100 label_opacity per_res">
+                                                    <div class="Container10 ">
                                                         <span>Nationality</span>
                                                     </div>
-                                                    <div class="Container70 Responsive100">
+                                                    <div class="Container70 ">
                                                         <p:selectOneRadio id="nwPriHldrNation"
                                                                           value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerCitizenshipDetails.nationality}">
                                                             <p:ajax listener="#{uobCustodyBean.onChngNation(true)}" update="nwPriHldNtnPnl"/>
@@ -110,7 +110,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </div>
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplNricInp}">
-                                                    <div class="Container100 Responsive100 margin-top width99">
+                                                    <div class="Container100 margin-top width99">
                                                     <span class="title_line">NRIC Number</span>
                                                         <p:inputText id="nwPriHldrNric" placeholder="Singapore NRIC Number"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}" maxlength="9"/>
@@ -118,23 +118,23 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </ui:fragment>
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplSingNricInp}">
-                                                    <div class="Container40 Responsive100 margin-top select_item">
+                                                    <div class="Container40 margin-top select_item">
                                                         <span class="title_line">Country Of Nationality</span>
                                                         <p:autoComplete id="nwPriHldrSelSinPrCtry" dropdown="true"
                                                                         value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerCitizenshipDetails.nationalitySpecify}"
                                                                         completeMethod="#{uobCustodyBean.completeText}" maxlength="45">
                                                         </p:autoComplete>
                                                     </div>
-                                                    <div class="Container100 Responsive100 margin-top">
+                                                    <div class="Container100 margin-top">
                                                     	<span class="title_line">NRIC Number</span>
                                                         <p:inputText id="nwPriHldrSinPrNric" placeholder="Singapore NRIC Number"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.nric}" maxlength="9"/>
                                                        <!--  <label for="nwPriHldrNric">NRIC Number</label> -->
                                                     </div>
                                                 </ui:fragment>
-                                                <div class="Container100 Responsive100 margin-top select_item">
+                                                <div class="Container100 margin-top select_item">
                                                     <ui:fragment rendered="#{uobCustodyBean.dsplOtrCntry}">
-                                                        <div class="Container40 Responsive100 ">
+                                                        <div class="Container40 ">
                                                             <span class="title_line">Country Of Nationality</span>
                                                             <p:autoComplete id="nwPriHldrSelCtry" dropdown="true"
                                                                             value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerCitizenshipDetails.nationalitySpecify}"
@@ -146,7 +146,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     </ui:fragment>
                                                     <ui:fragment rendered="#{uobCustodyBean.dsplIcNoInp}">
 
-                                                        <div class="Container30 Responsive100 margin-left ">
+                                                        <div class="Container30 margin-left ">
                                                             <span class="title_line">Malaysian NRIC Number</span>
 
                                                             <p:inputMask id="nwPriHldrIcNo" placeholder="Malaysian NRIC Number"
@@ -158,7 +158,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     </ui:fragment>
                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPspNoInp}">
 
-                                                        <div class="Container30 Responsive100 margin-left">
+                                                        <div class="Container30 margin-left">
                                                             <span class="title_line">Passport Number</span>
                                                             <p:inputText id="nwPriHldrPsprtNo" placeholder="Passport Number"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerIdentificationDetails.passport}"
@@ -197,13 +197,13 @@ $('.form-control').on('focus blur', function (e) {
                                             </p:panel>
                                         </div>
                                         <div class="acc_holder_dtl_block contact_dtl_block">
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
+                                            <div class="Container50 contactCode">
+                                                <div class="Container20 ">
                                                     <span>Country Code</span>
                                                     <p:inputText id="nwPriHldrHmNoCd" placeholder="" maxlength="5"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.homeTelNumberCD}"/>
                                                 </div>
-                                                <div class="Container80 Responsive100">
+                                                <div class="Container80 ">
                                                     <span>Area Code / Number</span>
                                                     <div class="Container100">
                                                         <p:inputText id="nwPriHldrHmNo" placeholder="Home Tel No" maxlength="16"
@@ -212,13 +212,13 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
+                                            <div class="Container50 contactCode">
+                                                <div class="Container20 ">
                                                     <span>Country Code</span>
                                                     <p:inputText id="nwPriHldrMobNoCd" placeholder="" maxlength="5"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.mobNumberCD}"/>
                                                 </div>
-                                                <div class="Container80 Responsive100">
+                                                <div class="Container80 ">
                                                     <span>Area Code / Number</span>
                                                     <div class="Container100">
                                                         <p:inputText id="nwPriHldrMobNo" placeholder="Mobile No" maxlength="16"
@@ -260,7 +260,7 @@ $('.form-control').on('focus blur', function (e) {
                                 <p:tab title="Joint Account Holder" rendered="#{uobCustodyBean.dspJntTab}">
                                     <div class="go-bottom">
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container20 Responsive100 select_item">
+                                            <div class="Container20 select_item">
                                                 <p:selectOneMenu id="jointtitle" value="Select Title" name="title">
                                                     <f:selectItem itemLabel="Select Title" itemValue=""/>
                                                     <f:selectItem itemLabel="Dr" itemValue="Dr"/>
@@ -272,7 +272,7 @@ $('.form-control').on('focus blur', function (e) {
                                                 </p:selectOneMenu>
 
                                             </div>
-                                            <div class="Container80 Responsive100">
+                                            <div class="Container80 ">
                                             	 <span class="title_line">Name</span>
                                                 <input id="jointname" name="name" type="text" placeholder="Name"/>
                                                <!--  <label for="name">Name</label> -->
@@ -280,7 +280,7 @@ $('.form-control').on('focus blur', function (e) {
                                         </div>
 
                                         <div class="Container100 acc_holder_dtl_block">
-                                            <div class="Container20 Responsive100 select_item">
+                                            <div class="Container20 select_item">
                                                 <span class="title_line">Gender</span>
                                                 <p:selectOneMenu id="jointgender" value="Select Gender">
                                                     <f:selectItem itemLabel="Select Gender" itemValue=""/>
@@ -288,7 +288,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="Female" itemValue="Female"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container50 Responsive100 date_birth">
+                                            <div class="Container50 date_birth">
                                                 <div class="Container100"><span class="title_line">Date Of Birth</span></div>
 
                                                 <p:calendar id="jointgerman" value="#{calendarView.date5}" navigator="true" pattern="dd-mm-yyyy"
@@ -299,7 +299,7 @@ $('.form-control').on('focus blur', function (e) {
                                                 <label for="dtbirth">Date Of Birth</label>
 
                                             </div>
-                                            <div class="Container25 Responsive100 select_item ">
+                                            <div class="Container25 select_item ">
                                                 <div class="Container100"><span class="title_line">Country Of Birth</span></div>
                                                 <!-- <input id="countbirth" name="countbirth" type="text" placeholder="Country of birth"/>
                                                 <label for="countbirth">Country of birth</label> -->
@@ -318,11 +318,11 @@ $('.form-control').on('focus blur', function (e) {
 
                                         </div>
                                         <div class="acc_holder_dtl_block ">
-                                            <div class="Container100 Responsive100 label_opacity per_res">
-                                                <div class="Container10 Responsive100">
+                                            <div class="Container100 label_opacity per_res">
+                                                <div class="Container10 ">
                                                     <span>Nationality</span>
                                                 </div>
-                                                <div class="Container70 Responsive100">
+                                                <div class="Container70 ">
                                                     <p:selectOneRadio id="radiojoint" value="">
                                                         <f:selectItem itemLabel="Singapore" itemValue="value1"></f:selectItem>
                                                         <f:selectItem itemLabel="Singapore PR" itemValue="value2"></f:selectItem>
@@ -330,27 +330,27 @@ $('.form-control').on('focus blur', function (e) {
                                                     </p:selectOneRadio>
                                                 </div>
                                             </div>
-                                            <div class="Container100 Responsive100 margin-top width99">
+                                            <div class="Container100 margin-top width99">
                                              <span class="title_line">NRIC Number</span>
                                                 <input id="nricjoint" name="nric" type="text" placeholder="NRIC Number"/>
                                                 <!-- <label for="nric">NRIC Number</label> -->
                                             </div>
-                                            <div class="Container100 Responsive100 margin-top">
-                                                <div class="Container50 Responsive100 ">
+                                            <div class="Container100 margin-top">
+                                                <div class="Container50 ">
                                                     <p:selectOneMenu id="conutryPRjoint" value="Select Country">
                                                         <f:selectItem itemLabel="Select Country" itemValue=""/>
                                                         <f:selectItem itemLabel="Singapore" itemValue="Singapore"/>
                                                         <f:selectItem itemLabel="Malaysia" itemValue="Malaysia"/>
                                                     </p:selectOneMenu>
                                                 </div>
-                                                <div class="Container50 Responsive100 ">
+                                                <div class="Container50 ">
                                                 <span class="title_line">NRIC Number</span>
                                                     <input id="nricPRjoint" name="nricPR" type="text" placeholder="NRIC Number"/>
                                                    <!--  <label for="nricPR">NRIC Number</label> -->
                                                 </div>
                                             </div>
-                                            <div class="Container100 Responsive100 margin-top">
-                                                <div class="Container30 Responsive100 ">
+                                            <div class="Container100 margin-top">
+                                                <div class="Container30 ">
                                                     <p:selectOneMenu id="conutryotherjoint" value="Select Country">
                                                         <f:selectItem itemLabel="Select Country" itemValue=""/>
                                                         <f:selectItem itemLabel="Singapore" itemValue="Singapore"/>
@@ -358,12 +358,12 @@ $('.form-control').on('focus blur', function (e) {
 
                                                     </p:selectOneMenu>
                                                 </div>
-                                                <div class="Container30 Responsive100 ">
+                                                <div class="Container30 ">
                                                  <span class="title_line">Malaysian IC Number</span>
                                                     <input id="icotherjoint" name="icother" type="text" placeholder="Malaysian IC Number"/>
                                                     <!-- <label for="icother">Malaysian IC Number</label> -->
                                                 </div>
-                                                <div class="Container30 Responsive100 ">
+                                                <div class="Container30 ">
                                                 <span class="title_line">Passport Number</span>
                                                     <input id="passotherjoint" name="passother" type="text" placeholder="Passport Number"/>
                                                     <!-- <label for="passother">Passport Number</label> -->
@@ -372,13 +372,13 @@ $('.form-control').on('focus blur', function (e) {
 
                                         </div>
                                         <div class="acc_holder_dtl_block contact_dtl_block">
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
+                                            <div class="Container50 ">
+                                                <div class="Container20 ">
                                                     <span>Country Code</span>
                                                     <input id="jointcountrycode" name="countrycode" type="text" placeholder=""/>
                                                     <!-- <label for="offTel">Office Tel No</label>	 -->
                                                 </div>
-                                                <div class="Container80 Responsive100">
+                                                <div class="Container80 ">
                                                     <span>Area Code / Number</span>
                                                     <div class="Container100">
                                                         <input id="jointhomeTel" name="homeTel" type="text" placeholder="Home Tel No"/>
@@ -386,13 +386,13 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
+                                            <div class="Container50 ">
+                                                <div class="Container20 ">
                                                     <span>Country Code</span>
                                                     <input id="jointcountrycode" name="countrycode" type="text" placeholder=""/>
                                                     <!-- <label for="offTel">Office Tel No</label>	 -->
                                                 </div>
-                                                <div class="Container80 Responsive100">
+                                                <div class="Container80 ">
                                                     <span>Area Code / Number</span>
                                                     <div class="Container100">
                                                         <input id="jointmobTel" name="mobTel" type="text" placeholder="Mobile No"/>
@@ -402,25 +402,25 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
+                                            <div class="Container50 contactCode">
+                                                <div class="Container20 ">
                                                     <span class="for_res title_line">Country Code</span>
                                                     <input id="jointcountrycode" name="countrycode" type="text" placeholder=""/>
                                                     <!-- <label for="offTel">Office Tel No</label>	 -->
                                                 </div>
-                                                <div class="Container80 Responsive100">
+                                                <div class="Container80 ">
                                                     <span class="for_res title_line">Area Code /  Number</span>
                                                     <input id="jointoffTel" name="offTel" type="text" placeholder="Office Tel No"/>
                                                     <!-- <label for="offTel">Office Tel No</label> -->
                                                 </div>
                                             </div>
-                                            <div class="Container50 Responsive100">
-                                                <div class="Container20 Responsive100">
+                                            <div class="Container50 contactCode">
+                                                <div class="Container20 ">
                                                     <span class="for_res title_line">Country Code</span>
                                                     <input id="jointcountrycode" name="countrycode" type="text" placeholder=""/>
                                                     <!-- <label for="offTel">Office Tel No</label>	 -->
                                                 </div>
-                                                <div class="Container80 Responsive100">
+                                                <div class="Container80 ">
                                                     <span class="for_res title_line">Area Code / Number</span>
                                                     <input id="jointfaxTel" name="faxTel" type="text" placeholder="Fax No"/>
                                                    <!--  <label for="faxTel">Fax No</label> -->
@@ -440,7 +440,7 @@ $('.form-control').on('focus blur', function (e) {
                             </p:tabView>
                         </div>
                         <div class="Container100 pre_next_btn">
-                            <div class="Container50 Responsive100 next_btn">
+                            <div class="Container50 next_btn">
                                 <p:commandLink id="newNxt"
                                                actionListener="#{uobCustodyBean.nextPage}"
                                                update=":cstdyFrm:newAccordian">
@@ -451,7 +451,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab1" title="Address" disabled="#{uobCustodyBean.isAccordianDisabled(1)}">
-                        <div class="Container100 Responsive100 holder_address acc_holder_form ">
+                        <div class="Container100 holder_address acc_holder_form ">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(1) != null}"
@@ -471,20 +471,20 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container30 Responsive100 select_item">
+                                            <div class="Container30 select_item">
                                                 <div class="Container100"><span class="title_line">Postal Code</span></div>
                                                 <p:inputText id="nwPriHldrPhyAddrPoCd" placeholder="Postal Code"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.physicalAddressZipCode}"
                                                              maxlength="10"/>
                                                 <!-- <label for="nwPriHldrPhyAddrPoCd">Postal Code</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100 select_item">
+                                            <div class="Container30 select_item">
                                                 <div class="Container100"><span class="title_line">City / State</span></div>
                                                 <p:inputText id="nwPriHldrPhyAddrCtySt" placeholder="City / State"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.physicalAddressCity}" maxlength="45"/>
                                                 <!-- <label for="nwPriHldrPhyAddrCtySt">City / State</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100 select_item">
+                                            <div class="Container30 select_item">
                                                 <div class="Container100"><span class="title_line">Country</span></div>
                                                 <p:autoComplete id="nwPriHldrPhyAddrCtry" dropdown="true"
                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.physicalAddressCountry}"
@@ -493,7 +493,7 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block label_opacity">
-                                            <div class="Container100 Responsive100  ">
+                                            <div class="Container100  ">
                                                 <div class="Container40 ">
                                                     <span class="title_line">Mailing Address is the same as Residential Address.</span>
                                                 </div>
@@ -529,20 +529,20 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </div>
                                                 <div class="acc_holder_dtl_block">
-                                                    <div class="Container30 Responsive100 select_item">
+                                                    <div class="Container30 select_item">
                                                         <div class="Container100"><span class="title_line">Postal Code</span></div>
                                                         <p:inputText id="nwPriHldrMlAddrPoCd" placeholder="Postal Code"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.mailingAddressZipCode}"
                                                         maxlength="15"/>
                                                         <!-- <label for="nwPriHldrMlAddrPoCd">Postal Code</label> -->
                                                     </div>
-                                                    <div class="Container30 Responsive100 select_item">
+                                                    <div class="Container30 select_item">
                                                         <div class="Container100"><span class="title_line">City / State</span></div>
                                                         <p:inputText id="nwPriHldrMlAddrCty" placeholder="City / State"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.mailingAddressCity}"/>
                                                         <!-- <label for="nwPriHldrMlAddrCty">City / State</label> -->
                                                     </div>
-                                                    <div class="Container30 Responsive100 select_item">
+                                                    <div class="Container30 select_item">
                                                         <div class="Container100"><span class="title_line">Country</span></div>
                                                         <p:autoComplete id="nwPriHldrMlAddrCtry" dropdown="true"
                                                                         value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.mailingAddressCountry}"
@@ -567,17 +567,17 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
 												<span class="title_line">Postal Code</span>
                                                 <input id="postcodejoint" name="postcode" type="text" placeholder="Postal Code"/>
                                                 <!-- <label for="postcode">Postal Code</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             	<span class="title_line">City / State</span>
                                                 <input id="Citystatejoint" name="Citystate" type="text" placeholder="City / State"/>
                                                 <!-- <label for="Citystate">City / State</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
 
                                                 <p:selectOneMenu id="conutryjoint" value="Select Country">
                                                     <f:selectItem itemLabel="Select Country" itemValue=""/>
@@ -594,7 +594,7 @@ $('.form-control').on('focus blur', function (e) {
                                                                                                                 </p:selectManyCheckbox>
                                              -->
 
-                                            <div class="Container100 Responsive100  ">
+                                            <div class="Container100  ">
                                                 <div class="Container40 ">
                                                     <span class="title_line">Mailing Address is the same as Residential Address.</span>
                                                 </div>
@@ -625,17 +625,17 @@ $('.form-control').on('focus blur', function (e) {
                                         </div>
 
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             <span class="title_line">Postal Code</span>
                                                 <input id="postalcodejoint" name="postalcode" type="text" placeholder="Postal Code"/>
                                                 <!-- <label for="postalcode">Postal Code</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             <span class="title_line">City / State</span>
                                                 <input id="cityjoint" name="city" type="text" placeholder="City / State"/>
                                                 <!-- <label for="city">City / State</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             <span class="title_line">Country</span>
                                                 <p:selectOneMenu id="conutry1joint" value="Select Country">
                                                     <f:selectItem itemLabel="Select Country" itemValue=""/>
@@ -672,7 +672,7 @@ $('.form-control').on('focus blur', function (e) {
 
                     <p:tab id="tab2" title="Remittance Standing Instruction"
                            disabled="#{uobCustodyBean.isAccordianDisabled(2)}">
-                        <div class="Container100 Responsive100 holder_address acc_holder_form ">
+                        <div class="Container100 holder_address acc_holder_form remittance_dtls">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(2) != null}"
@@ -724,21 +724,21 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container30 Responsive100 select_item">
+                                            <div class="Container30 select_item">
                                                 <div class="Container100"><span class="title_line">Postal Code</span></div>
                                                 <p:inputText id="nwPriHldrRemBnkAddrPoCd" placeholder="Postal Code"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressZipCode}"
                                                              maxlength="15"/>
                                                 <!-- <label for="nwPriHldrPhyAddrPoCd">Postal Code</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100 select_item">
+                                            <div class="Container30 select_item">
                                                 <div class="Container100"><span class="title_line">City / State</span></div>
                                                 <p:inputText id="nwPriHldrRemBnkAddrCtySt" placeholder="City / State"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCity}"
                                                              maxlength="45"/>
                                                 <!-- <label for="nwPriHldrPhyAddrCtySt">City / State</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100 select_item">
+                                            <div class="Container30 select_item">
                                                 <div class="Container100"><span class="title_line">Country</span></div>
                                                 <p:autoComplete id="nwPriHldrRemBnkAddrCtry" dropdown="true"
                                                                 value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.bankAddressCountry}"
@@ -747,21 +747,21 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container30 Responsive100 ">
+                                            <div class="Container30 ">
                                                <span class="title_line">Swift Bic</span>
                                                 <p:inputText id="nwPriHldrRemSwBic" placeholder="Swift Bic"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.swiftBic}"
                                                              maxlength="20"/>
                                                 <!-- <label for="nwPriHldrRemSwBic">Swift Bic</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100 ">
+                                            <div class="Container30 ">
                                                <span class="title_line">Correspondent Bank</span>
                                                 <p:inputText id="nwPriHldrRemCorrBnk" placeholder="Correspondent Bank"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBank}"
                                                              maxlength="45"/>
                                                 <!-- <label for="nwPriHldrRemCorrBnk">Correspondent Bank</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100 ">
+                                            <div class="Container30 ">
                                                <span class="title_line">Correspondent Bank Swift Bic</span>
                                                 <p:inputText id="nwPriHldrRemCorrBnkSwBic" placeholder="Correspondent Bank Swift Bic"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerBankDetails.correspondentBankSwiftBic}"
@@ -792,7 +792,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab3" title="Tax Residence Information" disabled="#{uobCustodyBean.isAccordianDisabled(3)}">
-                        <div class="Container100 Responsive100 holder_address acc_holder_form ">
+                        <div class="Container100 holder_address acc_holder_form ">
                             <p:tabView id="idTaxTabVw">
                                 <p:tab title="Main Account Holder" id="idTaxTabMn">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(3) != null}"
@@ -862,7 +862,7 @@ $('.form-control').on('focus blur', function (e) {
                                                         <h:outputText id="nwPriHldrTaxMsg" styleClass="errorText"
                                                                       value="#{uobCustodyBean.taxError}" escape="false"/>
                                                     </p:panel>
-                                                    <div class="Container50 Responsive100 select_item">
+                                                    <div class="Container50 select_item">
                                                         <div class="Container100"><span
                                                                 class="title_line">Country / Jurisdiction Of Tax Residence</span>
                                                         </div>
@@ -873,7 +873,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                     <div class="acc_holder_dtl_block ">
                                                         <div class="Container100 ">
-                                                            <div class="Container50 Responsive100 label_opacity radio_label">
+                                                            <div class="Container50 label_opacity radio_label">
                                                                 <div class="Container60 ">
                                                                     <span class="title_line">Have Tax Identification Number?</span>
                                                                 </div>
@@ -905,7 +905,7 @@ $('.form-control').on('focus blur', function (e) {
                                                                 <!--<div class="Container100 select_item">-->
                                                                 <!---->
                                                                 <!--</div>-->
-                                                                <div class="Container100 Responsive100 label_opacity radio_select">
+                                                                <div class="Container100 label_opacity radio_select">
                                                                     <p:selectOneRadio id="priHldrTaxPnlReasRad"
                                                                                       value="#{uobCustodyBean.owTaxDtls.tinUnavailableReason}"
                                                                                       layout="grid" columns="1">
@@ -924,7 +924,7 @@ $('.form-control').on('focus blur', function (e) {
                                                                 <p:panel id="nwPriHldTaxRsn" style="border-color: transparent;"
                                                                          class="Container100 width99">
                                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrTaxRsn}">
-                                                                        <div class="Container100 Responsive100">
+                                                                        <div class="Container100 ">
                                                                         	<span class="title_line">Explain</span>
                                                                             <p:inputText id="priHldrTaxPnlReasExpl" placeholder="Please Explain"
                                                                                          value="#{uobCustodyBean.owTaxDtls.tinUnavailableValue}"/>
@@ -1002,7 +1002,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <div class="panel_close">
                                                 <span class="ui-button-icon-center ui-icon ui-c fa fa-close"></span>
                                             </div>
-                                            <div class="Container60 Responsive100 select_item">
+                                            <div class="Container60 select_item">
                                                 <div class="Container100"><span class="title_line">Country / Jurisdiction Of Tax Residence</span>
                                                 </div>
                                                 <p:selectOneMenu id="jointconutry1" value="Select Jurisdiction / Country Of Tax ">
@@ -1015,7 +1015,7 @@ $('.form-control').on('focus blur', function (e) {
 
                                             <div class="acc_holder_dtl_block ">
                                                 <div class="Container100 select_item">
-                                                    <div class="Container40 Responsive100 label_opacity radio_label">
+                                                    <div class="Container40 label_opacity radio_label">
                                                         <div class="Container60 ">
                                                             <span class="title_line"> Have Tax Identification Number ?</span>
                                                         </div>
@@ -1026,7 +1026,7 @@ $('.form-control').on('focus blur', function (e) {
                                                             </p:selectOneRadio>
                                                         </div>
                                                     </div>
-                                                    <div class="Container50 Responsive100">
+                                                    <div class="Container50 ">
                                                     	<span class="title_line">Tax Identification Number</span>
                                                         <input id="jointtaxId" name="taxId" type="text" placeholder="Tax Identification Number"/>
                                                         <!-- <label for="taxId">Tax Identification Number</label> -->
@@ -1045,13 +1045,13 @@ $('.form-control').on('focus blur', function (e) {
                                                         </div>
 
                                                     </div>
-                                                    <div class="Container60 Responsive100">
+                                                    <div class="Container60 ">
                                                         <input id="jointcityId" name="cityId" type="text" placeholder="Citizenship Id"/>
                                                         <label for="cityId">Citizenship Id</label>
                                                     </div>
 
                                                 </div> -->
-                                                <div class="Container100 Responsive100 label_opacity radio_select">
+                                                <div class="Container100 label_opacity radio_select">
                                                     <p:selectOneRadio id="jointradio3" value="">
                                                         <f:selectItem
                                                                 itemLabel="A. The country/jurisdiction where the Account Holder is resident does not issue Tax Identification Number(s) to its residents"
@@ -1108,7 +1108,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab4" title="Employment" disabled="#{uobCustodyBean.isAccordianDisabled(4)}">
-                        <div class="Container100 Responsive100 holder_employment acc_holder_form">
+                        <div class="Container100 holder_employment acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(4) != null}"
@@ -1173,21 +1173,21 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </div>
                                                 <div class="acc_holder_dtl_block">
-                                                    <div class="Container30 Responsive100 select_item">
+                                                    <div class="Container30 select_item">
                                                         <div class="Container100"><span class="title_line">Postal Code</span></div>
                                                         <p:inputText id="nwPriHldrEmpZpCd" placeholder="Postal Code"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerEmploymentDetails.employerZipCode}"
                                                                      maxlength="15"/>
                                                         <!-- <label for="nwPriHldrEmpZpCd">Postal Code</label> -->
                                                     </div>
-                                                    <div class="Container30 Responsive100 select_item">
+                                                    <div class="Container30 select_item">
                                                         <div class="Container100"><span class="title_line">City / State</span></div>
                                                         <p:inputText id="nwPriHldrEmpCty" placeholder="City/State"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerEmploymentDetails.employerCity}"
                                                                      maxlength="45"/>
                                                         <!-- <label for="nwPriHldrEmpCty">City/State</label> -->
                                                     </div>
-                                                    <div class="Container30 Responsive100 select_item">
+                                                    <div class="Container30 select_item">
                                                         <div class="Container100"><span class="title_line">Country</span></div>
                                                         <p:autoComplete id="nwPriHldrEmpCtry" dropdown="true"
                                                                         value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerEmploymentDetails.employerZipCountry}"
@@ -1195,26 +1195,26 @@ $('.form-control').on('focus blur', function (e) {
                                                         </p:autoComplete>
                                                     </div>
                                                 </div>
-                                                <div class="acc_holder_dtl_block">
-                                                    <div class="Container50 Responsive100">
-                                                        <div class="Container20 Responsive100">
+                                                <div class="acc_holder_dtl_block empContCode">
+                                                    <div class="Container100 ">
+                                                        <div class="Container20 ">
                                                             <span>Country Code</span>
                                                             <p:inputText id="nwPriHldrOffNoCd" placeholder="" maxlength="5"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.officeTelNumberCD}"/>
                                                         </div>
-                                                        <div class="Container80 Responsive100">
+                                                        <div class="Container80 ">
                                                             <span>Area Code / Number</span>
                                                             <p:inputText id="nwPriHldrOffNo" placeholder="Office Tel No" maxlength="16"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.officeTelNumber}"/>
                                                             <!--<label for="nwPriHldrOffNo">Office Tel No</label>-->
                                                         </div>
                                                     </div>
-                                                    <!--<div class="Container50 Responsive100">-->
-                                                        <!--<div class="Container20 Responsive100">-->
+                                                    <!--<div class="Container50 ">-->
+                                                        <!--<div class="Container20 ">-->
                                                             <!--<p:inputText id="nwPriHldrFaxNoCd" placeholder="" maxlength="5"-->
                                                                          <!--value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.faxNumberCD}"/>-->
                                                         <!--</div>-->
-                                                        <!--<div class="Container80 Responsive100">-->
+                                                        <!--<div class="Container80 ">-->
                                                             <!--<p:inputText id="nwPriHldrFaxNo" placeholder="Fax No" maxlength="16"-->
                                                                          <!--value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerContactDetails.faxNumber}"/>-->
                                                             <!--<label for="nwPriHldrFaxNo">Fax No</label>-->
@@ -1279,17 +1279,17 @@ $('.form-control').on('focus blur', function (e) {
                                             </div>
                                         </div>
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             	<span class="title_line">Postal Code</span>
                                                 <input id="jointpostalcode" name="postalcode" type="text" placeholder="Postal Code"/>
                                                 <!-- <label for="postalcode">Postal Code</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             	<span class="title_line">City/State</span>
                                                 <input id="jointcity" name="city" type="text" placeholder="City/State"/>
                                                 <!-- <label for="city">City/State</label> -->
                                             </div>
-                                            <div class="Container30 Responsive100">
+                                            <div class="Container30 ">
                                             	<span class="title_line">Country</span>
                                                 <p:selectOneMenu id="jointconutry2" value="Select Country">
                                                     <f:selectItem itemLabel="Select Country" itemValue=""/>
@@ -1324,7 +1324,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab5" title="Security Question" disabled="#{uobCustodyBean.isAccordianDisabled(5)}">
-                        <div class="Container100 Responsive100 holder_employment acc_holder_form ">
+                        <div class="Container100 holder_employment acc_holder_form ">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(5) != null}"
@@ -1338,7 +1338,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <!-- <div class="Container40">
                                                  <h3>What is Mother's Maiden Name ?</h3>
                                              </div> -->
-                                            <div class="Container60 Responsive100">
+                                            <div class="Container60 ">
                                             	<span class="title_line">Mother's Maiden Name</span>
                                                 <p:inputText id="nwPriHldMomNm"
                                                              placeholder="What is your Mother's Maiden Name ?"
@@ -1351,7 +1351,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <!-- <div class="Container40">
                                                 <h3>What is Father's Name ?</h3>
                                             </div>	 -->
-                                            <div class="Container60 Responsive100">
+                                            <div class="Container60 ">
                                             	<span class="title_line">Father's Name</span>
                                                 <p:inputText id="nwPriHldDadNm" placeholder="What is your Father's Name ?"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.fatherName}"
@@ -1363,7 +1363,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <!-- <div class="Container40">
                                                 <h3>Name of Primary School Attend ?</h3>
                                             </div>	 -->
-                                            <div class="Container60 Responsive100">
+                                            <div class="Container60 ">
                                             <span class="title_line">Name of Primary School Attended</span>
                                                 <p:inputText id="nwPriHldSclNm" placeholder="What is the Name of Primary School Attended ?"
                                                              value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.nameOfPrimarySchool}"
@@ -1381,7 +1381,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <!-- <div class="Container40">
                                                  <h3>What is Mother's Maiden Name ?</h3>
                                              </div> -->
-                                            <div class="Container60 Responsive100">
+                                            <div class="Container60 ">
                                             	<span class="title_line">Mother's Maiden Name</span>
                                                 <input id="jointmotherName" name="motherName" type="text"
                                                        placeholder="What is your Mother's Maiden Name ?"/>
@@ -1392,7 +1392,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <!-- <div class="Container40">
                                                 <h3>What is Father's Name ?</h3>
                                             </div>	 -->
-                                            <div class="Container60 Responsive100">
+                                            <div class="Container60 ">
                                             	<span class="title_line">Father's Name</span>
                                                 <input id="jointfatherName" name="fatherName" type="text" placeholder="What is your Father's Name ?"/>
                                                 <!-- <label for="fatherName">Father's Name</label> -->
@@ -1402,7 +1402,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <!-- <div class="Container40">
                                                 <h3>Name of Primary School Attend ?</h3>
                                             </div>	 -->
-                                            <div class="Container60 Responsive100">
+                                            <div class="Container60 ">
                                             	<span class="title_line">Name of Primary School Attended</span>
                                                 <input id="jointschoolName" name="schoolName" type="text"
                                                        placeholder="What is the name of Primary School Attended ?"/>
@@ -1435,7 +1435,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab6" title="Financial Information" disabled="#{uobCustodyBean.isAccordianDisabled(6)}">
-                        <div class="Container100 Responsive100 holder_employment acc_holder_form">
+                        <div class="Container100 holder_employment acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(6) != null}"
@@ -1446,7 +1446,7 @@ $('.form-control').on('focus blur', function (e) {
                                     </p:panel>
                                     <div class="go-bottom">
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container50 Responsive100 select_item">
+                                            <div class="Container50 select_item">
                                                 <div class="Container100"><span class="title_line">Annual Income</span></div>
                                                 <p:selectOneMenu id="nwPriHldrAnInc"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownersFinancialDetails.annualIncome}">
@@ -1459,7 +1459,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="Above $ 300,000" itemValue="Above $ 300,000"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container50 Responsive100 select_item">
+                                            <div class="Container50 select_item">
                                                 <div class="Container100"><span class="title_line">Networth</span></div>
                                                 <p:selectOneMenu id="nwPriHldrNtWrth"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownersFinancialDetails.networth}">
@@ -1473,7 +1473,7 @@ $('.form-control').on('focus blur', function (e) {
                                                 </p:selectOneMenu>
                                             </div>
                                             <p:panel id="nwPriHldFinSrcPnl" style="border-color: transparent;" class="Container100">
-                                                <div class="Container50 Responsive100 select_item margin-top">
+                                                <div class="Container50 select_item margin-top">
                                                     <div class="Container100"><span class="title_line">Source of Funds / Wealth</span></div>
                                                     <p:selectOneMenu id="nwPriHldrWlthInc"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownersFinancialDetails.sourceOfFundsWealth}">
@@ -1488,7 +1488,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     </p:selectOneMenu>
                                                 </div>
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplSrcIncOtrs}">
-                                                    <div class="Container50 Responsive50 select_item margin-top">
+                                                    <div class="Container50 explBlock select_item margin-top">
                                                         <div class="Container100"><span class="title_line">Other Source of Funds / Wealth</span></div>
                                                         <div class="Container100">
                                                             <p:inputText id="nwPriHldrWlthIncInp" placeholder="Please specify Source of Funds/Wealth"
@@ -1499,7 +1499,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     </div>
                                                 </ui:fragment>
                                             </p:panel>
-                                            <div class="Container50 Responsive100">
+                                            <div class="Container50 ">
 
                                             </div>
 
@@ -1511,7 +1511,7 @@ $('.form-control').on('focus blur', function (e) {
                                 <p:tab title="Joint Account Holder" rendered="#{uobCustodyBean.dspJntTab}">
                                     <div class="go-bottom">
                                         <div class="acc_holder_dtl_block">
-                                            <div class="Container50 Responsive100 select_item">
+                                            <div class="Container50 select_item">
                                                 <div class="Container100"><span class="title_line">Annual Income</span></div>
                                                 <p:selectOneMenu id="annual_incomejoint" value="Annual Income">
                                                     <f:selectItem itemLabel="Annual Income" itemValue=""/>
@@ -1523,7 +1523,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="Above $ 300,000" itemValue="Above $ 300,000"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container50 Responsive100 select_item">
+                                            <div class="Container50 select_item">
                                                 <div class="Container100"><span class="title_line">NetWorth</span></div>
                                                 <p:selectOneMenu id="newtworthjoint" value="Networth">
                                                     <f:selectItem itemLabel="NetWorth" itemValue=""/>
@@ -1535,7 +1535,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="More than $ 1,000,000" itemValue="More than $ 1,000,000"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container50 Responsive100 select_item">
+                                            <div class="Container50 select_item">
                                                 <div class="Container100"><span class="title_line">Source of Funds / Wealth</span></div>
                                                 <p:selectOneMenu id="wealth_incomejoint" value="Source of Funds/Wealth">
                                                     <f:selectItem itemLabel="Source of Funds/Weath" itemValue=""/>
@@ -1547,7 +1547,7 @@ $('.form-control').on('focus blur', function (e) {
                                                     <f:selectItem itemLabel="Others" itemValue="Others"/>
                                                 </p:selectOneMenu>
                                             </div>
-                                            <div class="Container50 Responsive100 margin-left">
+                                            <div class="Container50 margin-left">
                                                 <div class="Container100"><span class="title_line">Please Specify</span></div>
                                                 <input id="otherFundsjoint" name="otherFunds" type="text" placeholder="Please Specify"/>
                                                 <!-- <label for="otherFundsjoint">Please Specify</label> -->
@@ -1580,7 +1580,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab7" title="Account Relationship Details" disabled="#{uobCustodyBean.isAccordianDisabled(7)}">
-                        <div class="Container100 Responsive100 holder_employment acc_holder_form">
+                        <div class="Container100 holder_employment acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(7) != null}"
@@ -1766,7 +1766,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
 
                     <p:tab id="tab8" title="Trading History/Objectives" disabled="#{uobCustodyBean.isAccordianDisabled(8)}">
-                        <div class="Container100 Responsive100 acc_holder_form">
+                        <div class="Container100 acc_holder_form">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(8) != null}"
@@ -1783,7 +1783,7 @@ $('.form-control').on('focus blur', function (e) {
                                                 </div>
                                                 <p:panel id="nwPriHldObjPnl3" style="border-color: transparent;" class="Container70">
                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrObjPnl3}">
-                                                        <div class="Container100">
+                                                        <div class="Container100 explBlock">
                                                         	<span class="title_line">Please Specify</span>
                                                             <p:inputText id="nwPriHldrObjInvObjDebInp" placeholder="Please Specify"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownersFinancialDetails.areYouUnableToPayYouDebtsDescribe}"
@@ -1809,7 +1809,7 @@ $('.form-control').on('focus blur', function (e) {
                                                 </div>
                                                 <p:panel id="nwPriHldObjPnl4" style="border-color: transparent;" class="Container70 ">
                                                     <ui:fragment rendered="#{uobCustodyBean.dsplPriHldrObjPnl4}">
-                                                        <div class="Container100">
+                                                        <div class="Container100 explBlock">
                                                         	<span class="title_line">Please Specify</span>
                                                             <p:inputText id="nwPriHldrObjInvObjDispInp" placeholder="Please Specify"
                                                                          value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownersFinancialDetails.doYouHaveAnyDisputedAccountDescribe}"
@@ -1946,7 +1946,7 @@ $('.form-control').on('focus blur', function (e) {
 
                     <p:tab id="tab9" title="Personal Data Protection Consent"
                            disabled="#{uobCustodyBean.isAccordianDisabled(9)}">
-                        <div class="Container100 Responsive100 holder_address acc_holder_form ">
+                        <div class="Container100 holder_address acc_holder_form ">
                             <p:tabView>
                                 <p:tab title="Main Account Holder">
                                     <p:panel id="nwPriHldrErr1" rendered="#{uobCustodyBean.getErrorMessage(9) != null}"
@@ -2005,7 +2005,7 @@ $('.form-control').on('focus blur', function (e) {
                     </p:tab>
                 </p:accordionPanel>
 
-                <div class="Container20 Responsive100 submit_acc_dtl">
+                <div class="Container20 submit_acc_dtl">
                     <p:commandButton id="uobSubmitBtn" disabled="#{uobCustodyBean.dsblSubmtBtn}"
                                      value="Next"
                                      styleClass="uob_button"
