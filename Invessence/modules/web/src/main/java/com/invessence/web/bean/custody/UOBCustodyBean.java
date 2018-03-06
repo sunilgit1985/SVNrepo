@@ -1132,32 +1132,40 @@ public void onChngRpDtls(String flag){
       {
          saveDetails(getPagemanager().getPage(), uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct(), false);
          getPagemanager().clearAllErrorMessage();
+         Boolean status =false;
          if (getPagemanager().getPage() + 1 == getPagemanager().getMaxNoofPages())
          {
-            dsblSubmtBtn = false;
+            status = validateAllPage();
+            dsblSubmtBtn = !status;
          }
          else
          {
             dsblSubmtBtn = true;
          }
-
-         if (getPagemanager().isLastPage() ||
-         (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9 ) ||
-         (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 4 ))
+         if(status)
          {
-            if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes")){
-               resetActiveTab(4);
-            }else  if(uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
+            if (getPagemanager().isLastPage() ||
+               (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9) ||
+               (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 4))
             {
-               resetActiveTab(10);
+               if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes"))
+               {
+                  resetActiveTab(4);
+               }
+               else if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No"))
+               {
+                  resetActiveTab(10);
+               }
+            }
+            else
+            {
+               getPagemanager().nextPage();
+               resetActiveTab(getPagemanager().getPage());
             }
          }
-         else
-         {
-            getPagemanager().nextPage();
-            resetActiveTab(getPagemanager().getPage());
-         }
          System.out.println("page next" + getPagemanager().getPage());
+      }else{
+         dsblSubmtBtn = true;
       }
    }
 
