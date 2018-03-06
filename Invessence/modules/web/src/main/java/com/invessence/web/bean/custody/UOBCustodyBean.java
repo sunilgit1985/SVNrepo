@@ -1093,6 +1093,10 @@ public void onChngRpDtls(String flag){
       {
          sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.cntryDtl", "Country / Jurisdiction of tax residence is required.", null));
       }
+      if (owTaxDtls.getJurisdictionOfTaxResidence()!=null && owTaxDtls.getJurisdictionOfTaxResidence().trim().equalsIgnoreCase("United States"))
+      {
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Particulars with US indicia are not permitted to open an account.", null));
+      }
       if (!hasRequiredData(owTaxDtls.getIsTINAvailable()))
       {
          sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.havTaxNum", "Tax Identification Number (Yes / No ) is required.", null));
