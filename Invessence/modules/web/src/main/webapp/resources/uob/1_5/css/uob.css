@@ -6557,7 +6557,7 @@ rect.highcharts-background {
     position: relative;}
 .header_link.prenext_btn.Container70{
     float:right;
-    min-width:208px;
+    min-width:210px;
     float:right;
     width:28%;
 }
@@ -6621,6 +6621,95 @@ td.bullet_td span{
     margin: 0px auto;
     display: block;
 }
+.reviewHeader_title .fine_tune_btn{
+	float:right;
+}
+.reviewHeader_title .header_title.Container30{
+	width:50%;
+}
+
+.Container100.tab_dtl.review_dtl{
+	width:98%;
+	padding:0 1% 12px 1%;
+}
+.ringselectmode{
+	width: 92%;
+    position: relative;
+    float: left;
+    padding: 0 4%;
+    display:none;
+	}
+
+	div.slidePanelleft{
+	position:relative;
+	}
+	.review_dtl .Container70.UserconfTable{
+	margin-top:0px;
+	}
+	.review_dtl .Container30.donutChartGraph{
+	top:0px;
+	}
+	.review_dtl .Container100{
+	margin-top:0px;
+	}
+	.Container100.tab_dtl.review_dtl .Container100 .Container100 .ContainerIndent{
+	width: 100%;
+    position: relative;
+    float: left;
+    padding: 0;
+    margin-top: 10px;
+}
+.Container100.barChartGraph .jqplot-target{
+width:100%;
+height:330px;
+
+}
+.Container100.barChartGraph .jqplot-target .jqplot-axis.jqplot-xaxis{
+	    width: 720px;
+    height: 21px !important;
+}
+.Conatiner100.IRERBlock{
+	    width: 98%;
+    position: relative;
+    float: left;
+    padding-right:2%;
+}
+.Conatiner100.IRERBlock .Fleft{
+	    width: 48%;
+  margin:0px;
+    padding:4px 2%;
+}
+.Conatiner100.IRERBlock .Fleft:nth-child(1){
+	  margin:0 2% 0 0;
+}
+
+.Conatiner100.IRERBlock .Fleft:nth-child(2){
+	  float:right;
+}
+.review_dtl .Container30.donutChartGraph .idPieChartArea{
+	    position: relative;
+    float: left;
+    width: 100%;
+    max-height: 360px;
+}
+.review_dtl .Container30.donutChartGraph .idPieChartArea .highcharts-container{
+	    width: 100% !important;
+    height: 360px !important;
+}
+
+.review_dtl .Container30.donutChartGraph .idPieChartArea .highcharts-container svg.highcharts-root{
+	height: 300px;
+    width: 100%;
+}
+.review_dtl .Container30.donutChartGraph .idPieChartArea .highcharts-container svg.highcharts-root path{
+	stroke-width:20px;
+}
+.reviewGoalbutton{
+	margin:0 0 0 -1% !important;
+}
+div.slidePanelleft{
+	width:154px;
+}
 @media only screen and (max-width: 1160px)  {
     .Container50.donutChartGraph{
         width:100%;
@@ -6641,6 +6730,8 @@ td.bullet_td span{
     width: 31%;}
     .contactCode .Container80 {
     width: 66%;}
+    .Conatiner100.IRERBlock .Fleft{width:100%;
+        margin:10px 0 0 0;}
     
     
 }
@@ -6670,6 +6761,17 @@ td.bullet_td span{
    
     width: 100%;
 }
+    .portfolio_selection.reviewcont,.portfolio_progress_bar.reviewcont{
+        width:90%;
+        margin:0 5%;
+    }
+    .reviewcont{
+        width:90%;
+        margin:1% 5%;
+    }
+    .reviewHeader_title .header_title.Container30{
+        width:50%;
+    }
 
     
     }
@@ -6840,8 +6942,20 @@ td.bullet_td span{
     {
         width: 100%;
     }
-    
 
+    .reviewHeader_title .header_title.Container30 {
+        width:44%;
+    }
+    .reviewHeader_title .header_title.Container30 .Container30.fine_tune_btn{
+        float: right;
+        width:42%;
+    }
+    .reviewHeader_title .header_link.prenext_btn.Container70{
+        width:auto;
+    }
+    .reviewHeader_title .header_title.Container30 .Container50{
+        width:50%;
+    }
 }
 @media only screen and (max-width: 760px)  {
     .portfolio_layout .tab_dtl{
@@ -6849,6 +6963,24 @@ td.bullet_td span{
     }
     .ui-panel-content .Container100 .tab_dtl p input.ui-inputtext{
         width:190px ;
+    }
+    .Conatiner100.IRERBlock{
+        width: 98%;
+        position: relative;
+        float: left;
+        padding-right:2%;
+    }
+    .Conatiner100.IRERBlock .Fleft{
+        width: 48%;
+        margin:0px;
+        padding:4px 2%;
+    }
+    .Conatiner100.IRERBlock .Fleft:nth-child(1){
+        margin:0 2% 0 0;
+    }
+
+    .Conatiner100.IRERBlock .Fleft:nth-child(2){
+        float:right;
     }
     /*** Start Form ***/
     .getStartcaraousle .Container100 .ui-outputpanel .wid55 .input_no_type input {
@@ -6906,6 +7038,55 @@ td.bullet_td span{
 	.explBlock.Container100 { width: 99%;}
 	.go-bottom .empContCode .Container80 {
     width: 78%;margin: 0;}
+    .go-bottom .acc_holder_dtl_block .Container80{
+        width:78%;
+        margin:0px !important;
+    }
+    .Container30.PaddingTopPercent2{
+        width: 100%;
+    }
+    .Container30.PaddingTopPercent2 .Conatiner100.IRERBlock{
+        width: 100%;
+        position: relative;
+        float: left;
+        margin-top: 10px;
+    }
+
+    .Container30.PaddingTopPercent2 .Conatiner100.IRERBlock .Fleft{
+        width: 46%;
+    }
+
+    .Container100.tab_dtl.review_dtl{
+        padding:0 2.5% 2.5% 2.5%;
+        width:95%;
+    }
+    .Container100.tab_dtl.review_dtl .reviewGoalbutton{
+        margin: 0 0 0 -2.5% !important;
+    }
+    .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container{width:auto !important;}
+    .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container .highcharts-data-labels .highcharts-label{
+        top:-60px !important;
+    }
+    .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container .highcharts-data-labels .highcharts-label span{
+        vertical-align: top;
+        line-height: 72px;
+        width: auto;
+        float: none;
+    }
+    .portfolio_selection .sapn_review{
+        padding-right: 20px;
+        float: right;
+    }
+
+    .portfolio_selection .sapn_review span{
+        width: 84%;
+        float: left;
+        text-align: right;
+    }
+
+    .portfolio_selection .sapn_review img{
+
+    }
     
 }
 @media only screen and (max-width: 660px){
@@ -6946,6 +7127,31 @@ td.bullet_td span{
     .select_item.Container20 {
     width: 55%;}
     .go-bottom .Container50.date_birth{width:60%;}
+    .go-bottom .acc_holder_dtl_block .Container80{
+        width:100%;
+        margin:2% 0 !important;
+    }
+    .go-bottom .acc_holder_dtl_block .Container20.select_item{
+        width:100%;
+    }
+    .reviewHeader_title .header_title.Container30 {
+        width:55%;
+    }
+    .reviewHeader_title .header_title.Container30 .Container30.fine_tune_btn{
+        float: right;
+        width:42%;
+    }
+    .reviewHeader_title .header_title.Container30 .Container50{
+        width:50%;
+    }
+    .header_link.prenext_btn.Container70.review_btn{
+        min-width:auto;
+        width:auto;
+    }
+    .ringselectmode{
+        display:block;
+    }
+    .ring_widget{display:none;}
 
 
 }
@@ -6957,11 +7163,17 @@ td.bullet_td span{
     .v3dMainTitle > .Wid70 {
         width:60%;
     }
+    .Conatiner100.IRERBlock .Fleft{
+        margin-top:10px;
+    }
 }
 
 @media only screen and (max-width: 480px)  {
     .dashboard_right_panel .ui-panel .ui-panel-content .tabpanel1 .user_table .ui-datatable .ui-datatable-tablewrapper table thead tr th:nth-child(1){
         width:11% !important;
+    }
+    .checkBoxOpt .Container10{
+        width:5%;
     }
     .select_item.width35,.go-bottom .Container50.date_birth,.select_item.width35,.select_item.Container20,.acc_holder_dtl_block .Container40 {
     width: 100%;

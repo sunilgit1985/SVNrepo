@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
 
-    <div class="caraousle Container100 ">
+    <div class="caraousle Container100 reviewcont">
 
         <div class="header_tab reviewHeader_title">
             <div class="header_title Container30">
@@ -130,7 +130,7 @@
                     </ui:fragment>
                     <ui:fragment rendered="#{uobProfile.interfaceIntMode == 0}">
                         <p:commandLink rendered="true" class="next_pg_link"
-                                       actionListener="#{uobProfile.gotoCustody}"> <span class="btntxt">Open Account</span> <span><p:graphicImage name="images/portfolio/open_acc.png" library="#{uiLayout.webProfile.cssdir}"
+                                       actionListener="#{uobProfile.gotoCustody}"> <span class="btntxt">Open Account</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
                                 width="25px"/></span>
                         </p:commandLink>
 
@@ -147,10 +147,12 @@
 
         </div>
         <div class="Container100 tab_dtl review_dtl">
+        <div class="Container100 reviewGoalbutton" >
             <div class="slidePanelleft GoalClickEvent" id="slidePanelleft">
                 <span class="ui-button-icon-center ui-icon ui-c fa fa-angle-left"></span>
                 <span style="float:left; ">Goal Details</span>
                 <p:graphicImage name="images/invtGoal.png" library="#{uiLayout.webProfile.cssdir}"/>
+            </div>
             </div>
 
             <div class="Container20" id="leftpanel">
@@ -330,7 +332,34 @@
 
 
                             </script>
-                            <div class="Container30 PaddingTopPercent2">
+                           <!--  <div class="Container30 PaddingTopPercent2">
+                                <div class="Conatiner100 IRERBlock">
+                                    <div class="Fleft ReturnValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
+                                        <div class="Wid100 ERLabel">Expected Return</div>
+                                        <div class="Wid100 ERCount">
+                                            <h:outputText id="uober" value="#{uobProfile.customer.totalExpectedReturns}">
+                                                <f:convertNumber pattern="##0.00%"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                    <div class="Fleft RiskValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
+                                        <div class="Wid100 IRLabel">
+                                            Investment Risk
+                                        </div>
+                                        <div class="Wid100 IRCount">
+                                            <h:outputText id="uobir" value="#{uobProfile.customer.totalRisk}">
+                                                <f:convertNumber pattern="##0.00%"/>
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div> -->
+                            <div class="Container100">
+
+                                <div class="Container30 donutChartGraph">
+									<div class="Container100 PaddingTopPercent2">
                                 <div class="Conatiner100 IRERBlock">
                                     <div class="Fleft ReturnValuePanel Wid40 BorderedBox TexAlCenter responsiveFullwidth UI-tcm">
                                         <div class="Wid100 ERLabel">Expected Return</div>
@@ -354,10 +383,6 @@
                                 </div>
 
                             </div>
-                            <div class="Container100">
-
-                                <div class="Container30 donutChartGraph">
-
                                     <div id="2dDonutChartCnf1" class="idPieChartArea"></div>
 
                                     <input type="hidden"
@@ -376,17 +401,17 @@
                                             <!-- <p:column style="width:5%; background-color: #{ticker.color}">
                                                 <h:outputText value=" "/>
                                             </p:column> -->
-                                            <p:column priority="0" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
+                                            <p:column priority="2" class="bullet_td" style="width:8%; text-align: left;text-align: center;"><!-- ROHIT's CHANGE -->
                                                 <span style="background-color: #{ticker.color}">&#160;</span>
                                             </p:column>
 
-                                            <p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
+                                            <p:column priority="0" style="width:60%;" styleClass="Fs12 TexAlLeft">
                                                 <f:facet name="header">
                                                     <h:outputText value="Name"/>
                                                 </f:facet>
                                                 <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
                                             </p:column>
-                                            <p:column style="width:12%;"
+                                            <p:column priority="3" style="width:12%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
                                                 <!-- ROHIT's CHANGE -->
                                                 <f:facet name="header">
@@ -397,7 +422,7 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column style="width:12%;"
+                                            <p:column priority="4" style="width:12%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
                                                 <!-- Prashant intro 2017-Sept -->
                                                 <f:facet name="header">
@@ -407,7 +432,7 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column style="width:17%;"
+                                            <p:column priority="0" style="width:17%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
                                                 <!-- ROHIT's CHANGE -->
                                                 <f:facet name="header">
