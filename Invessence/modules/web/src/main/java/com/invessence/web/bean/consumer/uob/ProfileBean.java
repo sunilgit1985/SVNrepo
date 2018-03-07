@@ -27,6 +27,7 @@ public class ProfileBean extends PortfolioCreationUI
    public WebMenuItem selectedCurrency;
    public Boolean selectedRetirementGoal = true;
    private String revwPnlExpYrFndLbl;
+   private String selectedMobileGoal;
 
    @Override
    public void initUI()
@@ -64,6 +65,7 @@ public class ProfileBean extends PortfolioCreationUI
             if (goalMap.containsKey(getCustomer().getGoal().toUpperCase()))
             {
                // Upload the data from DB and set selection as if user selected it.
+               selectedMobileGoal=getCustomer().getGoal().toUpperCase();
                selectedGoal = goalMap.get(getCustomer().getGoal().toUpperCase());
                reOrganizeGoalList();  // Reorg the list so that last selected one shows up
                selectedRetirementGoal =!getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.GOALS.RETIRED.toString());
@@ -526,6 +528,7 @@ public class ProfileBean extends PortfolioCreationUI
       {
          String goal = selectedItem.getKey();
          getCustomer().setGoal(goal);
+         selectedMobileGoal=goal;
          getCustomer().setPortfolioName(selectedItem.getDisplayName());
          // reOrganizeGoalList(selectedItem.getDisplayName());
          // Reset Rest of data.
@@ -1171,5 +1174,34 @@ public class ProfileBean extends PortfolioCreationUI
    public void cancelCS()
    {
       goBack();
+   }
+
+   public void onChngGoal(){
+     // if(true){
+         // System.out.println("Hello");
+     // }
+   }
+
+   public String getSelectedMobileGoal()
+   {
+      return selectedMobileGoal;
+   }
+
+   public void setSelectedMobileGoal(String selectedMobileGoal)
+   {
+      if(selectedMobileGoal==null || selectedMobileGoal.equalsIgnoreCase("select")){
+         selectedMobileGoal=getSelectedGoal().getKey();
+      }else{
+         this.selectedMobileGoal = selectedMobileGoal;
+         for (int i=0;i<goalsdata.size();i++)
+         {
+            if(goalsdata.get(i).getKey().equalsIgnoreCase(selectedMobileGoal))
+            {
+               setSelectedGoal(goalsdata.get(i));
+               selectedGoal=goalsdata.get(i);
+               break;
+            }
+         }
+      }
    }
 }

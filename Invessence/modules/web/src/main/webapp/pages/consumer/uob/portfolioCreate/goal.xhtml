@@ -4,13 +4,13 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions">
-
+    <p:panel id="goalRing" style="border: 0px; background: transparent">
     <div class="ring_widget">
 
         <p:ring id="goalid" value="#{uobProfile.goalsdata}" var="goal"
                 styleClass="image-ring" easing="easeInOutBack">
             <p:commandLink id="ringLink"
-                           update=":ceForm:goalInfo">
+                           update=":ceForm:goalInfo,:ceForm:goalDrop">
                 <f:setPropertyActionListener value="#{goal}" target="#{uobProfile.selectedGoal}" />
                 <p:graphicImage name="#{goal.image}" library="#{uiLayout.webProfile.cssdir}" width="100px"/>
                 <p:outputPanel style="text-align: center;" layout="block">#{goal.displayName}</p:outputPanel>
@@ -18,6 +18,24 @@
         </p:ring>
 
     </div>
+    </p:panel>
+    <p:panel id="goalDrop" style="border: 0px; background: transparent">
+    <div class="ringselectmode">
+        <p:selectOneMenu id="uobProfileGoal" styleClass=""
+                         value="#{uobProfile.selectedMobileGoal}" style="width: 100%;">
+            <p:ajax listener="#{uobProfile.onChngGoal}" update=":ceForm:goalInfo,ceForm:goalRing"/>
+            <f:selectItem itemLabel="Select One" itemValue="Select"
+                          noSelectionOption="true"/>
+            <f:selectItems
+                    value="#{uobProfile.goalsdata}"
+                    var="goalsdata" itemLabel="#{goalsdata.key}"
+                    itemValue="#{goalsdata.key}">
+
+            </f:selectItems>
+        </p:selectOneMenu>
+
+    </div>
+    </p:panel>
     <p:panel id="goalInfo" style="border: 0px; background: transparent">
 <!--
         <ui:fragment rendered="#{uobProfile.selectedGoalValue == 0}">

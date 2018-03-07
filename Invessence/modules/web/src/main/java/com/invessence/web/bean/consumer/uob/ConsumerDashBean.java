@@ -359,7 +359,7 @@ public class ConsumerDashBean extends CustomerData implements Serializable
          Double amt = null;
          if (selAccountList.get(0).getManaged())
          {
-            amt = selAccountList.get(0).getActualInvestment()*((selAccountList.get(0).getExchangeRate() == 0.0) ? 1 : selAccountList.get(0).getExchangeRate());
+            amt = selAccountList.get(0).getActualInvestment();
 //            actualInvestment
          }
          else
