@@ -15,8 +15,8 @@
 		//alert(val);
 		$(".floatLabel").addClass("demo");
 	}
-	
-	
+
+
 } */
 
 
@@ -76,9 +76,9 @@ $('.form-control').on('focus blur', function (e) {
                                                 </p:selectOneMenu>
                                             </div>
                                             <div class="Container50 date_birth">
-                                                <div class="Container100"><span class="title_line">Date Of Birth</span></div>
+                                                <div class="Container100"><span class="title_line">Date Of Birth (DD/MM/YYYY)</span></div>
                                                 <p:calendar yearRange="c-100:c" id="nwPriHldrDob" navigator="true"
-                                                            showOn="button" placeholder="Date Of Birth (dd mm yyyy)" pattern="d MMM yyyy"
+                                                            showOn="button" placeholder="Date Of Birth (DD/MM/YYYY)" pattern="dd/MM/yyyy"
                                                             value="#{uobCustodyBean.dtPriHldrDob}"/>
                                                <!--  <label for="nwPriHldrDob">Date Of Birth</label> -->
                                             </div>
@@ -289,14 +289,14 @@ $('.form-control').on('focus blur', function (e) {
                                                 </p:selectOneMenu>
                                             </div>
                                             <div class="Container50 date_birth">
-                                                <div class="Container100"><span class="title_line">Date Of Birth</span></div>
+                                                <div class="Container100"><span class="title_line">Date Of Birth (DD/MM/YYYY)</span></div>
 
-                                                <p:calendar id="jointgerman" value="#{calendarView.date5}" navigator="true" pattern="dd-mm-yyyy"
-                                                            showOn="button" placeholder="Date Of Birth (dd/mm/yyyy)"/>
+                                                <p:calendar id="jointgerman" value="#{calendarView.date5}" navigator="true" pattern="dd/MM/yyyy"
+                                                            showOn="button" placeholder="Date Of Birth (DD/MM/YYYY)"/>
 
 
                                                 <!-- <p:calendar id="button" name="dtbirth" value="#{calendarView.date3}" showOn="button" placeholder="Date Of Birth (dd/mm/yyyy)"  />									                   -->
-                                                <label for="dtbirth">Date Of Birth</label>
+                                                <label for="dtbirth">Date Of Birth (DD/MM/YYYY)</label>
 
                                             </div>
                                             <div class="Container25 select_item ">
