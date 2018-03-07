@@ -559,6 +559,7 @@ public class PrimefacesCharts implements Serializable
    {
       String color;
       Integer year;
+      Double amtDivFactor=1000.0;
       try
       {
          glidepath = new BarChartModel();
@@ -568,13 +569,14 @@ public class PrimefacesCharts implements Serializable
          calendarYear = cal.get(cal.YEAR);
          gain.setLabel("Growth");
          withdrawl.setLabel("Withdrawl");
+
          Integer count = 0;
          for (ProjectionData pdata : projectionDatas)
          {
             year = calendarYear + pdata.getYear();
-            Double money = pdata.getTotalCapitalWithGains();
+            Double money = pdata.getTotalCapitalWithGains()/amtDivFactor;
             gain.set(year, money);
-            Double withdrawlmoney = pdata.getWithdrawlAmount();
+            Double withdrawlmoney = pdata.getWithdrawlAmount()/1000;
             withdrawl.set(year, withdrawlmoney);
             if (count++ >= 30) { // Do max 30 years of points.
                break;
@@ -584,6 +586,10 @@ public class PrimefacesCharts implements Serializable
          glidepath.addSeries(withdrawl);
          glidepath.setStacked(true);
          glidepath.setExtender("glidepathChart");
+         glidepath.getAxis(AxisType.Y).setLabel("Values in Thonsands");
+//         glidepath.getAxis(AxisType.Y).setTickFormat("Hello Prathu:%#M");
+//         glidepath.getAxis(AxisType.Y).setMin(0);
+//         glidepath.getAxis(AxisType.Y).setMax();
       }
       catch (Exception ex)
       {
