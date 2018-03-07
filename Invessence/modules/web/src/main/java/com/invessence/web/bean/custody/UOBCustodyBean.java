@@ -1136,21 +1136,24 @@ public void onChngRpDtls(String flag){
       {
          saveDetails(getPagemanager().getPage(), uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct(), false);
          getPagemanager().clearAllErrorMessage();
-         Boolean status =false;
+         Boolean nextPageFlag=false;
          if (getPagemanager().getPage() + 1 == getPagemanager().getMaxNoofPages())
          {
-            status = validateAllPage();
-            dsblSubmtBtn = !status;
+            dsblSubmtBtn = !validateAllPage();
+            nextPageFlag=false;
+//            finalSubmit=true;
          }
          else
          {
             dsblSubmtBtn = true;
+            nextPageFlag=true;
+//            finalSubmit=false;
          }
-         if(status)
+         if (getPagemanager().isLastPage() ||
+            (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9) ||
+            (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 4))
          {
-            if (getPagemanager().isLastPage() ||
-               (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9) ||
-               (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 4))
+            if(!dsblSubmtBtn)
             {
                if (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes"))
                {
@@ -1161,7 +1164,10 @@ public void onChngRpDtls(String flag){
                   resetActiveTab(10);
                }
             }
-            else
+         }
+         else
+         {
+            if(nextPageFlag)
             {
                getPagemanager().nextPage();
                resetActiveTab(getPagemanager().getPage());

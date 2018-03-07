@@ -504,18 +504,21 @@ public class
    }
 
    public Double getInvestmentAmount() {
+
       Double amount = (initialInvestment != null && initialInvestment != 0) ? initialInvestment.doubleValue(): 100000.00;
-
-      amount = (actualInvestment != null && actualInvestment != 0) ? actualInvestment : amount;
-
-      Double fxRate = ((exchangeRate != null) && (exchangeRate != 0.0)) ? exchangeRate : 1.0;
-      if ((tradeCurrency == null || tradeCurrency.isEmpty()) ||
+      if(actualInvestment != null && actualInvestment != 0){
+         amount=actualInvestment;
+      }else{
+//         amount = (actualInvestment != null && actualInvestment != 0) ? actualInvestment : amount;
+         Double fxRate = ((exchangeRate != null) && (exchangeRate != 0.0)) ? exchangeRate : 1.0;
+         if ((tradeCurrency == null || tradeCurrency.isEmpty()) ||
             (settleCurrency == null || settleCurrency.isEmpty())){
-         return (amount);
-      }
-      else {
-         if (! tradeCurrency.equalsIgnoreCase(settleCurrency)) {
-            return (amount * fxRate);
+            return (amount);
+         }
+         else {
+            if (! tradeCurrency.equalsIgnoreCase(settleCurrency)) {
+               return (amount * fxRate);
+            }
          }
       }
       return amount;

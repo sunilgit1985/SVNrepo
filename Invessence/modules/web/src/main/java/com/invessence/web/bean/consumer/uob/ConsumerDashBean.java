@@ -357,17 +357,18 @@ public class ConsumerDashBean extends CustomerData implements Serializable
          }
 
          Double amt = null;
-         if (selAccountList.get(0).getManaged())
-         {
-            amt = selAccountList.get(0).getActualInvestment();
-//            actualInvestment
-         }
-         else
-         {
-//            initialInvestment
-            Double amt1 = selAccountList.get(0).getInitialInvestment()*((selAccountList.get(0).getExchangeRate() == 0.0) ? 1 : selAccountList.get(0).getExchangeRate());
-            amt = amt1;
-         }
+         amt=selAccountList.get(0).getInvestmentAmount();
+//         if (selAccountList.get(0).getManaged())
+//         {
+//            amt = selAccountList.get(0).getActualInvestment();
+////            actualInvestment
+//         }
+//         else
+//         {
+////            initialInvestment
+//            Double amt1 = selAccountList.get(0).getInitialInvestment()*((selAccountList.get(0).getExchangeRate() == 0.0) ? 1 : selAccountList.get(0).getExchangeRate());
+//            amt = amt1;
+//         }
 
          accoutListZize = selAccountList.size();
 

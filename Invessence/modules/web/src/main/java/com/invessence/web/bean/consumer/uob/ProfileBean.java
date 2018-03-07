@@ -78,8 +78,11 @@ public class ProfileBean extends PortfolioCreationUI
             }
          }
       }
-
-      setRiskTotalInvestment(getCustomer().getDefaultInvestment());
+      if(!getCustomer().getManaged()){
+         setRiskTotalInvestment(getCustomer().getInitialInvestment().doubleValue());
+      }else{
+         riskCalc.setInvestment(getCustomer().getActualInvestment());
+      }
       createAssetPortfolio();
       if(beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit)){
          getCustomer().setCanSaveData(true);
