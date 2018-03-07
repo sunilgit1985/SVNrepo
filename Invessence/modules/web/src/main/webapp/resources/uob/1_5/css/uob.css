@@ -5498,7 +5498,7 @@ span.output_review {
 }
 .barChartGraph{margin-top: -150px;}
 .review_dtl .Container70.UserconfTable {
-    margin-top: -75px;
+    margin-top: 0px;
 }
 .select_item .ui-autocomplete {
     width: 100%;
@@ -5645,8 +5645,8 @@ div.slidePanelleft {
     position: absolute;
     background: #a4332f;
     color: #fff;
-    top: 0;
-    left: 0;
+    top: -20px;
+    left: -12px;
     padding: 7px;
     cursor: pointer;
     width: 150px;
@@ -6152,7 +6152,7 @@ rect.highcharts-background {
 }
 .marginTopPercent5{margin-top:5%;}
 .PaddingTopPercent2 {
-    padding-top: 2%;
+    padding-top: 20%;
 }
 .dashboard_right_panel .user_table .ui-datatable table thead tr th {
     background: #a4332f !important;
@@ -6183,6 +6183,7 @@ rect.highcharts-background {
 }
 .relation_dtl .Container20 {
     width: 25%;}
+.ringselectmode{display:none;}
 /*** responsive**/
 
 /** 16/10/2017***/
