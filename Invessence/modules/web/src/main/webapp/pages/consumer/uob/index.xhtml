@@ -99,7 +99,7 @@
                <p:outputLabel for="acctDtls" value="" class="acc_overview_label">
                   <p:selectOneMenu id="acctDtls" value="#{uobdash.selAcctNum}" style="width:215px">
                      <p:ajax listener="#{uobdash.showSelAcctDtls}" event="change" update="uobIndxform:accountDtlArea"/>
-                     <f:selectItem itemLabel="Select Account" itemValue="0" noSelectionOption="true"/>
+                     <!--<f:selectItem itemLabel="Select Account" itemValue="0" noSelectionOption="true"/>-->
                      <f:selectItems value="#{uobdash.manageAccountList}" var="acctDtl"
                                     itemLabel="#{acctDtl.cstmAccountLabel}" itemValue="#{acctDtl.acctnum}"/>
                   </p:selectOneMenu>
