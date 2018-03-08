@@ -259,11 +259,11 @@ public class RebalanceProcess
 
                UserTradePreprocess rtd = new UserTradePreprocess(
                   profileData.getAdvisor(), profileData.getClientAccountID(), profileData.getAcctnum(),
-                  "P", null, td.getTradeCurrency(),
+                  "P", null, td.getSettleCurrency(),
                   td.getAssetclass(), td.getSubclass(), td.getColor(),
                   td.getTicker(), holdingQty, holdingPrice, holdingValue,
                   ticker, newQty, td.getCurPrice(), newValue,
-                  td.getSettleCurrency(), settleHoldingQty, settleHoldingPrice, settleHoldingValue,
+                  td.getTradeCurrency(), settleHoldingQty, settleHoldingPrice, settleHoldingValue,
                   td.getExchangeRate(),settleNewQty, td.getSettleCurPrice(), settleNewValue,
                   "New Buy", td.getReason());
 

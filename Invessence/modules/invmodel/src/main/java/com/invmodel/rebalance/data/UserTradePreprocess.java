@@ -38,12 +38,34 @@ public class UserTradePreprocess
    }
 
    public UserTradePreprocess(String advisor, String clientAccountID, Long acctnum,
+                              String assetclass, String color,
+                              Double curQty, Double curValue,
+                              Double newQty, Double newValue,
+                              Double settleCurQty, Double settleCurValue,
+                              Double settleNewQty, Double settleNewValue)
+   {
+      this.advisor = advisor;
+      this.clientAccountID = clientAccountID;
+      this.acctnum = acctnum;
+      this.color= color;
+      this.assetclass = assetclass;
+      this.curQty = curQty;
+      this.curValue = curValue;
+      this.newQty = newQty;
+      this.newValue = newValue;
+      this.settleCurQty = settleCurQty;
+      this.settleCurValue = settleCurValue;
+      this.settleNewQty = settleNewQty;
+      this.settleNewValue = settleNewValue;
+   }
+
+   public UserTradePreprocess(String advisor, String clientAccountID, Long acctnum,
                               String processed, String tradeDate, String tradeCurrency,
                               String assetclass, String subclass, String color,
                               String holdingTicker, Double curQty, Double curPrice, Double curValue,
                               String newTicker, Double newQty, Double newPrice, Double newValue,
                               String settleCurrency, Double settleCurQty, Double settleCurPrice, Double settleCurValue,
-                              Double exchangeRate,Double settleNewQty, Double settleNewPrice, Double settleNewValue,
+                              Double exchangeRate, Double settleNewQty, Double settleNewPrice, Double settleNewValue,
                               String tradeType, String reason)
    {
       this.advisor = advisor;
@@ -346,14 +368,14 @@ public class UserTradePreprocess
    }
 
    public Double getDiffQty() {
-      Double curvalue = (this.curQty == null) ? 0.0 : this.curQty;
-      Double newvalue = (this.newQty == null) ? 0.0 : this.newQty;
+      Double curvalue = (settleCurQty == null) ? 0.0 : settleCurQty;
+      Double newvalue = (settleCurQty == null) ? 0.0 : settleCurQty;
       return newvalue - curvalue;
    }
 
    public Double getDiffValue() {
-      Double curvalue = (this.curValue == null) ? 0.0 : this.curValue;
-      Double newvalue = (this.newValue == null) ? 0.0 :  this.newValue;
+      Double curvalue = (this.settleCurValue == null) ? 0.0 : this.settleCurValue;
+      Double newvalue = (this.settleNewValue == null) ? 0.0 :  this.settleNewValue;
       return newvalue - curvalue;
    }
 
