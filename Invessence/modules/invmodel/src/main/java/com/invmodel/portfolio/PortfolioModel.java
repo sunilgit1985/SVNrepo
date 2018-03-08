@@ -365,7 +365,8 @@ public class PortfolioModel
                      {
                         PrimeAssetClassData pacd = portfolioOptimizer.getPrimeAssetData(theme, assetname, primeassetclass);
                         double price = sd.getDailyprice();
-                        Double settleCurrencyInvestment = investment * sd.getExchangeRate();
+                        Double exRate = (sd.getExchangeRate() == null || sd.getExchangeRate() == 0.0) ? 1.0 : sd.getExchangeRate();
+                        Double settleCurrencyInvestment = investment * exRate;
                         Double settlePrice = sd.getSettlePrice();
                         Double rbsaWeight = (Double) ticker_weight * sd.getRbsaWeight();  // RBSA PREP WORK:  Currently all have rate of 1
                         // If there is no weight, just skip this ticker all together.
@@ -376,8 +377,8 @@ public class PortfolioModel
                            shares = (double) Math.round(((invCapital * rbsaWeight) / price) - 0.5);
                            money = shares * price;
 
-                           settleShare = (double) Math.round(((settleCurrencyInvestment * rbsaWeight) / settlePrice) - 0.5);
-                           settleMoney = settleShare * settlePrice;
+                           settleMoney = money * (1 / exRate);  // Just convert the Base money to SettleMoney
+                           settleShare = (settlePrice != null && settlePrice != 0.0) ? (double) Math.round(settleMoney / settlePrice) : 0.0;
 
                            // Only create this portfolio if there are shares and money
                            totalPortfolioWeight = 0.0;

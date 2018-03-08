@@ -10,16 +10,12 @@ import java.util.*;
  * Time: 4:50 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CurrentHolding implements Serializable
+public class CurrentHolding
 {
 
    private Long logonid;
    private Long acctnum;
    private String clientAccountID;
-   private String tradeCurrency;
-   private String ticker;
-   private String settleCurrency;
-   private Double exchangeRate;
 
    private Double totalAllocation;
    private Double totalvalue;
@@ -37,10 +33,25 @@ public class CurrentHolding implements Serializable
 
    private List<HoldingData> holdingList;
 
-   private Map<String, HoldingData> holdingDataMap = new HashMap<String, HoldingData>();
+   private Map<String, HoldingData> holdingDataMap;
 
    public CurrentHolding()
    {
+      totalAllocation = 0.0;
+      totalvalue = 0.0;
+      totalmoney = 0.0;
+      totalpnl = 0.0;
+      totalYield = 0.0;
+      totalExpenseRatio = 0.0;
+      totalRisk = 0.0;
+      totalFees = 0.0;
+      shortGains = 0.0;
+      longGains = 0.0;
+      shortLoss = 0.0;
+      longLoss = 0.0;
+      cashAvailable = 0.0;
+      holdingList = new ArrayList<HoldingData>();
+      holdingDataMap = new HashMap<String, HoldingData>();
    }
 
    public Double getCashAvailable()
@@ -224,87 +235,37 @@ public class CurrentHolding implements Serializable
       this.totalFees = totalFees;
    }
 
-   public String getTradeCurrency()
-   {
-      return tradeCurrency;
-   }
-
-   public void setTradeCurrency(String tradeCurrency)
-   {
-      this.tradeCurrency = tradeCurrency;
-   }
-
-   public String getTicker()
-   {
-      return ticker;
-   }
-
-   public void setTicker(String ticker)
-   {
-      this.ticker = ticker;
-   }
-
-   public String getSettleCurrency()
-   {
-      return settleCurrency;
-   }
-
-   public void setSettleCurrency(String settleCurrency)
-   {
-      this.settleCurrency = settleCurrency;
-   }
-
-   public Double getExchangeRate()
-   {
-      return exchangeRate;
-   }
-
-   public void setExchangeRate(Double exchangeRate)
-   {
-      this.exchangeRate = exchangeRate;
-   }
-
-   public void addTotals()
-   {
-      Integer rows;
-      try
-      {
-         totalAllocation = 0.0;
-         totalvalue = 0.0;
-         totalmoney = 0.0;
-         totalpnl = 0.0;
-         totalRisk = 0.0;
-         totalYield = 0.0;
-         totalExpenseRatio = 0.0;
-         totalFees = 0.0;
-
-         if (holdingList == null)
-         {
-            return;
-         }
-         rows = holdingList.size();
-         int counter=0;
-         holdingDataMap.clear();
-         String ticker;
-         for (int loop = 0; loop < rows; loop++)
-         {
-            HoldingData data = holdingList.get(loop);
-            ticker = data.getTicker();
-            if(!holdingDataMap.containsKey(ticker)){
-                holdingDataMap.put(ticker,data);
-            }
-            totalAllocation = totalAllocation + data.getWeight();
-            totalmoney = totalmoney + data.getCostBasisMoney();
-            totalvalue = totalvalue + data.getPositionValue();
-            totalpnl = totalpnl + data.getFifoPnlUnrealized();
-         }
+   public void addHoldingData(HoldingData hdata) {
+      String key = hdata.getTicker();
+      // We are assuming that trade currency is same.
+      if (holdingDataMap.containsKey(key)) {
+         holdingDataMap.get(key).setQty(holdingDataMap.get(key).getQty() + hdata.getQty());
+         holdingDataMap.get(key).setCostBasisMoney(holdingDataMap.get(key).getCostBasisMoney() + hdata.getCostBasisMoney());
+         holdingDataMap.get(key).setPositionValue(holdingDataMap.get(key).getPositionValue() + hdata.getPositionValue());
+         holdingDataMap.get(key).setFifoPnlUnrealized(holdingDataMap.get(key).getFifoPnlUnrealized() + hdata.getFifoPnlUnrealized());
+         // Adding Settlement will not be possible, as currency will differ.
       }
-      catch (Exception ex)
-      {
-         System.out.println("Error when attempting to addTotal(position)" + ex.getMessage());
-         ex.printStackTrace();
+      else {
+         holdingDataMap.put(key, hdata);
+         holdingList.add(hdata);  // This is only for prior code support.  Hash Map will have the list as well.
       }
 
+      if (key.equalsIgnoreCase("cash")) {
+         cashAvailable = cashAvailable + hdata.getPositionValue();
+      }
+
+      totalAllocation = totalAllocation + hdata.getWeight();
+      totalvalue = totalvalue + hdata.getPositionValue();
+      totalmoney = totalmoney + hdata.getCostBasisMoney();
+      totalpnl = totalpnl + hdata.getFifoPnlUnrealized();
+      totalYield = totalYield + hdata.getYield();
+      totalExpenseRatio = totalExpenseRatio + hdata.getExpenseRatio();
+      totalRisk = totalRisk + hdata.getRisk();
+      // totalFees = totalFees + hdata.getFee();
+      shortGains = shortGains + hdata.getRelShortGain();
+      longGains = longGains + hdata.getRelLongGain();
+      shortLoss = shortLoss + hdata.getRelShortLoss();
+      longLoss = longGains + hdata.getRelLongLoss();
    }
 
 }

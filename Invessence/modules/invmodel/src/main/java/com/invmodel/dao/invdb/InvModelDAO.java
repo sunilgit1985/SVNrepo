@@ -52,11 +52,10 @@ public class InvModelDAO extends JdbcDaoSupport
             // data is good.
             HoldingData data = new HoldingData();
             if (i == 0) {
+               currentHolding.setLogonid(logonid);
                currentHolding.setAcctnum(convert.getLongData(rs.get("acctnum")));
                currentHolding.setClientAccountID(convert.getStrData(rs.get("clientAccountID")));
                currentHolding.setTotalFees(convert.getDoubleData(rs.get("ytdinvoiceFee")));
-               currentHolding.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
-               currentHolding.setSettleCurrency(convert.getStrData(rs.get("settleCurrency")));
             }
             data.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
             data.setTicker(ticker);
@@ -79,25 +78,13 @@ public class InvModelDAO extends JdbcDaoSupport
             data.setExchangeRate(convert.getDoubleData(rs.get("exchangeRate")));
             data.setSettleQty(convert.getDoubleData(rs.get("settleQty")));
             data.setSettlePosition(convert.getDoubleData(rs.get("settleMoney")));
+            data.setRelShortGain(convert.getDoubleData(rs.get("shortGain")));
+            data.setRelShortLoss(convert.getDoubleData(rs.get("shortLoss")));
+            data.setRelLongGain(convert.getDoubleData(rs.get("longGain")));
+            data.setRelLongLoss(convert.getDoubleData(rs.get("longLoss")));
 
-            longGain = longGain + convert.getDoubleData(rs.get("longGain"));
-            longLoss = longLoss + convert.getDoubleData(rs.get("longLoss"));
-            shortGain = shortGain + convert.getDoubleData(rs.get("shortGain"));
-            shortLoss = shortLoss + convert.getDoubleData(rs.get("shortLoss"));
-
-            if(ticker.equalsIgnoreCase("cash")) {
-               cashAvailable = cashAvailable + convert.getDoubleData(rs.get("positionValue"));
-               currentHolding.setCashAvailable(cashAvailable);
-            }
-
-            currentHolding.setLongGains(longGain);
-            currentHolding.setLongLoss(longLoss);
-            currentHolding.setShortGains(shortGain);
-            currentHolding.setShortLoss(shortLoss);
-            currentHolding.getHoldingList().add(i, data);
-            //Not sure I need logonid JAV
-            currentHolding.setLogonid(logonid);
-
+            // Revised by Prashant 3/7/2018
+            currentHolding.addHoldingData(data);
             i++;
          }
       }

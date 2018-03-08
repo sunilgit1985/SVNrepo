@@ -67,7 +67,7 @@ public class InvModelSP extends StoredProcedure
                   declareParameter(new SqlParameter("p_curValue", Types.DOUBLE));
                   declareParameter(new SqlParameter("p_newTicker", Types.VARCHAR));
                   declareParameter(new SqlParameter("p_newQty", Types.INTEGER));
-                  declareParameter(new SqlParameter("p_newPrice", Types.INTEGER));
+                  declareParameter(new SqlParameter("p_newPrice", Types.DOUBLE));
                   declareParameter(new SqlParameter("p_newValue", Types.DOUBLE));
                   declareParameter(new SqlParameter("p_settleCurrency", Types.VARCHAR));
                   declareParameter(new SqlParameter("p_setleCurQty", Types.DOUBLE));
@@ -181,7 +181,7 @@ public class InvModelSP extends StoredProcedure
       inputMap.put("p_curValue", tData.getCurValue());
       inputMap.put("p_newTicker", tData.getNewTicker());
       inputMap.put("p_newQty", tData.getNewQty());
-      inputMap.put("p_newPrice", tData.getNewValue());
+      inputMap.put("p_newPrice", tData.getNewPrice());
       inputMap.put("p_newValue", tData.getNewValue());
       inputMap.put("p_settleCurrency", tData.getSettleCurrency());
       inputMap.put("p_setleCurQty", tData.getSettleCurQty());

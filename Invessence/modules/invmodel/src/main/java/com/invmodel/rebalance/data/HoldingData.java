@@ -74,6 +74,74 @@ public class HoldingData
    {
    }
 
+   public HoldingData(boolean processed, Long instrumentid,
+                      String ticker, String substituteTicker,
+                      String assetclass, String subclass, String color,
+                      Double qty, Double subQty, Double weight,
+                      String tradeCurrency, String description, String side,
+                      Double costBasisPrice, Double costBasisMoney, Double markPrice,
+                      Double subMarketPrice, Double positionValue, String levelOfDetail,
+                      Double yield, Double expenseRatio, Double risk,
+                      Boolean washSaleFlag, Boolean outRightSellFlag, Boolean tlhSellShortFlag,
+                      Boolean tlhSellLongFlag, Double relShortGain, Double relShortLoss,
+                      Double unrelShortGain, Double unrelShortLoss, Double relLongGain,
+                      Double relLongLoss, Double unrelLongGain, Double unrelLongLoss,
+                      Double longProceeds, Double longTimeShares, Double shortProceeds,
+                      Double shortTimeShares, String settleCurrency, Double exchangeRate,
+                      Double settleQty, Double settleMarkPrice, Double settlePosition,
+                      Double settleLongProceeds, Double settleLongTimeShares,
+                      Double settleShortProceeds, Double settleShortTimeShares,
+                      Double fifoPnlUnrealized)
+   {
+      this.processed = processed;
+      this.instrumentid = instrumentid;
+      this.ticker = ticker;
+      this.substituteTicker = substituteTicker;
+      this.assetclass = assetclass;
+      this.subclass = subclass;
+      this.color = color;
+      this.qty = qty;
+      this.subQty = subQty;
+      this.weight = weight;
+      this.tradeCurrency = tradeCurrency;
+      this.description = description;
+      this.side = side;
+      this.costBasisPrice = costBasisPrice;
+      this.costBasisMoney = costBasisMoney;
+      this.markPrice = markPrice;
+      this.subMarketPrice = subMarketPrice;
+      this.positionValue = positionValue;
+      this.levelOfDetail = levelOfDetail;
+      this.yield = yield;
+      this.expenseRatio = expenseRatio;
+      this.risk = risk;
+      this.washSaleFlag = washSaleFlag;
+      this.outRightSellFlag = outRightSellFlag;
+      this.tlhSellShortFlag = tlhSellShortFlag;
+      this.tlhSellLongFlag = tlhSellLongFlag;
+      this.relShortGain = relShortGain;
+      this.relShortLoss = relShortLoss;
+      this.unrelShortGain = unrelShortGain;
+      this.unrelShortLoss = unrelShortLoss;
+      this.relLongGain = relLongGain;
+      this.relLongLoss = relLongLoss;
+      this.unrelLongGain = unrelLongGain;
+      this.unrelLongLoss = unrelLongLoss;
+      this.longProceeds = longProceeds;
+      this.longTimeShares = longTimeShares;
+      this.shortProceeds = shortProceeds;
+      this.shortTimeShares = shortTimeShares;
+      this.settleCurrency = settleCurrency;
+      this.exchangeRate = exchangeRate;
+      this.settleQty = settleQty;
+      this.settleMarkPrice = settleMarkPrice;
+      this.settlePosition = settlePosition;
+      this.settleLongProceeds = settleLongProceeds;
+      this.settleLongTimeShares = settleLongTimeShares;
+      this.settleShortProceeds = settleShortProceeds;
+      this.settleShortTimeShares = settleShortTimeShares;
+      this.fifoPnlUnrealized = fifoPnlUnrealized;
+   }
 
    public Boolean getOutRightSellFlag()
    {
