@@ -1014,7 +1014,9 @@ public class PortfolioCreationUI extends UserInterface
    }
 
    public void enableRecurInvstPnl(){
-      recurInvstPrdFlag=getCustomer().getRecurringInvestment()!=null && getCustomer().getRecurringInvestment()>0;
+         recurInvstPrdFlag= true;
+        // recurInvstPrdFlag = getCustomer().getRecurringInvestment() != null && getCustomer().getRecurringInvestment() > 0;
+
    }
 
    public Boolean getRecurInvstPrdFlag()

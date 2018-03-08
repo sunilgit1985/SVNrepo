@@ -1133,16 +1133,18 @@ public class ProfileBean extends PortfolioCreationUI
             break;
          case 2:
             RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
-            if (!selectedRetirementGoal  || thisgoal.equals(RiskConst.GOALS.LEGACY)){
+            if ((!selectedRetirementGoal && thisgoal.equals(RiskConst.GOALS.RETIREMENT))  || thisgoal.equals(RiskConst.GOALS.LEGACY)){
                setRecurInvstAmtFlg(false);
+               setRecurInvstPrdFlag(false);
                setRecurringInvestment(0);
                setRecurringPeriod(0);
 //               revwPnlExpYrFndLbl="NA";
             }else{
                setRecurInvstAmtFlg(true);
+               setRecurInvstPrdFlag(true);
 //               revwPnlExpYrFndLbl= ""+getYear(getHorizon());
             }
-            enableRecurInvstPnl();
+            //enableRecurInvstPnl();
             break;
          case 3:
             break;
