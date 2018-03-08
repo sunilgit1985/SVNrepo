@@ -254,12 +254,12 @@
 
                                         <p:columnGroup type="footer">
                                             <p:row>
-                                           		<p:column colspan="4" footerText="Total" style="text-align:left" class="fourColspan"/>
-                                                <p:column colspan="4" style="text-align:right"
-                                                          footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumCurValue)}">
+                                           		<p:column colspan="2" footerText="Total" style="text-align:left"/>
+                                                <p:column colspan="1" style="text-align:right"
+                                                          footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumCurValue)}">
                                                 </p:column>
-                                                <p:column colspan="4" style="text-align:right"
-                                                          footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumNewValue)}">
+                                                <p:column colspan="1" style="text-align:right"
+                                                          footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumNewValue)}">
                                                 </p:column>
                                              </p:row>
                                                                                         
@@ -282,8 +282,8 @@
                                         <p:row>
                                             <p:column rowspan="2" headerText="" style="width:1px"/>
                                             <p:column rowspan="2" headerText="Subclass" style="width:10%;"/>
-                                            <p:column rowspan="2" headerText="Ticker" style="width:6%;"/>
-                                            <p:column rowspan="2" headerText="Price" style="width:6%;"/>
+                                            <p:column rowspan="2" headerText="Ticker/Currency" style="width:6%;"/>
+                                            <p:column rowspan="2" headerText="Current Price" style="width:6%;"/>
                                             <p:column rowspan="2" headerText="Holding Ticker" style="width:6%;"/>
                                             <p:column colspan="2" headerText="Current Holdings" style="width:15%;"/>
                                             <p:column colspan="2" headerText="New Holdings" style="width:15%;"/>
@@ -307,17 +307,18 @@
                                         <h:outputText value="#{tradedata.subclass}"/>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: left;">
-                                        <h:outputText value="#{tradedata.newTicker}"/>
+                                        <h:outputText value="#{tradedata.newTicker}"/><br/>
+                                        <h:outputText value="#{tradedata.tradeCurrency}"/>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: right;">
                                         <h:outputText value="#{tradedata.curPrice}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber type="currency" currencySymbol="S$"/>
                                         </h:outputText>
                                     </p:column>
 
                                     <p:column styleClass="Fs10" style="width:6%; text-align: left;">
                                         <h:outputText value="#{tradedata.holdingTicker}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber type="currency" currencySymbol="S$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -328,7 +329,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.curValue}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber type="currency" currencySymbol="S$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -339,7 +340,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.newValue}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber type="currency" currencySymbol="S$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -350,7 +351,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.diffValue}">
-                                            <f:convertNumber type="currency" currencySymbol="$"/>
+                                            <f:convertNumber type="currency" currencySymbol="S$"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:10%; text-align: left;">
@@ -363,20 +364,13 @@
                                         <p:row>
                                             <p:column  colspan="5" footerText="Total" style="text-align:left" class="W36" />
 											
-                                            <p:column  class="Wauto" colspan="2"
-                                                      footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumHoldingValue)}"
+                                            <p:column
+                                                      footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumCurValue)}"
                                                       style="text-align:right"/>
-                                            <p:column class="Wauto" colspan="2"
-                                                      footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumNewValue)}"
+                                            <p:column
+                                                      footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumNewValue)}"
                                                       style="text-align:right"/>
-                                            <p:column class="Wauto" colspan="2"
-                                                      footerText="#{dataDisplayConverter.displayAsMoney(tradeBean.sumCurValue)}"
-                                                      style="text-align:right"/>
-                                            <p:column  colspan="1" footerText="" style="text-align:left" class="W125"/>
-                                            
-                                            
-                                           
-                                            
+                                            <p:column  colspan="2" footerText="" style="text-align:left"/>
                                         </p:row>
                                     </p:columnGroup>
 

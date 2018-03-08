@@ -118,8 +118,8 @@
                                         <p:row>
                                             <p:column rowspan="2" headerText="" style="width:1px"/>
                                             <p:column rowspan="2" headerText="Subclass" style="width:10%;"/>
-                                            <p:column rowspan="2" headerText="Ticker" style="width:6%;"/>
-                                            <p:column rowspan="2" headerText="Price" style="width:6%;"/>
+                                            <p:column rowspan="2" headerText="Ticker/Currency" style="width:6%;"/>
+                                            <p:column rowspan="2" headerText="Current Price" style="width:6%;"/>
                                             <p:column rowspan="2" headerText="Holding Ticker" style="width:6%;"/>
                                             <p:column colspan="2" headerText="Current Holdings" style="width:15%;"/>
                                             <p:column colspan="2" headerText="New Holdings" style="width:15%;"/>
@@ -142,7 +142,8 @@
                                         <h:outputText value="#{tradedata.subclass}"/>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: left;">
-                                        <h:outputText value="#{tradedata.ticker}"/>
+                                        <h:outputText value="#{tradedata.ticker}"/><br/>
+                                        <h:outputText value="#{tradedata.tradeCurrency}"/>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: right;">
                                         <h:outputText value="#{tradedata.curPrice}">

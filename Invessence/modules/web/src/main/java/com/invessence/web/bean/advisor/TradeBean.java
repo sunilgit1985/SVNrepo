@@ -50,8 +50,7 @@ public class TradeBean extends TradeClientData implements Serializable
    private UserRiskProfile selectedRiskProfile;
 
    private List<String> tradeFilters;
-   Double sumHoldingValue= 0.0, sumCurValue = 0.0, sumNewValue = 0.0;
-
+   Double sumHoldingValue = 0.0, sumCurValue = 0.0, sumNewValue = 0.0;
 
 
    @ManagedProperty("#{filesIO}")
@@ -280,8 +279,10 @@ public class TradeBean extends TradeClientData implements Serializable
    public void setAssetMap(UserTradePreprocess data)
    {
       String key = data.getAssetclass();
-      if (assetMap.containsKey(key)) {
-         UserTradePreprocess origData = assetMap.get(key);
+      UserTradePreprocess origData;
+      if (assetMap.containsKey(key))
+      {
+         origData = assetMap.get(key);
          origData.setCurQty(origData.getCurQty() + data.getCurQty());
          origData.setCurValue(origData.getCurValue() + data.getCurValue());
          origData.setNewQty(origData.getNewQty() + data.getNewQty());
@@ -293,22 +294,34 @@ public class TradeBean extends TradeClientData implements Serializable
          origData.setSettleNewValue(origData.getSettleNewValue() + data.getSettleNewValue());
          // assetMap.put(key,origData);
       }
-      else {
-         assetMap.put(key,data);
+      else
+      {
+         origData = new UserTradePreprocess(data.getAdvisor(),
+                                            data.getClientAccountID(),
+                                            data.getAcctnum(),
+                                            data.getAssetclass(),
+                                            data.getColor(),
+                                            data.getCurQty(), data.getCurValue(), data.getNewQty(), data.getNewValue(),
+                                            data.getSettleCurQty(), data.getSettleCurValue(),
+                                            data.getSettleNewQty(), data.getSettleNewValue());
+         assetMap.put(key, origData);
       }
 
    }
 
-   public Double displayWeight(Double value, Double sum) {
-      if (sum == null || sum == 0.0) {
+   public Double displayWeight(Double value, Double sum)
+   {
+      if (sum == null || sum == 0.0)
+      {
          return 0.0;
       }
 
-      if (value == null || value == 0.0) {
+      if (value == null || value == 0.0)
+      {
          return 0.0;
       }
 
-      return webutil.MathAbs(value/sum);
+      return webutil.MathAbs(value / sum);
    }
 
    public List<UserTradePreprocess> getAssetList()
@@ -319,9 +332,13 @@ public class TradeBean extends TradeClientData implements Serializable
    public void rollupAssets()
    {
       assetList.clear();
-      sumHoldingValue= 0.0; sumCurValue = 0.0; sumNewValue = 0.0;
-      if (! assetMap.isEmpty()) {
-         for (UserTradePreprocess data : assetMap.values()) {
+      sumHoldingValue = 0.0;
+      sumCurValue = 0.0;
+      sumNewValue = 0.0;
+      if (!assetMap.isEmpty())
+      {
+         for (UserTradePreprocess data : assetMap.values())
+         {
             assetList.add(data);
             sumCurValue += data.getCurValue();
             sumNewValue += data.getNewValue();
@@ -331,27 +348,31 @@ public class TradeBean extends TradeClientData implements Serializable
 
    public Integer getWhichScreen()
    {
-      return ( whichScreen == null ? 1 : whichScreen);
+      return (whichScreen == null ? 1 : whichScreen);
    }
 
    public Boolean getDisplayReviewPanel()
    {
       return displayReviewPanel;
    }
+
    public Boolean getDisplayTradePanel()
    {
       return displayTradePanel;
    }
+
    public void setDisplayReviewPanel(Boolean displayReviewPanel)
    {
       this.displayReviewPanel = displayReviewPanel;
    }
 
-   public Boolean getIsTradeActive() {
+   public Boolean getIsTradeActive()
+   {
       return (getWhichScreen() == 1);
    }
 
-   public Boolean getIsReviewActive() {
+   public Boolean getIsReviewActive()
+   {
       return (getWhichScreen() == 2);
    }
 
@@ -469,7 +490,7 @@ public class TradeBean extends TradeClientData implements Serializable
                skip = false;
                Integer opt = 0;
                String filter, tradeDataFilter;
-                  while (!skip && opt < numOptions)
+               while (!skip && opt < numOptions)
                {
                   filter = getSelectedFilterOptions()[opt];
                   tradeDataFilter = getTradeClientDataList().get(loop).getTradeStatus();
@@ -508,13 +529,15 @@ public class TradeBean extends TradeClientData implements Serializable
    {
       try
       {
-         if (assetMap == null) {
+         if (assetMap == null)
+         {
             assetMap = new HashMap<String, UserTradePreprocess>();
          }
 
          assetMap.clear();
          rebalancetradedatalist = tradeDAO.loadRebalTrades(acctnum);
-         for (UserTradePreprocess data : rebalancetradedatalist) {
+         for (UserTradePreprocess data : rebalancetradedatalist)
+         {
             setAssetMap(data);
          }
          rollupAssets();
@@ -575,7 +598,7 @@ public class TradeBean extends TradeClientData implements Serializable
          {
             collectTradeDetails(acctnum);
             // uiLayout.doMenuAction("advisor", "operations/tradesummary.xhtml");
-            displayReviewPanel=true;
+            displayReviewPanel = true;
          }
       }
       catch (Exception ex)
@@ -595,7 +618,7 @@ public class TradeBean extends TradeClientData implements Serializable
          // uiLayout.doMenuAction("advisor", "operations/tradesummary.xhtml");
          this.setSelectedClient(filteredClientData);
          selectedRiskProfile = new UserRiskProfile(getSelectedClient().getAdvisor(), acctnum);
-         displayTradePanel=true;
+         displayTradePanel = true;
 //         }
       }
       catch (Exception ex)
@@ -608,28 +631,39 @@ public class TradeBean extends TradeClientData implements Serializable
    public void hideRebalDetails()
    {
 
-      displayReviewPanel=false;
+      displayReviewPanel = false;
 
    }
+
    public void hideRiskDetails()
    {
 
-      displayTradePanel=false;
+      displayTradePanel = false;
 
    }
 
    public void setTradeUI(String ui)
    {
       if (ui == null)
-            whichScreen = 1;
+      {
+         whichScreen = 1;
+      }
       else if (ui.startsWith("T"))
-            whichScreen = 1;
+      {
+         whichScreen = 1;
+      }
       else if (ui.startsWith("R"))
-            whichScreen = 2;
+      {
+         whichScreen = 2;
+      }
       else if (ui.startsWith("S"))
+      {
          whichScreen = 3;
-      else whichScreen = 1;
-
+      }
+      else
+      {
+         whichScreen = 1;
+      }
 
 
       switch (whichScreen)
@@ -877,35 +911,43 @@ public class TradeBean extends TradeClientData implements Serializable
       }
    }
 
-   public ArrayList<UserRiskData> getRiskDataReport() {
-      if (selectedRiskProfile != null) {
+   public ArrayList<UserRiskData> getRiskDataReport()
+   {
+      if (selectedRiskProfile != null)
+      {
          return selectedRiskProfile.getRiskDataReport();
       }
       return null;
    }
 
-   public List<UserRiskData> getRiskProfile() {
+   public List<UserRiskData> getRiskProfile()
+   {
       List<UserRiskData> userProfileList = new ArrayList<>();
-      if (selectedRiskProfile != null) {
+      if (selectedRiskProfile != null)
+      {
          Map<String, UserRiskData> profileMap = selectedRiskProfile.getRiskProfileReport();
-            for (String key : profileMap.keySet())
+         for (String key : profileMap.keySet())
+         {
+            UserRiskData udata = new UserRiskData(profileMap.get(key));
+            if (key.equalsIgnoreCase(RiskConst.TOTALINVESTMENT))
             {
-               UserRiskData udata = new UserRiskData(profileMap.get(key));
-               if (key.equalsIgnoreCase(RiskConst.TOTALINVESTMENT)) {
-                  udata.setAnswerDouble(selectedClient.getTotalInvestment());
-               }
-               if (key.equalsIgnoreCase(RiskConst.THEME)) {
-                  udata.setAnswerStr(selectedClient.getTheme());
-               }
-               userProfileList.add(udata);
+               udata.setAnswerDouble(selectedClient.getTotalInvestment());
             }
+            if (key.equalsIgnoreCase(RiskConst.THEME))
+            {
+               udata.setAnswerStr(selectedClient.getTheme());
+            }
+            userProfileList.add(udata);
          }
+      }
       Collections.sort(userProfileList);
       return userProfileList;
    }
 
-   public ArrayList<AdvisorRiskMapping> getAdvisorMapping() {
-      if (selectedRiskProfile != null) {
+   public ArrayList<AdvisorRiskMapping> getAdvisorMapping()
+   {
+      if (selectedRiskProfile != null)
+      {
          return selectedRiskProfile.getAdvisorMappingReport();
       }
       return null;
