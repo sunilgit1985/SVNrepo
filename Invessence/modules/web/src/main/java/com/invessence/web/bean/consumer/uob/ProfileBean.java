@@ -79,7 +79,11 @@ public class ProfileBean extends PortfolioCreationUI
          }
       }
       if(!getCustomer().getManaged()){
-         setRiskTotalInvestment(getCustomer().getInitialInvestment().doubleValue());
+         if(beanmode.equals(UIMode.New)){
+            riskCalc.setInvestment(getCustomer().getDefaultInvestment());
+         }else{
+            setRiskTotalInvestment(getCustomer().getInitialInvestment().doubleValue());
+         }
       }else{
          riskCalc.setInvestment(getCustomer().getActualInvestment());
       }
@@ -1193,7 +1197,10 @@ public class ProfileBean extends PortfolioCreationUI
    public void setSelectedMobileGoal(String selectedMobileGoal)
    {
       if(selectedMobileGoal==null || selectedMobileGoal.equalsIgnoreCase("select")){
-         selectedMobileGoal=getSelectedGoal().getKey();
+         if(getSelectedGoal()!=null)
+         {
+            selectedMobileGoal = getSelectedGoal().getKey();
+         }
       }else{
          this.selectedMobileGoal = selectedMobileGoal;
          for (int i=0;i<goalsdata.size();i++)

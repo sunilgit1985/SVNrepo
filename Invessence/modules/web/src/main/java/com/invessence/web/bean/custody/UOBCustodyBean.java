@@ -1151,7 +1151,7 @@ public void onChngRpDtls(String flag){
          }
          if (getPagemanager().isLastPage() ||
             (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("No") && getPagemanager().getPage() == 9) ||
-            (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 4))
+            (uobDataMaster.getAccountDetails().getAccountMiscDetails().getIsExistingIndividualAcct().equalsIgnoreCase("Yes") && getPagemanager().getPage() == 3))
          {
             if(!dsblSubmtBtn)
             {

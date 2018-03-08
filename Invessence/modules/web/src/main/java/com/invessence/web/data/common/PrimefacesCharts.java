@@ -582,6 +582,12 @@ public class PrimefacesCharts implements Serializable
                break;
             }
          }
+//         glidepath.set;
+         ;
+         Axis xAxis=glidepath.getAxis(AxisType.X);
+         xAxis.setTickInterval("2022,2027,2032");
+
+         glidepath.getAxes().put(AxisType.X,xAxis);
          glidepath.addSeries(gain);
          glidepath.addSeries(withdrawl);
          glidepath.setStacked(true);
