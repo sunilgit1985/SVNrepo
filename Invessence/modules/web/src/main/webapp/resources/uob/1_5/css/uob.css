@@ -413,7 +413,8 @@ input {
 .formPage .ui-inputfield, .formpageDropdown,
 .formPage .ui-inputfield.ui-state-hover,
 .formPage .ui-inputfield.ui-state-focus {
-    border: solid 1px #f2f2f2 !important;
+    /* border: solid 1px #f2f2f2 !important;*/
+    border:solid 1px #a9b5bb !important;
     background-color: transparent;
     color: #778D9B !important;
 }
@@ -885,7 +886,7 @@ Panel-UI > div {
 
 .ui-accordion .ui-accordion-header .ui-icon {
     right: 0.5em !important;
-    left: initial;
+    left: auto;
 }
 
 .ui-accordion-content {
@@ -4326,7 +4327,7 @@ span.conservative_plus{
     width: 99%;
     margin: 0;
     box-shadow: 2px 2px 5px 1px #e1e1e1;
-    position:relaative;
+    position:relative;
 }
 .accepted_block div {
     margin: 0;
@@ -4501,7 +4502,7 @@ th.del_edit_col span {
     color: #000;
 }
 .go-bottom input:focus, .go-bottom textarea:focus {
-    padding: 19px 12px 0px 5px !important;
+    /* padding: 19px 12px 0px 5px !important; */
     font-size: 17px !important;
 
 }
@@ -4516,7 +4517,7 @@ th.del_edit_col span {
 .go-bottom input:not(:placeholder-shown):valid,
 .go-bottom textarea:not(:placeholder-shown):valid
 {
-    padding: 19px 12px 0px 5px !important;
+    /* padding: 19px 12px 0px 5px !important; */
     font-size: 17px !important;
     color:#000 !important;
     font-family: helvetica !important;
@@ -4799,7 +4800,7 @@ th.del_edit_col span {
 .go-bottom .panel_close {
     position: absolute;
     top: 3px;
-    right: 7px;
+    right: 4%;
 }
 .panel_close span:before {
 
@@ -4962,7 +4963,7 @@ td.bullet_td span {
 }
 .for_res{display:none;}
 .margin-left {
-    margin-left: 10px;
+    margin-left: 10px !important;
 }
 
 .acc_holder_form .ui-tabs-top,
@@ -5645,8 +5646,8 @@ div.slidePanelleft {
     position: absolute;
     background: #a4332f;
     color: #fff;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     padding: 7px;
     cursor: pointer;
     width: 150px;
@@ -5764,9 +5765,31 @@ div#leftpanel {
     right: 10px;
     top: 10px;
 }
-.risk_meter .highcharts-data-label {
-    top: -60px !important;
+.risk_meter .highcharts-data-labels {
+    top: 45px !important;
+
 }
+.ui-inputtext, .ui-selectonemenu > label,.ui-inputfield{color: #000 !important;}
+.ui-inputtext::-webkit-input-placeholder{ /* Chrome/Opera/Safari */
+    color: #ddd !important;
+}
+.ui-inputtext::-moz-placeholder { /* Firefox 19+ */
+    color: #ddd !important;
+}
+.ui-inputtext:-ms-input-placeholder { /* IE 10+ */
+    color: #ddd !important;
+}
+.ui-inputfield:-ms-input-placeholder { /* IE 10+ */
+    color: #ddd !important;
+}
+.ui-selectonemenu:-ms-input-placeholder { /* IE 10+ */
+    color: #ddd !important;
+}
+.ui-inputtext:-moz-placeholder,
+.ui-inputfield::-webkit-input-placeholder { /* Firefox 18- */
+    color: #ddd !important;
+}
+.ui-inputfield{box-shadow:none;}
 /** 26/12/2017 **/
 .textline-height {
     line-height: 28px;
@@ -5863,6 +5886,7 @@ span.conservative_plus {
     background: #fff;
     text-align: center;
     padding-top: 1% !important;
+    overflow:auto;
 }
 .OverlayPanelDisClo ul.ui-tabs-nav.ui-helper-reset.ui-widget-header.ui-corner-all {
     text-align: left;
@@ -5877,7 +5901,7 @@ span.conservative_plus {
 }
 .submit_acc_dtl.file_submit {
     padding: 1% 41%;
-    width: 19%;
+    width: 25%;
 }
 .panelClose {
     position: absolute;
@@ -5991,12 +6015,15 @@ td.advisorBullet_td span {
 /*** 12/02/2018 **/
 
 .fourColspan {
-    width: 10.5% !important;
+    width: 114px !important;
 }
 .lastColWidth{width: 129px !important;}
 .W86{width:86px !important;}
 .W30{width:30px !important;}
 .W13{width:13px !important;}
+.Wauto{width:auto !important;}
+.W125{width:124px !important;}
+.W36{width:36.5% !important;}
 .ui-datatable.invDataTable  table  tfoot tr td ,
 .invAllocTable .ui-datatable-scrollable-footer-box table tfoot tr td
 {color: #fff;background-color: #556873;}
@@ -6091,8 +6118,8 @@ rect.highcharts-background {
     font-size: 20px;
 }
 .contactPopup .Container50 {
-    padding: 0 10%;
-    width: 30%;
+    padding: 0 8%;
+    width: 34%;
     margin: 10px 0;
 }
 .contactPopup .cancel_btn {
@@ -6131,8 +6158,40 @@ rect.highcharts-background {
 .dashboard_right_panel .user_table .ui-datatable table thead tr th {
     background: #a4332f !important;
 }
+.ui-messages-info, .ui-message-info {
+    color: #F03369!important;
+    background-color: #FBFCFD !important;
+    border-color: #F4BACB !important;
+}
+.ui-messages-info-icon {
+    background-image: url(/javax.faces.resource/images/warn-pink.svg.xhtml?ln=primefaces-spark&v=1_3) !important;
+}
+.formPage .ui-inputfield.txtBlack {
+    color: #000 !important;
+    font-size: 15px !important;
+}
+.ui-overlaypanel.InfoPannel .ui-overlaypanel-content {
+    background: #fff !important;
+    color: #a4332f;
+    font-size: 15px;
+    line-height: 1.4;
+}
+.InfoPannel {
+    left: 65px !important;}
+.passInfoPanel{top:-100px !important;}
+.InfoPannel li {
+    list-style: disc;
+}
+.relation_dtl .Container20 {
+    width: 25%;}
+.ringselectmode{display:none;}
 
-
+.Container100.bottomLineGraph {
+    width: 99%;
+    text-align: center;
+    font-size: 18px;
+    margin:10px 0 0;
+}
 
 /*** responsive**/
 
@@ -6395,12 +6454,12 @@ rect.highcharts-background {
     .Container100.pre_next_btn {
         height: 34px}
     /*** portfolio cration **/
-    .portfolio_selection span {
+    /* .portfolio_selection span {
         vertical-align: top;
         line-height: 2;
         width: 100%;
         float: left;
-    }
+    } */
     span.sapn_review {
         position: absolute;
         top: 76px;
@@ -6487,9 +6546,9 @@ rect.highcharts-background {
         width: 100%;
         float: left;
     }
-    .risk_meter .highcharts-data-label {
-        top: 0px !important;
-    }
+    /*  .risk_meter .highcharts-data-label {
+         top: 0px !important;
+     } */
     .caraousle .Container50.pre_btn:before{right:46px;}
     .mobileModeButton {display:block;}
     .desktopModeButton{display:none;}
@@ -6508,6 +6567,7 @@ rect.highcharts-background {
     margin-left: 192px;
     height: 25px;
 }
+
 /**** Changes By Amee ***/
 
 /*** responsive**/
@@ -6540,6 +6600,10 @@ rect.highcharts-background {
 .header_link.prenext_btn.Container70 .ui-outputpanel{
     position:relative;
     float:right;
+}
+
+.header_tab .header_title.Container30{
+
 }
 .acc_block_left{
     margin-left:10px !important;
@@ -6693,12 +6757,28 @@ div.slidePanelleft{
     .ui-datatable table{
         margin-left:1%;
     }
+    .date_birth .hasDatepicker {
+        width: 86% !important;}
+    .contactCode .Container20 {
+        width: 31%;}
+    .contactCode .Container80 {
+        width: 66%;}
     .Conatiner100.IRERBlock .Fleft{width:100%;
         margin:10px 0 0 0;}
 }
+@media only screen and (max-width: 1080px){
+    .contactPopup .Container50 {
+        padding: 0 7%;
+        width: 35%;}
+    .date_birth .hasDatepicker {
+        width: 82% !important;}
+}
+@media only screen and (max-width: 950px)
+{
 
-@media only screen and (max-width: 942px)  {.edit_input,.dbdTxtBox{
-    max-width:145px;}
+}
+@media only screen and (max-width: 942px)  {
+    .edit_input,.dbdTxtBox{ max-width:145px;}
     .portfolio_selection.reviewcont,.portfolio_progress_bar.reviewcont{
         width:90%;
         margin:0 5%;
@@ -6710,6 +6790,21 @@ div.slidePanelleft{
     .reviewHeader_title .header_title.Container30{
         width:50%;
     }
+    .date_birth .hasDatepicker { width: 80% !important}
+    .contactCode .Container20 {
+        width: 38%;}
+    .contactCode .Container80 {
+        width: 58%;}
+    .remittance_dtls .go-bottom div.Container30 {
+        margin-right: 10px;
+        width: 48.5%;
+    }
+    .remittance_dtls .go-bottom div.Container30 {
+
+        width: 100%;
+    }
+
+
 }
 @media only screen and (max-width: 862px)  {
     .acc_block_left,.dashboard_right_panel
@@ -6786,6 +6881,12 @@ div.slidePanelleft{
 .alert_menu button:hover > span{
     text-decoration: underline;
 }
+
+
+@media only screen and (max-width: 820px)
+{
+    .go-bottom textarea{width:96%;}
+}
 @media only screen and (max-width: 776px)  {
 
     .header_title.Container30{
@@ -6796,6 +6897,9 @@ div.slidePanelleft{
     }
     .caraousle .Container50.next_btn{
         margin:0px;padding:0 5px;
+    }
+    .contactCode .Container80,.contactCode .Container20 {
+        width: 100%;
     }
 }
 @media only screen and (max-width: 767px)  {
@@ -6882,6 +6986,7 @@ div.slidePanelleft{
     .reviewHeader_title .header_title.Container30 .Container50{
         width:50%;
     }
+
 }
 @media only screen and (max-width: 760px)  {
     .portfolio_layout .tab_dtl{
@@ -6959,10 +7064,24 @@ div.slidePanelleft{
     div.slidePanelleft.GoalClickEvent{
         width:150px;
     }
+    .Container30.PaddingTopPercent2{
+        width: 100%;
+    }
+    .Container30.PaddingTopPercent2 .Conatiner100.IRERBlock{
+        width: 100%;
+        position: relative;
+        float: left;
+        margin-top: 10px;
+    }
     .go-bottom .acc_holder_dtl_block .Container80{
         width:78%;
         margin:0px !important;
     }
+    .go-bottom .Container50.date_birth{  margin: 0;}
+    .acc_holder_dtl_block .margin-left { margin-left: 0px !important;}
+    .explBlock.Container100 { width: 99%;}
+    .go-bottom .empContCode .Container80 {
+        width: 78%;margin: 0;}
     .Container30.PaddingTopPercent2{
         width: 100%;
     }
@@ -6981,13 +7100,19 @@ div.slidePanelleft{
         padding:0 2.5% 2.5% 2.5%;
         width:95%;
     }
+
+}
+@media only screen and (max-width: 660px){
+    .date_birth .hasDatepicker {
+        width: 76% !important;
+    }
     .Container100.tab_dtl.review_dtl .reviewGoalbutton{
         margin: 0 0 0 -2.5% !important;
     }
     .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container{width:auto !important;}
-    .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container .highcharts-data-labels .highcharts-label{
+    /* .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container .highcharts-data-labels .highcharts-label{
         top:-60px !important;
-    }
+    } */
     .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container .highcharts-data-labels .highcharts-label span{
         vertical-align: top;
         line-height: 72px;
@@ -7066,7 +7191,13 @@ div.slidePanelleft{
         display:block;
     }
     .ring_widget{display:none;}
+    .select_item.Container20 {
+        width: 55%;}
+    .go-bottom .Container50.date_birth{width:60%;}
+
+
 }
+
 @media only screen and (max-width: 500px)  {
     .acc_block_left,.dashboard_right_panel{
         margin-left:2% !important;
@@ -7085,6 +7216,32 @@ div.slidePanelleft{
     }
     .checkBoxOpt .Container10{
         width:5%;
+    }
+    .select_item.width35,.go-bottom .Container50.date_birth,.select_item.width35,.select_item.Container20,.acc_holder_dtl_block .Container40 {
+        width: 100%;
+    }
+    .date_birth .hasDatepicker {
+        width: 86% !important;
+    }
+
+    .acc_holder_dtl_block .label_opacity .ui-selectoneradio td {
+        vertical-align: top;
+        display: inline-table;
+        float: left;
+    }
+    .acc_holder_dtl_block .label_opacity .ui-selectoneradio td:nth-child(even) {
+        width: 85%;
+        float: left;
+    }
+
+}
+@media only screen and (max-width: 390px){
+
+    .date_birth .hasDatepicker {
+        width: 84% !important;}
+    @media only screen and (max-width: 390px){
+        .date_birth .hasDatepicker {
+            width: 82% !important;}
     }
 }
 /** 16/10/2017***/
