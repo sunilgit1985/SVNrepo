@@ -567,8 +567,8 @@ public class PrimefacesCharts implements Serializable
          BarChartSeries withdrawl = new BarChartSeries();
          Calendar cal = Calendar.getInstance();
          calendarYear = cal.get(cal.YEAR);
-         gain.setLabel("Growth");
-         withdrawl.setLabel("Withdrawl");
+         gain.setLabel("Investment");
+         withdrawl.setLabel("Withdrawal");
 
          Integer count = 0;
          for (ProjectionData pdata : projectionDatas)
@@ -596,6 +596,11 @@ public class PrimefacesCharts implements Serializable
 //         glidepath.getAxis(AxisType.Y).setTickFormat("Hello Prathu:%#M");
 //         glidepath.getAxis(AxisType.Y).setMin(0);
 //         glidepath.getAxis(AxisType.Y).setMax();
+
+         glidepath.setLegendPosition("n");
+         glidepath.setLegendPlacement(LegendPlacement.OUTSIDE);
+         glidepath.setResetAxesOnResize(true);
+         glidepath.setLegendCols(2);
       }
       catch (Exception ex)
       {
