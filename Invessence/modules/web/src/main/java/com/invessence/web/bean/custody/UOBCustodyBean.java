@@ -1095,7 +1095,7 @@ public void onChngRpDtls(String flag){
       }
       if (owTaxDtls.getJurisdictionOfTaxResidence()!=null && owTaxDtls.getJurisdictionOfTaxResidence().trim().equalsIgnoreCase("United States"))
       {
-         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.new.pri.acctHldr.invCtry", "Particulars with US indicia are not permitted to open an account.", null));
+         sb.append(webutil.getMessageText().getDisplayMessage("validator.uob.acctOpen.taxPnl.cntryDtlUs", "Particulars with US indicia are not permitted to open an account.", null));
       }
       if (!hasRequiredData(owTaxDtls.getIsTINAvailable()))
       {
