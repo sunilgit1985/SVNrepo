@@ -8,6 +8,8 @@ public class AccountDetails
    private Long acctnum;
    private String clientAccountID;
    private String repId;
+   private String displayRep;
+   private String displayRepName;
    private String caseNumber;
    private Long advisorId;
    private String acctTypeId;
@@ -110,6 +112,26 @@ public class AccountDetails
       this.dateOfApplication = dateOfApplication;
    }
 
+   public String getDisplayRep()
+   {
+      return displayRep;
+   }
+
+   public void setDisplayRep(String displayRep)
+   {
+      this.displayRep = displayRep;
+   }
+
+   public String getDisplayRepName()
+   {
+      return displayRepName;
+   }
+
+   public void setDisplayRepName(String displayRepName)
+   {
+      this.displayRepName = displayRepName;
+   }
+
    @Override
    public String toString()
    {
@@ -117,6 +139,8 @@ public class AccountDetails
          "acctnum=" + acctnum +
          ", clientAccountID='" + clientAccountID + '\'' +
          ", repId='" + repId + '\'' +
+         ", displayRep='" + displayRep + '\'' +
+         ", displayRepName='" + displayRepName + '\'' +
          ", caseNumber='" + caseNumber + '\'' +
          ", advisorId=" + advisorId +
          ", acctTypeId='" + acctTypeId + '\'' +

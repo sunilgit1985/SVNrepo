@@ -84,7 +84,7 @@ public class FileProcessor
                   List<FileDetails> fileProcessStatusList=new ArrayList<FileDetails>();
                   List<ZipFile> filesForZip= new LinkedList<>();
                   Boolean preInstructionExecuted=false;
-                  Boolean isBussdtHoliday=fileProcessorDao.isBussdtHoliday(dbParamMap.get("SETT_CURRUNCY").getValue().toString(), dbParamMap.get("BUSINESS_DATE").getValue().toString());
+                  Boolean isBussdtHoliday=fileProcessorDao.isBussdtHoliday(dbParamMap.get("SETT_CURRENCY").getValue().toString(), dbParamMap.get("BUSINESS_DATE").getValue().toString());
                   int fileExecutionCounter=1;
                   System.out.println("****************************************************");
                   System.out.println("File Processor execution Started");
