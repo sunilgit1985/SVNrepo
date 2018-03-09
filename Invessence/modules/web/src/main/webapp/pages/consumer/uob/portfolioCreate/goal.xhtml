@@ -138,7 +138,7 @@
                                 I intend to retire and start using my funds in
                                 <p:inputNumber id="uobRetirePeriod" class="input_no_type"
                                                value="#{uobProfile.horizon}" placeholder="Years"
-                                               decimalPlaces="0">
+                                               minValue="0" maxValue="99" maxlength="2" decimalPlaces="0">
                                 </p:inputNumber>
                                 years.
                             </p>
@@ -147,7 +147,7 @@
                             When I start withdrawing money for my retirement, I plan to withdraw the funds over a period of
                             <p:inputNumber id="uobRW" class="input_no_type"
                                            value="#{uobProfile.withdrawlPeriod}" placeholder="Years"
-                                           decimalPlaces="0">
+                                           minValue="0" maxValue="99" maxlength="2" decimalPlaces="0">
                             </p:inputNumber>
                             years.
                         </p>
@@ -200,7 +200,7 @@
                         I aim to save and invest to purchase a property in
                         <p:inputNumber id="uobPropertyPeriod" class="input_no_type"
                                        value="#{uobProfile.horizon}" placeholder="Years"
-                                       decimalPlaces="0">
+                                       decimalPlaces="0" minValue="0" maxValue="99" maxlength="2">
                         </p:inputNumber>
                         years.
                     </p>
@@ -251,7 +251,7 @@
                         I expect the child to enter university / college in
                         <p:inputNumber id="uobEducationPeriod" class="input_no_type"
                                        value="#{uobProfile.horizon}" placeholder="Years"
-                                       decimalPlaces="0">
+                                       minValue="0" maxValue="99" maxlength="2" decimalPlaces="0">
                         </p:inputNumber>
                         years.
 
@@ -385,7 +385,7 @@
                         <p:inputNumber id="uoOtherPeriod" class="input_no_type"
                                        style="width:55px;"
                                        value="#{uobProfile.horizon}" placeholder="Years"
-                                       decimalPlaces="0">
+                                       decimalPlaces="0" minValue="0" maxValue="99" maxlength="2">
                         </p:inputNumber>
                         years.
 
@@ -398,7 +398,7 @@
                         <p:inputNumber id="uobOtherWP" class="input_no_type"
                                        style="width:55px;"
                                        value="#{uobProfile.withdrawlPeriod}" placeholder="Years"
-                                       decimalPlaces="0">
+                                       decimalPlaces="0" minValue="0" maxValue="99" maxlength="2">
                         </p:inputNumber>
                         years.
                     </p>
