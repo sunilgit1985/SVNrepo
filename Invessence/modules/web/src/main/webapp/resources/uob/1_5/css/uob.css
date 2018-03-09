@@ -6193,6 +6193,12 @@ rect.highcharts-background {
     margin:10px 0 0;
 }
 
+
+/*** 09/03/2018**/
+.jqplot-highlighter-tooltip {
+    display: none !important;
+}
+
 /*** responsive**/
 
 /** 16/10/2017***/
@@ -6590,7 +6596,7 @@ rect.highcharts-background {
     position: relative;}
 .header_link.prenext_btn.Container70{
     float:right;
-    min-width:208px;
+    min-width:210px;
     float:right;
     width:28%;
 }
@@ -6734,7 +6740,7 @@ div.slidePanelleft{
     height: 300px;
     width: 100%;
 }
-.review_dtl .Container30.donutChartGraph .idPieChartArea .highcharts-container svg.highcharts-root path{
+.review_dtl .Container30.donutChartGraph .idPieChartArea .highcharts-container svg.highcharts-root path.highcharts-point{
     stroke-width:20px;
 }
 .reviewGoalbutton{
@@ -6744,6 +6750,7 @@ div.slidePanelleft{
     width:154px;
 }
 @media only screen and (max-width: 1160px)  {
+    .Responsive{width:100%;}
     .Container50.donutChartGraph{
         width:100%;
     }

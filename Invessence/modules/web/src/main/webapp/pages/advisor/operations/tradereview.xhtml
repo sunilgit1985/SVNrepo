@@ -181,12 +181,12 @@
                         </div>
                         <div class="Container50 Fright TexAlRight">
                             <p:commandLink  update="@form"
-                                             actionListener="#{tradeBean.hideRebalDetails}" styleClass="uobsagbutton">
-                                             <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close float-right" style="color:#a4332f"></span>
-                                             </p:commandLink>
-                        
-                        
-                        
+                                            actionListener="#{tradeBean.hideRebalDetails}" styleClass="uobsagbutton">
+                                <span id="" class="ui-button-icon-center ui-icon ui-c fa fa-close float-right" style="color:#a4332f"></span>
+                            </p:commandLink>
+
+
+
                         </div>
 
                         <div class="Container100 Responsive">
@@ -195,7 +195,7 @@
                         <div class="Container100 Responsive scrollTable">
                             <p:fieldset legend="Overview" collapsed="false" toggleable="true" toggleSpeed="500" styleClass="uobbtn">
                                 <p:panel style="border: 0px">
-                                    <p:dataTable id="editAlloc" styleClass="invAllocTable" scrollable="true" 
+                                    <p:dataTable id="editAlloc" styleClass="invAllocTable" scrollable="true"
                                                  value="#{tradeBean.assetList}"
                                                  var="assetList">
 
@@ -205,7 +205,7 @@
 
                                         <p:columnGroup type="header">
                                             <p:row>
-                                                <p:column rowspan="2" headerText="" style="width: 2px;"/>
+                                                <p:column rowspan="2" headerText="" />
                                                 <p:column rowspan="2" headerText="Asset"/>
                                                 <p:column colspan="2" headerText="Current Holdings"/>
                                                 <p:column colspan="2" headerText="New Holdings"/>
@@ -219,7 +219,7 @@
                                         </p:columnGroup>
 
                                         <p:column class="bullet_td advisorBullet_td" style="width:20%; text-align: left;text-align: center;">
-                                           <!--  <h:outputText value=" "/> -->
+                                            <!--  <h:outputText value=" "/> -->
                                             <span style="background-color: #{assetList.color};">&#160;</span>
                                         </p:column>
                                         <p:column style="width: 10%; text-align: left;">
@@ -254,15 +254,16 @@
 
                                         <p:columnGroup type="footer">
                                             <p:row>
-                                           		<p:column colspan="2" footerText="Total" style="text-align:left"/>
-                                                <p:column colspan="1" style="text-align:right"
+
+                                                <p:column colspan="2" footerText="Total" style="text-align:left" class=""/>
+                                                <p:column colspan="2" style="text-align:right"
                                                           footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumCurValue)}">
                                                 </p:column>
-                                                <p:column colspan="1" style="text-align:right"
+                                                <p:column colspan="2" style="text-align:right"
                                                           footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumNewValue)}">
                                                 </p:column>
-                                             </p:row>
-                                                                                        
+                                            </p:row>
+
                                         </p:columnGroup>
                                     </p:dataTable>
 
@@ -280,28 +281,28 @@
 
                                     <p:columnGroup type="header">
                                         <p:row>
-                                            <p:column rowspan="2" headerText="" style="width:1px"/>
-                                            <p:column rowspan="2" headerText="Subclass" style="width:10%;"/>
-                                            <p:column rowspan="2" headerText="Ticker/Currency" style="width:6%;"/>
-                                            <p:column rowspan="2" headerText="Current Price" style="width:6%;"/>
-                                            <p:column rowspan="2" headerText="Holding Ticker" style="width:6%;"/>
-                                            <p:column colspan="2" headerText="Current Holdings" style="width:15%;"/>
-                                            <p:column colspan="2" headerText="New Holdings" style="width:15%;"/>
-                                            <p:column colspan="2" headerText="Trades" style="width:15%;"/>
-                                            <p:column rowspan="2" headerText="Reason" style="width:10%;"/>
+                                            <p:column rowspan="2" headerText=""/>
+                                            <p:column rowspan="2" headerText="Subclass" />
+                                            <p:column rowspan="2" headerText="Ticker/Currency" />
+                                            <p:column rowspan="2" headerText="Current Price" />
+                                            <p:column rowspan="2" headerText="Holding Ticker" />
+                                            <p:column colspan="2" headerText="Current Holdings" />
+                                            <p:column colspan="2" headerText="New Holdings" />
+                                            <p:column colspan="2" headerText="Trades" />
+                                            <p:column rowspan="2" headerText="Reason" />
                                         </p:row>
                                         <p:row>
-                                            <p:column headerText="Shares" style="width:3%;"/>
-                                            <p:column headerText="Value" style="width:12%;"/>
-                                            <p:column headerText="Shares" style="width:3%;"/>
-                                            <p:column headerText="Value" style="width:12%;"/>
-                                            <p:column headerText="Shares" style="width:3%;"/>
-                                            <p:column headerText="Value" style="width:12%;" />
+                                            <p:column headerText="Shares" />
+                                            <p:column headerText="Value" />
+                                            <p:column headerText="Shares" />
+                                            <p:column headerText="Value" />
+                                            <p:column headerText="Shares" />
+                                            <p:column headerText="Value"  />
                                         </p:row>
                                     </p:columnGroup>
                                     <p:column class="bullet_td advisorBullet_td" style="width:20%; text-align: left;text-align: center;">
-                                       <!--  <h:outputText value=" "/> -->
-                                         <span style="background-color: #{tradedata.color};">&#160;</span>
+                                        <!--  <h:outputText value=" "/> -->
+                                        <span style="background-color: #{tradedata.color};">&#160;</span>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:10%; text-align: left;">
                                         <h:outputText value="#{tradedata.subclass}"/>
@@ -362,15 +363,15 @@
 
                                     <p:columnGroup type="footer">
                                         <p:row>
-                                            <p:column  colspan="5" footerText="Total" style="text-align:left" class="W36" />
-											
-                                            <p:column
+                                            <p:column  colspan="5" footerText="Total" style="text-align:left"  />
+
+                                            <p:column colspan="2"
                                                       footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumCurValue)}"
                                                       style="text-align:right"/>
-                                            <p:column
+                                            <p:column colspan="2"
                                                       footerText="#{dataDisplayConverter.displayWithComma(tradeBean.sumNewValue)}"
                                                       style="text-align:right"/>
-                                            <p:column  colspan="2" footerText="" style="text-align:left"/>
+                                            <p:column  colspan="3" footerText="" style="text-align:left"/>
                                         </p:row>
                                     </p:columnGroup>
 
