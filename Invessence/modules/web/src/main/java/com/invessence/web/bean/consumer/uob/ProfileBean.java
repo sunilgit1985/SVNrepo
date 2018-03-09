@@ -670,6 +670,8 @@ public class ProfileBean extends PortfolioCreationUI
                      {
                         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.horizon.invalid", "Negative value is not allowed for retirement years.", null));
                      }
+                  }else{
+                     setHorizon(0);
                   }
                   if (!hasData(getWithdrawlPeriod()))
                   {
@@ -690,6 +692,7 @@ public class ProfileBean extends PortfolioCreationUI
                   {
                      pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.property.horizon.invalid", "Negative value is not allowed for investment years.", null));
                   }
+                  setWithdrawlPeriod(null);
                }
                if (thisgoal.equals(RiskConst.GOALS.EDUCATION))
                {
@@ -728,6 +731,8 @@ public class ProfileBean extends PortfolioCreationUI
                   {
                      pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.legacy.horizon.required", "Please choose your planning aim.", null));
                   }
+                  setWithdrawlPeriod(null);
+                  setHorizon(30);
                }
             }
             break;
@@ -1130,6 +1135,10 @@ public class ProfileBean extends PortfolioCreationUI
             }
             break;
          case 1:
+            if (selectedGoal != null)
+            {
+               reOrganizeGoalList();
+            }
             break;
          case 2:
             RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
