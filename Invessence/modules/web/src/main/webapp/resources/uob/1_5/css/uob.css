@@ -6198,6 +6198,9 @@ rect.highcharts-background {
 .jqplot-highlighter-tooltip {
     display: none !important;
 }
+.Responsive {
+    width: 100%;}
+
 
 /*** responsive**/
 
