@@ -34,7 +34,7 @@ public class ProfileBean extends PortfolioCreationUI
    {
       super.initUI();
       selectedGoal = null;
-      pagemanager = new PagesImpl(10);  // Set number of pages as per UI.
+      pagemanager = new PagesImpl(9);  // Set number of pages as per UI.
       progressbar = new ProgressBarImpl(0.0, (100.0 / pagemanager.getMaxNoofPages()));
    }
 
