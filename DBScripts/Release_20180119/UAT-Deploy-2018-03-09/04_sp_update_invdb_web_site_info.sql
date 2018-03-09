@@ -1,0 +1,1 @@
+UPDATE `invdb`.`web_site_info` SET `value`='KayHian.Without.Sing' WHERE `url`='utraderobo' and`name`='DEFAULT.MODEL';
