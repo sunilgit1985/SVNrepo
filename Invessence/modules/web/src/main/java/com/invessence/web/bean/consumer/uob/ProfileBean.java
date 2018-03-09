@@ -1166,7 +1166,7 @@ public class ProfileBean extends PortfolioCreationUI
 
    public String getRevwPnlExpYrFndLbl()
    {
-      if(!selectedRetirementGoal  || RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.LEGACY)){
+      if((!selectedRetirementGoal && RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.RETIREMENT))  || RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.LEGACY)){
          revwPnlExpYrFndLbl="NA";
       }else{
          revwPnlExpYrFndLbl= ""+getYear(getHorizon());
