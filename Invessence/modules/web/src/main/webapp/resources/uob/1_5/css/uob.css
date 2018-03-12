@@ -6190,7 +6190,7 @@ rect.highcharts-background {
     width: 99%;
     text-align: center;
     font-size: 18px;
-    margin:10px 0 0;
+    margin:25px 0 0 !important;
 }
 
 
@@ -6200,7 +6200,15 @@ rect.highcharts-background {
 }
 .Responsive {
     width: 100%;}
-
+.backgroundAdvPortlets .slideDwnpanel .ui-fieldset-content {
+    max-height: 300px;
+    overflow: auto;
+}
+.invAllocTable table tfoot tr td {
+    background: #556873;
+    color: #fff;
+}
+.jqplot-xaxis-label{bottom: -22px !important;}
 
 /*** responsive**/
 

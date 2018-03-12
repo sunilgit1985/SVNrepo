@@ -195,7 +195,7 @@
                         <div class="Container100 Responsive scrollTable">
                             <p:fieldset legend="Overview" collapsed="false" toggleable="true" toggleSpeed="500" styleClass="uobbtn">
                                 <p:panel style="border: 0px">
-                                    <p:dataTable id="editAlloc" styleClass="invAllocTable" scrollable="true"
+                                    <p:dataTable id="editAlloc" styleClass="invAllocTable" scrollable="false"
                                                  value="#{tradeBean.assetList}"
                                                  var="assetList">
 
@@ -271,7 +271,7 @@
                             </p:fieldset>
                             <p:fieldset legend="Detail" collapsed="false" toggleable="true" toggleSpeed="500"
                                         style="margin-top: 20px;"  styleClass="uobbtn">
-                                <p:dataTable id="dataTable" var="tradedata" scrollable="true"  scrollHeight="200"
+                                <p:dataTable id="dataTable" var="tradedata" scrollable="false"  scrollHeight="200"
                                              value="#{tradeBean.rebalancetradedatalist}"
                                              styleClass="invDataTable Fs10">
 
