@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/common/template.xhtml">
+
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <!-- Messages/Alets -->
+            <div class="Container50 Responsive">
+                <div class="ContainerIndent">
+                    <div class="Container100">
+                        <p:dataTable id="riskInfo"
+                                     var="riskVar"
+                                     styleClass="ListOfAccountsTable"
+                                     widgetVar="riskTable"
+                                     value="#{tradeBean.riskDataReport}" reflow="true">
+
+                            <p:column headerText="Question"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText styleClass="dashboardUsrColumnFloatLeft"
+                                              value="#{riskVar.key}"/>
+                            </p:column>
+                            <p:column headerText="Answer"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText
+                                        styleClass="dashboardUsrColumnFloatRight"
+                                        value="#{riskVar.answer}">
+                                    <f:convertNumber pattern="##0"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Score"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText
+                                        styleClass="dashboardUsrColumnFloatRight"
+                                        value="#{riskVar.riskScore}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visitors/Stat -->
+            <div class="Container50 Responsive">
+                <div class="ContainerIndent">
+                    <div class="Container100">
+                        <p:dataTable id="riskProfile"
+                                     var="riskProfileVar"
+                                     styleClass="ListOfAccountsTable"
+                                     value="#{tradeBean.riskProfile}" reflow="true">
+
+                            <p:column headerText="Profile"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText styleClass="dashboardUsrColumnFloatLeft"
+                                              value="#{riskProfileVar.key}"/>
+                            </p:column>
+                            <p:column headerText="Answer"
+                                      styleClass="ListOfAccntsColWidth"
+                                      resizable="true">
+                                <h:outputText styleClass="dashboardUsrColumnFloatLeft"
+                                              value="#{riskProfileVar.answer}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BOX END -->
+
+        <!-- BOX START -->
+        <div class="layout-portlets-box">
+            <div class="Container50 Responsive">
+                <div class="ContainerIndent">
+                </div>
+            </div>
+        </div>
+        <!-- BOX END -->
+
+    </ui:define>
+
+</ui:composition>

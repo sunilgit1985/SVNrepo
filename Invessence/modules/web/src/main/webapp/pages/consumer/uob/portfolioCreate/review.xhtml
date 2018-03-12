@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/template/common/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{uobProfile.preRenderReview}"/>
+    </f:metadata>
+    <ui:define name="content">
+        <h:outputScript name="js/invCharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/uobHighCharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+
+        <!-- HighChart .js plugin Start -->
+        <h:outputScript name="js/highcharts.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/highcharts-3d.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/highcharts-more.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/solid-guage.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/exporting.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/drilldown.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/data.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/exporting.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/riskMeter.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+        <h:outputScript name="js/glidepath.js"
+                        library="#{uiLayout.webProfile.cssdir}"/>
+
+		<script>
+//			$(document).ready(function() {
+//				$(".GoalClickEvent").click(function() {
+//
+//					// Set the effect type
+//					var effect = 'slide';
+//
+//					// Set the options for the effect type chosen
+//					var options = {
+//						direction : 'left'
+//					};
+//
+//					// Set the duration (default: 400 milliseconds)
+//					var duration = 700;
+//
+//					$('#leftpanel').toggle(effect, options, duration);
+//
+//				});
+//
+//				$("#fine_tune_btn").click(function() {
+//
+//					// Set the effect type
+//					var effect = 'slide';
+//
+//					// Set the options for the effect type chosen
+//					var options = {
+//						direction : 'up'
+//					};
+//
+//					// Set the duration (default: 400 milliseconds)
+//					var duration = 700;
+//
+//					$('.fineTuneBlock').toggle(effect, options, duration);
+//
+//				});
+//
+//				$(".panelClose").click(function() {
+//					$('.fineTuneBlock').hide(300);
+//					$('#leftpanel').hide(300);
+//				});
+//			});
+		</script>
+
+		<h:form id="ceForm">
+
+            <p:outputPanel id="reviewArea" style="background: transparent; border: 0px">
+                <div class="layout-portlets-box open_client_layout portfolio_layout ">
+                    <div class="Container100 Responsive100">
+                        <div class="portfolio_selection reviewcont">
+                            <div class="Container30 ">
+                            <span class="GoalClickEvent">
+                                <p:graphicImage  name="images/portfolio/goal.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/><span>Goal</span>
+                            </span>
+                            </div>
+                            <div class="Container30 risk_meter">
+                                <div id="riskChart" style="width: 100%; height: 85px; float: left" class="idRiskChartArea"></div>
+                            </div>
+                            <div class="Container30 donutReview">
+
+                                <!--<p:graphicImage name="images/portfolio/review.png" library="#{uiLayout.webProfile.cssdir}" width="80px"/>-->
+                                <div class="review-donut" style="float: right;  width: 100px;  height: 80px;">
+
+                                    <h:form id="ceForm">
+                                        <p:panel id="cnfgraphArea" style="border: 0px; background: white;">
+
+                                            <input type="hidden" class="idRiskChartValue" value="#{uobProfile.displayRiskScore}"/>
+                                            <script>
+                                                //                                                $(document).ready(function ()
+                                                //                                                                  {
+                                                //  if (document.getElementById('ceForm:cnftypeOfCharts') != null)
+                                                //  {
+                                                //  if (document.getElementById('ceForm:cnftypeOfCharts').value == 'HIGHCHART.2DDONUT')
+                                                //  {
+                                                //draw2dDonut1lyrChartDyna('CNFPrflo');
+
+                                                //                                                                      draw2dDonut1lyrChartClassBase('idPieChartArea1', 'idPieChartValue1');
+                                                //  }
+                                                // }
+
+                                                //                                                                      myGaugeChart('idRiskChartValue', 'idRiskChartArea', 0, 100, 'Risk', 'Score');
+                                                //                                                                  });
+
+                                            </script>
+
+                                            <div class="Container100 donutChartGraph review_graph">
+
+                                                <div id="2dDonutChartCnf2" class="idPieChartArea1"></div>
+
+                                                <input type="hidden"
+                                                       value="#{uobProfile.chart.chartData}"
+                                                       class="idPieChartValue1"/>
+                                                <input type="hidden" value="HIGHCHART.2DDONUT"
+                                                       class="idChartType1"/>
+
+                                            </div>
+
+
+                                        </p:panel>
+                                    </h:form>
+
+                                </div>
+                                <span class="sapn_review">Review</span>
+                            </div>
+
+                        </div>
+                        <div class="portfolio_progress_bar reviewcont">
+                            <p:progressBar value="#{uobProfile.progressBar}" labelTemplate="{value}%" displayOnly="true"/>
+                        </div>
+
+                        <ui:include src="/pages/consumer/uob/portfolioCreate/reviewPanel.xhtml"></ui:include>
+
+                    </div>
+                </div>
+
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

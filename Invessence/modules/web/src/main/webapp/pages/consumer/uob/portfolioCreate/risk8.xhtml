@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <div class="caraousle Container100">
+
+        <div class="header_tab">
+            <div class="header_title Container30">Risk Tolerance</div>
+
+                <p:outputPanel id="p8buttonArea" style="border: 0px; background: transparent">
+                    <div class="header_link prenext_btn Container70">
+                    <div class="Container50 next_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       actionListener="#{uobProfile.gotoReview}"> <span class="btntxt">Next</span> <span><p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span></p:commandLink>
+                    </div>
+                    <div class="Container50 pre_btn">
+                        <p:commandLink rendered="true" class="next_pg_link"
+                                       update=":ceForm:workArea"
+                                       process="@this"
+                                       actionListener="#{uobProfile.gotoPrevPage}"><span><p:graphicImage name="images/portfolio/prev_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                width="25px"/></span> <span class="btntxt">Previous</span> </p:commandLink>
+                    </div>
+                    </div>
+                </p:outputPanel>
+
+
+        </div>
+
+        <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                 style="margin-top: 7px;border: 0px; background: transparent"
+                 styleClass="Container100">
+            <h:outputText styleClass="errorText"
+                          value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+            <div class="EmptyBox5"></div>
+        </p:panel>
+
+
+        <div class="Container100 tab_dtl RTQ">
+            <p>Do you want Singapore-based assets to be included as a significant part of the portfolio allocated to you?<br/>
+                <span class="fontWightNormal">You may already own Singapore-based assets, including equities, bonds, properties, businesses and cash,  or derive a significant part of your savings from income sources within Singapore. You have the option of an investment account that does not include Singapore assets as significant part of its portfolio.    Please choose if you wish to include Singapore-based assets in your portfolio.</span>
+
+            </p>
+
+
+            <div class="selectRadio">
+                <p:selectOneRadio id="riskQ8" value="#{uobProfile.riskAns8}" styleClass=""
+                                  layout="pageDirection">
+                    <p:ajax listener="#{uobProfile.onChangeValue}"
+                            update=":ceForm:workArea"/>
+                    <f:selectItem id="r8a1"
+                                  itemLabel="No, I do not want Singapore-based assets to be included as a significant part (in the range of 5%-50%) of the portfolio allocated to me. I have sufficient exposure to Singapore-based assets."
+                                  itemValue="1"></f:selectItem>
+                    <f:selectItem id="r8a2"
+                                  itemLabel="Yes, I want Singapore-based assets to be included as a significant part (in the range of 5%-50%) of the global portfolio allocated to me. "
+                                  itemValue="2"></f:selectItem>
+                </p:selectOneRadio>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</ui:composition>

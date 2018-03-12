@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/common/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="ceForm">
+            <p:outputPanel id="workArea">
+                <p:inputText type="hidden" id="idHdnAcct" class="idHdnAcctCls"
+                             value="#{uobProfile.customer.acctnum}"/>
+
+                <div class="caraousle Container100">
+
+                    <div class="header_tab">
+                        <div class="header_title Container30">Confirmation</div>
+
+                        <p:outputPanel id="cnfbuttonArea" style="border: 0px; background: transparent">
+                            <div class="Container50 next_btn">
+                                <p:commandLink rendered="true" class="next_pg_link"
+                                               update=":ceForm:workArea"
+                                               actionListener="#{uobProfile.gotoPortfolioConfirm}" disabled="#{uobProfile.disableApproveBtn}"> Confirm <span class="icon_span"><p:graphicImage name="images/portfolio/approve_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                                                                                                                                                             width="25px"/></span></p:commandLink>
+                            </div>
+                            <div class="Container50 pre_btn">
+                                <p:commandLink rendered="true" class="next_pg_link"
+                                               update=":ceForm:workArea"
+                                               process="@this"
+                                               actionListener="#{uobProfile.cancelCS}"> <span class="icon_span" ><p:graphicImage name="images/portfolio/cancel_btn.png" library="#{uiLayout.webProfile.cssdir}"
+                                                                                                              width="25px"/></span>Cancel </p:commandLink>
+                            </div>
+                        </p:outputPanel>
+                    </div>
+
+                    <p:panel rendered="#{uobProfile.pagemanager.errorMessage != null }"
+                             style="margin-top: 7px;border: 0px; background: transparent"
+                             styleClass="Container100">
+                        <h:outputText styleClass="errorText"
+                                      value="#{uobProfile.pagemanager.errorMessage}" escape="false"/>
+
+                        <div class="EmptyBox5"></div>
+                    </p:panel>
+
+                    <div class="Container100 tab_dtl risk_switch ">
+                        <div class="Container100">
+                            <div class="Fs17 textAlign">
+                                I have read and understood the investment propectus.
+                                I am approving the execution of my trades as shown in the allocation model.
+                            </div>
+
+                            <div class="EmptyBox20"></div>
+                            <div class="Fs14 textAlign">
+
+                                <p:selectBooleanCheckbox value="#{uobProfile.csCheck1}"
+                                                         styleClass="RegulatoryCheckBox textAlignLeft checkBoxOpt margin-left"
+                                                         itemLabel="I approve!"
+                                                        >
+                                    <p:ajax listener="#{uobProfile.enableApproveBtn}" update=":ceForm:cnfbuttonArea"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>
