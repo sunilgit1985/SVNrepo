@@ -8,6 +8,6 @@ import com.invessence.service.bean.*;
  */
 public interface CallingLayer
 {
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object dataObject, AORequest aoRequest);
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object dataObject, AORequest aoRequest) throws Exception;
    public WSCallResult sendDoc(ServiceRequest serviceRequest, Object dataObject);
 }

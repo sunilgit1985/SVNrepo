@@ -11,6 +11,6 @@ import com.invessence.service.bean.*;
  */
 public interface DocumentServiceTraffic
 {
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests, List<CustodyFileRequest> updFileLst, StringBuilder requestIds) throws Exception;
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests, List<CustodyFileRequest> updFileLst, StringBuilder requestIds);
    public WSCallResult sendDoc(ServiceRequest serviceRequest, Object object);
 }

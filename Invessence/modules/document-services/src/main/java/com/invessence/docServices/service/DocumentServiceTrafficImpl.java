@@ -79,39 +79,49 @@ public class DocumentServiceTrafficImpl implements DocumentServiceTraffic
 //   }
 
    @Override
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests, List<CustodyFileRequest> updFileLst, StringBuilder requestIds)throws  Exception
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object object, List<AORequest> aoRequests, List<CustodyFileRequest> updFileLst, StringBuilder requestIds)
    {
-      WSCallResult wsCallResult=null;
-      List<ZipFile> filesForZip= new LinkedList<>();
-      System.out.println("serviceRequest = " + serviceRequest);
-      callingLayer=getCallingLayer(serviceRequest.getProduct());
-      UOBDataMaster uobDataMaster = (UOBDataMaster) object;
-      for(AORequest aoRequest:aoRequests){
-         System.out.println("aoRequest = " + aoRequest);
-         wsCallResult=callingLayer.createDoc(serviceRequest, object, aoRequest);
-//         List<CustodyFileRequest> updFileLst=custodyService.fetchUploadedFiles(serviceRequest.getProduct(), aoRequest.getAcctnum(), aoRequest.getReqType());
-         requestIds.append(aoRequest.getReqId()+",");
-         if(wsCallResult.getWSCallStatus().getErrorCode()==1)
-         {
-            filesForZip.add(new ZipFile(wsCallResult.getGenericObject().toString(),wsCallResult.getGenericObject().toString()));
-         }else{
-            return wsCallResult;
-         }
-      }
-      if(wsCallResult!=null && wsCallResult.getWSCallStatus().getErrorCode()==1)
+      WSCallResult wsCallResult = null;
+      try
       {
-         for(CustodyFileRequest custodyFileRequest: updFileLst){
-            filesForZip.add(new ZipFile(custodyFileRequest.getFilePath()+"/"+custodyFileRequest.getFileName(),custodyFileRequest.getFilePath()+"/"+custodyFileRequest.getFileName()));
-         }
-         if (filesForZip.size() > 0)
+         List<ZipFile> filesForZip = new LinkedList<>();
+         System.out.println("serviceRequest = " + serviceRequest);
+         callingLayer = getCallingLayer(serviceRequest.getProduct());
+         UOBDataMaster uobDataMaster = (UOBDataMaster) object;
+         for (AORequest aoRequest : aoRequests)
          {
-            String zipDirectory=ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "ZIP_FILES_DIRECTORY");
-            String zipFileName=uobDataMaster.getAccountDetails().getAcctnum().toString();
-            ZipFiles.createZipFile(zipFileName, zipDirectory, filesForZip);
-            emailCreator.createEmail(serviceRequest, ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "OPERATIONS_EMAIL"), "Account Opening Files", "Files related Account Opening Process.", zipDirectory+"/"+zipFileName+".zip");
+            System.out.println("aoRequest = " + aoRequest);
+            wsCallResult = callingLayer.createDoc(serviceRequest, object, aoRequest);
+//         List<CustodyFileRequest> updFileLst=custodyService.fetchUploadedFiles(serviceRequest.getProduct(), aoRequest.getAcctnum(), aoRequest.getReqType());
+            requestIds.append(aoRequest.getReqId() + ",");
+            if (wsCallResult.getWSCallStatus().getErrorCode() == 1)
+            {
+               filesForZip.add(new ZipFile(wsCallResult.getGenericObject().toString(), wsCallResult.getGenericObject().toString()));
+            }
+            else
+            {
+               return wsCallResult;
+            }
+         }
+         if (wsCallResult != null && wsCallResult.getWSCallStatus().getErrorCode() == 1)
+         {
+            for (CustodyFileRequest custodyFileRequest : updFileLst)
+            {
+               filesForZip.add(new ZipFile(custodyFileRequest.getFilePath() + "/" + custodyFileRequest.getFileName(), custodyFileRequest.getFilePath() + "/" + custodyFileRequest.getFileName()));
+            }
+            if (filesForZip.size() > 0)
+            {
+               String zipDirectory = ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "ZIP_FILES_DIRECTORY");
+               String zipFileName = uobDataMaster.getAccountDetails().getAcctnum().toString();
+               ZipFiles.createZipFile(zipFileName, zipDirectory, filesForZip);
+               emailCreator.createEmail(serviceRequest, ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), "OPERATIONS_EMAIL"), "Account Opening Files", "Files related Account Opening Process.", zipDirectory + "/" + zipFileName + ".zip");
+
+            }
 
          }
-
+      }catch (Exception ex){
+         wsCallResult = new WSCallResult(new WSCallStatus(0, "Failure"), ex.getMessage());
+         emailCreator.sendToSupport("ERR", "EXCEPTION:DOCUMENT PROCESS", ex.getMessage());
       }
       return wsCallResult;
    }

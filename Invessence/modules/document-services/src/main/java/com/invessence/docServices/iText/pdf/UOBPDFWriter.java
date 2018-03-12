@@ -24,12 +24,12 @@ public class UOBPDFWriter
 {
    @Autowired
    PDFWriter pdfWriter;
-   public void  writPDF(ServiceRequest serviceRequest, PDFFileDetails pdfFileDetails, Map<String, List<PDFFileRules>> pdfRules, Object dataObject)
+   public void  writPDF(ServiceRequest serviceRequest, PDFFileDetails pdfFileDetails, Map<String, List<PDFFileRules>> pdfRules, Object dataObject) throws Exception
    {
 // List of Files Object Parsing..
 //      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObject + "]");
-      try
-      {
+//      try
+//      {
 
          UOBDataMaster uobDataMaster = (UOBDataMaster) dataObject;
 
@@ -66,9 +66,9 @@ public class UOBPDFWriter
          }
          stamper.close();
 
-       }catch (Exception e){
-         e.printStackTrace();
-      }
+//       }catch (Exception e){
+//         e.printStackTrace();
+//      }
    }
 
    public void  copyPDF(ServiceRequest serviceRequest,PDFFileDetails pdfFileDetails, Object dataObject) throws Exception

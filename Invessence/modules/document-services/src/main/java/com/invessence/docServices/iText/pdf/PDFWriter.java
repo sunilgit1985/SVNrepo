@@ -18,11 +18,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PDFWriter
 {
-   public void  writPDF(PdfStamper stamper, List<PDFFileRules> pdfRules, Object[] dataObjects){
+   public void  writPDF(PdfStamper stamper, List<PDFFileRules> pdfRules, Object[] dataObjects) throws Exception
+   {
 
 //      System.out.println("pdfRules = [" + pdfRules + "], dataObject = [" + dataObjects + "]");
-try
-{
+//try
+//{
 
 //      Image img = Image.getInstance("pdf\\watermark.png");
 //      img.setAbsolutePosition(200, 400);
@@ -71,6 +72,9 @@ try
 //         under = stamper.getUnderContent(pdfFileRules.getPageNo());
 //         under.addImage(img);
             over = stamper.getOverContent(pdfFileRules.getPageNo());
+               if(over==null){
+                  throw new Exception("Page Number :"+pdfFileRules.getPageNo()+" not available in respected PDF file.");
+               }
             over.beginText();
             over.setFontAndSize(bf, 9);
             over.setTextMatrix(pdfFileRules.getXcord(), pdfFileRules.getYcord());
@@ -80,9 +84,9 @@ try
             over.endText();
             }
          }
-}catch (Exception e){
-   e.printStackTrace();
-}
+//}catch (Exception e){
+//   e.printStackTrace();
+//}
 
    }
 

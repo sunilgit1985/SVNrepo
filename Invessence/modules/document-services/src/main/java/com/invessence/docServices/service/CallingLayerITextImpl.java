@@ -25,11 +25,11 @@ public class CallingLayerITextImpl implements CallingLayer
    UOBPDFWriter uobPDFWriter;
    private static final Logger logger = Logger.getLogger(CallingLayerITextImpl.class);
    @Override
-   public WSCallResult createDoc(ServiceRequest serviceRequest, Object dataObject, AORequest aoRequest)
+   public WSCallResult createDoc(ServiceRequest serviceRequest, Object dataObject, AORequest aoRequest)throws Exception
    {
       WSCallResult wsCallResult = null;
-      try
-      {
+//      try
+//      {
 
          LinkedHashMap<String, LinkedList<PDFFileDetails>> pdfFileDetails = (LinkedHashMap<String, LinkedList<PDFFileDetails>>) ServiceDetails.getAdditionalDetails(serviceRequest.getProduct(), Constant.SERVICES.DOCUMENT_SERVICES.toString(), serviceRequest.getMode(), Constant.ADDITIONAL_DETAILS.PDF_FILE_DETAILS.toString());
 
@@ -62,10 +62,10 @@ public class CallingLayerITextImpl implements CallingLayer
             System.out.println("PDF Rules are not available for  :" + pdfCode);
             wsCallResult = new WSCallResult(new WSCallStatus(0, "Failure"), null);
          }
-      }catch(Exception ex){
-         wsCallResult = new WSCallResult(new WSCallStatus(0, "Failure"), ex.getMessage());
-         ex.printStackTrace();
-      }
+//      }catch(Exception ex){
+//         wsCallResult = new WSCallResult(new WSCallStatus(0, "Failure"), ex.getMessage());
+//         ex.printStackTrace();
+//      }
 
 
 //      Map<String,Country> countryDetails=(Map<String,Country>) ServiceDetails.genericDetails.get(Constant.GENERIC_DETAILS.COUNTRY.toString());
