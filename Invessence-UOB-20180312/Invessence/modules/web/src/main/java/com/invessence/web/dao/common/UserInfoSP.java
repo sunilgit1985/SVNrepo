@@ -143,7 +143,7 @@ public class UserInfoSP extends StoredProcedure
       inputMap.put("p_advisor", data.getAdvisor());
       inputMap.put("p_rep", data.getRep());
       inputMap.put("p_access", data.getAccess());
-      inputMap.put("p_fullname",data.getRegfullname());
+      inputMap.put("p_fullname",data.getRegfullname()==null||data.getRegfullname().equals("")?data.getFirstName()+" "+data.getLastName():data.getRegfullname());
 
       return super.execute(inputMap);
    }
