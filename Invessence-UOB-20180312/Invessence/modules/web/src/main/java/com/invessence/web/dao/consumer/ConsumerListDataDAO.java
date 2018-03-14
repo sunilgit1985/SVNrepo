@@ -1028,7 +1028,11 @@ public ArrayList<CustomerData> getClientProfileList(Long logonid, Long acctnum, 
          if(data.getManaged()){
             data.setCstmAccountLabel(data.getCustomName()+"-"+data.getDisplayActiveAcctNum());
          }else{
-            data.setCstmAccountLabel(data.getCustomName()+"-"+data.getCurrentStatus());
+            if(data.getCustomName()==null || data.getCustomName().trim().equals("")){
+               data.setCstmAccountLabel("Goal-"+data.getCurrentStatus());
+            }else{
+               data.setCstmAccountLabel(data.getCustomName()+"-"+data.getCurrentStatus());
+            }
          }
 
          data.setTradeCurrency(convert.getStrData(rs.get("tradeCurrency")));
