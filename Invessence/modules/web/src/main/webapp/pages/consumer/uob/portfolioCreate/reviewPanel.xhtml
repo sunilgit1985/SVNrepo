@@ -68,7 +68,7 @@
                                               minValue="#{uobProfile.riskCalc.scoreLowerBound}"
                                               maxValue="#{uobProfile.riskCalc.scoreUpperBound}"
                                               step="1">
-                                        <p:ajax event="slideEnd"
+                                        <p:ajax event="slideEnd" update=":ceForm:reviewArea"
                                                 listener="#{uobProfile.onAllocSlider}" />
                                     </p:slider>
                                 </div>

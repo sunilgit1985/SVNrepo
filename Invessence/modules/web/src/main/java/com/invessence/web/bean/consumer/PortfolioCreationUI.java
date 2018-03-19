@@ -447,6 +447,8 @@ public class PortfolioCreationUI extends UserInterface
          customer.riskProfile.setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
          riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
          riskCalc.setAssetRisk(0,eventValue.doubleValue());
+         riskCalc.setRiskScore(eventValue.doubleValue());
+         riskCalc.setScore(0, riskCalc.getRiskScore());
          formEdit = true;
          createAssetPortfolio();
       }
@@ -904,6 +906,7 @@ public class PortfolioCreationUI extends UserInterface
 //         riskCalc.setIntRiskScore(riskCalc.getIntRiskScore()-1);
          riskCalc.setRiskScore(riskCalc.getIntRiskScore().doubleValue() - 1.0);
          riskCalc.setAssetRisk(0,riskCalc.getIntRiskScore().doubleValue() - 1.0);
+         riskCalc.setScore(0, riskCalc.getRiskScore());
          formEdit = true;
          createAssetPortfolio();
       }
@@ -921,6 +924,7 @@ public class PortfolioCreationUI extends UserInterface
 //         riskCalc.setIntRiskScore(riskCalc.getIntRiskScore() + 1);
          riskCalc.setRiskScore(riskCalc.getIntRiskScore().doubleValue() + 1.0);
          riskCalc.setAssetRisk(0,riskCalc.getIntRiskScore().doubleValue() + 1.0);
+         riskCalc.setScore(0, riskCalc.getRiskScore());
          formEdit = true;
          createAssetPortfolio();
       }
