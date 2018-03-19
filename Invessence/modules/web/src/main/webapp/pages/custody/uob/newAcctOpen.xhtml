@@ -49,6 +49,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <span class="title_line">Title</span>
                                                 <p:selectOneMenu id="nwPriHldrTtl"
                                                                  value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.title}" name="title">
+                                                    <p:ajax listener="#{uobCustodyBean.onChangeTitle()}" update="nwPriHldrGndr"/>
                                                     <f:selectItem itemLabel="Select Title" itemValue="Select"/>
                                                     <f:selectItem itemLabel="Dr" itemValue="Dr"/>
                                                     <f:selectItem itemLabel="Professor" itemValue="Professor"/>

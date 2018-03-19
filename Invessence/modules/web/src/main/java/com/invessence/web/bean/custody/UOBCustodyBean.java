@@ -1187,6 +1187,19 @@ public void onChngRpDtls(String flag){
       setActiveTab(getPagemanager().getPage());
    }
 
+   public void onChangeTitle(){
+      try{
+         if(getUobDataMaster()!=null && getUobDataMaster().getIndividualOwnersDetails()!=null && getUobDataMaster().getIndividualOwnersDetails().getTitle()!=null && (getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Mrs") || getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Miss") || getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Mdm"))){
+            getUobDataMaster().getIndividualOwnersDetails().setGender("Female");
+         }else{
+            getUobDataMaster().getIndividualOwnersDetails().setGender("Male");
+         }
+      }catch(Exception e){
+
+      }
+   }
+
+
    public void onChngNation(boolean bflag)
    {
       try
