@@ -38,10 +38,10 @@ UPDATE `invdb`.`web_site_info` SET `value`='UAT' WHERE `url`='200deep' and`name`
 UPDATE `invdb`.`web_site_info` SET `value`='UAT' WHERE `url`='200deep' and`name`='SERVICE.DOCUSIGN.MODE';
 UPDATE `invdb`.`web_site_info` SET `value`='UAT' WHERE `url`='200deep' and`name`='SERVICE.EMAILER.MODE';
 UPDATE `invdb`.`web_site_info` SET `value`='UAT' WHERE `url`='200deep' and`name`='SERVICE.PRICING.MODE';
-UPDATE `invdb`.`web_site_info` SET `value`='images/logo/bellrock.png' WHERE `url`='200deep' and`name`='WEB.LOGO';
+UPDATE `invdb`.`web_site_info` SET `value`='images/logo/200DeepLogo.png' WHERE `url`='200deep' and`name`='WEB.LOGO';
 UPDATE `invdb`.`web_site_info` SET `value`='XXX XXX-XXXX' WHERE `url`='200deep' and`name`='PHONE.MAIN';
 UPDATE `invdb`.`web_site_info` SET `value`='XXX XXX-XXXX' WHERE `url`='200deep' and`name`='PHONE.SUPPORT';
-UPDATE `invdb`.`web_site_info` SET `value`='/javax.faces.resource/images/bellrock.png.xhtml?ln=tcm' WHERE `url`='200deep' and`name`='WEB.FAVICONLOGO';
+UPDATE `invdb`.`web_site_info` SET `value`='/javax.faces.resource/images/200DeepLogo.png.xhtml?ln=tcm' WHERE `url`='200deep' and`name`='WEB.FAVICONLOGO';
 UPDATE `invdb`.`web_site_info` SET `value`='UAT' WHERE `url`='200deep' and`name`='SERVICE.CUSTODY';
 UPDATE `invdb`.`web_site_info` SET `value`='1000' WHERE `url`='200deep' and`name`='INVESTMENT.MIN1ST';
 UPDATE `invdb`.`web_site_info` SET `value`='UAT' WHERE `url`='200deep' and`name`='WEB.MODE';
