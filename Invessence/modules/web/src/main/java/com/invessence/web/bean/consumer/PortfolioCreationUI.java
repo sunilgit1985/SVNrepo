@@ -15,7 +15,9 @@ import com.invessence.web.dao.consumer.*;
 import com.invessence.web.data.common.*;
 import com.invessence.web.util.*;
 import com.invmodel.asset.data.AssetClass;
+import com.invmodel.inputData.ProfileData;
 import com.invmodel.model.ModelUtil;
+import com.invmodel.model.fixedmodel.data.FMData;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.portfolio.data.Portfolio;
 import com.invmodel.risk.data.*;
@@ -383,6 +385,113 @@ public class PortfolioCreationUI extends UserInterface
       return (csCheck1 && csCheck2);
    }
 
+   public Integer getAge()
+   {
+      return getCustomer().getAge();
+   }
+
+   public void setAge(Integer age)
+   {
+      getCustomer().setAge(age);
+      riskCalc.setAge(age);
+   }
+
+   public Integer getHorizon()
+   {
+      if (getCustomer() != null)
+      {
+         return getCustomer().getHorizon();
+      }
+      else
+      {
+         return null;
+      }
+
+   }
+
+   public void setHorizon(Integer horizon)
+   {
+      getCustomer().setHorizon(horizon);
+      riskCalc.setHorizon(horizon);
+   }
+
+   public Integer getWithdrawlPeriod()
+   {
+      return getCustomer().riskProfile.getAnswerInt(RiskConst.WITHDRAWALPERIOD);
+   }
+
+   public void setWithdrawlPeriod(Integer period)
+   {
+      getCustomer().riskProfile.setAnswer(RiskConst.WITHDRAWALPERIOD, period);
+      riskCalc.setWithDrwalPeriod(period);
+   }
+
+   public String getTradeCurrency()
+   {
+      return getCustomer().getTradeCurrency();
+   }
+
+   public void setTradeCurrency(String currency)
+   {
+      getCustomer().setTradeCurrency(currency);
+   }
+
+   public Integer getInitialInvestment()
+   {
+      return getCustomer().getInitialInvestment();
+   }
+
+   public void setInitialInvestment(Integer investment)
+   {
+      getCustomer().setInitialInvestment(investment);
+      getCustomer().setExchangeRate(getExchangeRate());
+      setRiskTotalInvestment(investment.doubleValue());
+   }
+
+   public void setRiskTotalInvestment(Double investment) {
+      if (! getCustomer().getTradeCurrency().equalsIgnoreCase(webutil.getWebprofile().getDefaultCurrency()))
+      {
+         Double exRate = getExchangeRate();
+         Double calcInvestment = investment * ((exRate == null || exRate == 0.0) ? 1.0 : exRate);
+         getCustomer().getRiskProfile().setTotalInvestment(calcInvestment);
+         riskCalc.setInvestment(calcInvestment);
+      }
+      else {
+         riskCalc.setInvestment(investment);
+      }
+
+   }
+
+   public Integer getRecurringInvestment()
+   {
+      if (getCustomer() != null)
+      {
+         return getCustomer().getRecurringInvestment();
+      }
+      return null;
+   }
+
+   public void setRecurringInvestment(Integer investment)
+   {
+      getCustomer().setRecurringInvestment(investment);
+      riskCalc.setRecurring(investment.doubleValue());
+   }
+
+   public Integer getRecurringPeriod()
+   {
+      if (getCustomer() != null)
+      {
+         return getCustomer().riskProfile.getAnswerInt(RiskConst.RECURRINGPERIOD);
+      }
+      return null;
+   }
+
+   public void setRecurringPeriod(Integer period)
+   {
+      getCustomer().riskProfile.setAnswer(RiskConst.RECURRINGPERIOD, period);
+      riskCalc.setRecurringPeriod(period);
+   }
+
    public void fetchClientData()
    {
       try
@@ -435,6 +544,39 @@ public class PortfolioCreationUI extends UserInterface
       {
          ex.printStackTrace();
       }
+   }
+
+   public Boolean getFixedModel()
+   {
+      if (modelUtil != null && modelUtil.getFixoptimizer() != null) {
+         if (modelUtil.getFixoptimizer().isThisFixedTheme(getCustomer().getTheme())) {
+            return true;
+         }
+      }
+      return false;
+   }
+
+   public FMData getFixedFMModel()
+   {
+      return modelUtil.getFixoptimizer().getTheme(getCustomer().getTheme(), riskCalc.getScore(0));
+   }
+
+   public String getFixedModelName()
+   {
+      String value = "";
+      if (getFixedFMModel() != null) {
+         value = getFixedFMModel().getDisplayname();
+      }
+      return value;
+   }
+
+   public String getFixedModelDescription()
+   {
+      String  value = "";
+      if (getFixedFMModel() != null) {
+         value = getFixedFMModel().getDescription();
+      }
+      return value;
    }
 
 
@@ -520,6 +662,19 @@ public class PortfolioCreationUI extends UserInterface
       }
    }
 
+   public void doPerformanceChart()
+   {
+      if (modelUtil.getFixoptimizer().isThisFixedTheme(getCustomer().getTheme()))
+      {
+         ProjectionData[] performancedata = modelUtil.buildPerformanceChart(getCustomer().getProfileInstance(), getFixedFMModel());
+         chart.getHighChart().createProjectionHighChart(performancedata,
+                                          getHorizon(),
+                                          getAge(),
+                                          getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREDAGE),
+                                          null);
+      }
+   }
+
    public void createGlidePath() {
       Integer horizon = riskCalc.getDefaultHorizon();
       Integer withdrawl = (riskCalc.getWithDrwalPeriod() == null) ? 1 : riskCalc.getWithDrwalPeriod();
@@ -587,6 +742,12 @@ public class PortfolioCreationUI extends UserInterface
    public Boolean getEnablePrevButton()
    {
       return (!pagemanager.isFirstPage());
+   }
+
+   public void startover()
+   {
+      closeFTPanel();
+      pagemanager.setPage(0);
    }
 
    public void gotoPrevPage()

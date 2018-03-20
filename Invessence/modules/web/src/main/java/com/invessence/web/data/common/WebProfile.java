@@ -231,7 +231,7 @@ public class WebProfile
       webInfo.put("WEB.MODE", "DEMO");
       webInfo.put("WEB.THEME", "spark");
       webInfo.put("WEB.THEMELIB", "spark-layout");
-      webInfo.put("WEB.GOOGLEANALYTICS", "bb_googleanalytics.js");
+      webInfo.put("WEB.GOOGLEANALYTICS", "googleanalytics.js");
       webInfo.put("WEB.FAVICONLOGO", "/javax.faces.resource/images/Invessenceicon.png.xhtml?ln=tcm");
    }
 

@@ -22,6 +22,8 @@ public class AssetClass
    private Double percentfixedIncome = 0.0;
    private Double percentcash = 0.0;
 
+   private String themeName;
+   private String themeDescription;
 
    public AssetClass()
    {
@@ -201,6 +203,26 @@ public class AssetClass
    public void setPercentcash(Double percentcash)
    {
       this.percentcash = percentcash;
+   }
+
+   public String getThemeName()
+   {
+      return themeName;
+   }
+
+   public void setThemeName(String themeName)
+   {
+      this.themeName = themeName;
+   }
+
+   public String getThemeDescription()
+   {
+      return themeDescription;
+   }
+
+   public void setThemeDescription(String themeDescription)
+   {
+      this.themeDescription = themeDescription;
    }
 
    public Asset getAsset(String asset)

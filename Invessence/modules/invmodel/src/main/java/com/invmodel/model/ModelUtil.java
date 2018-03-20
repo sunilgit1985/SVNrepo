@@ -70,6 +70,31 @@ public class ModelUtil
       this.forwardProjection = forwardProjection;
    }
 
+   public AssetAllocationModel getAssetmodel()
+   {
+      return assetmodel;
+   }
+
+   public PortfolioModel getPortfolioModel()
+   {
+      return portfolioModel;
+   }
+
+   public ForwardProjection getForwardProjection()
+   {
+      return forwardProjection;
+   }
+
+   public FixedModelOptimizer getFixoptimizer()
+   {
+      return fixoptimizer;
+   }
+
+   public TLHSecurityCollection getTlhSecurityCollection()
+   {
+      return tlhSecurityCollection;
+   }
+
    public AssetClass createAssetAllocation(RiskCalc riskCalc)
    {
       return assetmodel.createAllocation(riskCalc);

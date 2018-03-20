@@ -674,6 +674,8 @@ public class AssetAllocationModel
 
       if (fixedModelData != null)
       {
+         assetclass.setThemeName(fixedModelData.getDisplayname());
+         assetclass.setThemeDescription(fixedModelData.getDescription());
          for (FMAssetData fiasset : fixedModelData.getAssetsData())
          {
             String assetname = fiasset.getAsset();

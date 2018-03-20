@@ -26,6 +26,11 @@ public class Chart
       highChart = new GenerateHighChartsData();
    }
 
+   public GenerateHighChartsData getHighChart()
+   {
+      return highChart;
+   }
+
    public Object getMeterGuage()
    {
       return primefacechart.getMeterGuage();

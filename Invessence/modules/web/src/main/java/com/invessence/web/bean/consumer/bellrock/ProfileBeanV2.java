@@ -1,24 +1,27 @@
-package com.invessence.web.bean.consumer.uob;
+package com.invessence.web.bean.consumer.bellrock;
 
 import java.util.*;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
 import com.invessence.converter.JavaUtil;
 import com.invessence.web.bean.consumer.PortfolioCreationUI;
 import com.invessence.web.constant.WebConst;
-import com.invessence.web.util.*;
 import com.invessence.web.util.Impl.*;
+import com.invessence.web.util.*;
+import com.invmodel.inputData.ProfileData;
+import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.risk.data.RiskConst;
-import com.invmodel.risk.data.client.UOBRiskCalc;
+import com.invmodel.risk.data.client.BellRockRiskCalc;
 
 /**
  * Created by prashant on 11/16/2017.
  */
 
-@ManagedBean(name = "uobProfile")
+@ManagedBean(name = "bellrockpb")
 @SessionScoped
-public class ProfileBean extends PortfolioCreationUI
+public class ProfileBeanV2 extends PortfolioCreationUI
 {
 
    private ArrayList<WebMenuItem> goalsdata = null;
@@ -34,14 +37,12 @@ public class ProfileBean extends PortfolioCreationUI
    {
       super.initUI();
       selectedGoal = null;
-      pagemanager = new PagesImpl(9);  // Set number of pages as per UI.
+      pagemanager = new PagesImpl(5);  // Set number of pages as per UI.
       progressbar = new ProgressBarImpl(0.0, (100.0 / pagemanager.getMaxNoofPages()));
    }
 
    private void setDefaultSwitch()
    {
-      setRiskAns2(true);
-      setRiskAns3(true);
    }
 
    public void setDefault()
@@ -265,36 +266,38 @@ public class ProfileBean extends PortfolioCreationUI
    }
 
    @Override
+   public void startover()
+   {
+      closeFTPanel();
+      riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+      pagemanager.setPage(0);
+      super.startover();
+   }
+
+   @Override
    public void gotoNextPage()
    {
-      try
-      {
-         if (validatePage(pagemanager.getPage()))
-         {
-            // If in New mode, and once the first page conditions are satisfied, we revert the mode to Edit.
-            if (beanmode.equals(UIMode.New))
-            {
-               beanmode = UIMode.Edit;
-            }
-            createAssetPortfolio();
+      Integer currentpage = pagemanager.getPage();
 
-            if (riskCalc.getKnockOutFlag())
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.knockout", "Cannot proceed further. You are an extremely conservative investor and this tool may not be right for you. ", null));
-               return;
-            }
-            getCustomFlags(pagemanager.getPage()+1);
-            super.gotoNextPage();
-         }else{
-            if (pagemanager.getPage() == 1)
-            {
-               reOrganizeGoalList();
-            }
-         }
-      }
-      catch (Exception ex)
+      if (validatePage(pagemanager.getPage()))
       {
-         ex.printStackTrace();
+         // If in New mode, and once the first page conditions are satisfied, we revert the mode to Edit.
+         if (beanmode.equals(UIMode.New))
+         {
+            beanmode = UIMode.Edit;
+         }
+         if (currentpage == 3)
+         {
+            doPerformanceChart();
+         }
+         riskCalc.calculate();
+         createAssetPortfolio();
+      }
+      else
+      {
+         // Certain pages have default FacesContext to display error messages.
+         FacesContext context = FacesContext.getCurrentInstance();
+         context.addMessage(null, new FacesMessage(pagemanager.getErrorMessage(), pagemanager.getErrorMessage()));
       }
    }
 
@@ -303,13 +306,6 @@ public class ProfileBean extends PortfolioCreationUI
    {
       try
       {
-         rollbackRiskQuestion(pagemanager.getPage());
-         if (pagemanager.getPage() == 2)
-         {
-            reOrganizeGoalList();
-         }
-
-         getCustomFlags(pagemanager.getPage()-1);
          pagemanager.clearErrorMessage(pagemanager.getPage());
          super.gotoPrevPage();
       }
@@ -354,7 +350,7 @@ public class ProfileBean extends PortfolioCreationUI
          loadWebMenuList(customer.getAdvisor());
          customer.setAdvisor(advisor);
          customer.riskProfile.setAdvisor(advisor);
-         riskCalc = new UOBRiskCalc(customer.riskProfile);
+         riskCalc = new BellRockRiskCalc(customer.riskProfile);
       }
    }
 
@@ -414,6 +410,7 @@ public class ProfileBean extends PortfolioCreationUI
 
       try
       {
+         /*
          if (selectedGoal != null)
          {
             selectedGoalValue = RiskConst.GOALS.displayToGoal(selectedGoal.getDisplayName());
@@ -423,6 +420,7 @@ public class ProfileBean extends PortfolioCreationUI
                return;
             }
          }
+         */
          age = getCustomer().getAge();
          horizon = getCustomer().getHorizon();
          score = getRiskCalc().ageTimeFormula(age, horizon);
@@ -498,7 +496,7 @@ public class ProfileBean extends PortfolioCreationUI
 
    private Boolean validateIntroPage()
    {
-      Boolean dataOK = true;
+      Boolean validateOK = true;
       Integer ans;
       pagemanager.clearErrorMessage(0);
       if (!hasData(getCustomer().getAge()))
@@ -532,261 +530,159 @@ public class ProfileBean extends PortfolioCreationUI
 
       if (hasData(pagemanager.getErrorMessage()))
       {
-         dataOK = false;
+         validateOK = false;
       }
-      this.dataOK = dataOK;
-      return dataOK;
+      this.dataOK = validateOK;
+      return validateOK;
    }
 
 
    private Boolean validatePage(Integer pagenum)
    {
-      Boolean dataOK = true;
+
+      Boolean validateOK = true;
       Integer ans;
       pagemanager.clearErrorMessage(pagenum);
+
+      if (pagenum == null)
+      {
+         return false;
+      }
+
+      Integer minInvestmentRequired = 0;
+      if (webutil.getWebprofile().getWebInfo().containsKey("INVESTMENT.MIN1ST"))
+      {
+         minInvestmentRequired = webutil.converter.getIntData(webutil.getWebprofile().getWebInfo().containsKey("INVESTMENT.MIN1ST"));
+      }
+
+      if (minInvestmentRequired == null || minInvestmentRequired == 0)
+      {
+         minInvestmentRequired = 2000;
+      }
+
       switch (pagenum)
       {
-         case 0: // This is Intro page
-            if (!hasData(getCustomer().getAge()))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.required", "Age is required.", null));
-            }
-            else if (!JavaUtil.isInRange(getCustomer().getAge(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.age.invalid", "Negative value is not allowed for age.", null));
-            }
-            else if (!JavaUtil.isInRange(getCustomer().getAge(), 21, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minAge.required", "You should be atleast 21 year old to invest.", new Object[]{21}));
-            }
-            break;
-         case 1: // Goal Page
-            if (selectedGoal == null)
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.goal.required", "Goal must be selected.", null));
+         case 0: // Accttype page
 
-            }
-            else
+            if (getCustomer().getGoal() == null || getInitialInvestment() == null)
             {
-               RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
-               if (thisgoal.equals(RiskConst.GOALS.RETIREMENT))
+               validateOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.investment.required", "Min $2,000 investment required", new Object[]{"$2,000"}));
+            }
+            if (getInitialInvestment() != null && getInitialInvestment() < minInvestmentRequired)
+            {
+               validateOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.investment.constraint", "Min $2,000 investment required", new Object[]{"$2,000"}));
+            }
+
+            if (getCustomer().getGoal() != null)
+            {
+               if (getCustomer().getAccountType() != null)
                {
-                  if (getSelectedRetirementGoal())
+                  if (getCustomer().getAccountType().equalsIgnoreCase("Traditional IRA") || getCustomer().getAccountType().equalsIgnoreCase("Roth IRA")
+                     || getCustomer().getAccountType().equalsIgnoreCase("SEP IRA") || getCustomer().getAccountType().equalsIgnoreCase("Roll Over IRA"))
                   {
-                     if (!hasData(getCustomer().getHorizon()))
+                     if (! getCustomer().getGoal().equalsIgnoreCase("retirement"))
                      {
-                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.horizon.required", "Please enter when you plan to retire.", null));
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.accounttype.retirement", "Goal cannot be changed as this is already an IRA. Please reset to Retirement.", new Object[]{getCustomer().getGoal()}));
                      }
-                     else if (!JavaUtil.isInRange(getCustomer().getHorizon(), 0, null))
+                  }
+               }
+               if (getCustomer().getGoal().equalsIgnoreCase("retirement"))
+               {
+                  if (getAge() == null)
+                  {
+                     validateOK = false;
+                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.age.constraint", "Age must be between 18 and 100 years.", null));
+                  }
+                  else
+                  {
+                     if ((getAge() < 18) || (getAge() > 100))
                      {
-                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.horizon.invalid", "Negative value is not allowed for retirement years.", null));
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.age.constraint", "Age must be between 18 and 100 years.", null));
                      }
-                  }else{
-                     setHorizon(0);
                   }
-                  if (!hasData(getWithdrawlPeriod()))
+
+                  if (! getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.RETIRED))
                   {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.withdrwl.required", "Please enter when you plan to withdraw.", null));
+                     if (getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREDAGE) == null)
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.retireage.required", "When do you plan to retire?", null));
+                     }
+                     else if (getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREDAGE) <= getAge())
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.retireage.constraint", "Retirement age must be greater than current age.", null));
+                     }
+                     else if (getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREDAGE) > 100)
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.retireage.constraint2", "Retirement age must be less than 100 years.", null));
+                     }
                   }
-                  else if (!JavaUtil.isInRange(getWithdrawlPeriod(), 0, null))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.retirement.withdrwl.invalid", "Negative value is not allowed for withdrawl years.", null));
-                  }
-               }
-               if (thisgoal.equals(RiskConst.GOALS.PROPERTY))
-               {
-                  if (!hasData(getCustomer().getHorizon()))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.property.horizon.required", "Please enter when you plan to purchase property.", null));
-                  }
-                  else if (!JavaUtil.isInRange(getCustomer().getHorizon(), 0, null))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.property.horizon.invalid", "Negative value is not allowed for investment years.", null));
-                  }
-                  setWithdrawlPeriod(null);
-               }
-               if (thisgoal.equals(RiskConst.GOALS.EDUCATION))
-               {
-                  if (!hasData(getCustomer().getHorizon()))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.education.horizon.required", "Please enter when you expect your child to enter college/university.", null));
-                  }
-                  else if (!JavaUtil.isInRange(getCustomer().getHorizon(), null, 20))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.education.maxHorizon.required", " Education goal can not exceed 20 years", new Object[]{20}));
-                  }
-                  else if (!JavaUtil.isInRange(getCustomer().getHorizon(), 0, null))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.education.horizon.invalid", "Negative value is not allowed for Education goal.", null));
-                  }
-               }
-               if (thisgoal.equals(RiskConst.GOALS.BUILDWEALTH))
-               {
-                  if (!hasData(getCustomer().getHorizon()))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.buildwealth.horizon.required", "Please enter how long you plan to invest.", null));
-                  }
-                  else if (!JavaUtil.isInRange(getCustomer().getHorizon(), 0, null))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.buildwealth.horizon.invalid", "Negative value is not allowed for investment years.", new Object[]{21}));
-                  }
-                  if (!JavaUtil.isInRange(getWithdrawlPeriod(), 0, null))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.buildwealth.withdrawlPrd.invalid", "Negative value is not allowed for withdrawl period.", new Object[]{21}));
-                  }
-               }
-               if (thisgoal.equals(RiskConst.GOALS.LEGACY))
-               {
-                  Integer legacyAnswer = getCustomer().getRiskProfile().getRiskAnswer(1);
-                  if (!hasData(legacyAnswer))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.legacy.horizon.required", "Please choose your planning aim.", null));
-                  }
-                  setWithdrawlPeriod(null);
-                  setHorizon(30);
-               }
-            }
-            break;
-         case 2: // Investment Page
-            RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
-            if (!hasData(getInitialInvestment()))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.initialInvestment.required", "Initial investment amount is required.", null));
-            }
-            else
-            {
-               Double minInitialRequired;
-               if (webutil.isUserLoggedIn())
-               {
-                  minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MIN2NDINTIALRQMT, 1.0);
                }
                else
                {
-                  minInitialRequired = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MININTITIALRQMT, 1.0);
-               }
-               if (getInitialInvestment() < minInitialRequired.intValue())
-               {
-//                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of " + minInitialRequired.toString() + " is required.", new Object[]{minInitialRequired.toString()}));
-                  String strMsg = getPortfolioInvstmCurr() + " " + getWebutil().getDataDisplayConverter().displayWithComma(minInitialRequired.intValue());
-                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mininitialInvestment.required", "A minimum investment of " + strMsg + " is required.", new Object[]{strMsg}));
-
-               }
-            }
-            if (selectedRetirementGoal && !thisgoal.equals(RiskConst.GOALS.LEGACY))
-            {
-               if (!JavaUtil.isInRange(getRecurringInvestment(), 0, null))
-               {
-                  pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.recurringInvestment.invalid", "Negative value is not allowed for per annum contribution.", null));
-               }
-               else if (hasData(getRecurringInvestment()))
-               {
-                  Double minRecurrInvstmt;
-                  minRecurrInvstmt = getCustomer().riskProfile.getDefaultDoubleValue(RiskConst.MINRECCURRINGRQMT, 0.0);
-                  if (getRecurringInvestment() > 0.0 && getRecurringInvestment() < minRecurrInvstmt)
+                  if (getCustomer().getGoal().equalsIgnoreCase("college"))
                   {
-                     String strMsg = getWebutil().getDataDisplayConverter().displayWithComma(minRecurrInvstmt.intValue());
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.minrecurringInvestment.required", "A minimum recurring investment of " + strMsg + " is required.", new Object[]{strMsg}));
+                     if (! hasData(getHorizon()))
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.college.required", "When does your child plan to attend college?", null));
+                     }
+                     else if (getHorizon() < 1 || getHorizon() > 18)
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.college.constraint", "Number of years to invest must be between 1 and 18 years.", null));
+                     }
                   }
-
-                  if (!hasData(getRecurringPeriod()))
+                  else
                   {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.recurringPrd.required", "Recurring period is required.", null));
-                  }
-                  else if (!JavaUtil.isInRange(getRecurringPeriod(), 0, null))
-                  {
-                     pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.recurringPrd.invalid", "Negative value is not allowed for recurring period.", null));
+                     if (! hasData(getHorizon()))
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.otherhorizon.required", "When do you plan to use these funds?", null));
+                     }
+                     else if (getHorizon() < 1 || getHorizon() > 100)
+                     {
+                        validateOK = false;
+                        pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.otherhorizon.constraint", "Number of years to invest must be between 1 and 100 years.", null));
+                     }
                   }
                }
             }
             break;
-         case 3: // Asset/Liabilty/Networth
-            if(hasData(getCustomer().getAccountFinancials().getHomeEquity()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getHomeEquity().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.priRes.invalid", "Negative value is not allowed for primary residence.", null));
-            }
-            if(hasData(getCustomer().getAccountFinancials().getInvestment()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getInvestment().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.invstAsst.invalid", "Negative value is not allowed for investable assets.", null));
-            }
-            if(hasData(getCustomer().getAccountFinancials().getHouseholdwages()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getHouseholdwages().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.houseWdgs.invalid", "Negative value is not allowed for employment income / income from business.", null));
-            }
-            if(hasData(getCustomer().getAccountFinancials().getOtherincome()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getOtherincome().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.otherincome.invalid", "Negative value is not allowed for other source of income.", null));
-            }
-            if(hasData(getCustomer().getAccountFinancials().getMortgageLoan()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getMortgageLoan().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.mortgageLoan.invalid", "Negative value is not allowed for mortgage loan on primary residence.", null));
-            }
-            if(hasData(getCustomer().getAccountFinancials().getOtherDebt()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getOtherDebt().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.otherDebt.invalid", "Negative value is not allowed for liabilities.", null));
-            }
-            if (!hasData(getCustomer().getAccountFinancials().getNetworth()))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.networth.required", "Current net worth amount is required.", null));
-            }
-            if (hasData(getCustomer().getAccountFinancials().getNetworth()) &&
-               !JavaUtil.isInRange(getCustomer().getAccountFinancials().getNetworth().intValue(), 0, null))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.networth.invalid", "Negative value is not allowed for net worth amount.", null));
-            }
-            break;
-         case 4: // Risk Questions start (First two are imbedded in this page.
-            // Don't need to check, as the default are set when starting.
-            break;
-         case 5:
-            ans = getCustomer().riskProfile.getRiskAnswer(4);
-            if (ans == null || ans == 0)
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
-            }
-            break;
-         case 6:
-            ans = getCustomer().riskProfile.getRiskAnswer(5);
+         case 1: // Investment Choices
+            ans = getCustomer().getRiskProfile().getRiskAnswer(1);
             if (!hasData(ans))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices", null));
+               validateOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.risk.radio.required", "Please choose one of these choices.", null));
             }
             break;
-         case 7:
-            ans = getCustomer().riskProfile.getRiskAnswer(6);
+         case 2: // Investment Risk
+            ans = getCustomer().getRiskProfile().getRiskAnswer(2);
             if (!hasData(ans))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
+               validateOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.risk.meter.required", "Please select the image that best represents your tolerance for risk.", null));
             }
             break;
-         case 8:
-            ans = getCustomer().riskProfile.getRiskAnswer(7);
+         case 3: // Investment Projection
+            ans = getCustomer().getRiskProfile().getRiskAnswer(3);
             if (!hasData(ans))
             {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
-            }
-            break;
-         case 9:
-            ans = getCustomer().riskProfile.getRiskAnswer(8);
-            if (!hasData(ans))
-            {
-               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.riskans.required", "Please select one of the  risk tolerance choices.", null));
+               validateOK = false;
+               pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.risk.projection.required", "Please choose an investment strategy.", null));
             }
             break;
       }
 
-      if (hasData(pagemanager.getErrorMessage()))
-      {
-         dataOK = false;
-      }
-
-      this.dataOK = dataOK;
-      return dataOK;
+      this.dataOK = validateOK;
+      return validateOK;
    }
 
    private void rollbackRiskQuestion(Integer pageno) {
@@ -870,122 +766,24 @@ public class ProfileBean extends PortfolioCreationUI
       setRiskAns(1, value);
    }
 
-   public Boolean getRiskAns2()
+   public String getRiskAns2()
    {
-      Integer ans = getCustomer().riskProfile.getRiskAnswer(2);
-      if (ans != null)
-      {
-         switch (ans)
-         {
-            case 1:
-               return true;
-            default:
-               break;
-         }
-      }
-      return false;
+      return getCustomer().riskProfile.getRiskAnswer(2).toString();
    }
 
-   public void setRiskAns2(Boolean value)
+   public void setRiskAns2(String value)
    {
-      if (value)
-      {
-         riskCalc.setQuestionsRisk(2, 1, 0.0);
-      }
-      else
-      {
-         riskCalc.setQuestionsRisk(2, 2, 0.0);
-      }
+      setRiskAns(2, value);
    }
 
-   public Boolean getRiskAns3()
+   public String getRiskAns3()
    {
-      Integer ans = getCustomer().riskProfile.getRiskAnswer(3);
-      if (ans != null)
-      {
-         switch (ans)
-         {
-            case 1:
-               return true;
-            default:
-               break;
-         }
-      }
-      return false;
+      return getCustomer().riskProfile.getRiskAnswer(3).toString();
    }
 
-   public void setRiskAns3(Boolean value)
+   public void setRiskAns3(String value)
    {
-      if (value)
-      {
-         riskCalc.setQuestionsRisk(3, 1, 0.0);
-      }
-      else
-      {
-         riskCalc.setQuestionsRisk(3, 2, 0.0);
-      }
-   }
-
-   public String getRiskAns4()
-   {
-      return getCustomer().riskProfile.getRiskAnswer(4).toString();
-   }
-
-   public void setRiskAns4(String value)
-   {
-      setRiskAns(4, value);
-   }
-
-   public String getRiskAns5()
-   {
-      return getCustomer().riskProfile.getRiskAnswer(5).toString();
-   }
-
-   public void setRiskAns5(String value)
-   {
-      setRiskAns(5, value);
-   }
-
-   public String getRiskAns6()
-   {
-      return getCustomer().riskProfile.getRiskAnswer(6).toString();
-   }
-
-   public void setRiskAns6(String value)
-   {
-      setRiskAns(6, value);
-   }
-
-   public String getRiskAns7()
-   {
-      return getCustomer().riskProfile.getRiskAnswer(7).toString();
-   }
-
-   public void setRiskAns7(String value)
-   {
-      setRiskAns(7, value);
-   }
-
-   public String getRiskAns8()
-   {
-      return getCustomer().riskProfile.getRiskAnswer(8).toString();
-   }
-
-   public void setRiskAns8(String value)
-   {
-      String newTheme = null;
-      if (value.equalsIgnoreCase("1")) {
-         newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.ALTTHEME+value,null);
-      }
-      else {
-         newTheme = webutil.getWebprofile().getModel();
-      }
-      if (newTheme != null)
-      {
-         getCustomer().setTheme(newTheme);
-         riskCalc.setTheme(newTheme);
-      }
-      setRiskAns(8, value);
+      setRiskAns(2, value);
    }
 
    public void onChangeName()

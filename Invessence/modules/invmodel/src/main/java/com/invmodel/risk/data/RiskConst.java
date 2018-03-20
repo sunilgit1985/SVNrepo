@@ -130,7 +130,9 @@ public class RiskConst
    public static String MAXSCORE          = "MAXSCORE";
    public static String RETIREMENTAGE     = "RETIREMENTAGE";
    public static String WITHDRAWLAGE      = "WITHDRAWLAGE";
-   public static String RISKADUSTMENT      = "RISKADJUSTMENT";
+   public static String RISKADUSTMENT     = "RISKADJUSTMENT";
+   public static String RETIRED           = "RETIRED";
+   public static String RETIREDAGE        = "RETIREDAGE";
 
    public static String ALTTHEME        = "THEME-";
 
