@@ -15,13 +15,17 @@
                     <div class="Container50 next_btn">
                         <p:commandLink rendered="true" class="next_pg_link"
                                        update=":ceForm:workArea"
-                                       actionListener="#{uobProfile.gotoCSStrategy}" disabled="#{uobProfile.disableChangeStragegyButton}">  <span class="btntxt">Next  </span>  <span class="icon_span" style="left:0px;">  <p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                width="25px"/></span></p:commandLink>
+                                       actionListener="#{uobProfile.gotoCSStrategy}" disabled="#{uobProfile.disableChangeStragegyButton}">  
+                                       <span class="btntxt">Next  </span>  
+                                       <span class="icon_span" style="left:0px;">  
+                                       	<p:graphicImage name="images/portfolio/next_btn.png" library="#{uiLayout.webProfile.cssdir}" width="25px"/>
+                                       </span>
+                               </p:commandLink>
                     </div>
                     <div class="Container50 pre_btn">
-                        <p:commandLink rendered="true" class="next_pg_link"
-                        ><span><p:graphicImage name="images/portfolio/cancel_btn.png" library="#{uiLayout.webProfile.cssdir}"
-                                               width="25px"/></span><span class="btntxt">Cancel</span>
+                        <p:commandLink rendered="true" class="next_pg_link">
+                        	<span><p:graphicImage name="images/portfolio/cancel_btn.png" library="#{uiLayout.webProfile.cssdir}" width="25px"/></span>
+                            <span class="btntxt">Cancel</span>
                             <p:ajax listener='#{uobProfile.cancelCS}' update=":ceForm:changeStrategy"/>
                         </p:commandLink>
                     </div>

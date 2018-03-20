@@ -1979,6 +1979,7 @@ span > input {
     padding: 0px 10px;
     margin-top: 10px;
     text-align: center;
+    width:90%;
 }
 
 .fineTuneBtn > .ui-button-text,
@@ -4662,12 +4663,12 @@ th.del_edit_col span {
 }
 .go-bottom div.Container30 {
     margin-right: 10px;
-    width: 32.2%;
+    width: 32.4%;
 }
 .go-bottom textarea {
-    width: 97%;
+    width: 98%;
     height: 85px !important;
-    padding: 19px 12px 0 5px !important;
+    padding: 5px !important;
     overflow: hidden !important;
 }
 /*** 12/10/2017 uob account opening page**/
@@ -4851,8 +4852,8 @@ th.del_edit_col span {
 }
 /*.submit_acc_dtl{padding:1% 40%;}*/
 .submit_acc_dtl {
-    padding: 1% 46%;
-    width: 7%;
+    /* padding: 1% 46%;
+    width: 7%; */
 }
 .per_res {
     margin: 8px 0;
@@ -4984,10 +4985,13 @@ td.bullet_td span {
 }
 .portfolio_progress_bar{margin:1% 12%;width:75%;}
 .portfolio_progress_bar .ui-progressbar {
-    height: 0.6em;
+    height: 1.2em;
+    border-radius: 10px;
+        background-color: grey
 }
 .portfolio_progress_bar .ui-progressbar-label {
-    display: none !important;
+   /*  display: none !important; */
+   color:#fff;
 }
 .ring_widget .ui-ring-item-focus .ui-outputpanel {
     color: #000;
@@ -5004,11 +5008,13 @@ td.bullet_td span {
 }
 .portfolio_selection .sapn_review {
 
-    /*  left: -34px; */
     position: relative;
     left: 0;
     z-index: 2;
     float: right;
+    cursor: pointer;
+    width: auto;
+    text-align: right;
 }
 .ui-carousel-page-links {
     display: none!important;
@@ -5364,7 +5370,7 @@ span.change_goal {
     background-color: #a4332f !important;
 }
 .portfolio_progress_bar .ui-progressbar-value {
-    background-color: #a4332f;}
+    background-color: #a4332f;border-radius: 10px;}
 
 /** end portfolio creation**/
 /*** 28/11/2017**/
@@ -5405,8 +5411,8 @@ span.change_goal {
     left:4px;
 }
 .review-donut{float: right;
-    width: 100px;
-    height: 87px;
+    width: 25%;
+    height: 80px;
     top: -127px;
     position: relative;
     right: 0px;
@@ -5603,9 +5609,9 @@ span.output_review {
 .Container10.upload_file {
     position: relative;
 }
-.file_submit button {
-    margin: 0 15px;
-}
+/* .file_submit button {
+    margin: 0 19px;
+} */
 .uplaod_note li {
     list-style: disc;
     line-height: 1.70;
@@ -5613,7 +5619,9 @@ span.output_review {
 }
 .file_nm {
     text-align: center;
-    margin: 0 35%;
+    /* margin: 0 35%; */
+    margin:0 auto;
+    float:none;
 }
 .Container100.upload_file {
     text-align: center;
@@ -5626,7 +5634,9 @@ span.output_review {
 .file_dtls{text-align: center;
     /* padding: 0 35%; */
     width: auto;
-    margin: 1% 41% 3%;
+    /* margin: 1% 41% 3%; */
+    margin:0 auto;
+    float:none;
     position:relative;
 
 }
@@ -5668,7 +5678,7 @@ div#leftpanel {
     box-shadow: 1px 1px 1px 1px #ccc;
     left: 0px;
     padding: 10px;
-    width: 25%;
+    width: 30%;
 }
 .review_dtl .fa-angle-left {
     float: left;
@@ -5899,10 +5909,14 @@ span.conservative_plus {
 .OverlayPanelDisClo .ui-panel-content {
     padding-bottom: 100px !important;
 }
-.submit_acc_dtl.file_submit {
-    padding: 1% 41%;
-    width: 25%;
+.submit_acc_dtl {
+   /*  padding: 1% 40%;
+    width: 26%; */
+    margin: 10px auto;
+    float: none;
 }
+.submit_acc_dtl.file_submit{margin: 0 auto;
+    float: none;}
 .panelClose {
     position: absolute;
     top: 2px;
@@ -6129,6 +6143,7 @@ rect.highcharts-background {
     background-color: #fff;
     color: #000;
     border-radius: 3px;
+    overflow:auto;
 }
 .ui-datatable-scrollable-body {
     overflow: auto;
@@ -6209,6 +6224,26 @@ rect.highcharts-background {
     color: #fff;
 }
 .jqplot-xaxis-label{bottom: -22px !important;}
+
+/*** 13/03/2018 ***/
+.risk_meter .highcharts-container {
+    width: auto !important;
+}
+/*** 20/03/2018 **/
+.strategy_select td {
+    vertical-align: top;
+}
+.strategy_select .ui-radiobutton {
+    margin: 2px 5px 0px 0px !important;
+    cursor: pointer;
+}
+.header_tab.ConfirmHeaderBtn .header_title.Container30 {
+    width: 30%;
+}
+.ConfirmHeaderBtn .header_link.prenext_btn.Container70 {
+    width: 63%;
+}
+
 
 /*** responsive**/
 
@@ -6439,9 +6474,9 @@ rect.highcharts-background {
     {
         font-size:12px;
     }
-    .acc_holder_dtl_block .save_btn {
+    /* .acc_holder_dtl_block .save_btn {
         margin: 2% 36% 0;
-    }
+    } */
     .label_opacity .ui-selectmanycheckbox.ui-widget td:nth-child(odd){ width: auto;}
     .label_opacity .ui-selectmanycheckbox.ui-widget td{
         width: 88%;
@@ -6465,8 +6500,9 @@ rect.highcharts-background {
         width: 40%;
     }
     .for_res{display:block;}
-    .tax_info .acc_panel_block .Container50 {
-        width: 100%;
+    .tax_info .acc_panel_block .taxInfobtn.Container50 {
+            width: 49%;
+   			 margin: 0;
     }
     .Container100.pre_next_btn {
         height: 34px}
@@ -6543,7 +6579,7 @@ rect.highcharts-background {
         width: 100%;
     }
     div.slidePanelleft{width:135px;}
-    div#leftpanel{    width: 85%;
+    div#leftpanel{    width: 40%;
         font-size: 18px;}
     .selected_reviewGoal span {
         font-size: 14px;
@@ -6577,6 +6613,14 @@ rect.highcharts-background {
         width: 100%;
         margin: 0;
     }
+    .Container50.selected_reviewGoal {
+        text-align: center;
+        width: 50%;
+    }
+    .review_dtl .Container100.barChartGraph {
+        margin-top: 20px;
+    }
+
 
 }
 
@@ -6783,24 +6827,46 @@ div.slidePanelleft{
         width: 66%;}
     .Conatiner100.IRERBlock .Fleft{width:100%;
         margin:10px 0 0 0;}
+    .reviewDonutDts{right:12.5%;}
+    .fineTuneOtrDiv{left:2%;width:96%;}
+    .checkBoxOpt .Container90 {
+        margin: 0px 5px;
+    }
+    .per_res .Container10 {
+        width: auto;
+        margin-right: 10px;
+    }
+    /* .file_submit button {
+    margin: 0 8px;
+} */
 }
+
 @media only screen and (max-width: 1080px){
     .contactPopup .Container50 {
         padding: 0 7%;
         width: 35%;}
     .date_birth .hasDatepicker {
         width: 82% !important;}
+        .submit_acc_dtl {
+		    width: 25%;
+		}
 }
+
 @media only screen and (max-width: 950px)
 {
-
+    .relation_dtl .Container50 {
+        width: 100%;
+    }
+    .go-bottom.tax_info .Container50:nth-child(1) {
+    width: 80%;
+	}
 }
 @media only screen and (max-width: 942px)  {
     .edit_input,.dbdTxtBox{ max-width:145px;}
-    .portfolio_selection.reviewcont,.portfolio_progress_bar.reviewcont{
+    /* .portfolio_selection.reviewcont,.portfolio_progress_bar.reviewcont{
         width:90%;
         margin:0 5%;
-    }
+    } */
     .reviewcont{
         width:90%;
         margin:1% 5%;
@@ -6903,7 +6969,9 @@ div.slidePanelleft{
 
 @media only screen and (max-width: 820px)
 {
-    .go-bottom textarea{width:96%;}
+    .go-bottom textarea{width:97%;}
+    .submit_acc_dtl {
+    width: 28%;}
 }
 @media only screen and (max-width: 776px)  {
 
@@ -6919,6 +6987,9 @@ div.slidePanelleft{
     .contactCode .Container80,.contactCode .Container20 {
         width: 100%;
     }
+    .ConfirmHeaderBtn .header_link.prenext_btn.Container70 {
+	     min-width:380px;
+	}
 }
 @media only screen and (max-width: 767px)  {
     .left_side_title .ui-selectonemenu{
@@ -6940,7 +7011,7 @@ div.slidePanelleft{
         top: 33px;
         right: 6px;
         left:auto;
-        z-index: 1;
+        z-index: 999;
         box-shadow: 0px 1px 4px 0px #666;
     }
     .menuHeader .Wid30{
@@ -7114,19 +7185,47 @@ div.slidePanelleft{
         width: 46%;
     }
 
-    .Container100.tab_dtl.review_dtl{
+    /* .Container100.tab_dtl.review_dtl{
         padding:0 2.5% 2.5% 2.5%;
         width:95%;
+    } */
+    .reviewDonutDts .Container30 {
+        width: 100%;
     }
+    .reviewDonutDts {
+        right: 4%;
+        width: 90%;
+    }
+    .reviewDonutDts .highcharts-container {
+        height: auto !important;
+    }
+    .go-bottom .explBlock input {
+        width: 99%;
+    }
+    .Container100.add_tax_info{width:auto;}
+    .tax_info .radio_label .Container60 {
+		    width: 60%;
+		    margin: 0;
+		}
+		.Container30.file_nm {
+		    width: 40%;
+		}
+		.submit_acc_dtl {
+		    width: 200px;
+		}
+
 
 }
 @media only screen and (max-width: 660px){
     .date_birth .hasDatepicker {
         width: 76% !important;
     }
-    .Container100.tab_dtl.review_dtl .reviewGoalbutton{
+    
+    div#leftpanel {
+        width: 60%;}
+    /* .Container100.tab_dtl.review_dtl .reviewGoalbutton{
         margin: 0 0 0 -2.5% !important;
-    }
+    } */
     .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container{width:auto !important;}
     /* .portfolio_selection .Container30.risk_meter .idRiskChartArea .highcharts-container .highcharts-data-labels .highcharts-label{
         top:-60px !important;
@@ -7138,18 +7237,20 @@ div.slidePanelleft{
         float: none;
     }
     .portfolio_selection .sapn_review{
-        padding-right: 20px;
+        /* padding-right: 20px; */
         float: right;
+        /*   width:50%; */
     }
 
-    .portfolio_selection .sapn_review span{
-        width: 84%;
-        float: left;
-        text-align: right;
-    }
+    /*    .portfolio_selection .sapn_review span{
+           width: 84%;
+           float: left;
+           text-align: right;
+       } */
 
-    .portfolio_selection .sapn_review img{
-
+    .fineTuneOtrDiv {
+        left: 1%;
+        width: 96%;
     }
 }
 
@@ -7207,15 +7308,38 @@ div.slidePanelleft{
     }
     .ringselectmode{
         display:block;
+        margin:16px 0;
     }
     .ring_widget{display:none;}
     .select_item.Container20 {
         width: 55%;}
     .go-bottom .Container50.date_birth{width:60%;}
+    .empContCode .Container20 {
+        width: 40%;
+    }
+    .ConfirmHeaderBtn .header_link.prenext_btn.Container70 {
+    min-width: 0;
+}
+.caraousle .ConfirmHeaderBtn .Container50.next_btn {
+    margin: 0;
+    padding: 0 4px;
+    width: 20%;
+}
 
 
 }
+@media only screen and (max-width: 510px){
 
+    .portfolio_selection span {line-height: 2;
+        width: 100%;
+        float: left;}
+    .portfolio_selection .sapn_review {left: -20px;}
+    /*  .reviewDonuts img {top: -5px;} */
+    .portfolio_selection .sapn_review span {width: auto;}
+    span.GoalClickEvent {
+        line-height: normal;
+    }
+}
 @media only screen and (max-width: 500px)  {
     .acc_block_left,.dashboard_right_panel{
         margin-left:2% !important;
@@ -7226,6 +7350,9 @@ div.slidePanelleft{
     .Conatiner100.IRERBlock .Fleft{
         margin-top:10px;
     }
+    .uplaod_note ul {
+	    width: 85%;
+	}
 }
 
 @media only screen and (max-width: 480px)  {
@@ -7242,15 +7369,43 @@ div.slidePanelleft{
         width: 86% !important;
     }
 
-    .acc_holder_dtl_block .label_opacity .ui-selectoneradio td {
+    .acc_holder_dtl_block .label_opacity .ui-selectoneradio td,
+    .label_opacity .ui-selectoneradio td {
         vertical-align: top;
         display: inline-table;
         float: left;
     }
-    .acc_holder_dtl_block .label_opacity .ui-selectoneradio td:nth-child(even) {
-        width: 85%;
+    .acc_holder_dtl_block .label_opacity .ui-selectoneradio td:nth-child(even),
+    .acc_holder_dtl_block.label_opacity .ui-selectoneradio td:nth-child(even) {
+        width: 90%;
         float: left;
     }
+    div#leftpanel {
+        width: 85%;
+    }
+    .go-bottom textarea {
+        width: 96%;
+    }
+    .tax_info .radio_label .Container60{width:100%;}
+    .tax_info .acc_holder_dtl_block .label_opacity .ui-selectoneradio td:nth-child(even) {
+		    width: auto;
+		}
+		.tax_info .acc_panel_block .Container50 {
+		    width: 100%;
+		}
+		.checkBoxOpt .Container90 {
+			    width: auto;
+			}
+			.Container20.label_opacity.RadioLineHeight {
+			    width: 100%;
+			}
+			.tax_info .label_opacity .Container20 {
+		    	width: 100%;
+			}
+			.tax_info .acc_holder_dtl_block .label_opacity.reasonSelect .ui-selectoneradio td:nth-child(even)
+			{
+			    width: 90%;
+			}
 
 }
 @media only screen and (max-width: 390px){

@@ -400,7 +400,7 @@
                                                                 <!--<div class="Container100 select_item">-->
                                                                 <!---->
                                                                 <!--</div>-->
-                                                                <div class="Container100 Responsive100 label_opacity radio_select">
+                                                                <div class="Container100 Responsive100 label_opacity radio_select reasonSelect">
                                                                     <p:selectOneRadio id="priHldrTaxPnlReasRad"
                                                                                       value="#{uobCustodyBean.owTaxDtls.tinUnavailableReason}"
                                                                                       layout="grid" columns="1">
@@ -429,7 +429,7 @@
                                                                 </p:panel>
                                                             </ui:fragment>
                                                         </p:panel>
-                                                        <div class="Container50 float-right">
+                                                        <div class="Container50 taxInfobtn float-right">
                                                             <p:commandButton id="taxCnclBtn"
                                                                              value="Cancel"
                                                                              styleClass="uob_button save_btn"
@@ -446,7 +446,7 @@
                                                                              actionListener="#{uobCustodyBean.updateTaxPnl}">
                                                             </p:commandButton>
                                                         </div>
-                                                        <div class="Container50">
+                                                        <div class="Container50 taxInfobtn">
                                                             <p:commandButton id="taxAddBtn"
                                                                              value="Add"
                                                                              styleClass="uob_button save_btn"
@@ -709,6 +709,7 @@
                         </div>
                     </p:tab>
                 </p:accordionPanel>
+                <div class="Container100">
                 <div class="Container20 Responsive100 submit_acc_dtl">
                     <p:commandButton id="uobExtSubmitBtn"
                                      value="Next"
@@ -716,6 +717,7 @@
                                      update="@form"
                                      actionListener="#{uobCustodyBean.submitDataForm}">
                     </p:commandButton>
+                </div>
                 </div>
             </div>
         </div>

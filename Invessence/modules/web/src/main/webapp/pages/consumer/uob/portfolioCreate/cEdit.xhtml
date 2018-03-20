@@ -131,7 +131,7 @@
 
 						</p:panel>
 					</div>
-					<div class="Container70 Responsive50 UserconfTable confirmation_donut_dtl scrollTable margin-top">
+					<div class="Container70 UserconfTable confirmation_donut_dtl scrollTable margin-top">
 						<!-- ROHIT's CHANGE -->
 
 						<div class="ContainerIndent ">
@@ -141,19 +141,19 @@
 								<!-- <p:column style="width:5%; background-color: #{ticker.color}">
                                                                 <h:outputText value=" "/>
                                                             </p:column> -->
-								<p:column priority="0" class="bullet_td"
+								<p:column priority="2" class="bullet_td"
 									style="width:8%; text-align: left;text-align: center;">
 									<!-- ROHIT's CHANGE -->
 									<span style="background-color: #{ticker.color}">&#160;</span>
 								</p:column>
 
-								<p:column style="width:60%;" styleClass="Fs12 TexAlLeft">
+								<p:column priority="0"  style="width:60%;" styleClass="Fs12 TexAlLeft">
 									<f:facet name="header">
 										<h:outputText value="Name" />
 									</f:facet>
 									<h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}" />
 								</p:column>
-								<p:column style="width:10%;"
+								<p:column priority="3" style="width:10%;"
 									styleClass="Fs12 num-text-align TexAlRight">
 									<!-- ROHIT's CHANGE -->
 									<f:facet name="header">
@@ -164,7 +164,7 @@
 									</h:outputText>
 								</p:column>
 
-								<p:column style="width:10%;"
+								<p:column style="width:10%;" priority="4"
 									styleClass="Fs12 num-text-align TexAlRight">
 									<!-- Prashant intro 2017-Sept -->
 									<f:facet name="header">
@@ -175,7 +175,7 @@
 									</h:outputText>
 								</p:column>
 
-								<p:column style="width:19%;"
+								<p:column style="width:19%;" priority="0"
 									styleClass="Fs12 num-text-align TexAlRight">
 									<!-- ROHIT's CHANGE -->
 									<f:facet name="header">
