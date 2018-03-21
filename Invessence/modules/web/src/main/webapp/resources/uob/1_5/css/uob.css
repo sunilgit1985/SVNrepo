@@ -5780,13 +5780,13 @@ div#leftpanel {
 
 }
 .ui-inputtext, .ui-selectonemenu > label,.ui-inputfield{color: #000 !important;}
-.ui-inputtext::-webkit-input-placeholder{ /* Chrome/Opera/Safari */
+.ui-inputfield::-webkit-input-placeholder{ /* Chrome/Opera/Safari */
     color: #ddd !important;
 }
-.ui-inputtext::-moz-placeholder { /* Firefox 19+ */
+.ui-inputfield::-moz-placeholder { /* Firefox 19+ */
     color: #ddd !important;
 }
-.ui-inputtext:-ms-input-placeholder { /* IE 10+ */
+.ui-inputfield:-ms-input-placeholder { /* IE 10+ */
     color: #ddd !important;
 }
 .ui-inputfield:-ms-input-placeholder { /* IE 10+ */
@@ -6816,9 +6816,9 @@ div.slidePanelleft{
     .Container50.donutChartTable.user_table{
         width:100%;
     }
-    .ui-datatable table{
+    /*.ui-datatable table{
         margin-left:1%;
-    }
+    }*/
     .date_birth .hasDatepicker {
         width: 86% !important;}
     .contactCode .Container20 {
