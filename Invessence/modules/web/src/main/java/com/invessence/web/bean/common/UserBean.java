@@ -556,20 +556,31 @@ public class UserBean implements Serializable
       try
       {
          userdata.setLogonID(getLongBeanLogonID());
-         userdata.setUserID(beanUserID);            // Since both logonid and email is forced to
+//         userdata.setUserID(beanUserID);            // Since both logonid and email is forced to
 
          if (newRegistration)
          {
+            userdata.setUserID(null);
+            userdata.setEmail(beanEmail);
             if (beanEmail == null || beanEmail.isEmpty()) {
                logger.debug("LOG: Invalidate Email (either empty or null): ");
                msgheader = "signup.U111";
                msg= webutil.getMessageText().getDisplayMessage(msgheader, "Email is required", null);
                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
                return;
+            }else if(userInfoDAO.validateUserID(userdata))
+            {
+               logger.debug("LOG: Validate Email failed: " + beanEmail);
+               msgheader = "signup.U112";
+               msg= webutil.getMessageText().getDisplayMessage(msgheader, "Email already taken", null);
+               FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msgheader));
+               return;
             }
-            userdata.setEmail(beanEmail);
-         }
 
+
+         }
+         userdata.setUserID(beanUserID);
+         userdata.setEmail(null);
          if (userInfoDAO.validateUserID(userdata))
          {
             logger.debug("LOG: Validate UserID failed: " + beanUserID);
