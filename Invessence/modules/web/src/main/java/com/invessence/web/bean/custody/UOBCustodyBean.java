@@ -1191,8 +1191,10 @@ public void onChngRpDtls(String flag){
       try{
          if(getUobDataMaster()!=null && getUobDataMaster().getIndividualOwnersDetails()!=null && getUobDataMaster().getIndividualOwnersDetails().getTitle()!=null && (getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Mrs") || getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Miss") || getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Mdm"))){
             getUobDataMaster().getIndividualOwnersDetails().setGender("Female");
-         }else{
+         }else if(getUobDataMaster()!=null && getUobDataMaster().getIndividualOwnersDetails()!=null && getUobDataMaster().getIndividualOwnersDetails().getTitle()!=null && getUobDataMaster().getIndividualOwnersDetails().getTitle().equals("Mr")){
             getUobDataMaster().getIndividualOwnersDetails().setGender("Male");
+         } else {
+            getUobDataMaster().getIndividualOwnersDetails().setGender("");
          }
       }catch(Exception e){
 
