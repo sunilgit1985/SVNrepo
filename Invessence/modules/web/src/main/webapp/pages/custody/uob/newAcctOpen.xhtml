@@ -187,7 +187,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <p:panel id="nwPriHldEmpOtrDtlPnl" style="border-color: transparent;" class="Container50">
                                                 <ui:fragment rendered="#{uobCustodyBean.dsplNwPriEmpOtrDtlPnl}">
                                                     <div class="Container100"><span class="title_line">Other Qualifications</span></div>
-                                                    <div class="Container100 ">
+                                                    <div class="Container100 width99">
 
                                                         <p:inputText id="nwPriHldrQualOtr" placeholder="Other"
                                                                      value="#{uobCustodyBean.uobDataMaster.individualOwnersDetails.ownerMiscDetails.qualificationsSpecify}"
@@ -1969,7 +1969,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <div class="Container50 Responsive50 checkBoxOpt ">
                                                 <div class="Container100">
                                                     <p:selectBooleanCheckbox id="nwPriHldrPrsnlPn" value="#{uobCustodyBean.consentCallFlag}"
-                                                                             itemLabel="Phone">
+                                                                             itemLabel="Phone" styleClass="Container100">
                                                     </p:selectBooleanCheckbox>
                                                 </div>
                                                 <div class="Container100 margin-CheckBoxleft">(voice calls)</div>
@@ -1977,7 +1977,7 @@ $('.form-control').on('focus blur', function (e) {
                                             <div class="Container50 Responsive50 checkBoxOpt ">
                                                 <div class="Container100">
                                                     <p:selectBooleanCheckbox id="nwPriHldrPrsnlTxt" value="#{uobCustodyBean.consentMsgFlag}"
-                                                                             itemLabel="Text Messages">
+                                                                             itemLabel="Text Messages" styleClass="Container100">
                                                     </p:selectBooleanCheckbox>
                                                 </div>
                                                 <div class="Container100 margin-CheckBoxleft">(SMS / MMS / VOIP based phone application eg Viber, Whatsapp)</div>

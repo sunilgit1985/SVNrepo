@@ -30,7 +30,7 @@
                     <div class="Container30 file_nm">
                         <h:outputText value="#{updLst.fileLabel}"/>
                     </div>
-                    <div class="Container70 file_dtls">
+                    <div class=" file_dtls">
 
                         <div class="Container100 upload_file">
                             <p:fileUpload fileUploadListener="#{uobCustodyBean.handleFileUpload}" mode="advanced"
@@ -66,7 +66,7 @@
                                 <div class="Container100   checkBoxOpt" style="text-align:left;">
                                     <div class="Container100">
                                         <p:selectBooleanCheckbox id="cstdyDwnDscl"
-                                                                 value="#{uobCustodyBean.dwnlDsclFlag}"
+                                                                 value="#{uobCustodyBean.dwnlDsclFlag}" class="Container100"
                                                                  itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Risk Disclosure statements">
                                             <p:ajax listener='#{uobCustodyBean.onChngAccept()}'
                                                     update=":cstdyFrm:uobAccpt"/>
@@ -78,9 +78,9 @@
                         <p:tab title="Guide and Cautionary Notes">
                             <pe:documentViewer height="500" value="#{uobCustodyBean.contentGuide}" download="guide.pdf" cache="true"/>
                             <div class="acc_holder_dtl_block   acceptTerm">
-                                <div class="Container100 Responsive50   checkBoxOpt" style="text-align:left;">
+                                <div class="Container100    checkBoxOpt" style="text-align:left;">
                                     <div class="Container100">
-                                        <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}"
+                                        <p:selectBooleanCheckbox id="cstdyDwnGuid" value="#{uobCustodyBean.dwnlGudFlag}" class="Container100"
                                                                  itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Guide and Cautionary Notes">
                                             <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
                                         </p:selectBooleanCheckbox>
@@ -92,9 +92,9 @@
                             <pe:documentViewer height="500" value="#{uobCustodyBean.contentMstrTrdAggr}" download="Declarations.pdf"
                                                cache="true"/>
                             <div class="acc_holder_dtl_block  acceptTerm">
-                                <div class="Container100 Responsive50  checkBoxOpt" style="text-align:left;">
+                                <div class="Container100   checkBoxOpt" style="text-align:left;">
                                     <div class="Container100">
-                                        <p:selectBooleanCheckbox id="cstdyDwnMstrTrdAggr" value="#{uobCustodyBean.dwnlMstrTrdAggrFlag}"
+                                        <p:selectBooleanCheckbox id="cstdyDwnMstrTrdAggr" value="#{uobCustodyBean.dwnlMstrTrdAggrFlag}" class="Container100"
                                                                  itemLabel="I have read, understood, accepted and agreed to the terms and conditions set out in Declarations.">
                                             <p:ajax listener='#{uobCustodyBean.onChngAccept()}' update=":cstdyFrm:uobAccpt"/>
                                         </p:selectBooleanCheckbox>
@@ -104,7 +104,7 @@
                         </p:tab>
                     </p:tabView>
                     <div class="acc_holder_dtl_block  margin-top acceptTerm Container100">
-                        <div class="Container30  submit_acc_dtl file_submit">
+                        <div class="Container20  submit_acc_dtl file_submit">
                             <p:commandButton id="uobAccptClose"
                                              value="Close"
                                              styleClass="uob_button hideclass Fleft">

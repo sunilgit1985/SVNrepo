@@ -594,6 +594,8 @@ public class PrimefacesCharts implements Serializable
          glidepath.setExtender("glidepathChart");
          glidepath.getAxis(AxisType.Y).setLabel("Values in Thousands");
          glidepath.getAxis(AxisType.X).setLabel("Years");
+         glidepath.isResetAxesOnResize();
+
 //         glidepath.getAxis(AxisType.Y).setTickFormat("Hello Prathu:%#M");
 //         glidepath.getAxis(AxisType.Y).setMin(0);
 //         glidepath.getAxis(AxisType.Y).setMax();
