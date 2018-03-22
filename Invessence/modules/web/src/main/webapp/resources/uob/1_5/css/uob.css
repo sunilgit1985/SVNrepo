@@ -4542,7 +4542,7 @@ th.del_edit_col span {
 /** floating label **/
 
 .acc_holder_form table {
-    width: 99%;
+    width: auto;
 
 }
 .acc_holder_form .tax_info table,
@@ -6258,6 +6258,9 @@ rect.highcharts-background {
 .acc_holder_dtl_block .checkBoxOpt span.ui-chkbox-label {
     width: 80%;
 }
+.Container20.submit_acc_dtl.SubNxtBtn {
+    width: 20%;
+}
 /*** responsive**/
 
 /** 16/10/2017***/
@@ -7445,6 +7448,9 @@ div.slidePanelleft{
 .checkBoxOpt span.ui-chkbox-label {
     width: 80%;
 }
+    .acc_holder_form .address_tab .label_opacity table {
+        width: 100%;
+    }
 
 }
 @media only screen and (max-width: 390px){
