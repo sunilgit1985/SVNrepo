@@ -111,9 +111,12 @@ public class ProfileBean extends PortfolioCreationUI
             super.preRenderView();
             setDefault();
 //            getCustomer().copyData(getSavedCustomer());
-         }
-
-         if (getCustomer() != null) {
+         }else {
+            riskCalc.setAge(getCustomer().getAge());
+            riskCalc.setHorizon(getCustomer().getHorizon());
+            riskCalc.setRecurringPeriod(getRecurringPeriod());
+            setRiskTotalInvestment(getCustomer().getInvestmentAmount());
+            setRecurringInvestment(getCustomer().getRecurringInvestment());
             createAssetPortfolio();
             createGlidePath();
          }
