@@ -56,6 +56,9 @@ public class RiskCalc
          recurring = userRiskProfile.getDefaultRecurringInvestment();
          withdrawlamount = userRiskProfile.getDefaultDoubleValue(RiskConst.WITHDRAWALPERIOD, 0.0);
          scoreDeviation = userRiskProfile.getDefaultDoubleValue(RiskConst.FINETUNEAJUSTMENTS, 15.0);
+         String tempFormula = userRiskProfile.getDefaultStrValue(RiskConst.CALCFORMULA, RiskConst.CALCFORMULAS.C.toString());
+         riskFormula =   RiskConst.CALCFORMULAS.valueOf(tempFormula);
+         riskScore = userRiskProfile.getScore(0);
       }
       else
       {
@@ -69,9 +72,10 @@ public class RiskCalc
          recurring = 0.0;
          withdrawlamount = 0.0;
          scoreDeviation = 15.0;
+         riskFormula = RiskConst.CALCFORMULAS.C;
+         riskScore = 0.0;
       }
-      riskFormula = RiskConst.CALCFORMULAS.C;
-      riskScore = 0.0;
+
    }
 
    public UserRiskProfile getUserRiskProfile()

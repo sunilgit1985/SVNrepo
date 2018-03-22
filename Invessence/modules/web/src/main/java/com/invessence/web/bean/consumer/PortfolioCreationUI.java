@@ -185,7 +185,11 @@ public class PortfolioCreationUI extends UserInterface
          {
             // For both new and existing client, this fetch is called.  It determines the default values.
             fetchClientData();
-            customer.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
+            if(getCustomer().getRiskProfile().getAnswer(RiskConst.CALCFORMULA)==null)
+            {
+               customer.setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
+            }
+
          }
       }
       catch (Exception e)
@@ -1039,6 +1043,7 @@ public class PortfolioCreationUI extends UserInterface
    public void saveFTPanel()
    {
       closeFTPanel();
+      getCustomer().setCanSaveData(true);
       riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
       getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       // This one will save the score in userRisk table as well

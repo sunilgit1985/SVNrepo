@@ -95,7 +95,7 @@ public class ProfileBean extends PortfolioCreationUI
       }
    }
 
-   public void preRenderReview()
+   public void preRenderConfirm()
    {
 
       if (!FacesContext.getCurrentInstance().isPostback())
