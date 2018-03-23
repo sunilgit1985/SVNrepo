@@ -49,7 +49,7 @@ public class RiskCalc
          theme = userRiskProfile.getDefaultStrValue(RiskConst.THEME, InvConst.DEFAULT_THEME);
          maxScore = userRiskProfile.getDefaultIntValue(RiskConst.MAXSCORE, 100);
          age = userRiskProfile.getDefaultAge();
-         horizon = null;
+         horizon = userRiskProfile.getHorizon();
          recurringPeriod = userRiskProfile.getDefaultIntValue(RiskConst.RECURRINGPERIOD, 0);
          withDrwalPeriod = userRiskProfile.getDefaultIntValue(RiskConst.WITHDRAWALPERIOD, null);
          investment = userRiskProfile.getTotalInvestment();
@@ -415,7 +415,7 @@ public class RiskCalc
 
    public Integer getDefaultAge()
    {
-      age = (age > 110) ? 110 : age; // Cannot be negative.
+      age = (((age == null) ? 30 : age) > 110) ? 110 : age; // Cannot be negative.
       return age;
 
    }
@@ -624,6 +624,9 @@ public class RiskCalc
          value = (value > maxScore) ? maxScore : value;
          value = (maxScore - value);
          return value;
+      }
+      else {
+         riskScore = userRiskProfile.getRiskScore(0);
       }
 
       return riskScore;

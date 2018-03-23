@@ -30,6 +30,7 @@ public interface ProgressBar
    public void setIncrement(Double increment);
    public Double nextProgress();
    public Double previousProgress();
+   public Double markCompleted();
 
 
 

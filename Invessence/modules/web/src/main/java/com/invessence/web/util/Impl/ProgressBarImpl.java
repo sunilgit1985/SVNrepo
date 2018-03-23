@@ -119,4 +119,11 @@ public class ProgressBarImpl implements Serializable, ProgressBar
       return progressBar;
    }
 
+   @Override
+   public Double markCompleted(){
+      progressBar = maxProgress;
+      return progressBar;
+   }
+
+
 }

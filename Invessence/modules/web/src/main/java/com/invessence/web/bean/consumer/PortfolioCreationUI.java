@@ -461,6 +461,7 @@ public class PortfolioCreationUI extends UserInterface
          riskCalc.setInvestment(calcInvestment);
       }
       else {
+         getCustomer().getRiskProfile().setTotalInvestment(investment);
          riskCalc.setInvestment(investment);
       }
 
@@ -752,6 +753,7 @@ public class PortfolioCreationUI extends UserInterface
    {
       closeFTPanel();
       pagemanager.setPage(0);
+      progressbar.initProgressBar();
    }
 
    public void gotoPrevPage()
@@ -800,7 +802,7 @@ public class PortfolioCreationUI extends UserInterface
 
    public void gotoReview()
    {
-      progressbar.nextProgress();
+      progressbar.markCompleted();
       saveProfile();
       if (canOpenAccount)
       {
@@ -1043,7 +1045,7 @@ public class PortfolioCreationUI extends UserInterface
    public void saveFTPanel()
    {
       closeFTPanel();
-      getCustomer().setCanSaveData(true);
+      // getCustomer().setCanSaveData(true);
       riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.D);
       getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.D.toString());
       // This one will save the score in userRisk table as well

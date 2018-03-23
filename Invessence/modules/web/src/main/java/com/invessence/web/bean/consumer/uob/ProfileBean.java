@@ -78,15 +78,26 @@ public class ProfileBean extends PortfolioCreationUI
             }
          }
       }
+   /*  Since, the RiskCalc is created with userRiskProfile, we don't neet to set value.
       if(!getCustomer().getManaged()){
          if(beanmode.equals(UIMode.New)){
             riskCalc.setInvestment(getCustomer().getDefaultInvestment());
-         }else{
-            setRiskTotalInvestment(getCustomer().getInitialInvestment().doubleValue());
+         }else{ // Must be edit mode...
+            riskCalc.setAge(getCustomer().getAge());
+            riskCalc.setHorizon(getCustomer().getHorizon());
+            riskCalc.setRecurringPeriod(getRecurringPeriod());
+            setRiskTotalInvestment(getCustomer().getInvestmentAmount());
+            setRecurringInvestment(getCustomer().getRecurringInvestment());
          }
       }else{
-         riskCalc.setInvestment(getCustomer().getActualInvestment());
+         // All other mode, if managed...
+         riskCalc.setAge(getCustomer().getAge());
+         riskCalc.setHorizon(getCustomer().getHorizon());
+         riskCalc.setRecurringPeriod(getRecurringPeriod());
+         setRiskTotalInvestment(getCustomer().getInvestmentAmount());
+         setRecurringInvestment(getCustomer().getRecurringInvestment());
       }
+   */
       createAssetPortfolio();
       if(beanmode.equals(UIMode.New) || beanmode.equals(UIMode.Edit)){
          getCustomer().setCanSaveData(true);
@@ -279,6 +290,9 @@ public class ProfileBean extends PortfolioCreationUI
             {
                beanmode = UIMode.Edit;
             }
+
+            riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+            getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
             createAssetPortfolio();
 
             if (riskCalc.getKnockOutFlag())
@@ -998,7 +1012,7 @@ public class ProfileBean extends PortfolioCreationUI
    public void onChangeValue()
    {
       formEdit = true;
-       createAssetPortfolio();
+      createAssetPortfolio();
    }
 
    public void onChangeCurrency()

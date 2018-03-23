@@ -297,9 +297,12 @@ public class UserRiskProfile
    {
       if (knockout > 0)
       {
+         return 0.0;
+      }
+      else {
          if (riskScores != null)
          {
-            if (year > 0 && year < riskScores.size())
+            if (year >= 0 && year < riskScores.size())
             {
                return riskScores.get(year).getScore();
             }
@@ -944,7 +947,8 @@ public class UserRiskProfile
 
          UserRiskData formuladata = new UserRiskData();
          UserRiskData totaldata = new UserRiskData();
-         formuladata.setKey("Formula");
+         String displayName = advisorRiskMaster.getAdvisorMasterdata().get(RiskConst.CALCFORMULA).getDisplayName();
+         formuladata.setKey(displayName);
          totaldata.setKey("Actual Score");
          if (getRiskScoreObj(0).getAllCashFlag())
          {
@@ -953,7 +957,8 @@ public class UserRiskProfile
          }
          else
          {
-            formuladata.setAnswer(getRiskScoreObj(0).getCalcFormula(), "T");
+            String answer = RiskConst.CALCFORMULAS.valueOf(getRiskScoreObj(0).getCalcFormula()).getDisplayValue();
+            formuladata.setAnswer(answer, "T");
             totaldata.setRiskScore(getRiskScoreObj(0).getScore());
          }
          userRiskList.add(formuladata);
@@ -972,31 +977,27 @@ public class UserRiskProfile
          {
             continue;
          }
-         if (advisorRiskMaster.getAdvisorMasterdata().get(key).getDisplayAdvisor()) {
-            String displayName = advisorRiskMaster.getAdvisorMasterdata().get(key).getDisplayName();
-            if (displayName == null) {
-               displayName = key;
-            }
-            String answer = udata.getAnswer();
-            if (key.equalsIgnoreCase(RiskConst.CALCFORMULA)) {
-               if (udata.getAnswer() != null)
-               {
-                  answer = RiskConst.CALCFORMULAS.valueOf(udata.getAnswer()).getDisplayValue();
-                  UserRiskData userReportData = new UserRiskData(udata.getSortorder(),
-                                                                 displayName,
-                                                                 answer,
-                                                                 "T",
-                                                                 udata.getRiskScore());
-
+         if (advisorRiskMaster.getAdvisorMasterdata().containsKey(key)) {
+            if (advisorRiskMaster.getAdvisorMasterdata().get(key).getDisplayAdvisor()) {
+               String displayName = advisorRiskMaster.getAdvisorMasterdata().get(key).getDisplayName();
+               if (displayName == null) {
+                  displayName = key;
                }
-            }
+               String answer = udata.getAnswer();
+               if (key.equalsIgnoreCase(RiskConst.CALCFORMULA)) {
+                  if (udata.getAnswer() != null)
+                  {
+                     answer = RiskConst.CALCFORMULAS.valueOf(udata.getAnswer()).getDisplayValue();
+                  }
+               }
 
-            UserRiskData userReportData = new UserRiskData(udata.getSortorder(),
-                                                           displayName,
-                                                           answer,
-                                                           udata.getAnswerType(),
-                                                           udata.getRiskScore());
-            userProfileMap.put(key, userReportData);
+               UserRiskData userReportData = new UserRiskData(udata.getSortorder(),
+                                                              displayName,
+                                                              answer,
+                                                              udata.getAnswerType(),
+                                                              udata.getRiskScore());
+               userProfileMap.put(key, userReportData);
+            }
          }
       }
       return userProfileMap;
