@@ -409,7 +409,12 @@
                                                 <f:facet name="header">
                                                     <h:outputText value="Name"/>
                                                 </f:facet>
-                                                <h:outputText id="uobtnam" value="#{ticker.namePlusSymbol}"/>
+                                                <ui:fragment rendered="#{uobProfile.customer.managed}">
+                                                    <h:outputText id="uobsname" value="#{ticker.namePlusSymbol}"/>
+                                                </ui:fragment>
+                                                <ui:fragment rendered="#{! uobProfile.customer.managed}">
+                                                    <h:outputText id="uobsclass" value="#{ticker.subclass}"/>
+                                                </ui:fragment>
                                             </p:column>
                                             <p:column priority="3" style="width:12%;"
                                                       styleClass="Fs12 num-text-align TexAlRight">
