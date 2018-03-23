@@ -188,11 +188,11 @@
 
 								<p:columnGroup type="footer">
 									<p:row>
-										<p:column />
-										<p:column colspan="3" styleClass="Fs14 TexAlLeft FontBold"
-											footerText="Total">
+										<!--<p:column />-->
+										<p:column priority="0" colspan="3" styleClass="Fs14 TexAlLeft FontBold"
+											footerText="Total" style="text-indent:30px;">
 										</p:column>
-										<p:column styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
+										<p:column priority="0" styleClass="Fs14 TexAlRight FontBold" id="uobttot2"
 											footerText="#{dataDisplayConverter.displayWithComma(uobProfile.customer.totalMoneyAllocated)}">
 										</p:column>
 									</p:row>
