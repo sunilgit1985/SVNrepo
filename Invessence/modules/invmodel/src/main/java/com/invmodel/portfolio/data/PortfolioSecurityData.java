@@ -165,7 +165,7 @@ public class PortfolioSecurityData
 
    private void setDailyprice(double dailyprice)
    {
-      this.dailyprice = round(dailyprice, 4);
+      this.dailyprice = dailyprice;
    }
 
    public double getWeight()
