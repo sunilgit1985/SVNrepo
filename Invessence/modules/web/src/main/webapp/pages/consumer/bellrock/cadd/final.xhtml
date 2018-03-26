@@ -12,20 +12,20 @@
                 <div class="Container50 Responsive50 Fleft">
                     <div class="Container100 Fleft TexAlCenter" style="padding: 0px 20px;box-sizing: border-box;">
                         Based on the responses that you have given, we have selected the
-                        <strong>#{tcmpb.fixedModelName}</strong> strategy for you.
+                        <strong>#{bellrockpb.fixedModelName}</strong> strategy for you.
                     </div>
                     <div class="EmptyBox10"></div>
                     <div class="Container100">
                         <p:outputPanel deferred="true">
-                            <p:chart type="pie" model="#{tcmpb.charts.pieChart}" style="height: 200px; width: 100%;"
-                                     rendered="#{tcmpb.charts.pieChart != null}"
+                            <p:chart type="pie" model="#{bellrockpb.charts.pieChart}" style="height: 200px; width: 100%;"
+                                     rendered="#{bellrockpb.charts.pieChart != null}"
                                      responsive="true"/>
                         </p:outputPanel>
                     </div>
                 </div>
                 <div class="Container50 Responsive50 Fleft assetAllocationTableMobView">
                     <p:dataTable styleClass="invAllocTable"
-                                 value="#{tcmpb.editableAsset}"
+                                 value="#{bellrockpb.editableAsset}"
                                  var="assetList">
 
                         <p:column style="width: 1%; background-color: #{assetList.color};">
@@ -54,7 +54,7 @@
                                           footerText="Total">
                                 </p:column>
                                 <p:column styleClass="Fs14 TexAlRight FontBold"
-                                          footerText="#{dataDisplayConverter.displayAsMoneyRounded(tcmpb.totalMoneyAllocated)}">
+                                          footerText="#{dataDisplayConverter.displayAsMoneyRounded(bellrockpb.totalMoneyAllocated)}">
                                 </p:column>
                             </p:row>
                         </p:columnGroup>
@@ -64,10 +64,10 @@
                 <p:commandButton styleClass="prev ResponsiveBtnFS" value="Start Over"
                                  update=":ceForm:inputArea"
                                  immediate="true"
-                                 actionListener="#{tcmpb.startover}"/>
-                <p:commandButton styleClass="Fright ResponsiveBtnFS" value="#{tcmpb.fundButtonText}"
+                                 actionListener="#{bellrockpb.startover}"/>
+                <p:commandButton styleClass="Fright ResponsiveBtnFS" value="#{bellrockpb.fundButtonText}"
                                  update=":ceForm:inputArea"
-                                 actionListener="#{tcmpb.fundAccount}"/>
+                                 actionListener="#{bellrockpb.fundAccount}"/>
 
             </div>
         </p:fieldset>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <p:outputPanel style="border: 0px; background: transparent" rendered="#{! tcmpb.fixedModel}">
+            <p:outputPanel style="border: 0px; background: transparent" rendered="#{! bellrockpb.fixedModel}">
                 <div class="Container100">
                     <div class="ContainerIndent">
                         <div class="Container50 Responsive50 TexAlCenter Fs16">
@@ -104,12 +104,12 @@
                                         Conservative
                                     </div>
                                     <div class="Container50 TexAlCenter Fs20">
-                                        <h:inputHidden id="portfolioValue" value="#{tcmpb.portfolioIndex}"/>
-                                        <p:slider id="portfolioSlider" for="portfolioValue" minValue="0" maxValue="#{tcmpb.maxPortfolioAllocationPoints}"
+                                        <h:inputHidden id="portfolioValue" value="#{bellrockpb.portfolioIndex}"/>
+                                        <p:slider id="portfolioSlider" for="portfolioValue" minValue="0" maxValue="#{bellrockpb.maxPortfolioAllocationPoints}"
                                                   step="1">
                                             <p:ajax event="slideEnd"
                                                     update=":ceForm:workArea, :ceForm:graphArea"
-                                                    listener="#{tcmpb.onPortfolioSlider}"/>
+                                                    listener="#{bellrockpb.onPortfolioSlider}"/>
                                         </p:slider>
                                     </div>
                                     <div class="Container25 TexAlCenter Fs16">
@@ -122,7 +122,7 @@
                                         <p:commandButton id="portSliderResetButton"
                                                          value="Recommended"
                                                          update=":ceForm:workArea, :ceForm:graphArea"
-                                                         actionListener="#{tcmpb.doPortfolioReset}"/>
+                                                         actionListener="#{bellrockpb.doPortfolioReset}"/>
                                     </div>
                                 </div>
                                 <div class="EmptyBox10"></div>
@@ -130,19 +130,19 @@
                         </div>
 
                     </div>
-                    <p:commandButton styleClass="prev" value="Start Over" rendered="#{tcmpb.pagemanager.prevButtonStat}"
+                    <p:commandButton styleClass="prev" value="Start Over" rendered="#{bellrockpb.pagemanager.prevButtonStat}"
                                      update=":ceForm:inputArea"
                                      immediate="true"
-                                     actionListener="#{tcmpb.startover}"/>
+                                     actionListener="#{bellrockpb.startover}"/>
                     <p:commandButton styleClass="Fright" value="Fund Account"
                                      update=":ceForm:inputArea"
-                                     actionListener="#{tcmpb.fundAccount}"/>
+                                     actionListener="#{bellrockpb.fundAccount}"/>
 
                 </div>
             </p:outputPanel>
 
             <div class="Container100">
-                <p:dataTable var="ticker" value="#{tcmpb.displayPortfolioList}">
+                <p:dataTable var="ticker" value="#{bellrockpb.displayPortfolioList}">
 
                     <p:column style="width:1%; background-color: #{ticker.color}">
                         <h:outputText value=" "/>
@@ -204,7 +204,7 @@
                                       footerText="Total">
                             </p:column>
                             <p:column styleClass="Fs14 TexAlRight FontBold"
-                                      footerText="#{dataDisplayConverter.displayAsMoneyRounded(tcmpb.totalMoneyAllocated)}">
+                                      footerText="#{dataDisplayConverter.displayAsMoneyRounded(bellrockpb.totalMoneyAllocated)}">
                             </p:column>
                         </p:row>
                     </p:columnGroup>

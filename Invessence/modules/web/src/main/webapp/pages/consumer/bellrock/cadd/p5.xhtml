@@ -25,13 +25,13 @@
         <div class="EmptyBox5"></div>
 
         <!-- Projection Slab  -->
-        <h:inputHidden id="tcmp5hidden1" value="#{tcmpb.riskCalculator.ans5}"/>
+        <h:inputHidden id="tcmp5hidden1" value="#{bellrockpb.riskCalculator.ans5}"/>
 
         <div class="ContainerDropDownSizing">
             <div class="ContainerPSlab-tcmUI MarAuto Fnone EnableDrodownProjection">
                 <p:selectOneMenu id="tcmp5ddriskcalc" styleClass="formpageDropdown FundAccountDropdownUI"
-                                 value="#{tcmpb.riskCalculator.ans5}" style="width: 100%;">
-                    <p:ajax listener="#{tcmpb.doProjectionChart}"
+                                 value="#{bellrockpb.riskCalculator.ans5}" style="width: 100%;">
+                    <p:ajax listener="#{bellrockpb.doProjectionChart}"
                             update=":ceForm:inputArea"/>
                     <f:selectItem id="tcmp5selectone" itemLabel="Select One" itemValue=""
                                   noSelectionOption="true"/>
@@ -56,7 +56,7 @@
 
                         <div class="EmptyBox5"></div>
 						<span class="Fs17 DispBlock BBGreen"> <h:outputText id="tcmp5avgperformance"
-                                value="#{tcmpb.charts.chartdata.getIntChartData('AvgPerformance')}">
+                                value="#{bellrockpb.charts.chartdata.getIntChartData('AvgPerformance')}">
                             <f:convertNumber pattern="$#,###,###,##0"/>
                         </h:outputText>
 						</span>
@@ -71,7 +71,7 @@
 
                         <div class="EmptyBox5"></div>
 						<span class="Fs17 DispBlock BBDarkGray"> <h:outputText id="tcmp5poorperformance"
-                                value="#{tcmpb.charts.chartdata.getIntChartData('PoorPerformance')}">
+                                value="#{bellrockpb.charts.chartdata.getIntChartData('PoorPerformance')}">
                             <f:convertNumber pattern="$#,###,###,##0"/>
                         </h:outputText>
 						</span>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="EmptyBox5"></div>
-            <h:inputHidden value="#{tcmpb.charts.chartdata.highChartresultSet}"
+            <h:inputHidden value="#{bellrockpb.charts.chartdata.highChartresultSet}"
                            id="projectionChart1"/>
 
             <div id="progressChart" class="Container100 Fright"></div>
@@ -95,66 +95,66 @@
             </div>
             <div class="Container70">
                 <div class="EmptyBox5"></div>
-                <p:commandLink id="tcmp5aggbtn" actionListener="#{tcmpb.setAnswer5(5)}"
+                <p:commandLink id="tcmp5aggbtn" actionListener="#{bellrockpb.setAnswer5(5)}"
                                process="@this" styleClass="PSlabLink"
                                update=":ceForm:inputArea">
                     <p:panel id="tcmp5aggbtnlabel" styleClass="PojectionSlabPanel">
-                        <div class="#{tcmpb.getAns5Tag2(5)}">
+                        <div class="#{bellrockpb.getAns5Tag2(5)}">
                             <span class="PSlabLabel">Aggressive</span>
                         </div>
-                        <div class="#{tcmpb.getAns5Tag1(5)}"></div>
+                        <div class="#{bellrockpb.getAns5Tag1(5)}"></div>
                     </p:panel>
                 </p:commandLink>
 
                 <div class="EmptyBox5"></div>
-                <p:commandLink id="tcmp5maggbtn" actionListener="#{tcmpb.setAnswer5(4)}"
+                <p:commandLink id="tcmp5maggbtn" actionListener="#{bellrockpb.setAnswer5(4)}"
                                process="@this" styleClass="PSlabLink"
                                update=":ceForm:inputArea">
                     <p:panel id="tcmp5maggbtnlabel" styleClass="PojectionSlabPanel">
 
-                        <div class="#{tcmpb.getAns5Tag2(4)}">
+                        <div class="#{bellrockpb.getAns5Tag2(4)}">
                             <span class="PSlabLabel">Moderately Aggressive</span>
                         </div>
-                        <div class="#{tcmpb.getAns5Tag1(4)}"></div>
+                        <div class="#{bellrockpb.getAns5Tag1(4)}"></div>
                     </p:panel>
                 </p:commandLink>
 
                 <div class="EmptyBox5"></div>
-                <p:commandLink id="tcmp5modbtn" actionListener="#{tcmpb.setAnswer5(3)}"
+                <p:commandLink id="tcmp5modbtn" actionListener="#{bellrockpb.setAnswer5(3)}"
                                process="@this" styleClass="PSlabLink"
                                update=":ceForm:inputArea">
                     <p:panel id="tcmp5modbtnlabel" styleClass="PojectionSlabPanel">
 
-                        <div class="#{tcmpb.getAns5Tag2(3)}">
+                        <div class="#{bellrockpb.getAns5Tag2(3)}">
                             <span class="PSlabLabel">Moderate</span>
                         </div>
-                        <div class="#{tcmpb.getAns5Tag1(3)}"></div>
+                        <div class="#{bellrockpb.getAns5Tag1(3)}"></div>
                     </p:panel>
                 </p:commandLink>
 
                 <div class="EmptyBox5"></div>
-                <p:commandLink id="tcmp5mconbtn" actionListener="#{tcmpb.setAnswer5(2)}"
+                <p:commandLink id="tcmp5mconbtn" actionListener="#{bellrockpb.setAnswer5(2)}"
                                process="@this" styleClass="PSlabLink"
                                update=":ceForm:inputArea">
                     <p:panel id="tcmp5mconbtnlabel" styleClass="PojectionSlabPanel">
 
-                        <div class="#{tcmpb.getAns5Tag2(2)}">
+                        <div class="#{bellrockpb.getAns5Tag2(2)}">
                             <span class="PSlabLabel">Moderately Conservative</span>
                         </div>
-                        <div class="#{tcmpb.getAns5Tag1(2)}"></div>
+                        <div class="#{bellrockpb.getAns5Tag1(2)}"></div>
                     </p:panel>
                 </p:commandLink>
 
                 <div class="EmptyBox5"></div>
-                <p:commandLink id="tcmp5conbtn" actionListener="#{tcmpb.setAnswer5(1)}"
+                <p:commandLink id="tcmp5conbtn" actionListener="#{bellrockpb.setAnswer5(1)}"
                                process="@this" styleClass="PSlabLink"
                                update=":ceForm:inputArea">
                     <p:panel id="tcmp5conbtnlabel" styleClass="PojectionSlabPanel">
 
-                        <div class="#{tcmpb.getAns5Tag2(1)}">
+                        <div class="#{bellrockpb.getAns5Tag2(1)}">
                             <span class="PSlabLabel">Conservative</span>
                         </div>
-                        <div class="#{tcmpb.getAns5Tag1(1)}"></div>
+                        <div class="#{bellrockpb.getAns5Tag1(1)}"></div>
                     </p:panel>
                 </p:commandLink>
             </div>
@@ -171,32 +171,32 @@
         </h3>
         <div class="EmptyBox20"></div>
         <p:panel id="tcmp5errormsg1"
-                rendered="#{tcmpb.pagemanager.getErrorMessage(3) != null  and  !tcmpb.formPortfolioEdit }"
+                rendered="#{bellrockpb.pagemanager.getErrorMessage(3) != null  and  !bellrockpb.formPortfolioEdit }"
                 style="border: 0px; background: transparent"
                 styleClass="Container100">
             <h:outputText id="tcmp5errortxt1" styleClass="errorText"
-                          value="#{tcmpb.pagemanager.getErrorMessage(3)}" escape="false"/>
+                          value="#{bellrockpb.pagemanager.getErrorMessage(3)}" escape="false"/>
         </p:panel>
 
         <p:panel id="tcmp5errormsg2"
-                rendered="#{tcmpb.pagemanager.getErrorMessage(4) != null  and  tcmpb.formPortfolioEdit }"
+                rendered="#{bellrockpb.pagemanager.getErrorMessage(4) != null  and  bellrockpb.formPortfolioEdit }"
                 style="border: 0px; background: transparent"
                 styleClass="Container100">
             <h:outputText id="tcmp5errortxt2" styleClass="errorText"
-                          value="#{tcmpb.pagemanager.getErrorMessage(4)}" escape="false"/>
+                          value="#{bellrockpb.pagemanager.getErrorMessage(4)}" escape="false"/>
         </p:panel>
 
         <div class="EmptyBox10"></div>
         <p:commandLink id="tcmp5previous" styleClass="UI-prevButton Fleft" value="Previous"
-                       rendered="#{tcmpb.pagemanager.prevButtonStat}"
+                       rendered="#{bellrockpb.pagemanager.prevButtonStat}"
                        update=":ceForm:inputArea" immediate="true"
-                       actionListener="#{tcmpb.prevPage}">
+                       actionListener="#{bellrockpb.prevPage}">
             <h:outputText value="Previous"/>
         </p:commandLink>
 
         <p:commandLink id="tcmp5next" styleClass="UI-nextButton Fright UI-tcmButton"
-                       value="Next" rendered="#{tcmpb.pagemanager.nextButtonStat}"
-                       update=":ceForm:inputArea" actionListener="#{tcmpb.nextPage}">
+                       value="Next" rendered="#{bellrockpb.pagemanager.nextButtonStat}"
+                       update=":ceForm:inputArea" actionListener="#{bellrockpb.nextPage}">
             <h:outputText value="Next"/>
         </p:commandLink>
     </div>

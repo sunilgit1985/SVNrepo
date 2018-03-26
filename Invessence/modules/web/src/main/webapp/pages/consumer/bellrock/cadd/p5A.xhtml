@@ -165,7 +165,7 @@
 	<div class="Container100 TextAlCenter customRadioBlock">
 
 		<h3 class="TexAlCenter StepsQuestionsFS">
-			<!-- Assuming you invest for at least #{tcmpb.horizon} years, in the course of any given year,
+			<!-- Assuming you invest for at least #{bellrockpb.horizon} years, in the course of any given year,
             which of the below range of returns would be most acceptable to you?-->
 			Below is a simulation of the possible performance ranges over time of
 			5 hypothetical portfolios at differing levels of risk, comparing the
@@ -192,10 +192,10 @@
 
 			<div class="ProjectionChartRadioBlock">
 				<p:selectOneRadio id="projection"
-					value="#{tcmpb.riskCalculator.ans5}" layout="custom"
+					value="#{bellrockpb.riskCalculator.ans5}" layout="custom"
 					required="true"
 					requiredMessage="Please choose one of these choices for appropriate investment">
-					<p:ajax listener="#{tcmpb.doProjectionChart}"
+					<p:ajax listener="#{bellrockpb.doProjectionChart}"
 						update=":ceForm:inputArea" />
 					<f:selectItem id="tcmp5ainv1" class="ProjectionChartRadioAssetsLabel" itemValue="1" />
 					<f:selectItem id="tcmp5ainv2" class="ProjectionChartRadioAssetsLabel" itemValue="2" />
@@ -241,8 +241,8 @@
 		<!-- customRadio HighChart start  -->
 		<div class="Container80 Responsive100-tcmUI">
 			<p:panel id="tcmp5aradiochart" styleClass="GraphPanel" update="beanValueChart"
-				action="#{tcmpb.docustomRadioChart}" />
-			<h:inputHidden value="#{tcmpb.charts.resultChart}"
+				action="#{bellrockpb.docustomRadioChart}" />
+			<h:inputHidden value="#{bellrockpb.charts.resultChart}"
 				id="beanValueChart" />
 			<div id="progressChart" class="Conatiner100 customRadioGraph"></div>
 		</div>
@@ -259,7 +259,7 @@
 								Performance</span>
 							<div class="EmptyBox5"></div>
 							<span class="Fs17 DispBlock BBGreen"> <h:outputText id="tcmp5aavgperformance"
-									value="#{tcmpb.charts.avgPerformance}">
+									value="#{bellrockpb.charts.avgPerformance}">
 									<f:convertNumber pattern="$#,###,###,##0" />
 								</h:outputText>
 							</span>
@@ -271,7 +271,7 @@
 							<span class="Fs14 DispBlock gray">Poor Market Performance</span>
 							<div class="EmptyBox5"></div>
 							<span class="Fs17 DispBlock BBDarkGray"> <h:outputText id="tcmp5apoorperformance"
-									value="#{tcmpb.charts.poorPerformance}">
+									value="#{bellrockpb.charts.poorPerformance}">
 									<f:convertNumber pattern="$#,###,###,##0" />
 								</h:outputText>
 							</span>
@@ -286,15 +286,15 @@
 
 		<div class="EmptyBox10"></div>
 		<p:commandLink id="tcmp5aprevious" styleClass="UI-prevButton Fleft" value="Previous"
-			rendered="#{tcmpb.pagemanager.prevButtonStat}"
+			rendered="#{bellrockpb.pagemanager.prevButtonStat}"
 			update=":ceForm:inputArea" immediate="true"
-			actionListener="#{tcmpb.prevPage}">
+			actionListener="#{bellrockpb.prevPage}">
 			<h:outputText value="Previous" />
 		</p:commandLink>
 
 		<p:commandLink id="tcmp5anext" styleClass="UI-nextButton Fright UI-tcmButton"
-			value="Next" rendered="#{tcmpb.pagemanager.nextButtonStat}"
-			update=":ceForm:inputArea" actionListener="#{tcmpb.nextPage}">
+			value="Next" rendered="#{bellrockpb.pagemanager.nextButtonStat}"
+			update=":ceForm:inputArea" actionListener="#{bellrockpb.nextPage}">
 			<h:outputText value="Next" />
 		</p:commandLink>
 	</div>

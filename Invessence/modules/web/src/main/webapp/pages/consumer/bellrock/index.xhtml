@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/template/common/template.xhtml">
 	<f:metadata>
-		<f:event type="preRenderView" listener="#{tcmdash.preRenderView}" />
+		<f:event type="preRenderView" listener="#{bellrockdash.preRenderView}" />
 	</f:metadata>
 
 
@@ -57,7 +57,7 @@
 								<div class="Container100">
 									<p:dataGrid
 										style="background: transparent; padding-right:5px; border:0px!important"
-										var="investment" value="#{tcmdash.manageAccountList}"
+										var="investment" value="#{bellrockdash.manageAccountList}"
 										columns="1" layout="grid">
 										<p:panel styleClass="DashboardBlock_d">
 											<table
@@ -180,8 +180,8 @@
 															</p:overlayPanel>
 															<span class="dsahboardEditDropdownBlock">
 															<p:menuButton value="Options" disabled="#{!investment.hasClientID}" styleClass="InfoNewDash customMenuButtonDashboard">
-                                                                <p:menuitem value="Change Address" action="#{tcmdash.doOptionMenuAction()}">
-                                                                    <f:setPropertyActionListener value="#{investment}" target="#{tcmdash.selectedAccount}" />
+                                                                <p:menuitem value="Change Address" action="#{bellrockdash.doOptionMenuAction()}">
+                                                                    <f:setPropertyActionListener value="#{investment}" target="#{bellrockdash.selectedAccount}" />
                                                                 </p:menuitem>
 
 
@@ -206,7 +206,7 @@
 																			icon="fa fa-pencil-square-o Fs14 white">
 
 																			<f:setPropertyActionListener value="#{investment}"
-																				target="#{tcmdash.selectedAccount}" />
+																				target="#{bellrockdash.selectedAccount}" />
 																		</p:commandButton>
 																	</div>
 																	<div class="Container100 ButtonConDashBlock">
@@ -222,9 +222,9 @@
 																			disabled="#{!investment.hasClientID}"
 																			styleClass="Fs14 GreenButton" process="@this"
 																			immediate="true" icon="fa fa-university Fs14 white"
-																			action="#{tcmdash.doFundingAction}">
+																			action="#{bellrockdash.doFundingAction}">
 																			<f:setPropertyActionListener value="#{investment}"
-																				target="#{tcmdash.selectedAccount}" />
+																				target="#{bellrockdash.selectedAccount}" />
 																		</p:commandButton>
 																	</div>
 																	<div class="Container100 ButtonConDashBlock">
@@ -240,9 +240,9 @@
 																		<p:commandButton id="editPortfolioButton"
 																			styleClass="Fs14 OrangeButton" process="@this"
 																			immediate="true" icon="fa fa-pie-chart Fs14 white"
-																			action="#{tcmdash.doPortfolioSelectedAction}">
+																			action="#{bellrockdash.doPortfolioSelectedAction}">
 																			<f:setPropertyActionListener value="#{investment}"
-																				target="#{tcmdash.selectedAccount}" />
+																				target="#{bellrockdash.selectedAccount}" />
 																		</p:commandButton>
 																	</div>
 																	<div class="Container100 ButtonConDashBlock">
@@ -263,9 +263,9 @@
 																			disabled="#{!investment.hasPosition}"
 																			styleClass="Fs14 GreenButton" process="@this"
 																			immediate="true" icon="fa fa-search-plus Fs14 white"
-																			action="#{tcmdash.showPosition}">
+																			action="#{bellrockdash.showPosition}">
 																			<f:setPropertyActionListener value="#{investment}"
-																				target="#{tcmdash.selectedAccount}" />
+																				target="#{bellrockdash.selectedAccount}" />
 																		</p:commandButton>
 																	</div>
 																	<div class="Container100 ButtonConDashBlock">

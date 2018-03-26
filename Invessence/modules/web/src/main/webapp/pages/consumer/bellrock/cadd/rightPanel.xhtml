@@ -14,7 +14,7 @@
                         <div class="EmptyBox5"></div>
                         <span class="Fs14 DispBlock gray">Investment Risk</span>
                                     <span class="Fs24 DispBlock red">
-                                    <h:outputText value="#{tcmpb.totalRisk}">
+                                    <h:outputText value="#{bellrockpb.totalRisk}">
                                         <f:convertNumber pattern="##0.00%"/>
                                     </h:outputText>
                                    </span>
@@ -28,7 +28,7 @@
                         <div class="EmptyBox5"></div>
                         <span class="Fs14 DispBlock gray">Expected Return</span>
                                     <span class="Fs24 DispBlock invessenceblue">
-                                      <h:outputText value="#{tcmpb.totalExpectedReturns}">
+                                      <h:outputText value="#{bellrockpb.totalExpectedReturns}">
                                           <f:convertNumber pattern="##0.00%"/>
                                       </h:outputText>
                                      </span>
@@ -43,18 +43,18 @@
                 <div class="Container80 Responsive100">
                     <div class="Container50  Fleft Responsive50">
                         <div class="TexAlCenter tcm-graphType">
-                        #{tcmpb.fixedModelName}
+                        #{bellrockpb.fixedModelName}
                         </div>
                         <div class="Container100">
-                            <p:chart type="pie" model="#{tcmpb.charts.pieChart}" styleClass="PieGraphPosition"
+                            <p:chart type="pie" model="#{bellrockpb.charts.pieChart}" styleClass="PieGraphPosition"
                                      style="height:200px; width: 100%;"
-                                     rendered="#{tcmpb.charts.pieChart != null}"
+                                     rendered="#{bellrockpb.charts.pieChart != null}"
                                      responsive="true"/>
                         </div>
                     </div>
                     <div class="Container50 Fleft Responsive50">
                         <p:dataTable styleClass="invAllocTable"
-                                     value="#{tcmpb.editableAsset}"
+                                     value="#{bellrockpb.editableAsset}"
                                      var="assetList">
 
                             <p:column style="width: 2%; background-color: #{assetList.color};">

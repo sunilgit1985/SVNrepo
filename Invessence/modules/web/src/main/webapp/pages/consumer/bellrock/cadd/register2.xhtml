@@ -55,12 +55,12 @@
 
                     <div class="Container100" style="text-align: center;">
                         <p:inputText id="firstName" styleClass="FS14 InputMergeRight CustomWidthFA3"
-                                     value="#{tcmpb.firstname}" placeholder="First Name"
+                                     value="#{bellrockpb.firstname}" placeholder="First Name"
                                      required="true" requiredMessage="Please enter First Name.">
                         </p:inputText>
 
                         <p:inputText id="lastName" styleClass="FS14 InputMergeLeft CustomWidthFA3"
-                                     value="#{tcmpb.lastname}" placeholder="Last Name"
+                                     value="#{bellrockpb.lastname}" placeholder="Last Name"
                                      required="true" requiredMessage="Please enter Last Name.">
                             <p:watermark for="lastName" value="Last Name"/>
                         </p:inputText>
@@ -68,7 +68,7 @@
                         <div class="EmptyBox10"></div>
 
                         <p:inputText id="email" styleClass="Wid100 FS14 CustomWidthFA2"
-                                     value="#{tcmpb.email}" placeholder="Email"
+                                     value="#{bellrockpb.email}" placeholder="Email"
                                      required="true" requiredMessage="Please enter Email."
                                      validatorMessage="Email format is not correct.">
                             <p:watermark for="email" value="Email Address"/>
@@ -84,10 +84,10 @@
                 <div class="Container100" style="text-align: center;">
                     <p:commandButton value="Review" id="newregreview"
                                      update=":ceForm:inputArea"
-                                     actionListener="#{tcmpb.gotoReview}" styleClass="customwidthbutton"/>
+                                     actionListener="#{bellrockpb.gotoReview}" styleClass="customwidthbutton"/>
                     <p:commandButton value="Open Account" type="submit" id="newregopenacct"
                                      update=":ceForm:inputArea"
-                                     actionListener="#{tcmpb.gotoCustody}" styleClass="customwidthbutton"/>
+                                     actionListener="#{bellrockpb.gotoCustody}" styleClass="customwidthbutton"/>
                 </div>
             </f:facet>
 

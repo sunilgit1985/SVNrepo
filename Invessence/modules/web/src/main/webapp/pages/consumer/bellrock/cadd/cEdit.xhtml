@@ -7,13 +7,13 @@
 	<p:panel id="inputArea"
 		style="border: 0px; background: transparent; height: auto">
 		<p:inputText type="hidden" id="idHdnAcct" class="idHdnAcctCls"
-					 value="#{tcmpb.acctnum}"/>
+					 value="#{bellrockpb.acctnum}"/>
 		<div class="Container100">
 			<div class="ContainerIndent Responsive100 tab_main">
 
-				<ui:fragment rendered="#{tcmpb.doesUserHavaLogonID}">
+				<ui:fragment rendered="#{bellrockpb.doesUserHavaLogonID}">
 					<p:steps id="progressbar" styleClass="portfolioCreationStepsPanel tabColorOnluCustom loginTabs"
-							 activeIndex="#{tcmpb.pagemanager.page}">
+							 activeIndex="#{bellrockpb.pagemanager.page}">
 						<p:menuitem value="Start" />
 						<p:menuitem value="Objective" />
 						<p:menuitem value="Risk" />
@@ -22,9 +22,9 @@
 					</p:steps>
 
 				</ui:fragment>
-				<ui:fragment rendered="#{! tcmpb.doesUserHavaLogonID}">
+				<ui:fragment rendered="#{! bellrockpb.doesUserHavaLogonID}">
 					<p:steps id="progressbar2" styleClass="portfolioCreationStepsPanel tabColorOnluCustom guestTabs"
-							 activeIndex="#{tcmpb.pagemanager.page}">
+							 activeIndex="#{bellrockpb.pagemanager.page}">
 						<p:menuitem value="Start" />
 						<p:menuitem value="Objective" />
 						<p:menuitem value="Risk" />
@@ -39,22 +39,22 @@
 
 		<div class="Container100 BackgroundWhite">
 			<div class="ContainerIndent">
-				<ui:fragment rendered="#{tcmpb.pagemanager.page == 0}">
+				<ui:fragment rendered="#{bellrockpb.pagemanager.page == 0}">
 					<ui:include src="/pages/consumer/tcm/cadd/p1.xhtml" />
 				</ui:fragment>
-				<ui:fragment rendered="#{tcmpb.pagemanager.page == 1}">
+				<ui:fragment rendered="#{bellrockpb.pagemanager.page == 1}">
 					<ui:include src="/pages/consumer/tcm/cadd/p3.xhtml" />
 				</ui:fragment>
-				<ui:fragment rendered="#{tcmpb.pagemanager.page == 2}">
+				<ui:fragment rendered="#{bellrockpb.pagemanager.page == 2}">
 					<ui:include src="/pages/consumer/tcm/cadd/p4.xhtml" />
 				</ui:fragment>
-				<ui:fragment rendered="#{tcmpb.pagemanager.page == 3}">
+				<ui:fragment rendered="#{bellrockpb.pagemanager.page == 3}">
 					<ui:include src="/pages/consumer/tcm/cadd/p5.xhtml" />
 				</ui:fragment>
-				<ui:fragment rendered="#{tcmpb.pagemanager.page == 4}">
+				<ui:fragment rendered="#{bellrockpb.pagemanager.page == 4}">
 					<ui:include src="/pages/consumer/tcm/cadd/portfolioreview.xhtml" />
 				</ui:fragment>
-				<ui:fragment rendered="#{tcmpb.pagemanager.page == 5}">
+				<ui:fragment rendered="#{bellrockpb.pagemanager.page == 5}">
 					<ui:include src="/pages/consumer/tcm/cadd/register.xhtml" />
 				</ui:fragment>
 			</div>

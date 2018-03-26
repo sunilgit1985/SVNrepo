@@ -7,8 +7,8 @@
                 template="/template/common/template.xhtml">
 
     <f:metadata>
-        <f:viewParam name="acct" value="#{tcmpos.acctnum}"/>
-        <f:event type="preRenderView" listener="#{tcmpos.preRenderView}"/>
+        <f:viewParam name="acct" value="#{bellrockpos.acctnum}"/>
+        <f:event type="preRenderView" listener="#{bellrockpos.preRenderView}"/>
     </f:metadata>
 
     <ui:define name="content">
@@ -21,11 +21,11 @@
                         <div class="DispInlBlock">
                             <div class="Container20"><i class="fa fa-user Fs50 red Fleft MarRight10" style="padding-top:15px;"></i></div>
                             <div class="Container80 UsernameDashboard">
-                                <h2 id="ovrvwclientid" class="Fs18 black head FontThemeMedium DispBlock">Account#: #{tcmpos.clientAccountID}
+                                <h2 id="ovrvwclientid" class="Fs18 black head FontThemeMedium DispBlock">Account#: #{bellrockpos.clientAccountID}
                                 </h2>
                                 <div class="Fright">
-                                    <span id="ovrvwfullname" class="Fs13 gray FontThemeRegular">#{tcmpos.fullName}</span>
-                                    <span id="ovrvwacctalias" class="Fs13 gray FontThemeRegular DispBlock">Strategy: #{tcmpos.accountAlias}
+                                    <span id="ovrvwfullname" class="Fs13 gray FontThemeRegular">#{bellrockpos.fullName}</span>
+                                    <span id="ovrvwacctalias" class="Fs13 gray FontThemeRegular DispBlock">Strategy: #{bellrockpos.accountAlias}
                                 </span>
                                 </div>
                             </div>
@@ -36,9 +36,9 @@
                                     <div class="Container50 Responsive50 tp20">
                                         <!-- ROHIT's CHANGE -->
                                         <div class="ContainerIndent">
-                                            <p:chart type="pie" model="#{tcmpos.pieModel}" styleClass="PieGraphPosition"
+                                            <p:chart type="pie" model="#{bellrockpos.pieModel}" styleClass="PieGraphPosition"
                                                      style="height:200px; width: 100%; border:0!important;"
-                                                     rendered="#{tcmpos.pieModel != null}"
+                                                     rendered="#{bellrockpos.pieModel != null}"
                                                      responsive="true"
                                                      id="ovrvwpiechart"
                                                      extender="pie_extensions"/>
@@ -47,7 +47,7 @@
                                     <div class="Container50 Responsive50"><!-- ROHIT's CHANGE -->
                                         <div class="ContainerIndent">
                                             <p:dataTable id="editAlloc" styleClass="invAllocTable"
-                                                         value="#{tcmpos.managedAssetsList}"
+                                                         value="#{bellrockpos.managedAssetsList}"
                                                          var="assetList" rowKey="#{assetList.asset}"
                                                          reflow="false"><!-- ROHIT's CHANGE -->
 
@@ -81,7 +81,7 @@
                                                                   footerText="Total">
                                                         </p:column>
                                                         <p:column id="ovrvwtotal1" styleClass="Fs14 TexAlRight FontBold"
-                                                                  footerText="#{dataDisplayConverter.displayAsMoney(tcmpos.totalvalue)}">
+                                                                  footerText="#{dataDisplayConverter.displayAsMoney(bellrockpos.totalvalue)}">
                                                         </p:column>
                                                     </p:row>
                                                 </p:columnGroup>
@@ -95,7 +95,7 @@
                             <p:tab title="Detailed Holdings">
                                 <div class="Container100 Responsive100">
                                     <div class="ContainerIndent">
-                                        <p:dataTable id="dataTable" var="position" value="#{tcmpos.displayPositionList}"
+                                        <p:dataTable id="dataTable" var="position" value="#{bellrockpos.displayPositionList}"
                                                      styleClass="invDataTable" reflow="false"> <!-- ROHIT's CHANGE reflow="true" for previuos table-->
 
                                             <p:column priority="0"
@@ -174,14 +174,14 @@
                                                     <p:column priority="2" footerText="" style="text-align:left"/>
 
                                                     <p:column priority="2" id="ovrvwtotalval1"
-                                                              footerText="#{dataDisplayConverter.displayAsMoney(tcmpos.totalmoney)}"
+                                                              footerText="#{dataDisplayConverter.displayAsMoney(bellrockpos.totalmoney)}"
                                                               style="text-align:right"/>
                                                     <p:column priority="2" footerText="" style="text-align:left"/>
                                                     <p:column id="ovrvwtotalval2"
-                                                            footerText="#{dataDisplayConverter.displayAsMoney(tcmpos.totalvalue)}"
+                                                            footerText="#{dataDisplayConverter.displayAsMoney(bellrockpos.totalvalue)}"
                                                             style="text-align:right"/>
                                                     <p:column colspan="" id="ovrvwtotalval3"
-                                                              footerText="#{dataDisplayConverter.displayAsMoney(tcmpos.totalpnl)}"
+                                                              footerText="#{dataDisplayConverter.displayAsMoney(bellrockpos.totalpnl)}"
                                                               style="text-align:right"/>
                                                 </p:row>
                                             </p:columnGroup>

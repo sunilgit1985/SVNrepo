@@ -16,7 +16,7 @@
                         <div class="Container50 Responsive100 Fleft ">
                             <p:panel id="fineTunePanel"
                                      styleClass="fineTuneBlock"
-                                     rendered="#{tcmpb.displayFTPanel}">
+                                     rendered="#{bellrockpb.displayFTPanel}">
                                 <div class="Container100 FTLabel">
                                     <span class="Fs16">Change Strategy</span>
                                     <div class="Wid10 Fright closeFTbtn">
@@ -24,7 +24,7 @@
                                                          styleClass="fineTuneBtn"
                                                          icon="fa fa-times"
                                                          update=":ceForm:workArea"
-                                                         actionListener="#{tcmpb.cancelFTPanel}">
+                                                         actionListener="#{bellrockpb.cancelFTPanel}">
                                         </p:commandButton>
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@
                                     <div class="EmptyBox10"></div>
                                     <div class="Container100 Fleft TexAlCenter"
                                          style="padding: 0px 20px; box-sizing: border-box;">
-                                        <strong><h:outputText id="modelnamelbl" value="#{tcmpb.fixedModelName}"/></strong>
+                                        <strong><h:outputText id="modelnamelbl" value="#{bellrockpb.fixedModelName}"/></strong>
                                     </div>
                                     <div class="EmptyBox20"></div>
                                     <div class="Container100 DispBlock gray">
@@ -47,12 +47,12 @@
                                             Conservative
                                         </div>
                                         <div class="Container50 TexAlCenter Fs20">
-                                            <h:inputHidden id="allocValue" value="#{tcmpb.sliderAllocationIndex}"/>
+                                            <h:inputHidden id="allocValue" value="#{bellrockpb.sliderAllocationIndex}"/>
                                             <p:slider id="allocSlider" for="allocValue" minValue="0"
-                                                      maxValue="#{tcmpb.maxAssetAllocatonPoints}" step="1">
+                                                      maxValue="#{bellrockpb.maxAssetAllocatonPoints}" step="1">
                                                 <p:ajax event="slideEnd"
                                                         update=":ceForm:graphArea, :ceForm:tcmFinal, :ceForm:modelnamelbl, :ceForm:modeldescrlbl, :ceForm:tcmp7aportfoliolist"
-                                                        listener="#{tcmpb.onAllocSlider}"/>
+                                                        listener="#{bellrockpb.onAllocSlider}"/>
                                             </p:slider>
                                         </div>
                                         <div class="Container25 TexAlLeft Fs14 uobSliderLabel lastLabel">
@@ -64,7 +64,7 @@
                                                 <p:commandButton id="allocSliderResetButton" value="Recommended"
                                                                  styleClass="uob_button"
                                                                  update=":ceForm:allocSlider, :ceForm:graphArea, :ceForm:tcmFinal, :ceForm:modelnamelbl, :ceForm:modeldescrlbl, :ceForm:tcmp7anext, :ceForm:tcmp7aportfoliolist"
-                                                                 actionListener="#{tcmpb.doAllocReset}"/>
+                                                                 actionListener="#{bellrockpb.doAllocReset}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                     <div class="EmptyBox10"></div>
                                     <div class="Container100 Fleft TexAlLeft"
                                          style="padding: 0px 20px; box-sizing: border-box; font-size: 13px;">
-                                        <h:outputText id="modeldescrlbl" value="#{tcmpb.newLongDesc}"/>
+                                        <h:outputText id="modeldescrlbl" value="#{bellrockpb.newLongDesc}"/>
 
                                     </div>
 
@@ -84,14 +84,14 @@
                                         <p:commandButton id="sccancelbtn4" value="Cancel" styleClass="" style="float: left;
     margin-left: 20px;"
                                                          update=":ceForm:workArea"
-                                                         actionListener="#{tcmpb.cancelFTPanel}">
+                                                         actionListener="#{bellrockpb.cancelFTPanel}">
                                         </p:commandButton>
 
 
                                         <p:commandButton id="scsavebtn3" value="Save" styleClass="" style="    float: right;
     margin-right: 20px;"
                                                          update=":ceForm:workArea"
-                                                         actionListener="#{tcmpb.saveFTPanel}">
+                                                         actionListener="#{bellrockpb.saveFTPanel}">
                                         </p:commandButton>
 
                                     </div>
@@ -105,7 +105,7 @@
                                         <p:panel style="height: 60%; width: 100%; background: #ffffff;">
                                             <div class="EmptyBox5"></div>
                                             <div class="Fs17 textAlign">Your current active strategy is
-                                                <strong>#{tcmpb.origCustomerData.portfolioName}</strong>
+                                                <strong>#{bellrockpb.origCustomerData.portfolioName}</strong>
                                             </div>
 
                                             <div class="EmptyBox5"></div>
@@ -113,10 +113,10 @@
                                     </div>
                                 </div>
 
-                                <ui:fragment rendered="#{! tcmpb.sameStrategy}">
+                                <ui:fragment rendered="#{! bellrockpb.sameStrategy}">
                                     <div class="Container100 Fleft TexAlCenter ResMArTop"
                                          style="padding: 0px 20px; box-sizing: border-box;">
-                                        Based on the responses that you have given, the revised strategy is <strong>#{tcmpb.portfolioName}</strong>.
+                                        Based on the responses that you have given, the revised strategy is <strong>#{bellrockpb.portfolioName}</strong>.
                                     </div>
                                     <div class="EmptyBox30 ResEmptyBox30"></div>
                                     <div class="Container100 Responsive100">
@@ -125,7 +125,7 @@
                                                 <div class="EmptyBox5"></div>
                                                 <span class="Fs14 DispBlock gray">Investment Risk</span>
                                     <span class="Fs24 DispBlock red">
-                                    <h:outputText value="#{tcmpb.totalRisk}">
+                                    <h:outputText value="#{bellrockpb.totalRisk}">
                                         <f:convertNumber pattern="##0.00%"/>
                                     </h:outputText>
                                    </span>
@@ -139,7 +139,7 @@
                                                 <div class="EmptyBox5"></div>
                                                 <span class="Fs14 DispBlock gray">Expected Return</span>
                                     <span class="Fs24 DispBlock invessenceblue">
-                                      <h:outputText value="#{tcmpb.totalExpectedReturns}">
+                                      <h:outputText value="#{bellrockpb.totalExpectedReturns}">
                                           <f:convertNumber pattern="##0.00%"/>
                                       </h:outputText>
                                      </span>
@@ -152,13 +152,13 @@
                                     <div class="Container100">
                                         <p:outputPanel deferred="true">
                                             <div class="Container50 Fleft spResPieBlock">
-                                                <p:chart id="tcmp7apiechart" type="pie" model="#{tcmpb.charts.pieChart}"
+                                                <p:chart id="tcmp7apiechart" type="pie" model="#{bellrockpb.charts.pieChart}"
                                                          style="height: 100%; width: 100%;"
-                                                         rendered="#{tcmpb.charts.pieChart != null}" responsive="true"/>
+                                                         rendered="#{bellrockpb.charts.pieChart != null}" responsive="true"/>
                                             </div>
                                             <div class="Container40 Fright assetAllocationTableMobView spResPieTableBlock">
                                                 <p:dataTable id="tcmp7aassettable" styleClass="invAllocTable"
-                                                             value="#{tcmpb.editableAsset}" var="assetList">
+                                                             value="#{bellrockpb.editableAsset}" var="assetList">
 
                                                     <p:column
                                                             style="width: 1%; background-color: #{assetList.color};">
@@ -188,7 +188,7 @@
                                                                       footerText="Total">
                                                             </p:column>
                                                             <p:column styleClass="Fs12 TexAlRight FontBold"
-                                                                      footerText="#{dataDisplayConverter.displayAsMoneyRounded(tcmpb.totalMoneyAllocated)}">
+                                                                      footerText="#{dataDisplayConverter.displayAsMoneyRounded(bellrockpb.totalMoneyAllocated)}">
                                                             </p:column>
                                                         </p:row>
                                                     </p:columnGroup>
@@ -197,7 +197,7 @@
                                         </p:outputPanel>
                                     </div>
                                 </ui:fragment>
-                                <ui:fragment rendered="#{tcmpb.sameStrategy}">
+                                <ui:fragment rendered="#{bellrockpb.sameStrategy}">
                                     <div class="Container100 csWarningPanel BorderBoxPanel">
 
                                         <div class="textAlign red cswLabel">
@@ -211,9 +211,9 @@
                                         <p:commandButton id="tcmp7achngstrategy2"
                                                          styleClass="fineTuneBtn fineTuneBtnImg spWid100"
                                                          value="Change Strategy"
-                                                         disabled="#{! tcmpb.enableChangeStrategy}"
+                                                         disabled="#{! bellrockpb.enableChangeStrategy}"
                                                          update=":ceForm:reviewArea, :ceForm:tcmp7achngstrategy2,:ceForm:tcmp7astartover,:ceForm:tcmp7anext"
-                                                         actionListener="#{tcmpb.showFTPanel}">
+                                                         actionListener="#{bellrockpb.showFTPanel}">
                                         </p:commandButton>
                                     </div>
                                 </ui:fragment>
@@ -238,7 +238,7 @@
 
                                             <div class="EmptyBox5"></div>
 								<span class="Fs17 DispBlock BBGreen"> <h:outputText id="tcmp7aavgperformance"
-                                                                                    value="#{tcmpb.charts.chartdata.getIntChartData('AvgPerformance')}">
+                                                                                    value="#{bellrockpb.charts.chartdata.getIntChartData('AvgPerformance')}">
                                     <f:convertNumber pattern="$#,###,###,##0"/>
                                 </h:outputText>
 								</span>
@@ -253,7 +253,7 @@
 
                                             <div class="EmptyBox5"></div>
 								<span class="Fs17 DispBlock BBGreen"> <h:outputText id="tcmp7apoorperformance"
-                                                                                    value="#{tcmpb.charts.chartdata.getIntChartData('PoorPerformance')}">
+                                                                                    value="#{bellrockpb.charts.chartdata.getIntChartData('PoorPerformance')}">
                                     <f:convertNumber pattern="$#,###,###,##0"/>
                                 </h:outputText>
 								</span>
@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="EmptyBox10"></div>
 
-                                <h:inputHidden value="#{tcmpb.charts.chartdata.highChartresultSet}"
+                                <h:inputHidden value="#{bellrockpb.charts.chartdata.highChartresultSet}"
                                                id="performanceChart"/>
 
                                 <div id="progressChart" class="Fright Wid100">
@@ -274,24 +274,24 @@
                     </div>
                     <div id="chngstBtnBock" class="Container100 Responsive100 summaryPageBtn" style="text-align: center;">
                         <p:commandButton styleClass="prev ResponsiveBtnFS Fleft spWid100" id="tcmp7astartover"
-                                         disabled="#{! tcmpb.enableChangeStrategy}"
+                                         disabled="#{! bellrockpb.enableChangeStrategy}"
                                          value="Start Over" update=":ceForm:inputArea" immediate="true"
-                                         actionListener="#{tcmpb.startover}"/>
+                                         actionListener="#{bellrockpb.startover}"/>
 
                         <p:commandButton id="tcmp7achngstrategy"
                                          styleClass="fineTuneBtn fineTuneBtnImg spWid100" value="Change Strategy"
                                          update=":ceForm:reviewArea, :ceForm:tcmp7achngstrategy"
-                                         disabled="#{! tcmpb.enableChangeStrategy}"
-                                         actionListener="#{tcmpb.showFTPanel}">
+                                         disabled="#{! bellrockpb.enableChangeStrategy}"
+                                         actionListener="#{bellrockpb.showFTPanel}">
                         </p:commandButton>
 
                         <p:commandButton id="tcmp7anext" style="margin-right: 0px!important;"
                                          styleClass="Fright ResponsiveBtnFS spWid100"
                                          value="Next"
-                                         rendered="#{tcmpb.pagemanager.nextButtonStat}"
+                                         rendered="#{bellrockpb.pagemanager.nextButtonStat}"
                                          update=":ceForm:inputArea"
-                                         disabled="#{! tcmpb.altrOnChngStrategy}"
-                                         actionListener="#{tcmpb.nextPage}"/>
+                                         disabled="#{! bellrockpb.altrOnChngStrategy}"
+                                         actionListener="#{bellrockpb.nextPage}"/>
 
                     </div>
                 </p:outputPanel>
@@ -305,7 +305,7 @@
                         </div>
                     </div>
                     <div class="Container100">
-                        <p:dataTable id="tcmp7aportfoliolist" var="ticker" value="#{tcmpb.displayPortfolioList}">
+                        <p:dataTable id="tcmp7aportfoliolist" var="ticker" value="#{bellrockpb.displayPortfolioList}">
 
                             <p:column style="width:1%; background-color: #{ticker.color}">
                                 <h:outputText value=" "/>
@@ -371,7 +371,7 @@
                                               footerText="Total">
                                     </p:column>
                                     <p:column styleClass="Fs14 TexAlRight FontBold"
-                                              footerText="#{dataDisplayConverter.displayAsMoneyRounded(tcmpb.totalMoneyAllocated)}">
+                                              footerText="#{dataDisplayConverter.displayAsMoneyRounded(bellrockpb.totalMoneyAllocated)}">
                                     </p:column>
                                 </p:row>
                             </p:columnGroup>

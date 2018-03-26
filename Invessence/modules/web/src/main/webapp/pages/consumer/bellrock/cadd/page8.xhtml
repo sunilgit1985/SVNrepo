@@ -126,11 +126,11 @@
         </div>
         <div class="EmptyBox20"></div>
         <div class="Container100 Fs18">
-            <p:selectOneRadio value="#{tcmpb.acceptterms}"
+            <p:selectOneRadio value="#{bellrockpb.acceptterms}"
                               layout="pageDirection"
                               required="true" requiredMessage="Must choose one of the terms!"
             >
-                <p:ajax listener="#{tcmpb.onTermChange}"
+                <p:ajax listener="#{bellrockpb.onTermChange}"
                         update=":ceForm:inputArea"/>
                 <f:selectItem
                         itemLabel="I have read, reviewed and understand the applicable prospectus of the Fund(s) and accept the terms and conditions described above."
@@ -144,14 +144,14 @@
         <div class="EmptyBox20"></div>
 
         <div class="Container100 TexAlCenter">
-            <p:commandButton styleClass="Fleft" value="Previous" rendered="#{tcmpb.pagemanager.prevButtonStat}"
+            <p:commandButton styleClass="Fleft" value="Previous" rendered="#{bellrockpb.pagemanager.prevButtonStat}"
                              update=":ceForm:inputArea"
                              immediate="true"
-                             actionListener="#{tcmpb.prevPage}"/>
-            <p:commandButton styleClass="Fright" value="Next" disabled="#{tcmpb.acceptterms != 'Y'}"
+                             actionListener="#{bellrockpb.prevPage}"/>
+            <p:commandButton styleClass="Fright" value="Next" disabled="#{bellrockpb.acceptterms != 'Y'}"
                              update=":ceForm:inputArea"
                              process="@this" immediate="true"
-                             actionListener="#{tcmpb.agreeTerms}">
+                             actionListener="#{bellrockpb.agreeTerms}">
             </p:commandButton>
         </div>
 

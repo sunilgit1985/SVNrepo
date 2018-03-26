@@ -6,9 +6,9 @@
                 template="/template/common/template.xhtml">
 
     <f:metadata>
-        <f:viewParam name="app" value="#{tcmpb.newapp}"/>
-        <f:viewParam name="acct" value="#{tcmpb.beanAcctnum}"/>
-        <f:event type="preRenderView" listener="#{tcmpb.portfolioRenderView}"/>
+        <f:viewParam name="app" value="#{bellrockpb.newapp}"/>
+        <f:viewParam name="acct" value="#{bellrockpb.beanAcctnum}"/>
+        <f:event type="preRenderView" listener="#{bellrockpb.portfolioRenderView}"/>
     </f:metadata>
 
     <ui:define name="content">
@@ -36,7 +36,7 @@
                                 <div class="ContainerIndent Responsive100 tab_main">
 
                                     <p:steps id="progressbar" styleClass="portfolioCreationSteps8Panel portfolioCreationStepsPanel"
-                                             activeIndex="#{tcmpb.pagemanager.page}">
+                                             activeIndex="#{bellrockpb.pagemanager.page}">
                                         <p:menuitem value="Selection" />
                                         <p:menuitem value="Start" />
                                         <p:menuitem value="Objective" />
@@ -52,25 +52,25 @@
 
                             <div class="Container100 BackgroundWhite">
                                 <div class="ContainerIndent">
-                                    <ui:fragment rendered="#{tcmpb.pagemanager.page == 0}">
+                                    <ui:fragment rendered="#{bellrockpb.pagemanager.page == 0}">
                                         <ui:include src="/pages/consumer/tcm/cadd/portfolioConfirmation.xhtml" />
                                     </ui:fragment>
-                                  <ui:fragment rendered="#{tcmpb.pagemanager.page == 1}">
+                                  <ui:fragment rendered="#{bellrockpb.pagemanager.page == 1}">
                                         <ui:include src="/pages/consumer/tcm/cadd/p1.xhtml" />
                                     </ui:fragment>
-                                      <ui:fragment rendered="#{tcmpb.pagemanager.page == 2}">
+                                      <ui:fragment rendered="#{bellrockpb.pagemanager.page == 2}">
                                           <ui:include src="/pages/consumer/tcm/cadd/p3.xhtml" />
                                       </ui:fragment>
-                                      <ui:fragment rendered="#{tcmpb.pagemanager.page == 3}">
+                                      <ui:fragment rendered="#{bellrockpb.pagemanager.page == 3}">
                                           <ui:include src="/pages/consumer/tcm/cadd/p4.xhtml" />
                                       </ui:fragment>
-                                       <ui:fragment rendered="#{tcmpb.pagemanager.page == 4}">
+                                       <ui:fragment rendered="#{bellrockpb.pagemanager.page == 4}">
                                           <ui:include src="/pages/consumer/tcm/cadd/p5.xhtml" />
                                       </ui:fragment>
-                                      <ui:fragment rendered="#{tcmpb.pagemanager.page == 5}">
+                                      <ui:fragment rendered="#{bellrockpb.pagemanager.page == 5}">
                                           <ui:include src="/pages/consumer/tcm/cadd/page7A.xhtml" />
                                       </ui:fragment>
-                                      <ui:fragment rendered="#{tcmpb.pagemanager.page == 6}">
+                                      <ui:fragment rendered="#{bellrockpb.pagemanager.page == 6}">
                                             <ui:include src="/pages/consumer/tcm/cadd/confirmedit.xhtml" />
                                       </ui:fragment>
                                 </div>

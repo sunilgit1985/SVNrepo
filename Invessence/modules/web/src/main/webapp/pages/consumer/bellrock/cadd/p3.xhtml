@@ -15,9 +15,9 @@
             <div class="Container100">
                 <div class="Container25 Responsive0" style="height:1px;"></div>
                 <div class="Container100 Responsive100 MarginSpaceP3 RiskQuestionBlock">
-                    <p:selectOneRadio id="p3id" value="#{tcmpb.riskCalculator.ans3}"
+                    <p:selectOneRadio id="p3id" value="#{bellrockpb.riskCalculator.ans3}"
                                       layout="pageDirection">
-                        <p:ajax listener="#{tcmpb.onChangeValue}"
+                        <p:ajax listener="#{bellrockpb.onChangeValue}"
                                 update=":ceForm:inputArea"/>
                         <f:selectItem id="tcmp3mci" itemLabel="Maximizing Current Income" itemValue="1" />
                         <f:selectItem id="tcmp3eipg" itemLabel="Emphasizing income with some potential for growth" itemValue="2" />
@@ -30,29 +30,29 @@
             </div>
 
         <div class="EmptyBox5"></div>
-         <p:panel id="tcmp3errormsg1" rendered="#{tcmpb.pagemanager.getErrorMessage(1) != null  and  !tcmpb.formPortfolioEdit }"
+         <p:panel id="tcmp3errormsg1" rendered="#{bellrockpb.pagemanager.getErrorMessage(1) != null  and  !bellrockpb.formPortfolioEdit }"
                   style="border: 0px; background: transparent"
                   styleClass="Container100">
              <h:outputText id="tcmp3errortxt1" styleClass="errorText"
-                           value="#{tcmpb.pagemanager.getErrorMessage(1)}" escape="false"/>
+                           value="#{bellrockpb.pagemanager.getErrorMessage(1)}" escape="false"/>
              <div class="EmptyBox5"></div>
          </p:panel>
-            <p:panel id="tcmp3errormsg2" rendered="#{tcmpb.pagemanager.getErrorMessage(2) != null  and  tcmpb.formPortfolioEdit }"
+            <p:panel id="tcmp3errormsg2" rendered="#{bellrockpb.pagemanager.getErrorMessage(2) != null  and  bellrockpb.formPortfolioEdit }"
                      style="border: 0px; background: transparent"
                      styleClass="Container100">
                 <h:outputText id="tcmp3errortxt2" styleClass="errorText"
-                              value="#{tcmpb.pagemanager.getErrorMessage(2)}" escape="false"/>
+                              value="#{bellrockpb.pagemanager.getErrorMessage(2)}" escape="false"/>
                 <div class="EmptyBox5"></div>
             </p:panel>
-        <p:commandLink id="tcmp3previousbtn" styleClass="UI-prevButton Fleft" value="Previous" rendered="#{tcmpb.pagemanager.prevButtonStat}"
+        <p:commandLink id="tcmp3previousbtn" styleClass="UI-prevButton Fleft" value="Previous" rendered="#{bellrockpb.pagemanager.prevButtonStat}"
                          update=":ceForm:inputArea"
                          immediate="true"
-                         actionListener="#{tcmpb.prevPage}">
+                         actionListener="#{bellrockpb.prevPage}">
                          <h:outputText value="Previous" />
                          </p:commandLink>
-             <p:commandLink id="tcmp3nextbtn" styleClass="UI-nextButton Fright UI-tcmButton"   rendered="#{tcmpb.pagemanager.nextButtonStat}"
+             <p:commandLink id="tcmp3nextbtn" styleClass="UI-nextButton Fright UI-tcmButton"   rendered="#{bellrockpb.pagemanager.nextButtonStat}"
                          update=":ceForm:inputArea"
-                         actionListener="#{tcmpb.nextPage}">
+                         actionListener="#{bellrockpb.nextPage}">
                          <h:outputText value="Next" />
                          </p:commandLink>
                          </div>

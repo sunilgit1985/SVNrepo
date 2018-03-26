@@ -9,9 +9,9 @@
         <p:panel id="editPage1" style="border: 0px; background: transparent;">
             <div class="Container100 TextAlCenter">
                 <div class="TexAlCenter">
-                    <div class="textAlign Fs17">#{tcmpb.firstname}, your currently selected strategy for this portfolio is <strong>#{tcmpb.origCustomerData.portfolioName}</strong></div>
+                    <div class="textAlign Fs17">#{bellrockpb.firstname}, your currently selected strategy for this portfolio is <strong>#{bellrockpb.origCustomerData.portfolioName}</strong></div>
                     <div class="EmptyBox20"></div>
-                    <div class="textAlign Fs17">The primary objective of this strategy is #{tcmpb.longDes}</div>
+                    <div class="textAlign Fs17">The primary objective of this strategy is #{bellrockpb.longDes}</div>
                 </div>
 
 
@@ -29,7 +29,7 @@
                 <div class="EmptyBox20"></div>
 
                 <div class="Fs12">
-                    <p:selectOneRadio value="#{tcmpb.profileProcess}"
+                    <p:selectOneRadio value="#{bellrockpb.profileProcess}"
                                       layout="pageDirection"
                                       required="true" requiredMessage="Must choose one of the method to change profile.">
                         <f:selectItem
@@ -50,10 +50,10 @@
                 <p:commandButton styleClass="Fleft" value="Cancel"
                                  update=":ceForm:inputArea"
                                  immediate="true"
-                                 actionListener="#{tcmpb.exitPage}"/>
+                                 actionListener="#{bellrockpb.exitPage}"/>
                 <p:commandButton styleClass="Fright" value="Continue"
                                  update=":ceForm:inputArea"
-                                 actionListener="#{tcmpb.nextPage}"/>
+                                 actionListener="#{bellrockpb.nextPage}"/>
             </f:facet>
         </p:panel>
     </div>

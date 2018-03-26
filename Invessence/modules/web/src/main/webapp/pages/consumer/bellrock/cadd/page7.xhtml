@@ -25,7 +25,7 @@
                             <p:panel style="height: 60%; width: 100%; background: #ffffff;">
                                 <div class="EmptyBox5"></div>
                                 <div class="Fs17 textAlign">Your currently selected strategy for this portfolio is
-                                    <strong>#{tcmpb.origCustomerData.portfolioName}</strong>
+                                    <strong>#{bellrockpb.origCustomerData.portfolioName}</strong>
                                 </div>
 
 
@@ -37,43 +37,43 @@
                         <p:panel id="reviewPanel" style="height: 60%; width: 100%; background: #ffffff;">
                             <div class="EmptyBox10"></div>
 
-                            <ui:fragment rendered="#{tcmpb.formula == 'Q'}">
+                            <ui:fragment rendered="#{bellrockpb.formula == 'Q'}">
                                 <div class="Fs17 textAlign">
                                     After reviewing your risk though the
-                                    questionnaire, your new portfolio recommendation is <strong>#{tcmpb.fixedModelName}</strong>
+                                    questionnaire, your new portfolio recommendation is <strong>#{bellrockpb.fixedModelName}</strong>
                                 </div>
                             </ui:fragment>
-                            <ui:fragment rendered="#{tcmpb.formula != 'Q'}">
+                            <ui:fragment rendered="#{bellrockpb.formula != 'Q'}">
                                 <div class="Fs17 textAlign">
                                     Rather than having a strategy recommended to me based on my time horizon and risk tolerance, I would rather directly choose my investment strategy and am familiar with the associated risks.The strategy I choose is:
                                 </div>
                             </ui:fragment>
 
                             <div class="EmptyBox10"></div>
-                            <ui:fragment rendered="#{(tcmpb.origCustomerData.portfolioName==tcmpb.fixedModelName) and tcmpb.formula=='Q'}">
+                            <ui:fragment rendered="#{(bellrockpb.origCustomerData.portfolioName==bellrockpb.fixedModelName) and bellrockpb.formula=='Q'}">
                                 <div class="fs17 textAlign">
                                     Your current and revised portfolio is same, you can not do further processing.
                                 </div>
                                 <div class="EmptyBox10"></div>
                             </ui:fragment>
 
-                            <ui:fragment rendered="#{(tcmpb.origCustomerData.portfolioName!=tcmpb.fixedModelName) or tcmpb.formula=='D'}">
+                            <ui:fragment rendered="#{(bellrockpb.origCustomerData.portfolioName!=bellrockpb.fixedModelName) or bellrockpb.formula=='D'}">
                                 <div style="border:0px !important; background:none;" class="Container50 FormContent">
                                     <div class="container100"><p:messages styleClass="errorText" showDetail="false" autoUpdate="true"
                                                                           closable="true"/></div>
                                     <div class="container100 ReviewRadioBtnP" style="margin:auto;" id="abc">
-                                        <p:selectOneRadio value="#{tcmpb.selectedThemeName}" layout="pageDirection"
+                                        <p:selectOneRadio value="#{bellrockpb.selectedThemeName}" layout="pageDirection"
                                                           required="true" requiredMessage="Please choose one of these choices">
-                                            <p:ajax listener="#{tcmpb.selectedTheme}"
+                                            <p:ajax listener="#{bellrockpb.selectedTheme}"
                                                     update=":ceForm:inputArea,:ceForm:summary"/>
                                             <f:selectItems style="font-size:14px;" itemLabel="#{c.displayname}" itemValue="#{c.displayname}" var="c"
-                                                           value="#{tcmpb.fmDataArrayList}"/>
+                                                           value="#{bellrockpb.fmDataArrayList}"/>
                                         </p:selectOneRadio>
                                     </div>
                                 </div>
                                 <div class="Container40">
 
-                                    <h:inputHidden value="#{tcmpb.charts.chartdata.highChartresultSet}"
+                                    <h:inputHidden value="#{bellrockpb.charts.chartdata.highChartresultSet}"
                                                    id="projectionChart"/>
 
                                     <div id="progressChart" class="Container100 Fright"></div>
@@ -82,27 +82,27 @@
                                 <div class="Container100 Responsive100 TextAlCenter">
 
 
-                                    <p:fieldset id="summary" legend="#{tcmpb.selectedThemeName}" toggleable="true" styleClass="summaryConfirm"
+                                    <p:fieldset id="summary" legend="#{bellrockpb.selectedThemeName}" toggleable="true" styleClass="summaryConfirm"
                                                 toggleSpeed="500">
                                         <div class="Container100 Responsive100">
                                             <div class="EmptyBox10"></div>
 
-                                            <div class="fs17 textAlign">#{tcmpb.newLongDesc}</div>
+                                            <div class="fs17 textAlign">#{bellrockpb.newLongDesc}</div>
                                             <div class="EmptyBox20"></div>
                                             <div class="Container50 Responsive50 Fleft">
 
                                                 <div class="EmptyBox10"></div>
                                                 <div class="Container100">
                                                     <p:outputPanel deferred="true">
-                                                        <p:chart type="pie" model="#{tcmpb.charts.pieChart}" style="height: 200px; width: 100%;"
-                                                                 rendered="#{tcmpb.charts.pieChart != null}"
+                                                        <p:chart type="pie" model="#{bellrockpb.charts.pieChart}" style="height: 200px; width: 100%;"
+                                                                 rendered="#{bellrockpb.charts.pieChart != null}"
                                                                  responsive="true"/>
                                                     </p:outputPanel>
                                                 </div>
                                             </div>
                                             <div class="Container50 Responsive50 Fleft assetAllocationTableMobView">
                                                 <p:dataTable styleClass="invAllocTable"
-                                                             value="#{tcmpb.editableAsset}"
+                                                             value="#{bellrockpb.editableAsset}"
                                                              var="assetList">
 
                                                     <p:column style="width: 1%; background-color: #{assetList.color};">
