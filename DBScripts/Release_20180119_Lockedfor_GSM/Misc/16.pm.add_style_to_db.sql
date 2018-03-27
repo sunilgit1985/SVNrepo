@@ -1,5 +1,34 @@
-ALTER TABLE `invdb`.`sec_rbsa` 
-CHANGE COLUMN `sec_type` `style` VARCHAR(30) NULL DEFAULT 'EQUITY' ;
+CREATE TABLE `invdb`.`sec_rbsa_20180326`
+as
+select * from `invdb`.`sec_rbsa`;
+
+DROP TABLE IF EXISTS `invdb`.`sec_rbsa`;
+
+CREATE TABLE `invdb`.`sec_rbsa` (
+ `theme` varchar(20) NOT NULL,
+ `primeasset_ticker` varchar(30) NOT NULL,
+ `ticker` varchar(20) NOT NULL,
+ `weight` double DEFAULT NULL,
+ `created` date DEFAULT NULL,
+ `base_currency` varchar(3) DEFAULT 'USD',
+ `style` varchar(30) DEFAULT 'EQUITY',
+ `dest_currency` varchar(3) DEFAULT 'USD',
+ PRIMARY KEY (`theme`,`primeasset_ticker`,`ticker`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `invdb`.`sec_rbsa`
+SELECT 
+   `sec_rbsa`.`theme`,
+   `sec_rbsa`.`primeasset_ticker`,
+   `sec_rbsa`.`ticker`,
+   `sec_rbsa`.`weight`,
+   `sec_master`.`base_currency`,
+   `sec_rbsa`.`created`,
+   `sec_master`.`style`,
+   'USD'
+FROM `invdb`.`sec_rbsa_20180326` as `sec_rbsa`
+,  `invdb`.`sec_master`
+where `sec_rbsa`.`primeasset_ticker` = `sec_master`.`ticker`;
 
 ALTER TABLE `invdb`.`sec_tax_loss_harvesting` 
 ADD COLUMN `theme` VARCHAR(20) NOT NULL FIRST,
@@ -8,11 +37,6 @@ ADD COLUMN `style` VARCHAR(20) NULL DEFAULT 'Equity' AFTER `tradeCurrency`,
 ADD COLUMN `settleCurrency` VARCHAR(3) NULL DEFAULT 'USD' AFTER `style`,
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`theme`, `ticker`, `tlhticker`);
-
-ALTER TABLE `invdb`.`sec_asset_mapping` 
-CHANGE COLUMN `sec_type` `type` VARCHAR(30) NULL DEFAULT 'OTHER' ,
-ADD COLUMN `style` VARCHAR(30) NULL DEFAULT 'OTHER' AFTER `type`;
-
 
 UPDATE `invdb`.`sec_master` SET `style`='Cash' WHERE `instrumentid`='1';
 UPDATE `invdb`.`sec_master` SET `style`='Cash' WHERE `instrumentid`='2';
@@ -132,6 +156,7 @@ UPDATE `invdb`.`sec_master` SET `style`='Equity' WHERE `instrumentid`='149';
 UPDATE `invdb`.`sec_master` SET `style`='Equity' WHERE `instrumentid`='150';
 UPDATE `invdb`.`sec_master` SET `style`='Equity' WHERE `instrumentid`='151';
 
+SET SQL_SAFE_UPDATES = 0;
 update `invdb`.`sec_master` 
 set `type` = `style`
 ;
@@ -146,12 +171,6 @@ set `sec_rbsa`.`style` = `sec_master`.`style`
 where `sec_rbsa`.`ticker` = `sec_master`.`ticker`
 ;
 
-
-update `invdb`.`sec_asset_mapping`, `invdb`.`sec_master`
-set `sec_asset_mapping`.`type` = `sec_master`.`type`
-, `sec_asset_mapping`.`style` = `sec_master`.`style`
-where `sec_asset_mapping`.`ticker` = `sec_master`.`ticker`
-;
 
 update `invdb`.`sec_tax_loss_harvesting` 
 set `theme` = '0.Wealth';
