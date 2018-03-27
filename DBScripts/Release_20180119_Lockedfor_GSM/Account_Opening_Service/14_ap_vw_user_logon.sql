@@ -1,3 +1,6 @@
+ALTER TABLE `invdb`.`user_logon` 
+ADD COLUMN `fullname` VARCHAR(45) NULL AFTER `firstname`;
+
 USE `invdb`;
 CREATE 
      OR REPLACE ALGORITHM = UNDEFINED 
