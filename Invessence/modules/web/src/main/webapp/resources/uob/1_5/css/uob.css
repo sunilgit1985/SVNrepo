@@ -4930,6 +4930,8 @@ td.bullet_td span {
 .footerPopup .ui-dialog-content {
     color: #000 !important;
     padding: 6% 0 !important;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .footerPopup {
     position: fixed;
@@ -5780,6 +5782,8 @@ div#leftpanel {
 }
 .risk_meter .highcharts-data-labels {
     top: 45px !important;
+    transform:translate(0px) !important;
+
 
 }
 .ui-inputtext, .ui-selectonemenu > label,.ui-inputfield{color: #000 !important;}
@@ -6271,6 +6275,17 @@ rect.highcharts-background {
     margin-right: 0 !important;
 } */
 .W30{width:30px!important;}
+.footerPopup .ui-dialog-titlebar {
+    background: transparent;
+    border-bottom: none !important;
+    /* border-color: transparent; */
+}
+.footerPopup button {
+    margin: 5% 50%;
+}
+
+
+
 /*** responsive**/
 
 /** 16/10/2017***/
