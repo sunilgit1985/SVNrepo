@@ -4943,6 +4943,7 @@ td.bullet_td span {
     background: #fff;
     padding: 10px;
     /* color: #000; */
+    overflow-y: auto;
 
 
 }
@@ -6283,7 +6284,23 @@ rect.highcharts-background {
 .footerPopup button {
     margin: 5% 50%;
 }
-
+/*** 28/03/2018**/
+#logonForm .ui-inputfield {
+    background: #f2f2f2 !important;
+    font-size: 18px !important;
+}
+#logonForm .ui-inputfield::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #6d8098 !important;
+}
+#logonForm .ui-inputfield::-moz-placeholder { /* Firefox 19+ */
+  color: #6d8098  !important;
+}
+#logonForm .ui-inputfield:-ms-input-placeholder { /* IE 10+ */
+  color: #6d8098  !important;
+}
+#logonForm .ui-inputfield:-moz-placeholder { /* Firefox 18- */
+  color: #6d8098  !important;
+}
 
 
 /*** responsive**/
@@ -7263,6 +7280,9 @@ div.slidePanelleft{
 		    width: 200px;
 		}
 		 .checkBoxOpt span.ui-chkbox-label{width:88%;}
+		 .footerPopup button {
+		    margin: 5% 40%;
+		}
 
 
 }
@@ -7476,6 +7496,9 @@ div.slidePanelleft{
     .acc_holder_form .address_tab .label_opacity table {
         width: 100%;
     }
+    .footerPopup button {
+		    margin: 5% 34%;
+		}
 
 }
 @media only screen and (max-width: 390px){
