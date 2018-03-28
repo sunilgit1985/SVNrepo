@@ -5594,11 +5594,11 @@ span.output_review {
 
 /*** 11/12/2017 file upload css**/
 .upload_file .ui-fileupload-content {
-    width: 203px;
-    left: 250px;
+    width:auto;
+   /* left: 250px;
     top: -10px;
-    /*  margin-left: 700%;*/
-    position: absolute;
+    !*  margin-left: 700%;*!
+    position: absolute;*/
 }
 .upload_file span.ui-messages-error-detail {
     display: none;
