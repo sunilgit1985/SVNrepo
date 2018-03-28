@@ -1,9 +1,0 @@
-instrumentid,status,securityStatus,ticker,cusip,isin,ric,name,assetclass,subclass,type,style,expenseRatio,inception,issuer,securityRiskSTD,rbsaFlag,exchange,base_currency
-601,A,A,1306.T,NULL,NULL,1306.T,"TOPIX EXCHANGE TRADED",Equity,"Japan Equities",NULL,NULL,0,NULL,NULL,0,NULL,TSE,JPY
-1004,A,A,F0HKG062UI.MSTA,NULL,SG9999003412,F0HKG062UI.MSTA,"United Singapore Bond Fund","Fixed Income","Singapore Bonds",NULL,NULL,NULL,NULL,NULL,NULL,NULL,MSTA,SGD
-611,A,A,IEMB.L,NULL,NULL,IEMB.L,"iShares J P Morgan $EM Bond ETF","Fixed Income","Emerging Market Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
-612,A,A,IEML.L,NULL,NULL,IEML.L,"iShares J P Morgan $EM Local Bond ETF","Fixed Income","Emerging Market Local Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
-610,A,A,LQDE.L,NULL,NULL,LQDE.L,"iShares $ Corp Bond UCITS ETF USD (Dist)","Fixed Income","Corporate Bonds",NULL,NULL,0,NULL,NULL,0,NULL,LSE,USD
-603,A,A,VAS.AX,NULL,NULL,VAS.AX,"iShares Core MSCI Emerging Markets IMI",Equity,"Emerging Mkt. Equities",NULL,NULL,0,NULL,NULL,0,NULL,ASX,AUD
-600,A,A,VEUR.L,NULL,NULL,VEUR.L,"VANGUARD FTSE DEV EU UCITS ETF",Equity,"Europe Equities",NULL,NULL,0,NULL,NULL,0,NULL,LSE,GBP
-602,A,A,XIC.TO,NULL,NULL,XIC.TO,"iShares Core SP TSX CA",Equity,"Australian Equities",NULL,NULL,0,NULL,NULL,0,NULL,TSE,CAD

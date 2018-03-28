@@ -1,1 +1,0 @@
-update invdb.advisor_risk_master arm set arm.defaultValue=0 where arm.key='RECURRINGPERIOD';
