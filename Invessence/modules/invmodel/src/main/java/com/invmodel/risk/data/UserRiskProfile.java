@@ -659,14 +659,14 @@ public class UserRiskProfile
          return;
       }
 
-      if (riskData.containsKey(key))
+      if (riskData.containsKey(key) && answer!=null)
       {
          prevanswer = riskData.get(key).getAnswer();
          if (!prevanswer.equalsIgnoreCase(answer))
          {
             riskData.get(key).setAnswer(answer, answerType);
             riskData.get(key).setRiskScore(riskScore);
-            setAnswer(key, answer.toString(), "I", riskScore);
+            setAnswer(key, answer, "I", riskScore);
          }
       }
       else
@@ -838,14 +838,25 @@ public class UserRiskProfile
       setNewAnswer(RiskConst.RECURRINGINVESTMENT, investment.toString(), "D", 0.0);
    }
 
+
    public void setAge(Integer age)
    {
-      setNewAnswer(RiskConst.AGE, age.toString(), "I", 0.0);
+      if(age==null)
+      {
+         setNewAnswer(RiskConst.AGE, null, "T", 0.0);
+      }else{
+         setNewAnswer(RiskConst.AGE, age.toString(), "I", 0.0);
+      }
    }
 
    public void setHorizon(Integer horizon)
    {
-      setNewAnswer(RiskConst.HORIZON, horizon.toString(), "I", 0.0);
+      if(horizon==null)
+      {
+         setNewAnswer(RiskConst.HORIZON, null, "T", 0.0);
+      }else{
+         setNewAnswer(RiskConst.HORIZON, horizon.toString(), "I", 0.0);
+      }
    }
 
    public RiskConst.CALCMETHODS getCalcMethod()
