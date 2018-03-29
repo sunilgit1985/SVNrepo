@@ -19,6 +19,7 @@ public class AccountData
    private	String	theme	;
    private	String	lastname	;
    private	String	firstname	;
+   private  String   fullname;
    private	String	state	;
    private	String	clientAccountID	;
    private	String	acctStatus	;
@@ -169,8 +170,21 @@ public class AccountData
       return firstname;
    }
 
+   public void setFirstname(String firstname)
+   {
+      this.firstname = firstname;
+   }
+
+   public void setFullname(String fullname)
+   {
+      this.fullname = fullname;
+   }
+
    public String getFullname()
    {
+      if (this.fullname != null)
+         return fullname;
+
       if (getLastname() == null || getLastname().length() == 0)
          return firstname;
       else {
@@ -181,10 +195,6 @@ public class AccountData
       }
    }
 
-   public void setFirstname(String firstname)
-   {
-      this.firstname = firstname;
-   }
 
    public String getState()
    {

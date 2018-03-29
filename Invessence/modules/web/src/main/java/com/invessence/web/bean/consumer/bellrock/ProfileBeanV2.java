@@ -19,7 +19,7 @@ import com.invmodel.risk.data.client.BellRockRiskCalc;
  * Created by prashant on 11/16/2017.
  */
 
-@ManagedBean(name = "bellrockpb")
+@ManagedBean(name = "deep200pb")
 @SessionScoped
 public class ProfileBeanV2 extends PortfolioCreationUI
 {

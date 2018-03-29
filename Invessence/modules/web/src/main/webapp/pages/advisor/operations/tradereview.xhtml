@@ -283,8 +283,8 @@
                                         <p:row>
                                             <p:column rowspan="2" headerText=""/>
                                             <p:column rowspan="2" headerText="Subclass" />
-                                            <p:column rowspan="2" headerText="Ticker/Currency" />
-                                            <p:column rowspan="2" headerText="Current Price" />
+                                            <p:column rowspan="2" headerText="Ticker" />
+                                            <p:column rowspan="2" headerText="Currency" />
                                             <p:column rowspan="2" headerText="Holding Ticker" />
                                             <p:column colspan="2" headerText="Current Holdings" />
                                             <p:column colspan="2" headerText="New Holdings" />
@@ -309,17 +309,14 @@
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: left;">
                                         <h:outputText value="#{tradedata.newTicker}"/><br/>
-                                        <h:outputText value="#{tradedata.tradeCurrency}"/>
+
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:6%; text-align: right;">
-                                        <h:outputText value="#{tradedata.curPrice}">
-                                            <f:convertNumber type="currency" currencySymbol="S$"/>
-                                        </h:outputText>
+                                        <h:outputText value="#{tradedata.tradeCurrency}"/>
                                     </p:column>
 
                                     <p:column styleClass="Fs10" style="width:6%; text-align: left;">
                                         <h:outputText value="#{tradedata.holdingTicker}">
-                                            <f:convertNumber type="currency" currencySymbol="S$"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -330,7 +327,7 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.curValue}">
-                                            <f:convertNumber type="currency" currencySymbol="S$"/>
+                                            <f:convertNumber pattern="###,###,##0.00"/>
                                         </h:outputText>
                                     </p:column>
 
@@ -341,18 +338,18 @@
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
                                         <h:outputText value="#{tradedata.newValue}">
-                                            <f:convertNumber type="currency" currencySymbol="S$"/>
+                                            <f:convertNumber pattern="###,###,##0.00"/>
                                         </h:outputText>
                                     </p:column>
 
                                     <p:column styleClass="Fs12" style="width:3%; text-align: right;">
-                                        <h:outputText value="#{tradedata.diffQty}">
+                                        <h:outputText value="#{tradedata.newQty - tradedata.curQty}">
                                             <f:convertNumber pattern="###,###,###"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column styleClass="Fs12" style="width:12%; text-align: right;">
-                                        <h:outputText value="#{tradedata.diffValue}">
-                                            <f:convertNumber type="currency" currencySymbol="S$"/>
+                                        <h:outputText value="#{tradedata.newValue - tradedata.curValue}">
+                                            <f:convertNumber pattern="###,###,##0.00"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column styleClass="Fs10" style="width:10%; text-align: left;">
