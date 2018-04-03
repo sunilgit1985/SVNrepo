@@ -2,11 +2,9 @@ package com.invessence.fileProcessor.service;
 
 import java.io.*;
 import java.nio.file.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.invessence.converter.DateUtil;
-import com.invessence.fileProcessor.bean.DBParameters;
 import com.invessence.fileProcessor.dao.FileProcessorDao;
 import com.invessence.fileProcessor.util.*;
 import com.invessence.service.bean.ServiceRequest;
@@ -31,13 +29,11 @@ public class FileUploader
    @Autowired
    FileProcessorUtil fileProcessorUtil;
 
-   public boolean upload(ServiceRequest serviceRequest, FileDetails fileDetails, LinkedHashMap<String,FileRules> fileRules, StringBuilder mailAlertMsg, Map<String, DBParameters> dbParamMap){
-      ChannelSftp channel = null;
-      Session session = null;
+   public boolean upload(ServiceRequest serviceRequest, FileDetails fileDetails, LinkedHashMap<String,FileRules> fileRules, StringBuilder mailAlertMsg, String processDate){
+         ChannelSftp channel = null;
+         Session session = null;
       boolean returnValue=false;
       try{
-
-         String businessDate=dbParamMap.get("BUSINESS_DATE").getValue().toString();
 
          JSch jsch = new JSch();
 
@@ -54,7 +50,7 @@ public class FileUploader
 
 //         String a1 = ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "UPLOAD_SFTP_SRC_DIRECTORY")+"/"+fileDetails.getSourcePath();
 
-         Path p= Paths.get(fileProcessorUtil.getFilePath(serviceRequest,fileDetails,"SFTP",businessDate));
+         Path p= Paths.get(fileProcessorUtil.getFilePath(serviceRequest, fileDetails, "SFTP", processDate));
 
          String fileName = p.getFileName().toString();
          String directory = p.getParent().toString().replaceAll("\\\\","/");
@@ -68,9 +64,9 @@ public class FileUploader
          List<String> fileNameLst = new ArrayList<String>();
          StringBuilder searchString=new StringBuilder();
          if(fileDetails.getFileNameAppender().equalsIgnoreCase("PREFIX")){
-            searchString.append("*_").append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
+            searchString.append("*").append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
          }else if(fileDetails.getFileNameAppender().equalsIgnoreCase("POSTFIX")){
-            searchString.append(fileDetails.getFileName()).append("_*").append("."+fileDetails.getFileExtension());
+            searchString.append(fileDetails.getFileName()).append("*").append("."+fileDetails.getFileExtension());
          }else{
             searchString.append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
          }
@@ -84,6 +80,7 @@ public class FileUploader
             entry = (ChannelSftp.LsEntry) v.get(i);
             fileNameLst.add(entry.getFilename());
          }
+
          logger.debug("Fetching list of " + fileDetails.getFileName() + " files from server" + v.size());
          if (fileNameLst == null || fileNameLst.size() == 0)
          {
@@ -96,7 +93,7 @@ public class FileUploader
          else
          {
             Collections.sort(fileNameLst);
-            List<String> filesToLoad = fileProcessorUtil.getFilesToLoad(fileNameLst, businessDate, fileDetails);
+            List<String> filesToLoad = fileProcessorUtil.getFilesToLoad(fileNameLst, processDate, fileDetails, false);
             logger.debug("File Size ["+filesToLoad.size()+"]");
             if (filesToLoad == null || filesToLoad.size() == 0)
             {
@@ -118,7 +115,7 @@ public class FileUploader
                      InputStream in = channel.get(fileToDownload);
                      // setting local file --
                      //localDirectory = new File(ServiceDetails.getConfigProperty(serviceRequest.getProduct(), Constant.SERVICES.FILE_PROCESS.toString(), serviceRequest.getMode(), "UPLOAD_LOCAL_SRC_DIRECTORY")+"/"+fileDetails.getDownloadDir() + "/");
-                     Path p1= Paths.get(fileProcessorUtil.getFilePath(serviceRequest, fileDetails, "LOCAL", businessDate));
+                     Path p1= Paths.get(fileProcessorUtil.getFilePath(serviceRequest, fileDetails, "LOCAL", processDate));
 
                      String fileName1 = p1.getFileName().toString();
                      String directory1 = p1.getParent().toString().replaceAll("\\\\","/");
@@ -139,7 +136,7 @@ public class FileUploader
 //                           e.printStackTrace();
 //                        }
 //                     }
-                     File localUploadFile = new File(fileProcessorUtil.getFilePath(serviceRequest,fileDetails,"LOCAL",businessDate));
+                     File localUploadFile = new File(fileProcessorUtil.getFilePath(serviceRequest, fileDetails, "LOCAL", processDate));
                      if (!localUploadFile.getParentFile().exists())
                      {
                         try
@@ -222,8 +219,8 @@ public class FileUploader
                               e.printStackTrace();
                            }
                         }
-                        fileProcessorUtil.deleteFilesFromServer(fileDetails,fileNameLst,channel,businessDate, mailAlertMsg);
-                        fileProcessorUtil.deleteFilesFromLocal(fileDetails,fileProcessorUtil.getListOfFiles(localUploadFile.getParent(),fileDetails.getFileName()),businessDate, localUploadFile.getParent(), mailAlertMsg);
+                        fileProcessorUtil.deleteFilesFromServer(fileDetails, fileNameLst, channel, processDate, mailAlertMsg);
+                        fileProcessorUtil.deleteFilesFromLocal(fileDetails, fileProcessorUtil.getListOfFiles(localUploadFile.getParent(),fileDetails.getFileName()), processDate, localUploadFile.getParent(), mailAlertMsg);
                      }
                      catch (Exception e)
                      {
@@ -254,7 +251,8 @@ public class FileUploader
 
          if(channel.isConnected()){ channel.disconnect();};
          logger.debug("Channel disconnected.");
-         session.disconnect();
+         if(session.isConnected()){
+            session.disconnect();}
          logger.debug("Host Session disconnected.");
       }
       return returnValue;
@@ -338,7 +336,9 @@ public class FileUploader
                               }
                               if(fileRules1.getIsRequired().equalsIgnoreCase("Y")){
                                  if(value==null || value.equalsIgnoreCase("")){
-                                    logger.info("Value not available for required DB Column " + fileRules1.getDbColumn());
+                                    logger.error("Value not available for required DB Column " + fileRules1.getDbColumn());
+                                    mailAlertMsg.append(fileDetails.getFileName()+" Value not available for required DB Column " + fileRules1.getDbColumn()+"\n");
+                                    lineLst.add(value);
                                  }else
                                  {
                                     if(fileRules1.getNeedToEncrypt().equalsIgnoreCase("Y"))

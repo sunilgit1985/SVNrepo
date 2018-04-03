@@ -30,7 +30,7 @@ public class ManualFileProcessor
             int sequenceId = Integer.parseInt(scanner.next());
             serviceRequest.setSequenceId(sequenceId);
 
-            WSCallResult wsCallResult=fp.process(serviceRequest);
+            WSCallResult wsCallResult=fp.process(serviceRequest, null);
             System.out.println("wsCallResult = " + wsCallResult);
          }else{
             System.out.println("Required parameters are not entered!");

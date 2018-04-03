@@ -32,7 +32,7 @@ public class FileDownloader
 
    SQLData convert = new SQLData();
 
-   public boolean download(ServiceRequest serviceRequest, FileDetails fileDetails, LinkedHashMap<String,FileRules> fileRules, StringBuilder mailAlertMsg, Map<String, DBParameters> dbParamMap){
+   public boolean download(ServiceRequest serviceRequest, FileDetails fileDetails, LinkedHashMap<String,FileRules> fileRules, StringBuilder mailAlertMsg, String processDate){
       boolean returnValue=false;
       try
       {
@@ -106,7 +106,7 @@ public class FileDownloader
             }
 
             if(fileData.size()>0){
-               return generateFile(fileData, fileDetails, serviceRequest, dbParamMap.get("BUSINESS_DATE").getValue().toString(), mailAlertMsg);
+               return generateFile(fileData, fileDetails, serviceRequest, processDate, mailAlertMsg);
             }else{
                logger.warn("Data not available for "+fileDetails.getFileName()+" file.");
             }
@@ -265,9 +265,9 @@ public class FileDownloader
          List<String> fileNameLst = new ArrayList<String>();
          StringBuilder searchString=new StringBuilder();
          if(fileDetails.getFileNameAppender().equalsIgnoreCase("PREFIX")){
-            searchString.append("*_").append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
+            searchString.append("*").append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
          }else if(fileDetails.getFileNameAppender().equalsIgnoreCase("POSTFIX")){
-            searchString.append(fileDetails.getFileName()).append("_*").append("."+fileDetails.getFileExtension());
+            searchString.append(fileDetails.getFileName()).append("*").append("."+fileDetails.getFileExtension());
          }else{
             searchString.append(fileDetails.getFileName()).append("."+fileDetails.getFileExtension());
          }

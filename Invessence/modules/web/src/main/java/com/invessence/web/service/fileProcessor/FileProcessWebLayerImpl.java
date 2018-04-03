@@ -15,7 +15,7 @@ public class FileProcessWebLayerImpl implements FileProcessWebLayer
    FileProcessor fileProcessor;
    public WSCallResult processFile(ServiceRequest serviceRequest){
 
-      WSCallResult wsCallResult=fileProcessor.process(serviceRequest);
+      WSCallResult wsCallResult=fileProcessor.process(serviceRequest,null);
       return wsCallResult;
    }
 }
