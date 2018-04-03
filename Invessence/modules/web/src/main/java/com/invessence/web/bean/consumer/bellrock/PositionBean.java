@@ -46,7 +46,7 @@ public class PositionBean implements Serializable
    private String firstname, lastname, dateOpened, clientAccountID,accountAlias;
    private Boolean managed;
 
-   private TCMCharts tcmChart = new TCMCharts();
+   private BRCharts tcmChart = new BRCharts();
 
    public void preRenderView()
    {

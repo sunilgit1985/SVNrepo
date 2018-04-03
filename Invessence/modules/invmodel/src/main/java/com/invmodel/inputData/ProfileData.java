@@ -533,12 +533,14 @@ public class
    public void setInitialInvestment(Integer initialInvestment)
    {
       this.initialInvestment = initialInvestment;
-      if ((getGoalData() != null) && (initialInvestment != null))
+
+      if (initialInvestment == null)
+         initialInvestment = 0;
+
+      if ((getGoalData() != null) && (initialInvestment == 0))
       {
          getGoalData().setActualInitialAmount(initialInvestment.doubleValue());
       }
-      if (initialInvestment == null)
-         initialInvestment = 0;
       riskProfile.setInitialInvestment(initialInvestment.doubleValue());
    }
 

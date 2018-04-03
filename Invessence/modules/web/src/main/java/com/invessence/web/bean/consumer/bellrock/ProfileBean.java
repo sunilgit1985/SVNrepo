@@ -351,6 +351,26 @@ public class ProfileBean extends BRCustomer implements Serializable
       return newLongDesc;
    }
 
+   @Override
+   public void setInitialInvestment(Integer initialInvestment)
+   {
+      super.setInitialInvestment(initialInvestment);
+
+      if (initialInvestment == null)
+         initialInvestment = 0;
+
+      if (initialInvestment < 10000) {
+         setTheme("BR.T1");
+      }
+      else {
+         if (initialInvestment < 50000) {
+            setTheme("BR.T2");
+         }
+         else {
+            setTheme("BR.T3");
+         }
+      }
+   }
 
    public String getFundButtonText()
    {
@@ -1146,7 +1166,7 @@ public class ProfileBean extends BRCustomer implements Serializable
 
       if (minInvestmentRequired == null || minInvestmentRequired == 0)
       {
-         minInvestmentRequired = 2000;
+         minInvestmentRequired = 1000;
       }
 
       switch (pagenum)
