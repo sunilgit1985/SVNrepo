@@ -11,7 +11,7 @@ import com.invessence.converter.*;
 import com.invessence.web.constant.WebConst;
 import com.invessence.web.data.common.*;
 import com.invessence.web.data.consumer.RiskCalculator;
-import com.invessence.web.data.consumer.tcm.*;
+import com.invessence.web.data.consumer.bellrock.*;
 import com.invessence.web.util.Impl.PagesImpl;
 import com.invmodel.inputData.ProfileData;
 import com.invmodel.model.fixedmodel.data.FMData;
@@ -29,7 +29,7 @@ import org.primefaces.event.*;
 
 @ManagedBean(name = "bellrockpb")
 @SessionScoped
-public class ProfileBean extends TCMCustomer implements Serializable
+public class ProfileBean extends BRCustomer implements Serializable
 {
    private String newapp;
    private Long beanAcctnum;
@@ -53,7 +53,7 @@ public class ProfileBean extends TCMCustomer implements Serializable
 
    private Integer imageSelected = 0;
    private JavaUtil jutil = new JavaUtil();
-   private TCMCharts charts = new TCMCharts();
+   private BRCharts charts = new BRCharts();
    private CustomerData origCustomerData;
    ArrayList<FMData> fmDataArrayList;
    LinkedHashMap<String, FMData> fmDataMap;
@@ -161,7 +161,7 @@ public class ProfileBean extends TCMCustomer implements Serializable
       return canOpenAccount;
    }
 
-   public TCMCharts getCharts()
+   public BRCharts getCharts()
    {
       return charts;
    }
@@ -419,7 +419,7 @@ public class ProfileBean extends TCMCustomer implements Serializable
    }
 
    @Override
-   public TCMRiskCalculator getRiskCalculator()
+   public BRRiskCalculator getRiskCalculator()
    {
       return riskCalculator;
    }

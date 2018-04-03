@@ -16,7 +16,7 @@ import com.invmodel.portfolio.data.Portfolio;
  * To change this template use File | Settings | File Templates.
  */
 
-public class TCMCharts extends PrimefacesCharts implements Serializable
+public class BRCharts extends PrimefacesCharts implements Serializable
 {
    private ChartData chartdata;
    private GenerateHighChartsData highCharts = new GenerateHighChartsData();
