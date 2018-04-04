@@ -415,7 +415,8 @@ public class RiskCalc
 
    public Integer getDefaultAge()
    {
-      age = (((age == null) ? 30 : age) > 110) ? 110 : age; // Cannot be negative.
+
+      age = (age == null) ? 30 :(( age > 110) ? 110 : age); // Cannot be negative.
       return age;
 
    }

@@ -241,7 +241,7 @@ public class UserRiskProfile
    public void setRiskQuestionWeight(Integer question, Integer answer, Double overrideWeight)
    {
       Integer prevanswer;
-      Integer knockoutanswer;
+      Integer knockoutanswer = null;
       Double weight = 0.0;
 
       if (answer == null)
@@ -260,19 +260,26 @@ public class UserRiskProfile
             Integer lastQuestion = getRiskQuestion();
             if (question > 0 && question <= lastQuestion)
             {
-               knockoutanswer = getAdvisorRiskMaster().getAdvisorMappings().get(question).getKnockoutQuestion();
+               if(getAdvisorRiskMaster()!=null && getAdvisorRiskMaster().getAdvisorMappings()!=null && getAdvisorRiskMaster().getAdvisorMappings().get(question)!=null)
+               {
+                  knockoutanswer = getAdvisorRiskMaster().getAdvisorMappings().get(question).getKnockoutQuestion();
+               }
                prevanswer = getRiskAnswer(question);
                if (prevanswer.equals(answer))
                {
                   return;
                }
 
-               Integer numofChoices = advisorRiskMaster.getAdvisorMappings().get(question).getNumOfWeights();
-               if (answer > 0 && answer <= numofChoices)
+               Integer numofChoices = null;
+               if(advisorRiskMaster!=null && advisorRiskMaster.getAdvisorMappings()!=null && advisorRiskMaster.getAdvisorMappings().get(question)!=null)
+               {
+                  numofChoices = advisorRiskMaster.getAdvisorMappings().get(question).getNumOfWeights();
+               }
+               if (answer > 0 && numofChoices!=null && answer <= numofChoices)
                {
                   weight = advisorRiskMaster.getAdvisorMappings().get(question).getWeight(answer);
                }
-               if (knockoutanswer > 0)
+               if (knockoutanswer!=null && knockoutanswer > 0)
                {
                   if (prevanswer.equals(knockoutanswer))
                   {

@@ -17,6 +17,7 @@ public class RiskConst
       INCOME("INCOME",7),
       RETIRED("RETIRED",11),
       COLLEGE("COLLEGE",12),
+      OTHER("OTHER",90),
       UNDEFINED("UNDEFINED",99);
 
       String displayValue;
