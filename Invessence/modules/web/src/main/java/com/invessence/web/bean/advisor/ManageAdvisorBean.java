@@ -6,6 +6,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 
+import com.invessence.web.bean.common.UserInterface;
 import com.invessence.web.constant.*;
 import com.invessence.web.dao.advisor.*;
 import com.invessence.web.dao.common.PositionDAO;
@@ -18,7 +19,7 @@ import com.invessence.web.util.*;
 
 @ManagedBean(name = "manageAdvisorBean")
 @SessionScoped
-public class ManageAdvisorBean implements Serializable
+public class ManageAdvisorBean extends UserInterface implements Serializable
 {
    @ManagedProperty("#{webutil}")
    private WebUtil webutil;
