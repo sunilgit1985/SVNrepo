@@ -27,6 +27,7 @@ public class AdvisorDashBean extends AdvisorDashData implements Serializable
    {
       this.advisorListDataDAO = advisorListDataDAO;
    }
+   private String baseCurrencySymbol;
 
    public void preRenderView()
    {
@@ -41,6 +42,8 @@ public class AdvisorDashBean extends AdvisorDashData implements Serializable
                setAdvisor(webutil.getWebprofile().getDefaultAdvisor());
                setRep(webutil.getUserInfoData().getRep());
                reloadData();
+               loadWebMenuList(getAdvisor());
+
             }
          }
       }
@@ -50,4 +53,22 @@ public class AdvisorDashBean extends AdvisorDashData implements Serializable
       }
    }
 
+   public String getBaseCurrencySymbol()
+   {
+      if(baseCurrencySymbol==null || baseCurrencySymbol.equals(""))
+      {
+         loadWebMenuList(webutil.getWebprofile().getDefaultAdvisor());
+         String defaultStr = webutil.getWebprofile().getDefaultCurrency();
+         if(defaultStr!=null && !defaultStr.equals("") && webMenuList.getMenuItemMap("CURRENCY")!=null && webMenuList.getMenuItemMap("CURRENCY").get(defaultStr)!=null)
+         {
+            baseCurrencySymbol = webMenuList.getMenuItemMap("CURRENCY").get(defaultStr).getShortname();
+         }
+      }
+      return baseCurrencySymbol;
+   }
+
+   public void setBaseCurrencySymbol(String baseCurrencySymbol)
+   {
+      this.baseCurrencySymbol = baseCurrencySymbol;
+   }
 }
