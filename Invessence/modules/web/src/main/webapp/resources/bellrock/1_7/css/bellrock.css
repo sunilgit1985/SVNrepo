@@ -6,7 +6,7 @@
 
 /* Logo*/
 #logo2 {
-    height: 50px;
+    height: 60px;
     margin-top: 4px;
 }
 
@@ -717,14 +717,14 @@ img.riskImage:hover {
 }
 
 .ProjectionSlabHeight_Selected {
-    background: #025d3c !important;
+    background: #233F90 !important;
     color: white !important;
     height: 50px;
     text-align: right;
 }
 
 .triangleShape_Selected {
-    border-left: 15px solid #025d3c !important;
+    border-left: 15px solid #233F90 !important;
 }
 
 @media (max-width: 1205px) {
@@ -1896,7 +1896,7 @@ img.atCheckMarkImg {
 }
 
 .getStartedBtn > span {
-    background: #025d3c !important;
+    background: #233F90 !important;
 }
 
 .loginStartedBtn > span {
@@ -2135,7 +2135,7 @@ Panel-UI > div {
 }
 
 .formpageDropdown > .ui-selectonemenu-trigger > .ui-icon-triangle-1-s, .dropdownInputFullWidth > .ui-selectonemenu-trigger > .ui-icon-triangle-1-s {
-    background: url("/javax.faces.resource/images/dropdown.png.xhtml?ln=tcm") !important;
+    background: url("/javax.faces.resource/images/dropdown.png.xhtml?ln=bellrock") !important;
     background-repeat: no-repeat;
     background-size: 100% 100% !important;
 }
@@ -2355,15 +2355,15 @@ tcmAccordionPanel-UI > .ui-accordion .ui-state-hover, .ui-accordion .ui-state-ac
 .UI-nextButton {
     height: 40px;
     width: 60px;
-    background: url("/javax.faces.resource/images/tcmnext.png.xhtml?ln=tcm");
+    background: url("/javax.faces.resource/images/next_arrow.png.xhtml?ln=bellrock");
     background-size: 60% 100%;
     background-repeat: no-repeat;
     background-position-x: 30px;
-    background-position: right;
+    /* background-position: right; */
     cursor: pointer;
-    color: #0BA769 !important;
+    color: #233F90 !important;
     line-height: 39px;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     text-decoration: none;
     transition: 0.2s linear;
@@ -2375,12 +2375,12 @@ tcmAccordionPanel-UI > .ui-accordion .ui-state-hover, .ui-accordion .ui-state-ac
     /* float: right; */
     height: 40px;
     width: 60px;
-    background: url("/javax.faces.resource/images/tcmnext.png.xhtml?ln=tcm");
+    background: url("/javax.faces.resource/images/next_arrow.png.xhtml?ln=bellrock");
     background-repeat: no-repeat;
     cursor: pointer;
-    color: #0BA769 !important;
+    color: #233F90 !important;
     line-height: 39px;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     text-decoration: none;
     transition: 0.2s linear;
@@ -2388,34 +2388,38 @@ tcmAccordionPanel-UI > .ui-accordion .ui-state-hover, .ui-accordion .ui-state-ac
     -moz-transition: 0.2s linear;
     padding: 6px 15px;
     background-position-x: 45px;
-    background-position: right;
+   /*  background-position: right; */
     background-size: 40% 100%;
     margin: 0 auto !important;
+    font-weight:bold;
 
 }
 
 .UI-prevButton {
     height: 40px;
     width: 60px;
-    background: url("/javax.faces.resource/images/tcmprev.png.xhtml?ln=tcm");
+    background: url("/javax.faces.resource/images/prev_arrow.png.xhtml?ln=bellrock");
     background-size: 43% 100%;
     background-repeat: no-repeat;
     /* background-position-x: 30px; */
     cursor: pointer;
-    color: #0BA769 !important;
+    color: #233F90 !important;
     line-height: 39px;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     text-decoration: none;
     padding-left: 27px;
 }
 
 body {
-    background-image: none !important;
-    height: 100vh;
-    background: linear-gradient(141deg, rgba(0, 93, 56, 0.78) 0%, rgba(0, 89, 55, 0.87) 51%, rgba(0, 66, 40, 0.95) 75%) !important;
-    /* background: linear-gradient(141deg, #CFD8DC 0%, rgb(189, 194, 195) 51%, rgba(199, 210, 205, 0.95) 75%) !important;*/
-}
+	height:100vh;
+	background: #233f90; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #233f90 0%, #7db9e8 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #233f90 0%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #233f90 0%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#233f90', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+   }
 
 .ui-message-error {
     margin: 0 !important;
@@ -2435,6 +2439,8 @@ body {
 
 #layout-topbar {
     min-height: auto !important;
+    background:url("#{resource['bellrock:images/woodBg.jpg']}");
+    height:70px;
 }
 
 .UI-tcm {
@@ -2462,7 +2468,9 @@ body {
 
 .portfolioCreationStepsPanel > ul > li > a > span.ui-steps-title {
     padding-top: 12px;
-    font-size: 13px;
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
 }
 
 .portfolioCreationStepsPanel > ul > .ui-state-highlight {
@@ -2470,7 +2478,7 @@ body {
 }
 
 .tabColorOnluCustom > ul > .ui-state-highlight {
-    background-color: #025d3c !important;
+    background-color: #8DC63F !important;
 }
 
 .portfolioCreationStepsPanel > ul > .ui-state-disabled {
@@ -4517,11 +4525,11 @@ tbody > tr > .AdvtcmLayoutColumn > span:nth-child(2) {
     padding: 0px !important;
 }
 
-.customwidthbutton {width: 140px; margin: 0 5px;}
+.customwidthbutton {width: 140px; margin: 5px 4px;}
 
 @media screen and (max-width:600px) and (min-width:320px) {
     .customwidthbutton {width: 140px;
-        margin: 5px;}
+        margin: 5px 4px;}
 }
 
 
@@ -4543,4 +4551,92 @@ tbody > tr > .AdvtcmLayoutColumn > span:nth-child(2) {
     background-image:url("#{resource['tcm:images/tcmloginpageillust.svg']}");
     background-repeat:no-repeat;
     background-position:center; background-size:cover;
+}
+
+
+
+
+/*** additional changes by prachi **/
+.loginBtnInv {
+    background: #233F90!important;
+}
+.nav{background-color:#233F90;}
+.ui-inputtext, .ui-selectonemenu > label {
+    color: #233F90 !important;
+}
+.ui-selectonemenu-panel {
+    border-top: solid 3px #233F90 !important;
+    border-bottom: solid 3px #233F90 !important;
+}
+.ui-selectonemenu-panel .ui-state-highlight, .ui-selectcheckboxmenu-panel .ui-state-highlight {
+    color: #8dc63f !important;}
+    .ui-selectonemenu-panel .ui-selectonemenu-list-item{color:#233F90;font-size:16px;}
+    .ui-selectonemenu-items > .ui-state-hover {
+    background: #8dc63f !important;}
+    .StepsQuestionsFS ,
+    .formFS{
+    font-size: 17px!important;
+    line-height: 1.5;
+}
+.ui-selectonemenu.ui-state-focus .ui-selectonemenu-label {
+    background-color: transparent !important;
+}
+.ui-inputfield.ui-state-hover, .ui-inputfield.ui-state-focus{color: #233F90 !important;
+    background-color: transparent;}
+    .invInputText > .ui-state-focus, .invInputText > .ui-state-hover {
+    border: 1px solid #8dc63f!important;
+}
+.Container49{width:49%;float:left}
+.portfolioCreationSteps8Panel > ul > .ui-state-highlight > a > span:nth-child(1), .portfolioCreationStepsPanel > ul > .ui-state-highlight > a > span:nth-child(1) {
+    background-color: #233F90 !important;
+}
+.ui-steps .ui-steps-item:nth-child(1) .ui-steps-number,
+.ui-steps .ui-steps-item:nth-child(2) .ui-steps-number,
+.ui-steps .ui-steps-item:nth-child(3) .ui-steps-number,
+.ui-steps .ui-steps-item:nth-child(4) .ui-steps-number,
+.ui-steps .ui-steps-item:nth-child(5) .ui-steps-number,
+.ui-steps .ui-steps-item:nth-child(6) .ui-steps-number{
+    color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 7px 12px !important;
+    background-position: center;
+}
+.ui-steps .ui-steps-item:nth-child(1) .ui-steps-number{background-image:url("#{resource['bellrock:images/start.png']}");}
+.ui-steps .ui-steps-item:nth-child(2) .ui-steps-number{background-image:url("#{resource['bellrock:images/objective.png']}");}
+.ui-steps .ui-steps-item:nth-child(3) .ui-steps-number{background-image:url("#{resource['bellrock:images/risk.png']}");}
+.ui-steps .ui-steps-item:nth-child(4) .ui-steps-number{background-image:url("#{resource['bellrock:images/projection.png']}");}
+.ui-steps .ui-steps-item:nth-child(5) .ui-steps-number{background-image:url("#{resource['bellrock:images/review.png']}");}
+.ui-steps .ui-steps-item:nth-child(6) .ui-steps-number{background-image:url("#{resource['bellrock:images/register.png']}");}
+.ui-icon-bullet {
+    background-color: #233F90 !important;
+}
+.ui-button-text-only .ui-button-text,
+.ui-fieldset-legend,
+.ui-fieldset-legend.ui-state-hover,
+.ui-chkbox-box .ui-icon-check
+{background-color: #233F90;}
+h3.StepsQuestionsFS {
+    font-weight: bold;
+}
+.LoginBlock{border: 0px;
+    background: transparent;
+    margin-top: 0!important;
+    background: #fdfdfd;
+    padding: 3% 0!important;
+    box-shadow: 0px 2px 2px 2px;
+}
+.LoginBlock input {
+       width: 90% !important;
+    float: none !important;
+    margin: 10px auto !important;
+    border: 1px solid !important;
+}
+.ui-button.ui-state-hover .ui-button-text, .ui-buttonset .ui-state-hover .ui-button-text {
+    background-color: #233F90;
+}
+
+/*** responsive **/
+@media (max-width: 760px){
+	.Container49{width:96%;float:left; margin:0 10px !important;}
 }
