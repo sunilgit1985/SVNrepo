@@ -265,17 +265,17 @@ public class PortfolioCreationUI extends UserInterface
 
    public Integer getInterfaceIntMode()
    {
-      if (interfaceMode.equalsIgnoreCase(UIMode.New.getCodeValue()) || interfaceMode.equalsIgnoreCase(UIMode.Edit.getCodeValue()))
+      if (interfaceMode!=null && (interfaceMode.equalsIgnoreCase(UIMode.New.getCodeValue()) || interfaceMode.equalsIgnoreCase(UIMode.Edit.getCodeValue())))
       {
          return 0;
       }
-      if (interfaceMode.equalsIgnoreCase(UIMode.ChangeStrategy.getCodeValue()))
+      if (interfaceMode!=null && interfaceMode.equalsIgnoreCase(UIMode.ChangeStrategy.getCodeValue()))
       {
          return 1;
       }
       else
       {
-         if (interfaceMode.equalsIgnoreCase(UIMode.Confirm.getCodeValue()))
+         if (interfaceMode!=null && interfaceMode.equalsIgnoreCase(UIMode.Confirm.getCodeValue()))
          {
             return 2;
          }
@@ -1209,5 +1209,19 @@ public class PortfolioCreationUI extends UserInterface
    public void setRecurInvstAmtFlg(Boolean recurInvstAmtFlg)
    {
       this.recurInvstAmtFlg = recurInvstAmtFlg;
+   }
+
+   public Integer getRetirementAge()
+   {
+      return getCustomer().riskProfile.getDefaultIntValue(RiskConst.RETIREDAGE, null);
+   }
+
+   public void setRetirementAge(Integer retirementAge)
+   {
+      if(retirementAge!=null && retirementAge>0 && getCustomer().getAge()!=null && getCustomer().getAge()>0 && getCustomer().getAge()<retirementAge){
+         setHorizon(retirementAge - getCustomer().getAge());
+         getCustomer().riskProfile.setAnswer(RiskConst.HORIZON, getHorizon());
+      }
+      getCustomer().riskProfile.setAnswer(RiskConst.RETIREDAGE, retirementAge);
    }
 }
