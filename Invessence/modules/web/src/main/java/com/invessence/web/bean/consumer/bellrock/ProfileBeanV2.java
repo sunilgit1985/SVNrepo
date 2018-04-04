@@ -8,8 +8,9 @@ import javax.faces.context.FacesContext;
 import com.invessence.converter.JavaUtil;
 import com.invessence.web.bean.consumer.PortfolioCreationUI;
 import com.invessence.web.constant.WebConst;
-import com.invessence.web.util.Impl.*;
 import com.invessence.web.util.*;
+import com.invessence.web.util.Impl.*;
+import com.invmodel.asset.data.Asset;
 import com.invmodel.inputData.ProfileData;
 import com.invmodel.performance.data.ProjectionData;
 import com.invmodel.risk.data.RiskConst;
@@ -24,13 +25,30 @@ import com.invmodel.risk.data.client.BellRockRiskCalc;
 public class ProfileBeanV2 extends PortfolioCreationUI
 {
 
+   private String newapp;
    private ArrayList<WebMenuItem> goalsdata = null;
    private Map<String, WebMenuItem> currencyMap = null;
    public WebMenuItem selectedGoal;
    public WebMenuItem selectedCurrency;
    public Boolean selectedRetirementGoal = true;
    private String revwPnlExpYrFndLbl;
-   private String selectedMobileGoal;
+   private String selectedGoalStr;
+   private Boolean formPortfolioEdit = false;
+   private Boolean displayGoalText = false;
+   ArrayList<ProjectionData[]> projectionDatas;
+   private BRCharts charts = new BRCharts();
+   public Chart chart;
+   private String whichChart;
+
+   public BRCharts getCharts()
+   {
+      return charts;
+   }
+
+   public void setCharts(BRCharts charts)
+   {
+      this.charts = charts;
+   }
 
    @Override
    public void initUI()
@@ -45,6 +63,71 @@ public class ProfileBeanV2 extends PortfolioCreationUI
    {
    }
 
+   @Override
+   public Integer getInitialInvestment()
+   {
+      if(getCustomer().getInitialInvestment()==null){
+         return getCustomer().getRiskProfile().getDefaultInitialInvestment().intValue();
+      }
+      return getCustomer().getInitialInvestment();
+   }
+
+   @Override
+   public void setInitialInvestment(Integer initialInvestment)
+   {
+      super.setInitialInvestment(initialInvestment);
+
+      if (initialInvestment == null)
+         initialInvestment = 0;
+
+      String newTheme;
+      if (initialInvestment < 10000) {
+         newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.ALTTHEME+"1",null);
+      }
+      else {
+         if (initialInvestment < 50000) {
+
+            newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.ALTTHEME+"2",null);
+         }
+         else {
+            newTheme = getCustomer().getRiskProfile().getDefaultStrValue(RiskConst.ALTTHEME+"3",null);
+         }
+      }
+      if(newTheme!=null)
+      {
+         getCustomer().setTheme(newTheme);
+      }
+   }
+
+
+   public String getNewapp()
+   {
+      return newapp;
+   }
+
+   public Boolean getDisplayGoalText()
+   {
+      return displayGoalText;
+   }
+
+   public void setDisplayGoalText(Boolean displayGoalText)
+   {
+      this.displayGoalText = displayGoalText;
+   }
+
+   public void setNewapp(String newapp)
+   {
+      this.newapp = newapp;
+   }
+   public Boolean getFormPortfolioEdit()
+   {
+      return formPortfolioEdit;
+   }
+
+   public void setFormPortfolioEdit(Boolean formPortfolioEdit)
+   {
+      this.formPortfolioEdit = formPortfolioEdit;
+   }
    public void setDefault()
    {
       pagemanager.initPage();
@@ -66,7 +149,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
             if (goalMap.containsKey(getCustomer().getGoal().toUpperCase()))
             {
                // Upload the data from DB and set selection as if user selected it.
-               selectedMobileGoal=getCustomer().getGoal().toUpperCase();
+               //selectedMobileGoal=getCustomer().getGoal().toUpperCase();
                selectedGoal = goalMap.get(getCustomer().getGoal().toUpperCase());
                reOrganizeGoalList();  // Reorg the list so that last selected one shows up
                selectedRetirementGoal =!getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.GOALS.RETIRED.toString());
@@ -96,11 +179,12 @@ public class ProfileBeanV2 extends PortfolioCreationUI
       }
    }
 
-   public void preRenderReview()
+   public void preRenderConfirm()
    {
 
       if (!FacesContext.getCurrentInstance().isPostback())
       {
+         whichChart = "pie";
          // Need to find out why this is being tested???
          if (getCustomer() == null)
          {
@@ -109,12 +193,15 @@ public class ProfileBeanV2 extends PortfolioCreationUI
             {
                beanmode = UIMode.Review;
             }
+           // fetchClientData();
             super.preRenderView();
             setDefault();
 //            getCustomer().copyData(getSavedCustomer());
-         }
-
-         if (getCustomer() != null) {
+         }else {
+            riskCalc.setAge(getCustomer().getAge());
+            riskCalc.setHorizon(getCustomer().getHorizon());
+            riskCalc.setRecurringPeriod(getRecurringPeriod());
+            setRecurringInvestment(getCustomer().getRecurringInvestment());
             createAssetPortfolio();
             createGlidePath();
          }
@@ -147,7 +234,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
 
 //            if (getCustomer() == null)
 //            {
-               // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
+            // If the user is doing new portfolio from existing account, we can skip the PortfolioCreation registration process.
 
 
                /*  Don't redirect, let the cadd handle the appropriate page.
@@ -156,9 +243,17 @@ public class ProfileBeanV2 extends PortfolioCreationUI
                   gotoRiskQuestions();
                }
                */
-
-               super.preRenderView();
-               setDefault();
+            if (newapp != null && newapp.startsWith("N"))
+            {
+               setNewapp("N");
+               beanAcctnum = null;
+            }
+            else {
+               setNewapp("E");
+            }
+            formPortfolioEdit = false;
+            super.preRenderView();
+            setDefault();
 
             if(beanmode.equals(UIMode.Confirm)){
                super.gotoReview();
@@ -286,12 +381,26 @@ public class ProfileBeanV2 extends PortfolioCreationUI
          {
             beanmode = UIMode.Edit;
          }
-         if (currentpage == 3)
+         riskCalc.setRiskFormula(RiskConst.CALCFORMULAS.C);
+         getCustomer().getRiskProfile().setCalcFormula(RiskConst.CALCFORMULAS.C.toString());
+         createAssetPortfolio();
+         if (riskCalc.getKnockOutFlag())
+         {
+            pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.uob.knockout", "Cannot proceed further. You are an extremely conservative investor and this tool may not be right for you. ", null));
+            return;
+         }
+         getCustomFlags(pagemanager.getPage()+1);
+         super.gotoNextPage();
+         /*if (currentpage == 3)
          {
             doPerformanceChart();
          }
          riskCalc.calculate();
-         createAssetPortfolio();
+         createAssetPortfolio();*/
+         if(currentpage == 2){
+            calcProjectionChart();
+            doProjectionChart();
+         }
       }
       else
       {
@@ -444,7 +553,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
       {
          String goal = selectedItem.getKey();
          getCustomer().setGoal(goal);
-         selectedMobileGoal=goal;
+         // selectedMobileGoal=goal;
          getCustomer().setPortfolioName(selectedItem.getDisplayName());
          // reOrganizeGoalList(selectedItem.getDisplayName());
          // Reset Rest of data.
@@ -461,7 +570,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
 //         if (goal.equalsIgnoreCase(RiskConst.GOALS.RETIREMENT.toString())){
 //            setWithdrawlPeriod(30);
 //         }else{
-            setWithdrawlPeriod(getCustomer().getRiskProfile().getDefaultIntValue(RiskConst.WITHDRAWALPERIOD,null));
+         setWithdrawlPeriod(getCustomer().getRiskProfile().getDefaultIntValue(RiskConst.WITHDRAWALPERIOD,null));
 //         }
       }
    }
@@ -582,14 +691,14 @@ public class ProfileBeanV2 extends PortfolioCreationUI
                   if (getCustomer().getAccountType().equalsIgnoreCase("Traditional IRA") || getCustomer().getAccountType().equalsIgnoreCase("Roth IRA")
                      || getCustomer().getAccountType().equalsIgnoreCase("SEP IRA") || getCustomer().getAccountType().equalsIgnoreCase("Roll Over IRA"))
                   {
-                     if (! getCustomer().getGoal().equalsIgnoreCase("retirement"))
+                     if (! getCustomer().getGoal().equalsIgnoreCase("RETIREMENT"))
                      {
                         validateOK = false;
                         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.accounttype.retirement", "Goal cannot be changed as this is already an IRA. Please reset to Retirement.", new Object[]{getCustomer().getGoal()}));
                      }
                   }
                }
-               if (getCustomer().getGoal().equalsIgnoreCase("retirement"))
+               if (getCustomer().getGoal().equalsIgnoreCase("RETIREMENT"))
                {
                   if (getAge() == null)
                   {
@@ -607,7 +716,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
 
                   if (! getCustomer().getRiskProfile().getAnswerBoolean(RiskConst.RETIRED))
                   {
-                     if (getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREDAGE) == null)
+                     if(getCustomer().getRiskProfile().getAnswerInt(RiskConst.RETIREDAGE) == null)
                      {
                         validateOK = false;
                         pagemanager.setErrorMessage(webutil.getMessageText().getDisplayMessage("validator.retireage.required", "When do you plan to retire?", null));
@@ -624,9 +733,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
                      }
                   }
                }
-               else
-               {
-                  if (getCustomer().getGoal().equalsIgnoreCase("college"))
+               else if (getCustomer().getGoal().equalsIgnoreCase("COLLEGE"))
                   {
                      if (! hasData(getHorizon()))
                      {
@@ -653,10 +760,10 @@ public class ProfileBeanV2 extends PortfolioCreationUI
                      }
                   }
                }
-            }
+
             break;
          case 1: // Investment Choices
-            ans = getCustomer().getRiskProfile().getRiskAnswer(1);
+            ans = getCustomer().getRiskProfile().getRiskAnswer(2);
             if (!hasData(ans))
             {
                validateOK = false;
@@ -664,7 +771,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
             }
             break;
          case 2: // Investment Risk
-            ans = getCustomer().getRiskProfile().getRiskAnswer(2);
+            ans = getCustomer().getRiskProfile().getRiskAnswer(3);
             if (!hasData(ans))
             {
                validateOK = false;
@@ -672,7 +779,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
             }
             break;
          case 3: // Investment Projection
-            ans = getCustomer().getRiskProfile().getRiskAnswer(3);
+            ans = getCustomer().getRiskProfile().getRiskAnswer(4);
             if (!hasData(ans))
             {
                validateOK = false;
@@ -773,6 +880,10 @@ public class ProfileBeanV2 extends PortfolioCreationUI
 
    public void setRiskAns2(String value)
    {
+      if(value!=null && !value.equals(""))
+      {
+         getCustomer().riskProfile.setAnswer(RiskConst.RISKQUESTIONKEY + "2", Integer.parseInt(value));
+      }
       setRiskAns(2, value);
    }
 
@@ -783,9 +894,62 @@ public class ProfileBeanV2 extends PortfolioCreationUI
 
    public void setRiskAns3(String value)
    {
-      setRiskAns(2, value);
+      if(value!=null && !value.equals(""))
+      {
+         getCustomer().riskProfile.setAnswer(RiskConst.RISKQUESTIONKEY + "3", Integer.parseInt(value));
+      }
+      setRiskAns(3, value);
    }
 
+   public String getRiskAns4()
+   {
+      return getCustomer().riskProfile.getRiskAnswer(4).toString();
+   }
+
+   public void setRiskAns4(String value)
+   {
+      if(value!=null && !value.equals(""))
+      {
+         getCustomer().riskProfile.setAnswer(RiskConst.RISKQUESTIONKEY + "4", Integer.parseInt(value));
+      }
+      setRiskAns(4, value);
+   }
+   public String getRiskAns5()
+   {
+      return getCustomer().riskProfile.getRiskAnswer(5).toString();
+   }
+
+   public void setRiskAns5(String value)
+   {
+      if(value!=null && !value.equals(""))
+      {
+         getCustomer().riskProfile.setAnswer(RiskConst.RISKQUESTIONKEY + "5", Integer.parseInt(value));
+      }
+      setRiskAns(5, value);
+   }
+   public String getAns4Tag2(Integer which)
+   {
+      if (which != null)
+      {
+         if (getRiskAns4() != null && getRiskAns4().equalsIgnoreCase(which.toString()))
+         {
+            return "Container90 ProjectionSlabHeight ProjectionSlabHeight_Selected";
+         }
+      }
+      return "Container90 ProjectionSlabHeight";
+   }
+
+   public String getAns4Tag1(Integer which)
+   {
+      if (which != null)
+      {
+         if (getRiskAns4() != null && getRiskAns4().equalsIgnoreCase(which.toString()))
+         {
+            return "triangleShape Fleft triangleShape_Selected";
+         }
+      }
+      return "triangleShape Fleft";
+   }
    public void onChangeName()
    {
    }
@@ -793,7 +957,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
    public void onChangeValue()
    {
       formEdit = true;
-       createAssetPortfolio();
+      createAssetPortfolio();
    }
 
    public void onChangeCurrency()
@@ -851,7 +1015,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
             break;
          case 2:
             RiskConst.GOALS thisgoal = RiskConst.GOALS.displayToGoal(selectedGoal.getKey());
-            if ((!selectedRetirementGoal && thisgoal.equals(RiskConst.GOALS.RETIREMENT))  || thisgoal.equals(RiskConst.GOALS.LEGACY)){
+            if ((!selectedRetirementGoal && thisgoal.equals(RiskConst.GOALS.RETIREMENT))){
                setRecurInvstAmtFlg(false);
                setRecurInvstPrdFlag(false);
                setRecurringInvestment(0);
@@ -884,7 +1048,7 @@ public class ProfileBeanV2 extends PortfolioCreationUI
 
    public String getRevwPnlExpYrFndLbl()
    {
-      if((!selectedRetirementGoal && RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.RETIREMENT))  || RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.LEGACY)){
+      if((!selectedRetirementGoal && RiskConst.GOALS.displayToGoal(selectedGoal.getKey()).equals(RiskConst.GOALS.RETIREMENT)) ){
          revwPnlExpYrFndLbl="NA";
       }else{
          revwPnlExpYrFndLbl= ""+getYear(getHorizon());
@@ -904,34 +1068,272 @@ public class ProfileBeanV2 extends PortfolioCreationUI
    }
 
    public void onChngGoal(){
-     // if(true){
-         // System.out.println("Hello");
-     // }
+      if (customer.getGoal() == null || customer.getGoal().isEmpty())
+      {
+         displayGoalText = false;
+      }
+      else
+      {
+         displayGoalText = true;
+         selectedRetirementGoal = true;
+        /* setAge(null);
+         setRetirementAge(null);
+         setHorizon(null);
+         setWithdrawlPeriod(null);*/
+      }
+
    }
 
+/*
    public String getSelectedMobileGoal()
    {
       return selectedMobileGoal;
    }
+*/
 
-   public void setSelectedMobileGoal(String selectedMobileGoal)
+   public String getSelectedGoalStr()
    {
-      if(selectedMobileGoal==null || selectedMobileGoal.equalsIgnoreCase("select")){
-         if(getSelectedGoal()!=null)
+      return selectedGoalStr;
+   }
+
+   public void setSelectedGoalStr(String selectedGoalStr)
+   {
+
+      if(selectedGoalStr!=null && !selectedGoalStr.equalsIgnoreCase("select")){
+         for (int i = 0; i < goalsdata.size(); i++)
          {
-            selectedMobileGoal = getSelectedGoal().getKey();
-         }
-      }else{
-         this.selectedMobileGoal = selectedMobileGoal;
-         for (int i=0;i<goalsdata.size();i++)
-         {
-            if(goalsdata.get(i).getKey().equalsIgnoreCase(selectedMobileGoal))
+            if (goalsdata.get(i).getKey().equalsIgnoreCase(selectedGoalStr))
             {
                setSelectedGoal(goalsdata.get(i));
-               selectedGoal=goalsdata.get(i);
+               this.selectedGoal = goalsdata.get(i);
                break;
             }
          }
       }
+      this.selectedGoalStr=selectedGoalStr;
+   }
+
+   public void onGoalChangeValue()
+   {
+      if (customer.getGoal() == null || customer.getGoal().isEmpty())
+      {
+         displayGoalText = false;
+      }
+      else
+      {
+         displayGoalText = true;
+         selectedRetirementGoal = true;
+         setAge(null);
+         setRetirementAge(null);
+         setHorizon(null);
+         setWithdrawlPeriod(null);
+      }
+   }
+
+   public void riskSelected(Integer value)
+   {
+      setRiskAns3(value.toString());
+      formEdit = true;
+      riskCalc.calculate();
+      createAssetPortfolio();
+   }
+
+   public String getRiskGraphic(Integer value)
+   {
+      String defaultImage = "/javax.faces.resource/images/gl";
+      String selectedImage = "/javax.faces.resource/images/sgl";
+      String extension = ".png.xhtml?ln=tcm";
+
+      if (getRiskAns3() == null)
+      {
+         return defaultImage + value.toString() + extension;
+      }
+      else
+      {
+         if (getRiskAns3().equalsIgnoreCase(value.toString()))
+         {
+            return selectedImage + value.toString() + extension;
+         }
+         else
+         {
+            return defaultImage + value.toString() + extension;
+         }
+      }
+
+   }
+
+   public void doProjectionChart()
+   {
+      String event = getRiskAns4();
+      Integer whichslide = null;
+
+      if ((event != null) && (!event.isEmpty()))
+      {
+         whichslide = webutil.getConverter().getIntData(event);
+      }
+
+      if (whichslide == null)
+      {
+         if (getRiskAns3() != null && !getRiskAns3().isEmpty())
+         {
+            whichslide = webutil.getConverter().getIntData(getRiskAns3()); // See comment below, we are offsetting it by one.
+         }
+         else
+         {
+            whichslide = 0;
+         }
+      }
+
+      if (whichslide > 0)
+      { // Answers are stored in 1 to 5.  Whereas array is from 0-4
+         whichslide -= 1;   // We have to offset the slider by 1 if > 0
+      }
+      //  Calls for Projection creation chart by using HighChart
+      if (getProjectionDatas() != null)
+      {
+         if (getProjectionDatas().size() > 0)
+         {
+            Integer portfolioID = getProjectionDatas().size() - 1;
+            charts.createProjectionHighChart(getProjectionDatas().get(whichslide),
+                                             getHorizon(),
+                                             getAge(),
+                                             riskCalc.getHorizon(),
+                                             getProjectionDatas().get(portfolioID));
+         }
+
+      }
+      formEdit = true;
+      riskCalc.calculate();
+      createAssetPortfolio();
+   }
+
+   public ArrayList<ProjectionData[]> getProjectionDatas()
+   {
+      return projectionDatas;
+   }
+
+   public void calcProjectionChart() {
+      if (customer.getModelUtil() != null) {
+         projectionDatas = customer.getModelUtil().buildProjectionData(customer.getProfileInstance());
+      }
+
+   }
+
+   public void setProjectionDatas(ArrayList<ProjectionData[]> projectionDatas)
+   {
+      this.projectionDatas = projectionDatas;
+   }
+
+   public Double getTotalRisk()
+   {
+      return customer.getTotalRisk();
+
+   }
+
+   public Double getTotalExpectedReturns()
+   {
+      return customer.getTotalExpectedReturns();
+   }
+
+   public ArrayList<Asset> getEditableAsset()
+   {
+      return customer.getEditableAsset();
+   }
+
+   public void setEditableAsset(Asset data)
+   {
+      customer.setEditableAsset(data);
+   }
+
+   private void createCharts()
+   {
+
+      try
+      {
+         formEdit = true;
+         // charts.setMeterGuage(getMeterRiskIndicator());
+         if (customer.getAssetData() != null)
+         {
+            charts.createPieModel(customer.getAssetData(), 0);
+            // charts.createBarChart(getAssetData(), 0);
+         }
+         else
+         {
+            charts.resetCharts();
+         }
+      }
+      catch (Exception ex)
+      {
+         ex.printStackTrace();
+      }
+   }
+
+
+   public void doPerformanceFinalpage()
+   {
+      if (getFixedModel())
+      {
+         ProjectionData[] performancedata = modelUtil.buildPerformanceChart((ProfileData) customer.getInstance(), getFixedFMModel());
+         charts.createProjectionHighChart(performancedata,
+                                          getHorizon(),
+                                          getAge(),
+                                          getRetirementAge(),
+                                          null);
+      }
+   }
+
+
+   public void refreshChart()
+   {
+
+      if (whichChart.toLowerCase().equals("pie"))
+      {
+         charts.createPieModel(customer.getAssetData(), 0);
+      }
+      else if (whichChart.toLowerCase().equals("bar"))
+      {
+         charts.createBarChart(customer.getAssetData(), 0);
+      }
+
+   }
+
+   public String getWhichChart()
+   {
+      return whichChart;
+   }
+
+   public void setWhichChart(String whichChart)
+   {
+      this.whichChart = whichChart;
+   }
+
+   public String getEmail()
+   {
+      return customer.getEmail();
+   }
+
+   public void setEmail(String email)
+   {
+      customer.setEmail(email);
+   }
+
+   public String getFirstname()
+   {
+      return customer.getFirstname();
+   }
+
+   public void setFirstname(String firstname)
+   {
+      customer.setFirstname(firstname);
+   }
+
+   public String getLastname()
+   {
+      return customer.getLastname();
+   }
+
+   public void setLastname(String lastname)
+   {
+      customer.setLastname(lastname);
    }
 }
