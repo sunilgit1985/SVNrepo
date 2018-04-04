@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 
 import com.invessence.web.dao.advisor.AdvisorListDataDAO;
 import com.invessence.web.dao.common.CommonDAO;
+import com.invessence.web.bean.common.UserInterface;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +15,7 @@ import com.invessence.web.dao.common.CommonDAO;
  * Time: 8:58 PM
  * To change this template use File | Settings | File Templates.
  */
-public class AdvisorDashData
+public class AdvisorDashData extends UserInterface
 {
      private Long logonid;
      private String advisorname;
