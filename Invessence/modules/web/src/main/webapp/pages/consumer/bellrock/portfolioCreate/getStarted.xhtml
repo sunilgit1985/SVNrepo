@@ -1,0 +1,177 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="Container100 TextAlCenter">
+        <p:outputPanel rendered="#{deep200pb.interfaceIntMode == 0}">
+        <h3 class="StepsQuestionsFS" style="text-align: center!important; margin: 10px 0px!important;">
+            Welcome to #{webutil.webprofile.companyname}! <br/>We will start by asking you a
+            set of questions - beginning with your goals, and then about your
+            attitudes towards risk.
+        </h3>
+        </p:outputPanel>
+        <p:outputPanel rendered="#{deep200pb.interfaceIntMode > 0}">
+            <h3 class="StepsQuestionsFS" style="text-align: center!important; margin: 10px 0px!important;">
+                We will start by asking you a
+                set of questions - beginning with your goals, and then about your
+                attitudes towards risk.
+            </h3>
+        </p:outputPanel>
+
+        <div class="TexAlCenter">
+            <div class="PortfolioCreationFields">
+                <span class="mobileFullWidth">
+                    <h:outputText id="tcmp1formtext1" value="I plan on investing" styleClass="formFS" rendered="#{!deep200pb.formPortfolioEdit}"/>
+                    <h:outputText id="tcmp1formtext2" value="The objective for this portfolio is " styleClass="formFS"
+                                  rendered="#{deep200pb.formPortfolioEdit}"/>
+                    </span>
+                <p:inputNumber id="initialIid" rendered="#{!deep200pb.formPortfolioEdit}"
+                               styleClass="invInputText input_investwid1 amountBRmobileSupport mobileFullWidthinput"
+                               value="#{deep200pb.initialInvestment}"
+                               maxlength="11" symbol="$"
+                               decimalPlaces="0"
+                               required="true" requiredMessage="Min. of $50,000 investment is required!"
+                               validatorMessage="Min. of $50,000 investment is required!">
+                </p:inputNumber>
+                <p:message id="tcmp1tooltip" for="initialIid" display="tooltip"/>
+
+               <span class="mobileFullWidth">
+                    <h:outputText value="for" id="tcmp1formtext3" styleClass="formFS" rendered="#{!deep200pb.formPortfolioEdit}"/>
+                    </span>
+
+
+                <p:selectOneMenu id="q3" styleClass="TCM-UI-Dropdown dropdownInputFullWidth portfolioCreationDD"
+                                 value="#{deep200pb.selectedGoalStr}" required="true" requiredMessage="Please choose investment strategy">
+                    <p:ajax listener="#{deep200pb.onChngGoal}" update=":ceForm:inputArea" process="initialIid q3"/>
+                    <f:selectItem itemLabel="Select One" itemValue="Select"
+                                  noSelectionOption="true"/>
+                    <f:selectItems
+                            value="#{deep200pb.goalsdata}"
+                            var="goalsdata" itemLabel="#{goalsdata.displayName}"
+                            itemValue="#{goalsdata.key}">
+
+                    </f:selectItems>
+                </p:selectOneMenu>
+            </div>
+        </div>
+
+        <div class="EmptyBox10"></div>
+
+        <p:panel id="p1hrznpanel" style="background: transparent; border: 0px"
+                 rendered="#{deep200pb.displayGoalText}">
+            <div class="Container100 ResponsiveMarginTop BlockErrorIncluded">
+                <ui:fragment rendered="#{deep200pb.customer.goal == 'RETIREMENT'}">
+                    <div class="TexAlCenter">
+                        <div>
+                            <div class="mobileFullWidth"><h3 class="formFS"> I am </h3></div>
+                            <p:inputNumber id="ageid"
+                                           styleClass="invInputText input_agewid1 mobileFullWidthinput"
+                                           value="#{deep200pb.age}"
+                                           decimalPlaces="0" size="9"
+                                           required="true" requiredMessage="Age is required!"
+                                           validatorMessage="Age should be between 18 and 100."/>
+
+                            <div class="mobileFullWidth portfolioCreation2DropdownBlock"><h3 class="formFS"> years old and I am
+                                <p:selectOneMenu id="retiredDDID" value="#{deep200pb.selectedRetirementGoal}"
+                                                 styleClass="TCM-UI-Dropdown dropdownInputFullWidth">
+                                    <p:ajax event="change" process="@this ageid"
+                                            update=":ceForm:p1hrznpanel"/>
+                                    <f:selectItem id="tcmp1notretired" itemLabel="Not Retired" itemValue="true"/>
+                                    <f:selectItem id="tcmp1retired" itemLabel="Retired" itemValue="false"/>
+                                </p:selectOneMenu>
+                            </h3></div>
+                        </div>
+                    </div>
+                    <div class="EmptyBox20"></div>
+                    <div class="TexAlCenter">
+                        <div>
+                            <ui:fragment rendered="#{deep200pb.selectedRetirementGoal}">
+                                <div class="mobileFullWidth">
+                                    <h3 class="formFS"> I would like to retire when I am </h3>
+                                </div>
+                                <p:inputNumber id="retireageID"
+                                               styleClass="invInputText input_wid1 amountBRmobileSupport mobileFullWidthinput"
+                                               style="width: 60px;"
+                                               value="#{deep200pb.retirementAge}"
+                                               decimalPlaces="0"
+                                               size="3"
+                                               required="true" requiredMessage="When do you plan to retire?">
+
+                                </p:inputNumber>
+
+                                <div class="mobileFullWidth"><h3 class="formFS"> years old.</h3></div>
+                            </ui:fragment>
+
+                        </div>
+                    </div>
+
+                </ui:fragment>
+                <ui:fragment rendered="#{deep200pb.customer.goal == 'COLLEGE'}">
+
+                    <h3 class="formFS TexAlCenter ">
+                        The child I am saving for is expected to start college in
+                        <p:inputNumber id="collegeid"
+                                       styleClass="invInputText input_wid1 mobileFullWidthinput" style="width: 60px;"
+                                       value="#{deep200pb.horizon}"
+                                       decimalPlaces="0"
+                                       size="3"
+                                       required="true" requiredMessage="When does your child plan to attend college?"/>
+                        years.
+                    </h3>
+                </ui:fragment>
+                <ui:fragment rendered="#{deep200pb.customer.goal == 'BUILDWEALTH' || deep200pb.customer.goal == 'OTHER'}">
+
+                    <h3 class="formFS TexAlCenter ">
+                        I plan on utilizing the funds for this goal in
+                        <p:inputNumber id="otherid"
+                                       styleClass="invInputText input_agewid1 mobileFullWidthinput"
+                                       value="#{deep200pb.horizon}"
+                                       decimalPlaces="0"
+                                       size="3"
+                                       required="true" requiredMessage="When do you plan to use these funds?"/>
+                        years.
+                    </h3>
+                </ui:fragment>
+            </div>
+
+        </p:panel>
+        <div class="EmptyBox10"></div>
+        <p:panel id="tcmp1errormsg1" rendered="#{deep200pb.pagemanager.getErrorMessage(0) != null and  !deep200pb.formPortfolioEdit }"
+                 style="border: 0px; background: transparent"
+                 styleClass="Container100 TexAlCenter">
+            <h:outputText id="tcmp1errortext1" styleClass="errorText"
+                          value="#{deep200pb.pagemanager.getErrorMessage(0)}" escape="false"/>
+        </p:panel>
+        <p:panel id="tcmp1errormsg2" rendered="#{deep200pb.pagemanager.getErrorMessage(1) != null and deep200pb.formPortfolioEdit }"
+                 style="border: 0px; background: transparent"
+                 styleClass="Container100 TexAlCenter">
+            <h:outputText id="tcmp1errortext2" styleClass="errorText"
+                          value="#{deep200pb.pagemanager.getErrorMessage(1)}" escape="false"/>
+        </p:panel>
+
+        <div class="TexAlCenter">
+            <p:commandLink styleClass="UI-nextButtonPg1 UI-tcmButton" id="tcmp1nextbtn" rendered="#{deep200pb.pagemanager.nextButtonStat}"
+                           update=":ceForm:inputArea"
+                           actionListener="#{deep200pb.gotoNextPage}">
+                <h:outputText value="Next"/>
+            </p:commandLink>
+        </div>
+        <div style="display: none;">
+            <img src="/javax.faces.resource/images/gl1.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/gl2.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/gl3.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/gl4.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/gl5.png.xhtml?ln=tcm"/>
+
+            <img src="/javax.faces.resource/images/sgl1.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/sgl2.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/sgl3.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/sgl4.png.xhtml?ln=tcm"/>
+            <img src="/javax.faces.resource/images/sgl5.png.xhtml?ln=tcm"/>
+
+        </div>
+    </div>
+
+</ui:composition>
