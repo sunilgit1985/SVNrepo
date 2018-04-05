@@ -590,6 +590,18 @@
             <jdbc.password>inv3ss3nc3u530n1y</jdbc.password>
          </properties>
       </profile>
+      <profile>
+         <id>3P4-EXT-UTRADEROBO-PROD</id>
+         <properties>
+            <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+            <jdbc.url>jdbc:mysql://www.utraderobo.com:3306/invdb?noAccessToProcedureBodies=true</jdbc.url>
+            <rbsa.url>jdbc:mysql://www.utraderobo.com:3306/rbsa?noAccessToProcedureBodies=true</rbsa.url>
+            <service.url>jdbc:mysql://www.utraderobo.com:3306/service?noAccessToProcedureBodies=true</service.url>
+            <temp.url>jdbc:mysql://www.utraderobo.com:3306/temp?noAccessToProcedureBodies=true</temp.url>
+            <jdbc.username>webuser</jdbc.username>
+            <jdbc.password>inv3ss3nc3u530n1y</jdbc.password>
+         </properties>
+      </profile>
 
       <profile>
          <id>5Z-----PROD ----5Z</id>
@@ -630,7 +642,7 @@
             <email_templates_dir>${base.web.dir}/template/html/</email_templates_dir>
          </properties>
       </profile>
-            <profile>
+      <profile>
          <id>ZZ-DEPLOY</id>
          <properties>
             <!-- Mode PROD -->
