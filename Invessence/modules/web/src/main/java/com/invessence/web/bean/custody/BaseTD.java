@@ -40,6 +40,7 @@ public class BaseTD
    private PagesImpl pagemanager = new PagesImpl(11);
    private String defaultCheckedImage = "/javax.faces.resource/images/checkedN.png.xhtml?ln=tcm";
    private String selectedCheckedImage = "/javax.faces.resource/images/checkedY.png.xhtml?ln=tcm";
+   private String selectedCheckedImageBR = "/javax.faces.resource/images/checkedY.png.xhtml?ln=bellrock";
 
    private String saveandOpenError;
    private ArrayList<BenefiaciaryDetails> beneTempList = new ArrayList<BenefiaciaryDetails>();
@@ -242,6 +243,19 @@ public class BaseTD
          if (tdMasterData.getAccttype() == which)
          {
             return selectedCheckedImage;
+         }
+      }
+      return defaultCheckedImage;
+
+   }
+   public String getCheckedImageBR(Integer which)
+   {
+      which = (which == null) ? 0 : which;
+      if (tdMasterData.getAccttype() != null)
+      {
+         if (tdMasterData.getAccttype() == which)
+         {
+            return selectedCheckedImageBR;
          }
       }
       return defaultCheckedImage;

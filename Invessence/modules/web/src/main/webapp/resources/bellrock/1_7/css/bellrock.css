@@ -14,6 +14,7 @@
     height: 70px;
     margin-top: 4px;
     width:auto;
+    max-width:100%;
 }
 
 @media (min-width: 960px) {
@@ -2147,7 +2148,7 @@ Panel-UI > div {
 
 .tcmPanel-UI {
     border-radius: 0px;
-    border-top: 4px solid #05AF6C;
+    border-top: 4px solid #233F90;
 }
 
 .ui-color {
@@ -2222,7 +2223,7 @@ Panel-UI > div {
 .UI-nextButtonFA {
     height: 40px;
     width: 90px;
-    background: url("/javax.faces.resource/images/nextbtn.png.xhtml?ln=tcm");
+    background: url("/javax.faces.resource/images/nextbtn.png.xhtml?ln=bellrock");
     background-size: 45% 100%;
     background-repeat: no-repeat;
     background-position-x: 30px;
@@ -2240,7 +2241,7 @@ Panel-UI > div {
 .UI-prevButtonFA {
     height: 40px;
     width: 32px;
-    background: url("/javax.faces.resource/images/prevbtn.png.xhtml?ln=tcm");
+    background: url("/javax.faces.resource/images/prevbtn.png.xhtml?ln=bellrock");
     background-size: 70% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -2279,7 +2280,7 @@ Panel-UI > div {
 }
 
 .ui-accordion-header {
-    background-color: #005936 !important;
+    background-color: #233F90 !important;
     text-transform: uppercase !important;
 }
 
@@ -2299,7 +2300,7 @@ tcmAccordionPanel-UI > .ui-accordion .ui-state-hover, .ui-accordion .ui-state-ac
 
 .ui-accordion-content {
     margin-bottom: 15px !important;
-    border-bottom: 1px solid #49B669 !important;
+    border-bottom: 1px solid #233F90 !important;
 }
 
 .MarCenter {
@@ -4721,6 +4722,10 @@ width: 100% !important;
     color: #233f90;
     font-size: 18px;
 }
+.ui-tabs-top .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs-top .ui-tabs-nav li.ui-tabs-active a, .ui-tabs-top .ui-tabs-nav li.ui-state-hover a {
+    color: #233F90 !important;
+}
+.ui-button.ui-state-focus .ui-button-text, .ui-inputswitch-handle.ui-state-focus, .ui-slider-handle.ui-state-focus{background-color: #233F90;}
 /*** responsive **/
 @media(max-width: 1060px){
     .TierTable .Container30{width:30%;margin:0 1.5%;}

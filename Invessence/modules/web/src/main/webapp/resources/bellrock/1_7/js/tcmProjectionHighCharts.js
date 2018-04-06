@@ -156,7 +156,7 @@ $(function ()
                               data: $.parseJSON(chartValue).goalLowerValue,
                               type: 'areasplinerange',
                               lineWidth: 0,
-                              color: '#54a685', //Highcharts.getOptions().colors[0]'', //#3498DB
+                              color: '#8dc63f', //Highcharts.getOptions().colors[0]'', //#3498DB
                               //fillOpacity: 0.7,
                               border: 0,
                               zIndex: 2,
@@ -305,7 +305,7 @@ $(function ()
                               data: $.parseJSON(chartValue).goalLowerValue,
                               type: 'areasplinerange',
                               lineWidth: 0,
-                              color: '#54a685', //Highcharts.getOptions().colors[0]'', //#3498DB
+                              color: '#8dc63f', //Highcharts.getOptions().colors[0]'', //#3498DB
                               //fillOpacity: 0.7,
                               border: 0,
                               zIndex: 2,
