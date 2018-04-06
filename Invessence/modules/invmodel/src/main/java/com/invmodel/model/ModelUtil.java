@@ -175,4 +175,12 @@ public class ModelUtil
    public void goalTracking(ProfileData pdata) {
       forwardProjection.goalTracking(pdata);
    }
+
+   public boolean isItFixedModel(String theme){
+      if(fixoptimizer!=null){
+         return fixoptimizer.isThisFixedTheme(theme);
+      }else{
+         return false;
+      }
+   }
 }
