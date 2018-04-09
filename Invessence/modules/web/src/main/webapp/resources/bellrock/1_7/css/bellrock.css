@@ -1494,7 +1494,7 @@ img.riskImage:hover {
 
 .tableCustomSeperater > td {
     height: 2px !important;
-    background: linear-gradient(to right, #307a5d 0%, transparent 98%);
+    background: linear-gradient(to right, #233F90  0%, transparent 98%);
 }
 
 .acctOverviewLabel {
@@ -4726,12 +4726,21 @@ width: 100% !important;
     color: #233F90 !important;
 }
 .ui-button.ui-state-focus .ui-button-text, .ui-inputswitch-handle.ui-state-focus, .ui-slider-handle.ui-state-focus{background-color: #233F90;}
+
+.regiPanel .ui-selectmanycheckbox.ui-widget td, .regiPanel .ui-selectoneradio.ui-widget td {
+    vertical-align: top;
+}
 /*** responsive **/
 @media(max-width: 1060px){
     .TierTable .Container30{width:30%;margin:0 1.5%;}
 }
 @media(max-width: 890px){
     .TierTable .Container30{width:32%;margin:0 0.5%;height:360px;}
+    .Container49 {
+        width: 96%;
+        float: left;
+        margin: 0 10px !important;
+    }
 }
 @media (max-width: 760px){
 	.Container49{width:96%;float:left; margin:0 10px !important;}
