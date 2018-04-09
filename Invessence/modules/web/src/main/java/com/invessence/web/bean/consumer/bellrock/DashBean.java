@@ -139,7 +139,7 @@ public class DashBean implements Serializable
       {
          if (getSelectedAccount().isUnopened())
          {
-            uiLayout.doMenuAction("consumer", "tadd.xhtml?app=E&acct=" + selectedAccount.getAcctnum().toString());
+            uiLayout.doMenuAction("consumer", "cadd.xhtml?app=E&acct=" + selectedAccount.getAcctnum().toString());
          }
          else
          {

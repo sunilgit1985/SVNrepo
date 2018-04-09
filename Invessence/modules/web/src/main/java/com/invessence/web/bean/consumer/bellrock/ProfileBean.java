@@ -1452,6 +1452,7 @@ public class ProfileBean extends BRCustomer implements Serializable
          if (getProjectionDatas().size() > 0)
          {
             Integer portfolioID = getProjectionDatas().size() - 1;
+            whichslide = (whichslide > getProjectionDatas().size()) ? portfolioID : whichslide;
             charts.createProjectionHighChart(getProjectionDatas().get(whichslide),
                                              getHorizon(),
                                              getAge(),

@@ -1317,7 +1317,7 @@ public class CustomerData extends ProfileData
       Map<String, Asset> tallyAssetclass = new LinkedHashMap<String, Asset>();
       Double totalMoney = 0.0;
       Double remainMoney = getDefaultInvestment();
-      if (pfclass != null)
+      if (pfclass != null  && pfclass.getPortfolio().size() > 0)
       {
          String displayName;
          Double allocwght;

@@ -286,7 +286,7 @@ public class UserBean implements Serializable
 
    public void updateLogonStatus()
    {
-      Boolean found;
+      logger.debug("LOG: Saving logon status... updateLogonStatus");
       userInfoDAO.updLogonStatus(beanLogonID);
    }
 
@@ -351,9 +351,10 @@ public class UserBean implements Serializable
             userdata.setLogonID(getLongBeanLogonID());
             userdata.setResetID(beanResetID);
             String validateMsg = validateReset();
+            logger.debug("LOG: Reset ID checked = " + beanUserID + ", Status " + validateMsg);
             if (validateMsg != null && !validateMsg.isEmpty())
             {
-               logger.debug("DEBUG: Invalid ResetID: Email =" + userdata.getEmail() + ", Balidate Message-> " + validateMsg);
+               logger.debug("DEBUG: Invalid ResetID: Email =" + userdata.getEmail() + ", Validate Message-> " + validateMsg);
                webutil.redirecttoMessagePage("ERROR", "Invalid link", "Sorry, this link contains invalid reset data.");
             }
             updateLogonStatus();
@@ -555,11 +556,13 @@ public class UserBean implements Serializable
       String msgheader;
       try
       {
+         logger.debug("LOG: Registration check ... LogonID: " + getLongBeanLogonID().toString());
          userdata.setLogonID(getLongBeanLogonID());
 //         userdata.setUserID(beanUserID);            // Since both logonid and email is forced to
 
          if (newRegistration)
          {
+            logger.debug("LOG: New User, check ... Email: " + beanEmail);
             userdata.setUserID(null);
             userdata.setEmail(beanEmail);
             if (beanEmail == null || beanEmail.isEmpty()) {
@@ -625,6 +628,7 @@ public class UserBean implements Serializable
             {
                webutil.sendConfirmation(userdata,"A");
             }
+            logger.debug("LOG: Redirecting to security questions page ->");
             webutil.redirect("/signup2.xhtml", null);
          }
          else {
